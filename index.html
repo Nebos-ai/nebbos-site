@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Idvor — Operations Intelligence</title>
+<meta name="description" content="Your tools tell you what already broke. Idvor reads the signal your operation emits, predicts what's about to go wrong, explains why, and acts under your approval — model-agnostic, and governed by design." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="assets/tailwind.config.js"></script>
+<link rel="stylesheet" href="assets/styles.css" />
+<link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+<link rel="canonical" href="https://idvor.ai/" />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://idvor.ai/" />
+<meta property="og:site_name" content="Idvor" />
+<meta property="og:title" content="Idvor — Operations Intelligence" />
+<meta property="og:description" content="Your tools tell you what already broke. Idvor reads the signal your operation emits, predicts what's about to go wrong, explains why, and acts under your approval." />
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Idvor — Operations Intelligence" />
+<meta name="twitter:description" content="Your tools tell you what already broke. Idvor reads the signal your operation emits, predicts what's about to go wrong, explains why, and acts under your approval." />
+</head>
+<body data-page="home" class="bg-ink-900">
+
+<canvas id="bg" aria-hidden="true"></canvas>
+<div id="page">
+<div id="bar"></div>
+
+<div id="pre" aria-hidden="true"><div class="w">idvor</div><div class="pbar"><i></i></div></div>
+
+<div id="nav-mount"></div>
+
+<!-- HERO -->
+<section class="relative overflow-hidden">
+  <div class="glow" style="width:520px;height:520px;background:#3B4ACB;top:-180px;right:-120px"></div>
+  <div class="glow" style="width:420px;height:420px;background:#637DFF;bottom:-220px;left:-140px;opacity:.35"></div>
+  <div class="container pt-40 pb-24 md:pt-48 md:pb-32 relative">
+    <p class="eyebrow hero-el">Operations Intelligence</p>
+    <h1 class="hero-el mt-5 text-[clamp(38px,5.6vw,76px)] max-w-[19ch]">Dashboards tell you what already broke. Idvor tells you what's <span class="text-blue">about to</span>.</h1>
+    <p class="hero-el mt-7 text-[clamp(17px,1.5vw,21px)] text-mist max-w-[50ch]">Your tools already emit the early signs of how your company really runs. Idvor reads that signal as it happens — the stalled handoff, the slipping deadline, the capacity crunch forming three teams away — and puts the fix in front of you while you can still use it.</p>
+    <div class="kin hero-el mt-8" id="kin" aria-hidden="true">
+      <span data-w="Signal">Signal</span><i>→</i><span data-w="Prediction">Prediction</span><i>→</i><span data-w="Explanation">Explanation</span><i>→</i><span data-w="Action">Action</span><i>→</i><span data-w="Knowledge">Knowledge</span>
+    </div>
+    <div class="hero-el mt-9 flex flex-wrap gap-3">
+      <a href="https://app.idvor.ai" class="btn btn-primary mag">Log in to Idvor <span class="arr">→</span></a>
+      <a href="#story" class="btn btn-ghost">See it in action <span class="arr">▸</span></a>
+    </div>
+    <p class="hero-el mt-5 text-[13px] text-faint">No login yet? <a href="contact.html" class="text-blue-soft hover:underline">Request access</a>.</p>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="hairline border-b border-white/8 py-5 marquee" aria-hidden="true">
+  <ul>
+    <li><b>Live signal —</b> Tasks<span class="px-3">·</span></li><li>Messages<span class="px-3">·</span></li><li>Calendars<span class="px-3">·</span></li><li>Handoffs<span class="px-3">·</span></li><li>Tickets<span class="px-3">·</span></li><li>Deploys<span class="px-3">·</span></li><li>Approvals<span class="px-3">·</span></li><li>Incidents<span class="px-3">·</span></li>
+    <li><b>Live signal —</b> Tasks<span class="px-3">·</span></li><li>Messages<span class="px-3">·</span></li><li>Calendars<span class="px-3">·</span></li><li>Handoffs<span class="px-3">·</span></li><li>Tickets<span class="px-3">·</span></li><li>Deploys<span class="px-3">·</span></li><li>Approvals<span class="px-3">·</span></li><li>Incidents<span class="px-3">·</span></li>
+  </ul>
+</div>
+
+<!-- THESIS -->
+<section class="container section">
+  <p class="eyebrow reveal">The idea</p>
+  <h2 class="reveal mt-5 text-[clamp(30px,4.4vw,56px)] max-w-[16ch]">Most software remembers. <span class="text-blue">Idvor predicts.</span></h2>
+  <p class="reveal mt-6 text-mist text-lg max-w-[60ch]">Every organisation runs on five questions: what's happening, what's about to go wrong, why, what to do, and what it just learned. Idvor answers them in order — each built on the one beneath it — and shows its work as it goes.</p>
+</section>
+
+<!-- SIGNATURE: five-question scroll narrative -->
+<section id="story" class="story" style="height:560vh">
+  <div class="story-sticky container">
+    <div class="scenes">
+      <article class="scene" data-stage="0"><span class="qn">Q1 — Signal</span><h2>What's happening<br>right now.</h2><p>Connect the tools your teams already use. Idvor turns the daily exhaust of work into one clean, normalised stream of operational events. No rip-and-replace.</p></article>
+      <article class="scene" data-stage="1"><span class="qn" style="color:var(--tomato)">Q2 — Prediction</span><h2>What's <span style="color:var(--tomato)">about to<br>go wrong</span>.</h2><p>Deterministic pattern detection runs first — deadline risk, capacity crunch, stalled handoffs, cascade risk. Only when a pattern fires does Idvor reason about it. Cheap to watch, sharp when it counts.</p></article>
+      <article class="scene" data-stage="2"><span class="qn">Q3 — Explanation</span><h2>Why it's<br>going wrong.</h2><p>A dedicated agent for each department works through the signal and tells you the cause in plain language, with the evidence attached. You see the reasoning, not just a red flag.</p></article>
+      <article class="scene" data-stage="3"><span class="qn">Q4 — Action</span><h2>What to do<br>about it.</h2><p>Idvor can act — but the riskier moves are rehearsed in a sandbox first, then passed to a human checkpoint. Autonomy is earned, bounded to what's been proven, and always reversible.</p></article>
+      <article class="scene" data-stage="4"><span class="qn">Q5 — Knowledge</span><h2>What you've<br>learned.</h2><p>Everything observed and resolved compounds into your Operational Graph — a living record of how your organisation actually runs, richer every week it's on.</p></article>
+      <div class="rail" id="rail" aria-hidden="true">
+        <button data-go="0" class="on"><div class="tick"><i></i></div><div class="lab">Signal</div></button>
+        <button data-go="1"><div class="tick"><i></i></div><div class="lab">Predict</div></button>
+        <button data-go="2"><div class="tick"><i></i></div><div class="lab">Explain</div></button>
+        <button data-go="3"><div class="tick"><i></i></div><div class="lab">Act</div></button>
+        <button data-go="4"><div class="tick"><i></i></div><div class="lab">Know</div></button>
+      </div>
+    </div>
+    <div class="story-vis"><canvas id="viz"></canvas></div>
+  </div>
+</section>
+
+<!-- WHO IT'S FOR -->
+<section class="hairline border-t border-white/8">
+  <div class="container section">
+    <p class="eyebrow reveal">Who it's for</p>
+    <h2 class="reveal mt-5 text-[clamp(28px,4vw,50px)] max-w-[20ch]">Everyone in the company needs something different.</h2>
+    <p class="reveal mt-6 text-mist text-lg max-w-[56ch]">One signal, read five ways. The same Operational Graph answers the question each person is actually asking.</p>
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4 mt-12">
+      <div class="reveal tile"><div class="dep">Operations / COO</div><h3>Stop finding out on Friday.</h3><p>The stalled handoff and the slipping deadline surface while you can still move on them — not in next week's post-mortem.</p></div>
+      <div class="reveal tile"><div class="dep">Engineering / CTO</div><h3>Six checks before one token.</h3><p>Model-agnostic by design. Deterministic detection runs first; it works with any LLM, locked to none — over a dashboard and an MCP interface.</p></div>
+      <div class="reveal tile"><div class="dep">Finance / CFO</div><h3>Worth more next year.</h3><p>Predictable cost on top of whatever model you run, and the rare tool that compounds instead of depreciating.</p></div>
+      <div class="reveal tile"><div class="dep">Risk / Legal</div><h3>It never acts alone.</h3><p>Five enforcement layers, every decision sourced, built to the EU AI Act's high-risk bar — not retrofitted to it.</p></div>
+      <div class="reveal tile"><div class="dep">Department leads</div><h3>A colleague who did the homework.</h3><p>Pearl arrives caught up and asks why the date moved — never how you feel. One agent per team.</p></div>
+      <div class="reveal tile" style="background:#15151e;border-color:rgba(99,125,255,.4)"><div class="dep">The whole company</div><h3>One source of operational truth.</h3><p>Everyone acting on the same live read of how the work is actually moving — not five conflicting dashboards.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PEARL -->
+<section id="pearl" class="container section">
+  <div class="grid lg:grid-cols-2 gap-14 items-start">
+    <div>
+      <p class="eyebrow reveal">The agent</p>
+      <h2 class="reveal mt-5 text-[clamp(28px,4vw,50px)] max-w-[14ch]">Meet Pearl — one&nbsp;per&nbsp;department.</h2>
+      <p class="reveal mt-6 text-mist text-lg max-w-[46ch]">Pearl watches a single department's signal, surfaces only what's worth your attention, and asks at most a couple of sharp questions when it genuinely can't explain something. It never asks how you feel — it asks about the one data point it can't account for, then learns from your answer.</p>
+      <a href="pearl.html" class="btn btn-ghost mt-8 reveal">Explore Pearl <span class="arr">→</span></a>
+    </div>
+    <div class="reveal hitl">
+      <div class="bubble sys"><div class="who">Pearl · Delivery</div>The Riverside handoff has waited 51 hours — past your 48-hour threshold. A downstream team's Friday commitment now can't be met. I can flag both leads and propose a revised date.</div>
+      <div class="pills"><button class="pill yes" data-approve>Approve</button><button class="pill">Edit</button><button class="pill">Not now</button></div>
+      <div class="bubble you"><div class="who">You</div>Approve — and tell me which other commitments depend on that one.</div>
+      <div class="done"><svg width="15" height="15" viewBox="0 0 22 22" fill="none"><circle cx="11" cy="11" r="10" fill="#637DFF"/><path d="M6.5 11.5l3 3 6-6.5" stroke="#0B0B10" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg> Approved · logged to your Operational Graph</div>
+    </div>
+  </div>
+  <div class="bento mt-12">
+    <div class="reveal tile"><div class="dep">Engineering</div><h3>Velocity &amp; risk</h3><p>Watches velocity drops, stalled reviews and cascade risk across delivery.</p></div>
+    <div class="reveal tile"><div class="dep">Sales</div><h3>Pipeline signal</h3><p>Spots slipping commitments and capacity crunch before the quarter does.</p></div>
+    <div class="reveal tile"><div class="dep">Operations</div><h3>Handoff health</h3><p>Catches cross-team handoffs going cold past their threshold.</p></div>
+    <div class="reveal tile"><div class="dep">HR</div><h3>Coverage gaps</h3><p>Flags unaccounted absence and coverage risk — to the lead, never the person.</p></div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section id="how" class="hairline border-t border-white/8">
+  <div class="container section">
+    <p class="eyebrow reveal">Getting started</p>
+    <h2 class="reveal mt-5 text-[clamp(28px,4vw,50px)]">Live in days, not quarters.</h2>
+    <p class="reveal mt-6 text-mist text-lg max-w-[54ch]">Idvor reads from the stack you already run. Nothing for your teams to adopt, no new place for them to log work.</p>
+    <div class="grid md:grid-cols-4 gap-7 mt-14">
+      <div class="reveal step"><span class="n">01</span><h3>Connect</h3><p>Link existing tools through secure connectors. Idvor reads events — never replaces the systems they live in.</p></div>
+      <div class="reveal step"><span class="n">02</span><h3>Observe</h3><p>Your Operational Graph builds itself from day-one data, learning how work really moves.</p></div>
+      <div class="reveal step"><span class="n">03</span><h3>Predict</h3><p>As soon as there's enough signal, your first Pearl surfaces what's about to go wrong — with reasoning attached.</p></div>
+      <div class="reveal step"><span class="n">04</span><h3>Act</h3><p>You approve, edit or decline. Every decision and its rationale is recorded — and the system sharpens.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- EFFICIENCY -->
+<section class="hairline border-t border-white/8">
+  <div class="container section grid lg:grid-cols-2 gap-14 items-center">
+    <div>
+      <p class="eyebrow reveal">Built for the cost of AI</p>
+      <h2 class="reveal mt-5 text-[clamp(28px,4vw,50px)] max-w-[15ch]">It thinks before it spends.</h2>
+      <p class="reveal mt-6 text-mist text-lg max-w-[50ch]">Six deterministic detectors run before any model call — most checks never cost a token. When one fires, governance-tiered routing sends it to the right model at the right price. It works across any LLM or provider, so you're never locked to one vendor's bill.</p>
+      <a href="platform.html" class="btn btn-ghost mt-8 reveal">How the routing works <span class="arr">→</span></a>
+    </div>
+    <div class="reveal panel">
+      <div class="qmark">Tokens spent per 100 checks</div>
+      <div class="mt-6 space-y-5">
+        <div>
+          <div class="flex justify-between text-[13px] mono text-mist"><span>A model call on every event</span><span>100</span></div>
+          <div class="mt-2 h-2.5 rounded-full bg-white/10"><div class="h-full rounded-full" style="width:100%;background:#3a3a45"></div></div>
+        </div>
+        <div>
+          <div class="flex justify-between text-[13px] mono"><span class="text-paper">Idvor — deterministic first</span><span class="text-blue">[&nbsp;XX&nbsp;]</span></div>
+          <div class="mt-2 h-2.5 rounded-full bg-white/10"><div class="h-full rounded-full" style="width:28%;background:linear-gradient(90deg,#637DFF,#8FA1FF)"></div></div>
+        </div>
+      </div>
+      <p class="mt-6 text-[12px] text-faint mono">Placeholder — measured compression rate, workload and baseline to be supplied from engineering. Bar is illustrative until the live figure lands.</p>
+    </div>
+  </div>
+</section>
+
+<!-- OVERSIGHT teaser -->
+<section class="hairline border-t border-white/8">
+  <div class="container section grid lg:grid-cols-2 gap-14 items-center">
+    <div>
+      <p class="eyebrow reveal">Oversight &amp; governance</p>
+      <h2 class="reveal mt-5 text-[clamp(28px,4vw,50px)] max-w-[18ch]">Five layers stand between an idea and a change to your data.</h2>
+      <p class="reveal mt-6 text-mist text-lg max-w-[50ch]">A system that watches how people work is high-risk under the EU AI Act. Idvor answers that with architecture, not a PDF: a human approval gate, every decision sourced, tenant isolation at the database, and governance tiers that decide what's even allowed to change anything.</p>
+      <a href="security.html" class="btn btn-ghost mt-8 reveal">See how Idvor stays accountable <span class="arr">→</span></a>
+    </div>
+    <div class="reveal flex flex-wrap gap-2.5">
+      <span class="chip lead">Human approval gate</span><span class="chip">5 enforcement layers</span><span class="chip">Every decision sourced</span><span class="chip">Tenant isolation · RLS</span><span class="chip">Built to EU AI Act high-risk</span>
+    </div>
+  </div>
+</section>
+
+<!-- DIFFERENTIATOR + CTA -->
+<section class="hairline border-t border-white/8">
+  <div class="container section">
+    <h2 class="reveal text-[clamp(26px,3.6vw,46px)] max-w-[22ch]">Software that's worth more the longer you keep it.</h2>
+    <p class="reveal mt-6 text-mist text-lg max-w-[60ch]">Most tools peak the day you buy them. Idvor's compound: every prediction, every resolution, every correction feeds back in — so the system you run at month 24 has been shaped entirely around how your organisation works. A competitor can quote against the month-one product. They can't quote against yours.</p>
+    <div class="reveal mt-16 rounded-3xl p-10 md:p-14 grid-bg relative overflow-hidden" style="background:#121219;border:1px solid rgba(255,255,255,.08)">
+      <div class="glow" style="width:360px;height:360px;background:#3B4ACB;top:-160px;right:-80px;opacity:.4"></div>
+      <div class="relative text-center max-w-[40ch] mx-auto">
+        <h2 class="text-[clamp(26px,3.4vw,42px)]">See what your operations are about to do.</h2>
+        <p class="mt-5 text-mist text-lg">Log in to pick up where you left off, or request access and we'll get your first Pearl watching your data.</p>
+        <div class="mt-9 flex flex-wrap gap-3 justify-center">
+          <a href="https://app.idvor.ai" class="btn btn-light mag">Log in to Idvor <span class="arr">→</span></a>
+          <a href="contact.html" class="btn btn-ghost">Request access</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+</div><!-- /#page -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js"></script>
+<script src="assets/app.js"></script>
+</body>
+</html>
