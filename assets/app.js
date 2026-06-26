@@ -9,7 +9,7 @@
   if(reduce) html.classList.add('reduce');
   var desktop = window.matchMedia('(min-width:1024px)').matches;
   var pointerFine = window.matchMedia('(pointer:fine)').matches;
-  var APP = 'https://app.idvor.ai';
+  var APP = 'https://app.nebbos.ai';
   var page = document.body.getAttribute('data-page') || '';
 
   /* ---------- staging guard: noindex anything that isn't production nebbos.ai ----------
