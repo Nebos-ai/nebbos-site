@@ -1,4 +1,4 @@
-/* Idvor brand tokens for the Tailwind Play CDN */
+/* Nebbos brand tokens for the Tailwind Play CDN */
 tailwind.config = {
   theme: {
     extend: {

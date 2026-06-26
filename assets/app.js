@@ -1,5 +1,5 @@
 /* ============================================================
-   Idvor — shared site script
+   Nebbos — shared site script
    ============================================================ */
 (function(){
   "use strict";
@@ -9,8 +9,23 @@
   if(reduce) html.classList.add('reduce');
   var desktop = window.matchMedia('(min-width:1024px)').matches;
   var pointerFine = window.matchMedia('(pointer:fine)').matches;
-  var APP = 'https://app.idvor.ai';
+  var APP = 'https://app.nebbos.ai';
   var page = document.body.getAttribute('data-page') || '';
+
+  /* ---------- staging guard: noindex anything that isn't production nebbos.ai ----------
+     Production = nebbos.ai / www.nebbos.ai (indexed). idvor.ai + *.up.railway.app = staging.
+     Canonical tags already point at nebbos.ai (primary signal); this is belt-and-suspenders.
+     The robust noindex for the staging deploy is a Disallow-all robots.txt on that env. */
+  (function(){
+    var host = location.hostname;
+    var isProd = host === 'nebbos.ai' || host === 'www.nebbos.ai';
+    if(!isProd){
+      var m = document.createElement('meta');
+      m.name = 'robots';
+      m.content = 'noindex, nofollow';
+      document.head.appendChild(m);
+    }
+  })();
 
   /* ---------- nav + footer (single source) ---------- */
   var NAV = [
@@ -33,7 +48,7 @@
                  '<a href="'+APP+'">Log in</a>';
     mount.innerHTML =
       '<header id="nav"><div class="nav-inner">'+
-        '<a class="brand" href="index.html" aria-label="Idvor home">'+MARK+'idvor</a>'+
+        '<a class="brand" href="index.html" aria-label="Nebbos home">'+MARK+'nebbos</a>'+
         '<nav class="nav-links">'+links+'</nav>'+
         '<div class="nav-right">'+
           '<a class="btn btn-primary btn-sm mag" href="'+APP+'">Log in <span class="arr">&rarr;</span></a>'+
@@ -50,7 +65,7 @@
       '<footer class="hairline"><div class="container">'+
         '<div class="foot-grid">'+
           '<div style="max-width:300px">'+
-            '<div class="brand" style="font-size:20px">'+MARK+'idvor</div>'+
+            '<div class="brand" style="font-size:20px">'+MARK+'nebbos</div>'+
             '<p class="lead" style="margin-top:14px;font-size:14.5px">Operations Intelligence. Built on the Operational Graph.</p>'+
           '</div>'+
           '<div class="foot-col"><h4>Product</h4>'+
@@ -63,8 +78,8 @@
             '<a href="privacy.html">Privacy</a><a href="terms.html">Terms</a></div>'+
         '</div>'+
         '<div class="foot-note">'+
-          '<span class="mono" style="max-width:58ch">idvor — a village in Vojvodina, birthplace of Mihajlo Pupin, who spent his life carrying faint signals further without losing what they held.</span>'+
-          '<span>&copy; '+yr+' Idvor</span>'+
+          '<span class="mono" style="max-width:58ch">In the spirit of Mihajlo Pupin, who spent his life carrying faint signals further without losing what they held.</span>'+
+          '<span>&copy; '+yr+' Nebbos</span>'+
         '</div>'+
       '</div></footer>';
   }
@@ -254,7 +269,7 @@
       e.preventDefault();
       var get=function(n){ var el=f.querySelector('[name="'+n+'"]'); return el?el.value.trim():''; };
       var body='Name: '+get('name')+'%0D%0ACompany: '+get('company')+'%0D%0AEmail: '+get('email')+'%0D%0A%0D%0A'+encodeURIComponent(get('message'));
-      window.location.href='mailto:hello@idvor.ai?subject='+encodeURIComponent('Idvor — access request')+'&body='+body;
+      window.location.href='mailto:hello@nebbos.ai?subject='+encodeURIComponent('Nebbos — access request')+'&body='+body;
       var note=document.getElementById('formNote'); if(note) note.style.display='block';
     });
   })();

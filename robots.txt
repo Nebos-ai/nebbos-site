@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 Disallow: /pricing.html
 
-Sitemap: https://idvor.ai/sitemap.xml
+Sitemap: https://nebbos.ai/sitemap.xml
