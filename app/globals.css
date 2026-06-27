@@ -1,0 +1,465 @@
+/*
+ * Nebbos marketing — global styles.
+ *
+ * Brand tokens come from the shared @nebbos/brand package (ADR-278 AD-3) — the
+ * single source of brand truth, consumed by BOTH Folio (@nebos/ui) and this
+ * marketing site. We import the canonical theme.css below; its :root block
+ * defines the Folio token vocabulary (--ink / --text / --action / --accent-* /
+ * --ok / --warn / --w-* …). The marketing CSS uses its OWN legacy var names
+ * (--paper, --blue, --tomato …), so the :root alias block beneath the import
+ * maps the marketing names onto the package's canonical vars. A rebrand is now
+ * a package version bump (#vX.Y.Z) — the values below follow automatically.
+ *
+ * NOTE on Tailwind: theme.css is the Folio THEME CONTRACT and its @theme blocks
+ * are Tailwind v4 at-rules. This site does NOT use Tailwind, so those @theme
+ * registrations are inert here — but the plain :root{}/[data-theme] blocks
+ * (which carry every brand primitive + semantic value) DO apply, which is all
+ * the marketing site consumes. The alias layer below is what bridges the names.
+ *
+ * Restrained, editorial, DARK aesthetic (Palantir.com inspired).
+ */
+
+@import "@nebbos/brand/theme.css";
+
+:root {
+  /* ── Marketing legacy names → @nebbos/brand canonical vars ──────────────
+     Where the package exposes a semantic equivalent we alias to it so the
+     value is owned by the package. Three stops the package's :root does not
+     expose as CSS vars (mid-slate ink-700/600, blue-deep, tomato accent) are
+     pinned to the package's canonical slate-ramp / accent hexes documented in
+     theme.css — see token-gap notes in lib/brand/tokens.ts. */
+
+  /* Ink surfaces — package primitives (founder refresh 2026-06-26 palette) */
+  --ink-900: var(--ink);           /* #0c0e12  slate-950 */
+  --ink-800: var(--ink-2);         /* #13161b  slate-900 */
+  --ink-700: #22262f;              /* slate-800 (package slate ramp; no :root var) */
+  --ink-600: #373a41;              /* slate-700 (package slate ramp; no :root var) */
+
+  /* Text */
+  --paper: var(--text);            /* #fafafa  slate-25 */
+  --mist: var(--muted-text);       /* rgba(250,250,250,.60) */
+  --faint: var(--faint);           /* package exposes --faint directly */
+
+  /* Blue / accent family */
+  --blue: var(--accent-1);         /* #637dff  Blue Aura — primary */
+  --blue-deep: #3b4470;            /* package "Muted Dark Blue" accent (theme.css note) */
+  --blue-soft: var(--accent-3);    /* #bbc7ff  pastel light indigo */
+  --sky: var(--accent-3);          /* #bbc7ff  (package retired the legacy --sky #c9d3ff) */
+  --tomato: #f6926c;               /* legacy accent — package theme has no tomato (see gap note) */
+
+  --hairline: var(--edge);         /* rgba(255,255,255,.10) translucency edge */
+  --content-max: 1160px;           /* site-specific layout constant (not a brand token) */
+
+  /* Fonts: the package's --font-sans/--font-mono are Folio stacks keyed on
+     --font-inter/--font-geist-mono. The marketing site ships DM Sans/DM Mono
+     via next/font, so it overrides these two with its own brand stacks. */
+  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink-900);
+  color: var(--paper);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+}
+
+h1 {
+  letter-spacing: -0.04em;
+  font-size: clamp(38px, 5.6vw, 76px);
+}
+
+p {
+  margin: 0;
+}
+
+:focus-visible {
+  outline: 2px solid var(--blue);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Layout primitives ---- */
+.container {
+  width: 100%;
+  max-width: var(--content-max);
+  margin-inline: auto;
+  padding-inline: 24px;
+}
+
+.section {
+  padding-block: clamp(64px, 9vw, 128px);
+}
+
+.hairline-top {
+  border-top: 1px solid var(--hairline);
+}
+
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--blue);
+  color: var(--ink-900);
+  padding: 10px 16px;
+  border-radius: 6px;
+  font-weight: 600;
+}
+.skip-link:focus {
+  left: 16px;
+  top: 16px;
+}
+
+/* ---- Type helpers ---- */
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+}
+.lead {
+  font-size: clamp(17px, 1.5vw, 21px);
+  color: var(--mist);
+  max-width: 56ch;
+}
+.mist {
+  color: var(--mist);
+}
+.faint {
+  color: var(--faint);
+}
+.mono {
+  font-family: var(--font-mono);
+}
+.text-blue {
+  color: var(--blue);
+}
+.text-tomato {
+  color: var(--tomato);
+}
+
+/* ---- Header ---- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  backdrop-filter: blur(12px);
+  background: rgba(11, 11, 16, 0.72);
+  border-bottom: 1px solid var(--hairline);
+}
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  height: 64px;
+}
+.brandmark {
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  font-size: 19px;
+}
+.nav {
+  display: none;
+  gap: 28px;
+}
+.nav__item {
+  position: relative;
+}
+.nav__trigger {
+  font-size: 15px;
+  color: var(--mist);
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  padding: 8px 0;
+}
+.nav__item:hover .nav__trigger,
+.nav__trigger:focus-visible {
+  color: var(--paper);
+}
+.nav__menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 220px;
+  background: var(--ink-800);
+  border: 1px solid var(--hairline);
+  border-radius: 12px;
+  padding: 8px;
+  display: none;
+  flex-direction: column;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+.nav__item:hover .nav__menu,
+.nav__item:focus-within .nav__menu {
+  display: flex;
+}
+.nav__menu a {
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--mist);
+}
+.nav__menu a:hover {
+  background: var(--ink-700);
+  color: var(--paper);
+}
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+@media (min-width: 1024px) {
+  .nav {
+    display: flex;
+  }
+}
+
+/* ---- Buttons ---- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 15px;
+  font-weight: 500;
+  padding: 11px 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  cursor: pointer;
+}
+.btn:hover {
+  transform: translateY(-1px);
+}
+.btn-primary {
+  background: var(--blue);
+  color: var(--ink-900);
+}
+.btn-primary:hover {
+  background: var(--blue-soft);
+}
+.btn-light {
+  background: var(--paper);
+  color: var(--ink-900);
+}
+.btn-ghost {
+  border-color: var(--hairline);
+  color: var(--paper);
+  background: transparent;
+}
+.btn-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.24);
+}
+
+/* ---- Glow accent ---- */
+.glow {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(110px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* ---- Cards / tiles ---- */
+.tile {
+  background: var(--ink-800);
+  border: 1px solid var(--hairline);
+  border-radius: 16px;
+  padding: 24px;
+}
+.tile h3 {
+  font-size: 19px;
+  margin-top: 8px;
+}
+.tile p {
+  color: var(--mist);
+  font-size: 15px;
+  margin-top: 8px;
+}
+.dep {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--blue-soft);
+}
+.panel {
+  background: var(--ink-800);
+  border: 1px solid var(--hairline);
+  border-radius: 18px;
+  padding: 28px;
+}
+.qmark {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+/* ---- Grids ---- */
+.grid {
+  display: grid;
+  gap: 16px;
+}
+.grid-2 {
+  grid-template-columns: 1fr;
+}
+.grid-3 {
+  grid-template-columns: 1fr;
+}
+.grid-4 {
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) {
+  .grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  .grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ---- Chips ---- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  font-size: 13px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  border: 1px solid var(--hairline);
+  color: var(--mist);
+  background: var(--ink-800);
+}
+.chip.lead {
+  border-color: rgba(99, 125, 255, 0.4);
+  color: var(--sky);
+}
+
+/* ---- Footer ---- */
+.site-footer {
+  border-top: 1px solid var(--hairline);
+  background: var(--ink-900);
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 32px;
+}
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: repeat(6, 1fr);
+  }
+}
+.footer-col h4 {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  margin-bottom: 14px;
+}
+.footer-col a {
+  display: block;
+  font-size: 14px;
+  color: var(--mist);
+  padding: 4px 0;
+}
+.footer-col a:hover {
+  color: var(--paper);
+}
+
+/* ---- Prose (MDX content) ---- */
+.prose {
+  max-width: 70ch;
+}
+.prose h2 {
+  font-size: clamp(24px, 3vw, 34px);
+  margin-top: 48px;
+}
+.prose h3 {
+  font-size: 21px;
+  margin-top: 32px;
+}
+.prose p {
+  color: var(--mist);
+  margin-top: 18px;
+  font-size: 17px;
+}
+.prose ul,
+.prose ol {
+  color: var(--mist);
+  margin-top: 18px;
+  padding-left: 22px;
+}
+.prose li {
+  margin-top: 8px;
+}
+.prose a {
+  color: var(--blue-soft);
+  text-decoration: underline;
+}
+.prose code {
+  font-family: var(--font-mono);
+  background: var(--ink-700);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 0.9em;
+}
+
+/* ---- Page hero spacing ---- */
+.page-hero {
+  position: relative;
+  overflow: hidden;
+  padding-top: clamp(96px, 14vw, 176px);
+  padding-bottom: clamp(48px, 8vw, 96px);
+}
+
+/* ---- Staging banner ---- */
+.staging-banner {
+  background: var(--tomato);
+  color: var(--ink-900);
+  font-family: var(--font-mono);
+  font-size: 12px;
+  text-align: center;
+  padding: 6px 12px;
+  letter-spacing: 0.04em;
+}

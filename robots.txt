@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /pricing.html
-
-Sitemap: https://nebbos.ai/sitemap.xml

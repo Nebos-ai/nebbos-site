@@ -1,0 +1,54 @@
+---
+title: Run the cheap check before the expensive one
+description: Deterministic detection runs continuously and costs nothing to watch; only a firing pattern ever spends a model call.
+date: 2026-06-15
+author: Nebbos
+---
+
+The lazy default for an AI product is to put a model call on every event. A
+ticket arrives — reason about it. A deadline moves — reason about it. It looks
+intelligent and it scales badly: most events are unremarkable, and you have just
+paid a premium to be told so.
+
+## Most events are not worth a thought
+
+An operation emits a constant stream of small signals. The overwhelming majority
+mean nothing on their own. Spending a model call on each is like hiring an analyst
+to read every line of a log. The skill isn't reading everything — it's noticing
+the handful of moments that have actually changed shape.
+
+## Six detectors that cost nothing to watch
+
+Nebbos runs deterministic detection continuously, underneath any reasoning. Six
+detectors watch the shape of work as it moves:
+
+- **Deadline risk** — a commitment drifting toward a date it won't make.
+- **Capacity crunch** — load arriving faster than a team can clear it.
+- **Velocity drop** — throughput that fell off and hasn't recovered.
+- **Handoff stall** — work passed across a boundary that nobody picked up.
+- **Absence signal** — an expected event that simply didn't happen.
+- **Cascade risk** — a single slip positioned to take others down with it.
+
+These run on patterns, thresholds and timing — arithmetic, not inference. They
+are effectively free to keep running, which is the whole point: you can afford to
+watch everything when watching is cheap.
+
+## Only a firing pattern spends a thought
+
+A model call is a deliberate act, not a reflex. It happens when a detector fires
+— when something has crossed a line worth reasoning about. At that moment the
+question is no longer *is this interesting* but *what does this mean, and what
+should the lead do about it*. That is work worth paying for, and only then do we
+pay for it.
+
+## The right model at the right price
+
+When reasoning is warranted, governance-tiered routing sends it to the model that
+fits the call: a fast model for a routine read, a stronger one where the stakes
+and ambiguity justify it. The tier is a governance decision, not a hardcoded
+vendor choice. Nebbos is model-agnostic — there is no lock-in to a single
+provider, and the routing can change as the frontier does.
+
+The effect is restraint by design. Detection is constant and cheap; reasoning is
+rare and earned. You get the early read without paying to think about everything
+that was never going to matter.
