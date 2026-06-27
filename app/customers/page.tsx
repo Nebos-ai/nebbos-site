@@ -18,7 +18,7 @@ export default function CustomersIndexPage() {
       <Section divider>
         <div className="grid grid-2">
           {stories.map((s) => (
-            <Link key={s.slug} href={`/customers/${s.slug}`} className="tile" style={{ display: "block" }}>
+            <Link key={s.slug} href={`/customers/${encodeURIComponent(s.slug)}`} className="tile" style={{ display: "block" }}>
               <div className="dep">{s.frontmatter.industry ?? s.frontmatter.company}</div>
               <h3 style={{ marginTop: 8 }}>{s.frontmatter.title}</h3>
               {s.frontmatter.description ? <p className="mist" style={{ marginTop: 8 }}>{s.frontmatter.description}</p> : null}

@@ -18,7 +18,7 @@ export default function BlogIndexPage() {
       <Section divider>
         <div style={{ display: "grid", gap: 16 }}>
           {posts.map((p) => (
-            <Link key={p.slug} href={`/blog/${p.slug}`} className="tile" style={{ display: "block" }}>
+            <Link key={p.slug} href={`/blog/${encodeURIComponent(p.slug)}`} className="tile" style={{ display: "block" }}>
               {p.frontmatter.date ? <div className="dep">{p.frontmatter.date}</div> : null}
               <h3 style={{ marginTop: 8 }}>{p.frontmatter.title}</h3>
               {p.frontmatter.description ? <p className="mist" style={{ marginTop: 8 }}>{p.frontmatter.description}</p> : null}
