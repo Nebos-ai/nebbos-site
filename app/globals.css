@@ -1,38 +1,60 @@
 /*
  * Nebbos marketing — global styles.
  *
- * TODO(AD-3): these custom properties mirror lib/brand/tokens.ts. Once
- * @nebbos/brand has a confirmed home (ADR-270), generate this block from the
- * package instead of hand-maintaining it.
+ * Brand tokens come from the shared @nebbos/brand package (ADR-278 AD-3) — the
+ * single source of brand truth, consumed by BOTH Folio (@nebos/ui) and this
+ * marketing site. We import the canonical theme.css below; its :root block
+ * defines the Folio token vocabulary (--ink / --text / --action / --accent-* /
+ * --ok / --warn / --w-* …). The marketing CSS uses its OWN legacy var names
+ * (--paper, --blue, --tomato …), so the :root alias block beneath the import
+ * maps the marketing names onto the package's canonical vars. A rebrand is now
+ * a package version bump (#vX.Y.Z) — the values below follow automatically.
  *
- * Restrained, editorial, DARK placeholder aesthetic (Palantir.com inspired).
- * Founder Figma is PENDING — keep visuals token-driven for easy re-skin.
+ * NOTE on Tailwind: theme.css is the Folio THEME CONTRACT and its @theme blocks
+ * are Tailwind v4 at-rules. This site does NOT use Tailwind, so those @theme
+ * registrations are inert here — but the plain :root{}/[data-theme] blocks
+ * (which carry every brand primitive + semantic value) DO apply, which is all
+ * the marketing site consumes. The alias layer below is what bridges the names.
+ *
+ * Restrained, editorial, DARK aesthetic (Palantir.com inspired).
  */
 
+@import "@nebbos/brand/theme.css";
+
 :root {
-  /* Ink surfaces */
-  --ink-900: #0b0b10;
-  --ink-800: #121219;
-  --ink-700: #1a1a23;
-  --ink-600: #24242f;
+  /* ── Marketing legacy names → @nebbos/brand canonical vars ──────────────
+     Where the package exposes a semantic equivalent we alias to it so the
+     value is owned by the package. Three stops the package's :root does not
+     expose as CSS vars (mid-slate ink-700/600, blue-deep, tomato accent) are
+     pinned to the package's canonical slate-ramp / accent hexes documented in
+     theme.css — see token-gap notes in lib/brand/tokens.ts. */
+
+  /* Ink surfaces — package primitives (founder refresh 2026-06-26 palette) */
+  --ink-900: var(--ink);           /* #0c0e12  slate-950 */
+  --ink-800: var(--ink-2);         /* #13161b  slate-900 */
+  --ink-700: #22262f;              /* slate-800 (package slate ramp; no :root var) */
+  --ink-600: #373a41;              /* slate-700 (package slate ramp; no :root var) */
 
   /* Text */
-  --paper: #f4f4f5;
-  --mist: #a6a6b2;
-  --faint: #6a6a77;
+  --paper: var(--text);            /* #fafafa  slate-25 */
+  --mist: var(--muted-text);       /* rgba(250,250,250,.60) */
+  --faint: var(--faint);           /* package exposes --faint directly */
 
-  /* Blue family */
-  --blue: #637dff;
-  --blue-deep: #3b4acb;
-  --blue-soft: #8fa1ff;
-  --sky: #c9d3ff;
-  --tomato: #f6926c;
+  /* Blue / accent family */
+  --blue: var(--accent-1);         /* #637dff  Blue Aura — primary */
+  --blue-deep: #3b4470;            /* package "Muted Dark Blue" accent (theme.css note) */
+  --blue-soft: var(--accent-3);    /* #bbc7ff  pastel light indigo */
+  --sky: var(--accent-3);          /* #bbc7ff  (package retired the legacy --sky #c9d3ff) */
+  --tomato: #f6926c;               /* legacy accent — package theme has no tomato (see gap note) */
 
-  --hairline: rgba(255, 255, 255, 0.08);
-  --content-max: 1160px;
+  --hairline: var(--edge);         /* rgba(255,255,255,.10) translucency edge */
+  --content-max: 1160px;           /* site-specific layout constant (not a brand token) */
 
-  --font-sans: "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Fonts: the package's --font-sans/--font-mono are Folio stacks keyed on
+     --font-inter/--font-geist-mono. The marketing site ships DM Sans/DM Mono
+     via next/font, so it overrides these two with its own brand stacks. */
+  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, SFMono-Regular, monospace;
 }
 
 *,

@@ -10,8 +10,12 @@ Runtime dependencies are intentionally minimal:
 
 - `next`, `react`, `react-dom` — the framework.
 - No CSS framework runtime (Tailwind CDN from the legacy site is **removed**).
-  Styling is hand-authored CSS in `app/globals.css`, driven by the brand tokens
-  in `lib/brand/tokens.ts`. No utility-class runtime ships to the client.
+  Styling is hand-authored CSS in `app/globals.css`, driven by the shared brand
+  tokens from `@nebbos/brand` (ADR-278 AD-3): `app/globals.css` imports the
+  package's `theme.css` and aliases the marketing var names onto its canonical
+  vars; `lib/brand/tokens.ts` re-exports the package's typed tokens. The package
+  is a git-tag dependency (no registry, no client runtime). No utility-class
+  runtime ships to the client.
 - No animation libraries. The legacy site shipped GSAP + Lenis from CDNs; the
   rebuild drops them. Re-introduce only with a measured budget if motion is
   needed after the Figma.
