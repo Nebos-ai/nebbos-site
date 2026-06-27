@@ -9,8 +9,11 @@
 [phases.setup]
 nixPkgs = ["nodejs_22"]
 
+# npm install (not npm ci): the macOS-generated lockfile omits Linux-only optional
+# WASM-fallback deps (@emnapi/runtime/core, from Next 15 native bindings), which
+# npm ci rejects on Linux. npm install resolves the per-platform optional deps.
 [phases.install]
-cmds = ["npm ci"]
+cmds = ["npm install --no-audit --no-fund"]
 
 [phases.build]
 cmds = [
