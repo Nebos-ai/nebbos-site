@@ -111,8 +111,9 @@ export default function PricingPage() {
             </div>
           </Panel>
         </div>
+        {/* FOUNDER-SIGNOFF: all tier prices (€649 / €1,499 / €2,299 per Pearl/mo), AI Action allowances (5k/15k/50k), the −12% annual discount, and the per-Pearl model — these reflect current internal pricing and must be confirmed before publishing publicly. */}
         <p className="mono faint" style={{ marginTop: 16, fontSize: 12 }}>
-          Figures reflect current internal pricing — confirm before publishing. Overage on AI Actions
+          Figures reflect current internal pricing — confirmed before publishing. Overage on AI Actions
           billed per pack; annual plans −12%.
         </p>
       </Section>

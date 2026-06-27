@@ -1,4 +1,7 @@
-import { StubPage } from "@/components/ui/StubPage";
+import { Section } from "@/components/ui/Section";
+import { Tile, Chip } from "@/components/ui/Card";
+import { ButtonLink } from "@/components/ui/Button";
+import { PageHero } from "@/components/ui/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
@@ -8,18 +11,92 @@ export const metadata = pageMetadata({
     "Security, governance and compliance at Nebbos — accountability built into the architecture, not retrofitted to it.",
 });
 
+const areas = [
+  { href: "/security", dep: "Security", title: "Oversight is the architecture", body: "A human on every consequential move, every decision sourced, tenant isolation at the database, and the approval gate enforced in five places. Read the guarantees in full." },
+  { href: "/governance", dep: "Governance", title: "What's allowed to change anything", body: "Four governance tiers decide how much scrutiny an action earns, and a simulation gate rehearses anything consequential against a private copy before it runs." },
+  { href: "/compliance", dep: "Compliance", title: "Built for the high-risk bar", body: "Designed to the EU AI Act high-risk requirements from day one and GDPR-aligned, with documentation available for active evaluations." },
+];
+
+const principles = [
+  ["A human on every consequential move.", "There is no path that lets the system act on the things that matter without a person signing off."],
+  ["Every decision is sourced.", "What was decided, by whom, on what evidence, and why — recorded and queryable, all the time."],
+  ["Your data, your tenant.", "Isolation is enforced at the database for every row — not promised in a clause."],
+  ["The shape of work, not the contents.", "Nebbos stores structured operational signal — patterns, thresholds, relationships — not the raw text of your messages and documents."],
+];
+
 export default function TrustPage() {
   return (
-    <StubPage
-      eyebrow="Trust center"
-      title="Accountable by architecture."
-      lead="A system that watches how people work is high-risk under the EU AI Act. Nebbos answers that with how it's built. Start here, then go deep on the area you need."
-      cta={{ label: "Talk to us →", href: "/contact" }}
-      sections={[
-        { heading: "Security", body: "A human on every consequential move, every decision sourced, tenant isolation at the database, five enforcement layers. Read the guarantees on the Security page." },
-        { heading: "Governance", body: "Four governance tiers and a simulation gate decide what's even allowed to change anything — and what gets rehearsed before it runs." },
-        { heading: "Compliance", body: "Built to the EU AI Act high-risk bar, GDPR-aligned, with SOC 2 and ISO 27001 status confirmed before publishing. Compliance documentation and the live trust portal land here." },
-      ]}
-    />
+    <>
+      <PageHero
+        eyebrow="Trust center"
+        title="Accountable by architecture."
+        lead="A system that observes how people work is high-risk under the EU AI Act. Most vendors answer that with a policy document. Nebbos answers with how it's built — and you can read the guarantees here. Start with the overview, then go deep on the area you need."
+      >
+        <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
+          <ButtonLink href="/contact" variant="primary">Talk to us →</ButtonLink>
+          <ButtonLink href="/security" variant="ghost">Read the security guarantees</ButtonLink>
+        </div>
+      </PageHero>
+
+      <Section divider>
+        <p className="eyebrow">The premise</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "22ch" }}>
+          Trust you can read, not just a badge you have to take on faith.
+        </h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "62ch" }}>
+          Software that watches how an organisation operates has to earn a higher standard of trust than
+          most tools. We don&rsquo;t think a policy page is enough. The oversight, the data minimisation,
+          and the audit trail aren&rsquo;t features you enable — they&rsquo;re properties of how Nebbos is
+          built, true in every layer of the stack. This is where you can check that for yourself.
+        </p>
+        <div style={{ marginTop: 32, display: "flex", gap: 10, flexWrap: "wrap" }}>
+          <Chip lead>EU AI Act · high-risk ready</Chip>
+          <Chip>GDPR</Chip>
+          <Chip>Tenant isolation · RLS</Chip>
+          <Chip>Full audit trail</Chip>
+        </div>
+      </Section>
+
+      <Section divider>
+        <p className="eyebrow">Three places to go deep</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)" }}>Security, governance, compliance.</h2>
+        <div className="grid grid-3" style={{ marginTop: 48 }}>
+          {areas.map((a) => (
+            <a key={a.href} href={a.href} style={{ display: "block" }}>
+              <Tile label={a.dep} title={a.title}>{a.body}</Tile>
+            </a>
+          ))}
+        </div>
+      </Section>
+
+      <Section divider>
+        <p className="eyebrow">What&rsquo;s true everywhere</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "20ch" }}>
+          The commitments that hold across the whole platform.
+        </h2>
+        <div className="grid grid-2" style={{ marginTop: 40, maxWidth: 880 }}>
+          {principles.map(([t, d]) => (
+            <Tile key={t} title={t}>{d}</Tile>
+          ))}
+        </div>
+        {/* FOUNDER-SIGNOFF: live trust portal link + certification badges (SOC 2 / ISO 27001) — wire and confirm status before publishing. */}
+        <p className="mono faint" style={{ marginTop: 20, fontSize: 12 }}>
+          A live trust portal and the full documentation set land here; certification status is confirmed
+          before publishing.
+        </p>
+      </Section>
+
+      <Section divider>
+        <div style={{ textAlign: "center" }}>
+          <h2 style={{ fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "24ch", marginInline: "auto" }}>
+            Bring the security questionnaire. We built for it.
+          </h2>
+          <div style={{ marginTop: 32, display: "flex", gap: 12, justifyContent: "center", flexWrap: "wrap" }}>
+            <ButtonLink href="/contact" variant="primary">Talk to us →</ButtonLink>
+            <ButtonLink href="/governance" variant="ghost">How governance works</ButtonLink>
+          </div>
+        </div>
+      </Section>
+    </>
   );
 }

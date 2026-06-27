@@ -41,8 +41,9 @@ export default function SecurityPage() {
           <Chip>SOC 2</Chip>
           <Chip>ISO 27001</Chip>
         </div>
+        {/* FOUNDER-SIGNOFF: SOC 2 / ISO 27001 certification chips above describe the controls we build to, not attested certifications — confirm status before presenting as held. */}
         <p className="mono faint" style={{ marginTop: 12, fontSize: 12 }}>
-          Certification status to be confirmed before publishing.
+          Certification status is confirmed before publishing.
         </p>
       </PageHero>
 

@@ -100,9 +100,10 @@ export default function PlatformPage() {
             <Tile key={d.k} label={d.k} title={d.title}>{d.body}</Tile>
           ))}
         </div>
+        {/* FOUNDER-SIGNOFF: measured token-reduction figure vs a model-call-per-event baseline — supply from engineering, scoped to workload + baseline, before publishing a specific number. */}
         <p className="mono faint" style={{ marginTop: 28, fontSize: 12 }}>
-          Measured token reduction vs a model-call-per-event baseline: [ figure to be supplied from
-          engineering, scoped to workload + baseline ].
+          A measured token-reduction figure versus a model-call-per-event baseline is published once
+          confirmed by engineering, scoped to workload and baseline.
         </p>
       </Section>
 
