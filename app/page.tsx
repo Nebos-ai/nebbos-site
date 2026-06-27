@@ -183,14 +183,15 @@ export default function HomePage() {
       <Section divider>
         <div className="grid grid-2" style={{ alignItems: "center", gap: 56 }}>
           <div>
-            <p className="eyebrow">Oversight &amp; governance</p>
+            <p className="eyebrow">Tideline</p>
             <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "18ch" }}>
               Five layers stand between an idea and a change to your data.
             </h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "50ch" }}>
-              A system that watches how people work is high-risk under the EU AI Act. Nebbos answers
-              that with architecture, not a PDF: a human approval gate, every decision sourced, tenant
-              isolation at the database, and governance tiers that decide what&rsquo;s even allowed to change anything.
+              Pearls do the work. <strong>Tideline</strong> is the line they never cross. A system that
+              watches how people work is high-risk under the EU AI Act, and Nebbos answers that with
+              architecture, not a PDF: a human approval gate, every decision sourced, tenant isolation
+              at the database, and tiers that decide what&rsquo;s even allowed to change anything.
             </p>
             <div style={{ marginTop: 32 }}>
               <ButtonLink href="/security" variant="ghost">

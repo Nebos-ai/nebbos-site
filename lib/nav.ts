@@ -1,4 +1,4 @@
-// Canonical information architecture (ADR-278 AD-6).
+// Canonical information architecture.
 // Drives the header nav, footer, and sitemap. Single source of truth.
 
 export type NavLink = { label: string; href: string; external?: boolean };
@@ -34,7 +34,7 @@ export const primaryNav: NavGroup[] = [
     links: [
       { label: "Overview", href: "/trust" },
       { label: "Security", href: "/security" },
-      { label: "Governance", href: "/governance" },
+      { label: "Tideline", href: "/governance" },
       { label: "Compliance", href: "/compliance" },
     ],
   },
@@ -86,7 +86,7 @@ export const footerNav: NavGroup[] = [
     links: [
       { label: "Trust center", href: "/trust" },
       { label: "Security", href: "/security" },
-      { label: "Governance", href: "/governance" },
+      { label: "Tideline", href: "/governance" },
       { label: "Compliance", href: "/compliance" },
     ],
   },

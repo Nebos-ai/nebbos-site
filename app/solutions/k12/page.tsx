@@ -11,7 +11,7 @@ export const metadata = pageMetadata({
     "Operations Intelligence for K-12 districts and schools. Nebbos surfaces the coverage gap, the missed compliance deadline and the stalled support case before they reach a family — in your own isolated, governed environment, with a human on every consequential call and a FERPA-aggregate posture by design.",
 });
 
-// K-12 is the lead vertical (ADR-278 AD-6) — most-developed industry page.
+// K-12 is the lead vertical — most-developed industry page.
 
 const pearls = [
   { dep: "Operations / Facilities", title: "Coverage & coordination", body: "Substitute coverage gaps, transport and facilities handoffs going cold, and the schedule conflict forming across buildings — surfaced to the lead while there's still time to fix it." },

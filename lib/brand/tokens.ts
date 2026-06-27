@@ -1,6 +1,6 @@
 // Nebbos marketing brand tokens.
 //
-// ADR-278 AD-3: the shared @nebbos/brand package is now the single source of
+//
 // brand truth, consumed by BOTH Folio (@nebos/ui) and this marketing site. This
 // file no longer DEFINES tokens — it RE-EXPORTS the package's typed tokens so
 // every value lives in one place (a rebrand is a package version bump).

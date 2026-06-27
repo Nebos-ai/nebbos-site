@@ -5,10 +5,10 @@ import { PageHero } from "@/components/ui/PageHero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Governance",
+  title: "Tideline",
   path: "/governance",
   description:
-    "Four governance tiers and a simulation gate: not everything earns the same scrutiny, and nothing skips it.",
+    "Tideline — the layer that keeps every Pearl accountable. Four tiers of scrutiny and a small set of red lines: not everything earns the same scrutiny, and nothing skips it.",
 });
 
 const tiers = [
@@ -22,9 +22,9 @@ export default function GovernancePage() {
   return (
     <>
       <PageHero
-        eyebrow="Layers of governance"
+        eyebrow="Tideline"
         title="Not everything earns the same scrutiny. Nothing skips it."
-        lead="Governance that treats every action the same is either too slow to live with or too loose to trust. Nebbos runs four tiers — so scrutiny matches consequence — and a small set of red lines binds every tier without exception."
+        lead="Tideline is the line your AI never crosses — the layer that keeps every Pearl accountable. Treating every action the same is either too slow to live with or too loose to trust, so Nebbos runs four tiers — scrutiny matches consequence — and a small set of red lines binds every tier without exception."
       >
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <ButtonLink href="/contact" variant="primary">Talk to us →</ButtonLink>

@@ -1,7 +1,7 @@
 /*
  * Nebbos marketing — global styles.
  *
- * Brand tokens come from the shared @nebbos/brand package (ADR-278 AD-3) — the
+ * Brand tokens come from the shared @nebbos/brand package — the
  * single source of brand truth, consumed by BOTH Folio (@nebos/ui) and this
  * marketing site. We import the canonical theme.css below; its :root block
  * defines the Folio token vocabulary (--ink / --text / --action / --accent-* /
