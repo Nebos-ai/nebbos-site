@@ -12,8 +12,8 @@ export const metadata = pageMetadata({
 });
 
 const watches = [
-  { dep: "Coverage & absence signal", title: "The gap, raised to the lead", body: "No activity where there should be, and no leave on record to explain it — flagged to the lead who owns coverage, never broadcast to peers and never surfaced as a judgement about the person." },
-  { dep: "Scoped by role", title: "Sensitive signal stays where it belongs", body: "Access is scoped by role at the data layer, so a coverage or absence signal reaches only the person whose role allows them to act on it. Discretion is a property of the architecture, not a policy people are asked to honour." },
+  { dep: "Coverage & absence signal", title: "The gap, raised to the lead", body: "No activity where there should be, and no leave on record to explain it — flagged to the lead who owns coverage, never broadcast to peers and never surfaced as a judgment about the person." },
+  { dep: "Scoped by role", title: "Sensitive signal stays where it belongs", body: "Access is scoped by role at the data layer, so a coverage or absence signal reaches only the person whose role allows them to act on it. Discretion is a property of the architecture, not a policy people are asked to honor." },
   { dep: "Asks about data, never feelings", title: "One missing data point, nothing more", body: "When Nebbos can’t account for something, the Pearl asks about the one data point it’s missing — not how anyone is doing. It reads the shape of work, not the contents of a person’s day." },
 ];
 

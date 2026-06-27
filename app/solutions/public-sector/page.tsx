@@ -12,7 +12,7 @@ export const metadata = pageMetadata({
 });
 
 const watches = [
-  { dep: "Cross-agency coordination", title: "Handoffs that don’t fall between bodies", body: "A referral or case waiting on another team or agency, going cold past its threshold — raised to the person who owns the next step, not lost in a queue across an organisational boundary." },
+  { dep: "Cross-agency coordination", title: "Handoffs that don’t fall between bodies", body: "A referral or case waiting on another team or agency, going cold past its threshold — raised to the person who owns the next step, not lost in a queue across an organizational boundary." },
   { dep: "Deadline risk", title: "Statutory dates that can’t slip", body: "Mandated response windows and service-level deadlines tracked against the work actually happening, so a date never surprises the team the week it’s due." },
   { dep: "Capacity crunch", title: "The crunch before the backlog", body: "Caseload and deadline pressure landing on the same team at once — surfaced while there’s still time to move work, not after the backlog reaches a citizen." },
   { dep: "Coordination", title: "One accountable read", body: "Service and oversight leads acting on the same live picture of how work is moving, instead of reconciling it across systems and reports by hand." },

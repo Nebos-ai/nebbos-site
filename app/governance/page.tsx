@@ -38,9 +38,9 @@ export default function GovernancePage() {
           Scrutiny that scales with consequence.
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "62ch" }}>
-          Reading a report and rewriting the rules an organisation runs on are not the same act, and
+          Reading a report and rewriting the rules an organization runs on are not the same act, and
           they shouldn&rsquo;t pass through the same gate. Nebbos sorts every action into one of four
-          tiers. A read-only exploration moves freely; a change to the rules an organisation runs on earns full review
+          tiers. A read-only exploration moves freely; a change to the rules an organization runs on earns full review
           and a complete audit record. The weight of the check matches the weight of the move — and the
           consequential calls always pause for a person.
         </p>

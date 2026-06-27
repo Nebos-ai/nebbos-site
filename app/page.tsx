@@ -48,7 +48,7 @@ const fiveQuestions = [
   {
     q: "Q5 — Learning",
     title: "What you've learned.",
-    body: "Everything observed and resolved compounds into one living memory of how your organisation actually runs — richer every week it's on.",
+    body: "Everything observed and resolved compounds into one living memory of how your organization actually runs — richer every week it's on.",
   },
 ];
 
@@ -79,7 +79,7 @@ export default function HomePage() {
           <p className="eyebrow">Operations Intelligence</p>
           <h1 style={{ marginTop: 20, maxWidth: "20ch" }}>
             An intelligent operating system that runs how your{" "}
-            <span className="text-blue">organisation runs</span>.
+            <span className="text-blue">organization runs</span>.
           </h1>
           <p className="lead" style={{ marginTop: 28, maxWidth: "52ch" }}>
             Dashboards tell you what already broke. Nebbos tells you what&rsquo;s about to — reading the
@@ -133,7 +133,7 @@ export default function HomePage() {
               re-explaining yourself.
             </p>
             <p className="mist" style={{ marginTop: 16, fontSize: 19, maxWidth: "52ch" }}>
-              Nebbos holds <strong>one living memory of how your organisation actually works</strong> —
+              Nebbos holds <strong>one living memory of how your organization actually works</strong> —
               every decision, every process, remembered in detail, so nothing is lost. Every step builds
               on the last, and today builds on yesterday. You get a system that already knows you, not a
               tool you have to brief from scratch each time.
@@ -168,7 +168,7 @@ export default function HomePage() {
         <p className="eyebrow">End to end</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)" }}>The five questions, in order.</h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
-          Every organisation runs on five questions: what&rsquo;s happening, what&rsquo;s about to go
+          Every organization runs on five questions: what&rsquo;s happening, what&rsquo;s about to go
           wrong, why, what to do, and what it just learned. Nebbos answers them in order — each built on
           the one beneath it — and shows its work as it goes.
         </p>
@@ -190,7 +190,7 @@ export default function HomePage() {
         <div className="grid grid-2" style={{ marginTop: 40, alignItems: "start", gap: 56 }}>
           <div>
             <p className="mist" style={{ fontSize: 19, maxWidth: "52ch" }}>
-              Every day, Nebbos gets smarter about <em>your</em> organisation — it learns how you work,
+              Every day, Nebbos gets smarter about <em>your</em> organization — it learns how you work,
               so the longer it runs, the more it&rsquo;s worth to you. The intelligence about your
               operation compounds for you.
             </p>

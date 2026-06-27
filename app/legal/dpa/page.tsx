@@ -22,7 +22,7 @@ export default function DpaPage() {
       <h2>Scope &amp; nature of processing</h2>
       <p>Nebbos processes structured operational signal — events, patterns, thresholds, relationships and timing — to generate predictions, explanations and proposed actions within the customer&rsquo;s tenant. [Describe categories of data subjects and data.]</p>
       <h2>Security measures</h2>
-      <p>Tenant isolation enforced at the database, role-scoped access, encryption in transit and at rest. [Reference Annex of technical and organisational measures.]</p>
+      <p>Tenant isolation enforced at the database, role-scoped access, encryption in transit and at rest. [Reference Annex of technical and organizational measures.]</p>
       <h2>Sub-processors</h2>
       <p>Current sub-processors are listed on the <a href="/legal/subprocessors">Subprocessors</a> page. [Describe notice of changes and objection rights.]</p>
       <h2>International transfers</h2>

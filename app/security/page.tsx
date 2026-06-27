@@ -61,7 +61,7 @@ export default function SecurityPage() {
       </Section>
 
       <Section divider>
-        <p className="eyebrow">Defence in depth</p>
+        <p className="eyebrow">Defense in depth</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "20ch" }}>
           The approval gate is enforced in five places.
         </h2>

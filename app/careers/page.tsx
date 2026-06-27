@@ -8,7 +8,7 @@ import { getCollection } from "@/lib/content";
 export const metadata = pageMetadata({
   title: "Careers",
   path: "/careers",
-  description: "Help build software that sharpens judgement instead of replacing it.",
+  description: "Help build software that sharpens judgment instead of replacing it.",
 });
 
 const values = [
@@ -23,8 +23,8 @@ export default function CareersPage() {
     <>
       <PageHero
         eyebrow="Careers"
-        title="Build software that sharpens judgement."
-        lead="We help organisations see what's about to happen and act with their judgement intact. If that's the kind of thing you want to build, talk to us."
+        title="Build software that sharpens judgment."
+        lead="We help organizations see what's about to happen and act with their judgment intact. If that's the kind of thing you want to build, talk to us."
       />
 
       <Section divider>

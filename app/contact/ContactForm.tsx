@@ -4,7 +4,7 @@ import { useState, type FormEvent } from "react";
 import { CONTACT_EMAIL } from "@/lib/site";
 
 /**
- * Minimal client-side contact form. Mirrors the legacy static behaviour: it
+ * Minimal client-side contact form. Mirrors the legacy static behavior: it
  * composes a mailto: so there is no backend to stand up for this pass. A real
  * form endpoint is a follow-up once the marketing CRM is wired.
  */

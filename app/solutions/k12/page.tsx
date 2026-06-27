@@ -22,7 +22,7 @@ const pearls = [
 
 const howSteps = [
   { dep: "Your own environment", title: "Your data stays yours", body: "Your operational signal lives in your own isolated, governed tenant, enforced at the database. It reads from the systems your district already runs — there's nothing new for staff to adopt." },
-  { dep: "Pearls", title: "A specialist per function", body: "One Pearl watches operations, another compliance, another student support. Each is scoped to its function, so its attention is narrow and its judgement specific — and each arrives having studied best practice for districts." },
+  { dep: "Pearls", title: "A specialist per function", body: "One Pearl watches operations, another compliance, another student support. Each is scoped to its function, so its attention is narrow and its judgment specific — and each arrives having studied best practice for districts." },
   { dep: "Governed action", title: "Nothing acts alone", body: "Before anything consequential runs, it routes through a human approval gate and a simulation gate that rehearses the move against a private copy first. Every action is sourced, logged, and reversible." },
 ];
 

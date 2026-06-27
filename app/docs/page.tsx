@@ -51,7 +51,7 @@ export default function DocsPage() {
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "60ch" }}>
           Nebbos is early, and so is this page. What&rsquo;s here is an honest overview of how the product
-          fits together — not yet the complete reference. The connector catalogue, the agent API
+          fits together — not yet the complete reference. The connector catalog, the agent API
           reference and the governance configuration guides are being written and will land here as
           they&rsquo;re ready.
         </p>

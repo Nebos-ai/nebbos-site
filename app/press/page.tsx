@@ -24,7 +24,7 @@ export default function PressPage() {
       <PageHero
         eyebrow="Press"
         title="Press & media."
-        lead="Nebbos builds Operations Intelligence — software that helps organisations see what's about to happen and act with their judgement intact. Resources for journalists are below."
+        lead="Nebbos builds Operations Intelligence — software that helps organizations see what's about to happen and act with their judgment intact. Resources for journalists are below."
       >
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <ButtonLink href="/contact" variant="primary">Contact us →</ButtonLink>

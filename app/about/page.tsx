@@ -8,11 +8,11 @@ export const metadata = pageMetadata({
   title: "About",
   path: "/about",
   description:
-    "Nebbos builds Operations Intelligence — software that helps organisations see what's about to happen and act with their judgement intact.",
+    "Nebbos builds Operations Intelligence — software that helps organizations see what's about to happen and act with their judgment intact.",
 });
 
 const principles = [
-  { dep: "Principle 01", title: "Keep the human in the loop", body: "Software should sharpen judgement, not replace it. The consequential calls stay with people, always." },
+  { dep: "Principle 01", title: "Keep the human in the loop", body: "Software should sharpen judgment, not replace it. The consequential calls stay with people, always." },
   { dep: "Principle 02", title: "Show your work", body: "A prediction without its reasoning is just a guess with confidence. Every answer comes with its evidence." },
   { dep: "Principle 03", title: "Earn trust slowly", body: "Autonomy is something a system earns by being right over time — not a switch you flip on day one." },
 ];
@@ -22,7 +22,7 @@ export default function AboutPage() {
     <>
       <PageHero
         eyebrow="About"
-        title="We help organisations see what's about to happen."
+        title="We help organizations see what's about to happen."
         lead="Most software is a record of the past. We think the more useful thing is a clear, honest read of what's coming — early enough to do something about it, and explained well enough that a person can decide what."
       />
 
@@ -37,7 +37,7 @@ export default function AboutPage() {
               losing what it held. His work let a weak voice travel further and arrive intact.
             </p>
             <p className="mist" style={{ marginTop: 16, fontSize: 18, maxWidth: "52ch" }}>
-              That&rsquo;s the idea we build on. Every organisation is full of faint operational signal
+              That&rsquo;s the idea we build on. Every organization is full of faint operational signal
               that fades before anyone acts on it. Nebbos carries that signal further — and makes sure
               the meaning survives the trip.
             </p>

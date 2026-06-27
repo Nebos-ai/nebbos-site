@@ -44,7 +44,7 @@ export default function TrustPage() {
           Trust you can read, not just a badge you have to take on faith.
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "62ch" }}>
-          Software that watches how an organisation operates has to earn a higher standard of trust than
+          Software that watches how an organization operates has to earn a higher standard of trust than
           most tools. We don&rsquo;t think a policy page is enough. The oversight, the data minimisation,
           and the audit trail aren&rsquo;t features you enable — they&rsquo;re properties of how Nebbos is
           built, true in every layer of the stack. This is where you can check that for yourself.
