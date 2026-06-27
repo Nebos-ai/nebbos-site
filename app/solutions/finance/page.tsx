@@ -14,7 +14,7 @@ export const metadata = pageMetadata({
 const watches = [
   { dep: "Cheap-first economics", title: "Most checks never incur an AI cost", body: "Six continuous checks that cost nothing to run happen before any model call. The everyday work of watching your operation is plain computation — it costs nothing to run — so a model is only reached for when reasoning genuinely needs one." },
   { dep: "Works with any provider", title: "No lock-in to one vendor’s bill", body: "Nebbos works with any AI provider — no lock-in — rather than betting your costs on a single one. Routing sends reasoning to an appropriate model for the job, so you’re never captive to one vendor’s pricing." },
-  { dep: "Compounds, not depreciates", title: "Worth more at month 24", body: "Every prediction, resolution and correction feeds back into the Operational Graph. The system you run later has been shaped around how your organisation actually works — it compounds where most tools depreciate." },
+  { dep: "Compounds, not depreciates", title: "Worth more at month 24", body: "Every prediction, resolution and correction feeds back into the Operational Graph. The system you run later has been shaped around how your organization actually works — it compounds where most tools depreciate." },
 ];
 
 export default function FinancePage() {
@@ -41,7 +41,7 @@ export default function FinancePage() {
           pricing, and the tool is worth no more in a year than the day you bought it. Nebbos is built
           the other way round: continuous checks that cost nothing to run do the everyday watching, the
           reasoning layer works with any AI provider so you&rsquo;re not locked to one vendor, and the system
-          compounds as it learns how your organisation works.
+          compounds as it learns how your organization works.
         </p>
       </Section>
 

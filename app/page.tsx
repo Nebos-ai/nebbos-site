@@ -6,21 +6,39 @@ import { APP_URL } from "@/lib/site";
 
 export const metadata = pageMetadata({ path: "/" });
 
+const plugsIn = [
+  {
+    dep: "Your stack stays",
+    title: "Plugs in. Nothing ripped out.",
+    body: "Every system you already use — CRM, finance, ticketing, comms, whatever your stack is — plugs straight in. Nothing gets ripped out and replaced. Nebbos reads from the tools your teams already work in.",
+  },
+  {
+    dep: "Your models, your call",
+    title: "Any model, any country.",
+    body: "Connect whatever AI models you want — any provider, any country, swapped whenever a better one appears. You're never locked to one, and the choice stays yours as the field moves.",
+  },
+  {
+    dep: "Straight with you",
+    title: "We tell you what's done and what's coming.",
+    body: "Where a piece is still landing, we say so — in plain words, not a marketing gap. You'll always know what works today before you commit to it.",
+  },
+];
+
 const fiveQuestions = [
   {
     q: "Q1 — Signal",
     title: "What's happening right now.",
-    body: "Connect the tools your teams already use. Nebbos turns the daily exhaust of work into one clean, normalised stream of operational events. No rip-and-replace.",
+    body: "Nebbos turns the daily exhaust of work into one clean, normalised stream of operational events — read straight from the tools your teams already use.",
   },
   {
     q: "Q2 — Prediction",
     title: "What's about to go wrong.",
-    body: "Deterministic pattern detection runs first — deadline risk, capacity crunch, stalled handoffs, cascade risk. Only when a pattern fires does Nebbos reason about it. Cheap to watch, sharp when it counts.",
+    body: "Continuous pattern detection runs first — deadline risk, capacity crunch, stalled handoffs, cascade risk. Only when a pattern fires does Nebbos reason about it. Cheap to watch, sharp when it counts.",
   },
   {
     q: "Q3 — Reasoning",
     title: "Why it's going wrong.",
-    body: "A dedicated agent for each department works through the signal and tells you the cause in plain language, with the evidence attached. You see the reasoning, not just a red flag.",
+    body: "A Pearl for each department works through the signal and tells you the cause in plain language, with the evidence attached. You see the reasoning, not just a red flag.",
   },
   {
     q: "Q4 — Action",
@@ -30,22 +48,22 @@ const fiveQuestions = [
   {
     q: "Q5 — Learning",
     title: "What you've learned.",
-    body: "Everything observed and resolved compounds into your Operational Graph — a living record of how your organisation actually runs, richer every week it's on.",
+    body: "Everything observed and resolved compounds into one living memory of how your organization actually runs — richer every week it's on.",
   },
 ];
 
 const audiences = [
   { dep: "Operations / COO", title: "Stop finding out on Friday.", body: "The stalled handoff and the slipping deadline surface while you can still move on them — not in next week's post-mortem." },
-  { dep: "Engineering / CTO", title: "Six checks before any AI cost.", body: "Works with any AI provider — no lock-in. The continuous checks run first; only a real risk reaches a model — over a dashboard and an agent interface." },
-  { dep: "Finance / CFO", title: "Worth more next year.", body: "Predictable cost on top of whatever model you run, and the rare tool that compounds instead of depreciating." },
-  { dep: "Risk / Legal", title: "It never acts alone.", body: "Five enforcement layers, every decision sourced, built to the EU AI Act's high-risk bar — not retrofitted to it." },
+  { dep: "Engineering / CTO", title: "Checks before any AI cost.", body: "Works with any AI provider — no lock-in. The continuous checks run first; only a real risk reaches a model." },
+  { dep: "Finance / CFO", title: "Worth more next year.", body: "The same power for a fraction of what AI costs anyone else — the hard, expensive part is already built. And the rare tool that compounds instead of depreciating." },
+  { dep: "Risk / Legal", title: "It never acts alone.", body: "Tideline stands between an idea and a change to your data — every decision sourced, built to the EU AI Act's high-risk bar, not retrofitted to it." },
   { dep: "Department leads", title: "A colleague who did the homework.", body: "Pearl arrives caught up and asks why the date moved — never how you feel. One agent per team." },
   { dep: "The whole company", title: "One source of operational truth.", body: "Everyone acting on the same live read of how the work is actually moving — not five conflicting dashboards." },
 ];
 
 const steps = [
   { n: "01", title: "Connect", body: "Link existing tools through secure connectors. Nebbos reads events — never replaces the systems they live in." },
-  { n: "02", title: "Observe", body: "Your Operational Graph builds itself from day-one data, learning how work really moves." },
+  { n: "02", title: "Observe", body: "Your living memory builds itself from day-one data, learning how work really moves." },
   { n: "03", title: "Predict", body: "As soon as there's enough signal, your first Pearl surfaces what's about to go wrong — with reasoning attached." },
   { n: "04", title: "Act", body: "You approve, edit or decline. Every decision and its rationale is recorded — and the system sharpens." },
 ];
@@ -59,14 +77,14 @@ export default function HomePage() {
         <div className="glow" style={{ width: 420, height: 420, background: "var(--blue)", bottom: -220, left: -140, opacity: 0.35 }} aria-hidden />
         <div className="container" style={{ position: "relative" }}>
           <p className="eyebrow">Operations Intelligence</p>
-          <h1 style={{ marginTop: 20, maxWidth: "19ch" }}>
-            Dashboards tell you what already broke. Nebbos tells you what&rsquo;s{" "}
-            <span className="text-blue">about to</span>.
+          <h1 style={{ marginTop: 20, maxWidth: "20ch" }}>
+            An intelligent operating system that runs how your{" "}
+            <span className="text-blue">organization runs</span>.
           </h1>
-          <p className="lead" style={{ marginTop: 28, maxWidth: "50ch" }}>
-            Your tools already emit the early signs of how your company really runs. Nebbos reads
-            that signal as it happens — the stalled handoff, the slipping deadline, the capacity
-            crunch forming three teams away — and puts the fix in front of you while you can still use it.
+          <p className="lead" style={{ marginTop: 28, maxWidth: "52ch" }}>
+            Dashboards tell you what already broke. Nebbos tells you what&rsquo;s about to — reading the
+            signal your operation emits, predicting where it&rsquo;s heading, and putting the fix in
+            front of you while you can still use it.
           </p>
           <p className="mono" style={{ marginTop: 28, color: "var(--mist)", letterSpacing: "0.04em", fontSize: 14 }}>
             Signal → Prediction → Reasoning → Action → Learning
@@ -82,29 +100,128 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* THESIS */}
+      {/* PLUGS IN — nothing replaced */}
       <Section divider>
-        <p className="eyebrow">The idea</p>
-        <h2 style={{ marginTop: 20, fontSize: "clamp(30px,4.4vw,56px)", maxWidth: "16ch" }}>
-          Most software remembers. <span className="text-blue">Nebbos predicts.</span>
+        <p className="eyebrow">Plugs in</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "20ch" }}>
+          It sits on top of what you already run.
         </h2>
-        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
-          Every organisation runs on five questions: what&rsquo;s happening, what&rsquo;s about to
-          go wrong, why, what to do, and what it just learned. Nebbos answers them in order — each
-          built on the one beneath it — and shows its work as it goes.
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "58ch" }}>
+          Nebbos isn&rsquo;t another system to migrate to. It&rsquo;s the layer that reads everything
+          you already have — keep your tools, keep your models, keep your data where it is.
         </p>
+        <div className="grid grid-3" style={{ marginTop: 48 }}>
+          {plugsIn.map((p) => (
+            <Tile key={p.dep} label={p.dep} title={p.title}>
+              {p.body}
+            </Tile>
+          ))}
+        </div>
+      </Section>
+
+      {/* LIVING MEMORY — the differentiator */}
+      <Section divider>
+        <div className="grid grid-2" style={{ alignItems: "center", gap: 56 }}>
+          <div>
+            <p className="eyebrow">The living memory</p>
+            <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "18ch" }}>
+              It knows how you work — so it doesn&rsquo;t drift.
+            </h2>
+            <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "52ch" }}>
+              Hand a raw AI a job with more than a few steps and it starts from nothing every time — no
+              memory of the last step, no grounding in how you work. So it drifts, and you end up
+              re-explaining yourself.
+            </p>
+            <p className="mist" style={{ marginTop: 16, fontSize: 19, maxWidth: "52ch" }}>
+              Nebbos holds <strong>one living memory of how your organization actually works</strong> —
+              every decision, every process, remembered in detail, so nothing is lost. Every step builds
+              on the last, and today builds on yesterday. You get a system that already knows you, not a
+              tool you have to brief from scratch each time.
+            </p>
+            <div style={{ marginTop: 32 }}>
+              <ButtonLink href="/platform" variant="ghost">
+                How the platform works →
+              </ButtonLink>
+            </div>
+          </div>
+          <Panel label="One living memory">
+            <div className="grid grid-2" style={{ marginTop: 16, gap: 16 }}>
+              {[
+                ["Every decision", "what was chosen, and why"],
+                ["Every process", "how work actually moves here"],
+                ["Through time", "today builds on yesterday"],
+                ["Nothing lost", "no starting from zero again"],
+              ].map(([t, d]) => (
+                <div key={t} style={{ borderLeft: "1px solid var(--hairline)", paddingLeft: 14 }}>
+                  <b style={{ color: "var(--paper)" }}>{t}</b>
+                  <br />
+                  <span className="mist" style={{ fontSize: 15 }}>{d}</span>
+                </div>
+              ))}
+            </div>
+          </Panel>
+        </div>
       </Section>
 
       {/* FIVE QUESTIONS */}
       <Section divider>
         <p className="eyebrow">End to end</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)" }}>The five questions, in order.</h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
+          Every organization runs on five questions: what&rsquo;s happening, what&rsquo;s about to go
+          wrong, why, what to do, and what it just learned. Nebbos answers them in order — each built on
+          the one beneath it — and shows its work as it goes.
+        </p>
         <div className="grid grid-3" style={{ marginTop: 48 }}>
           {fiveQuestions.map((s) => (
             <Tile key={s.q} label={s.q} title={s.title}>
               {s.body}
             </Tile>
           ))}
+        </div>
+      </Section>
+
+      {/* INTELLIGENCE THAT COMPOUNDS — your data stays yours */}
+      <Section divider>
+        <p className="eyebrow">Your data stays yours</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(30px,4.6vw,58px)", maxWidth: "16ch" }}>
+          Intelligence that <span className="text-blue">compounds</span>.
+        </h2>
+        <div className="grid grid-2" style={{ marginTop: 40, alignItems: "start", gap: 56 }}>
+          <div>
+            <p className="mist" style={{ fontSize: 19, maxWidth: "52ch" }}>
+              Every day, Nebbos gets smarter about <em>your</em> organization — it learns how you work,
+              so the longer it runs, the more it&rsquo;s worth to you. The intelligence about your
+              operation compounds for you.
+            </p>
+            <p className="mist" style={{ marginTop: 16, fontSize: 19, maxWidth: "52ch" }}>
+              Your data never does. It stays sealed to you — never mixed with another customer&rsquo;s,
+              never used to serve or train for anyone else. The system gets sharper at running your
+              business without your information ever becoming the fuel for someone else&rsquo;s answer.
+            </p>
+            <div style={{ marginTop: 32 }}>
+              <ButtonLink href="/security" variant="ghost">
+                See how your data stays sealed →
+              </ButtonLink>
+            </div>
+          </div>
+          <div>
+            <p className="eyebrow">Tideline</p>
+            <p className="mist" style={{ marginTop: 16, fontSize: 18, maxWidth: "50ch" }}>
+              Pearls do the work. <strong>Tideline</strong> is the line they never cross. Sealing
+              isn&rsquo;t a setting you can forget to turn on — it&rsquo;s enforced in the foundation, by
+              the database itself. Every change is written to a record that can&rsquo;t be altered, and
+              you can stop the system at any moment.
+            </p>
+            <div style={{ marginTop: 24, display: "flex", flexWrap: "wrap", gap: 10 }}>
+              <Chip lead>Sealed to you</Chip>
+              <Chip>Never mixed with another customer&rsquo;s</Chip>
+              <Chip>Never used to serve anyone else</Chip>
+              <Chip>Enforced by the database</Chip>
+              <Chip>An unalterable record of every change</Chip>
+              <Chip>You can stop it anytime</Chip>
+            </div>
+          </div>
         </div>
       </Section>
 
@@ -115,7 +232,7 @@ export default function HomePage() {
           Everyone in the company needs something different.
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "56ch" }}>
-          One signal, read five ways. The same Operational Graph answers the question each person is actually asking.
+          One signal, read five ways. The same living memory answers the question each person is actually asking.
         </p>
         <div className="grid grid-3" style={{ marginTop: 48 }}>
           {audiences.map((a) => (
@@ -179,32 +296,29 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* OVERSIGHT */}
+      {/* COST */}
       <Section divider>
         <div className="grid grid-2" style={{ alignItems: "center", gap: 56 }}>
           <div>
-            <p className="eyebrow">Tideline</p>
+            <p className="eyebrow">The cost story</p>
             <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "18ch" }}>
-              Five layers stand between an idea and a change to your data.
+              The same power, for a fraction of what AI costs anyone else.
             </h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "50ch" }}>
-              Pearls do the work. <strong>Tideline</strong> is the line they never cross. A system that
-              watches how people work is high-risk under the EU AI Act, and Nebbos answers that with
-              architecture, not a PDF: a human approval gate, every decision sourced, tenant isolation
-              at the database, and tiers that decide what&rsquo;s even allowed to change anything.
+              The hard, expensive part is already built. The continuous checks watch for free and only a
+              real problem reaches a model — so you pay for problems solved, not events processed.
             </p>
             <div style={{ marginTop: 32 }}>
-              <ButtonLink href="/security" variant="ghost">
-                See how Nebbos stays accountable →
+              <ButtonLink href="/pricing" variant="ghost">
+                See pricing →
               </ButtonLink>
             </div>
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
-            <Chip lead>Human approval gate</Chip>
-            <Chip>5 enforcement layers</Chip>
-            <Chip>Every decision sourced</Chip>
-            <Chip>Tenant isolation · Access scoped by role</Chip>
-            <Chip>Built to EU AI Act high-risk</Chip>
+            <Chip lead>The expensive part is built</Chip>
+            <Chip>Watch for free</Chip>
+            <Chip>Pay for problems, not events</Chip>
+            <Chip>Compounds instead of depreciating</Chip>
           </div>
         </div>
       </Section>

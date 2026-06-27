@@ -104,7 +104,7 @@ export default function PricingPage() {
             </h3>
             <p className="mist" style={{ marginTop: 8, maxWidth: "60ch" }}>
               Volume pricing across Pearls, extended audit retention, regulator-export support, and
-              security review. Built for organisations adopting Nebbos org-wide.
+              security review. Built for organizations adopting Nebbos org-wide.
             </p>
             <div style={{ marginTop: 16 }}>
               <ButtonLink href="/contact" variant="light">Talk to us →</ButtonLink>

@@ -71,14 +71,14 @@ export default function IntegrationsPage() {
         </p>
       </Section>
 
-      {/* CONNECTOR CATALOGUE */}
+      {/* CONNECTOR Catalog */}
       <Section divider>
-        <p className="eyebrow">Connector catalogue</p>
+        <p className="eyebrow">Connector catalog</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "22ch" }}>
-          The named catalogue lands with the founder content pass.
+          The named catalog lands with the founder content pass.
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "60ch" }}>
-          The full, named connector catalogue and its setup guides are being finalised and will land
+          The full, named connector catalog and its setup guides are being finalised and will land
           here with the founder content pass. We&rsquo;d rather publish the list once it&rsquo;s accurate than
           name integrations we haven&rsquo;t confirmed.
         </p>

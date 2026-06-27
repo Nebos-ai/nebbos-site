@@ -15,7 +15,7 @@ const steps = [
   { k: "01", phase: "Connect", title: "Link the stack you already run", body: "Existing tools connect through secure connectors. Nebbos reads the events they already emit — tasks, messages, calendars, handoffs, tickets, deploys — and never replaces the systems they live in. There's nothing new for teams to log into." },
   { k: "02", phase: "Observe", title: "The graph builds itself", body: "From day-one data, the Operational Graph maps how work actually moves between teams — who depends on whom, where it stalls, how long a handoff usually takes. It holds the shape of work: patterns, thresholds, relationships and timing, not the contents of your messages." },
   { k: "03", phase: "Predict", title: "Your first Pearl surfaces the risk", body: "Once there's enough signal, deterministic detectors run continuously against the graph. When one fires, the Pearl for that department reasons about it and surfaces what's about to go wrong — in plain language, with a confidence score and a \"why\" you can open." },
-  { k: "04", phase: "Act", title: "You decide; the system learns", body: "Pearl proposes the next best action. You approve, edit or decline — and anything consequential pauses for a person. Every decision and its rationale is written back to the graph, so the system sharpens around how your organisation actually works." },
+  { k: "04", phase: "Act", title: "You decide; the system learns", body: "Pearl proposes the next best action. You approve, edit or decline — and anything consequential pauses for a person. Every decision and its rationale is written back to the graph, so the system sharpens around how your organization actually works." },
 ];
 
 export default function HowItWorksPage() {

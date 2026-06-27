@@ -82,7 +82,7 @@ export default function PearlPage() {
         <p className="eyebrow">One per department</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)" }}>A Pearl that knows your function.</h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "54ch" }}>
-          Each Pearl is scoped to one department, so its attention is narrow and its judgement is
+          Each Pearl is scoped to one department, so its attention is narrow and its judgment is
           specific. Add Pearls as you grow — they share what they learn where it&rsquo;s relevant.
         </p>
         <div className="grid grid-4" style={{ marginTop: 48 }}>

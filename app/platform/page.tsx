@@ -16,7 +16,7 @@ const questions = [
   { k: "Q2", phase: "Prediction", title: "What's about to go wrong", body: "Deterministic detectors run continuously and cost nothing to watch. Only when one fires does Nebbos spend a model call to reason about it — so prediction is both cheap and sharp." },
   { k: "Q3", phase: "Reasoning", title: "Why it's going wrong", body: "A Pearl — one per department — works through the firing pattern against the graph and returns the cause in plain language with the evidence attached. Each prediction carries a confidence score and a \"why\" you can open." },
   { k: "Q4", phase: "Action", title: "What to do about it", body: "Pearl proposes the next best action. Anything consequential pauses for a human checkpoint — autonomy is earned over time, bounded to what's been proven, and always reversible." },
-  { k: "Q5", phase: "Learning", title: "What you've learned", body: "Every prediction, resolution and correction is written back to the Operational Graph. The system you run in month 24 has been shaped entirely around how your organisation works." },
+  { k: "Q5", phase: "Learning", title: "What you've learned", body: "Every prediction, resolution and correction is written back to the Operational Graph. The system you run in month 24 has been shaped entirely around how your organization works." },
 ];
 
 const detectors = [
@@ -34,7 +34,7 @@ export default function PlatformPage() {
       <PageHero
         eyebrow="The platform"
         title="One platform. Five questions. One source of operational truth."
-        lead="Nebbos watches the work your organisation already does and turns it into foresight — predicting where things break, explaining why, and acting under your oversight. It all runs on one thing: the Operational Graph."
+        lead="Nebbos watches the work your organization already does and turns it into foresight — predicting where things break, explaining why, and acting under your oversight. It all runs on one thing: the Operational Graph."
       >
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
           <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
@@ -49,7 +49,7 @@ export default function PlatformPage() {
             <p className="eyebrow">The mechanism</p>
             <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)", maxWidth: "16ch" }}>The Operational Graph.</h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 18, maxWidth: "52ch" }}>
-              Underneath every answer is a living map of how your organisation actually operates — who
+              Underneath every answer is a living map of how your organization actually operates — who
               depends on whom, how work moves between teams, where it tends to stall. Nebbos builds it
               from the events your tools already emit, keeps it current as the work changes, and reasons over it.
             </p>
