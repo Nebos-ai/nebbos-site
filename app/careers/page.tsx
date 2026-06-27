@@ -42,7 +42,7 @@ export default function CareersPage() {
         <h2 style={{ marginTop: 20, fontSize: "clamp(26px,3.6vw,44px)" }}>Roles</h2>
         <div style={{ marginTop: 40, display: "grid", gap: 16 }}>
           {roles.map((r) => (
-            <Link key={r.slug} href={`/careers/${r.slug}`} className="tile" style={{ display: "block" }}>
+            <Link key={r.slug} href={`/careers/${encodeURIComponent(r.slug)}`} className="tile" style={{ display: "block" }}>
               <div className="dep">{r.frontmatter.team} · {r.frontmatter.location}</div>
               <h3 style={{ marginTop: 8 }}>{r.frontmatter.title}</h3>
               {r.frontmatter.description ? <p className="mist" style={{ marginTop: 8 }}>{r.frontmatter.description}</p> : null}
