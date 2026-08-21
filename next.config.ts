@@ -10,15 +10,21 @@ const nextConfig: NextConfig = {
   },
   // Hidden client-facing artifacts (briefs, decks, one-pagers).
   //
-  // /brief/delta is the Nebbos brief for Delta Holding (NEB-26-02 Rev 19).
-  // Served from /public/nebbos-delta-brief.html. Not linked from public nav;
-  // noindex,nofollow inside the file's own <meta>. Share via the exact URL only.
+  // URL slugs are CATEGORICAL, not client-named, so the URL itself doesn't
+  // leak the deal target if a recipient shares a tab or email preview. The
+  // underlying file name (nebbos-<slug>-brief.html) is internal only.
   //
-  // Future: swap to /brief/:token/nebbos-delta-brief.html when the SALOS
-  // per-recipient token flow lands (see nebbos-delta-brief/HOSTING-AND-TRACKING.md).
+  //   /brief/financial   → financial-services brief (currently the NEB-26-02
+  //                        Rev 19 file authored for one specific holding co)
+  //
+  // Not linked from public nav; noindex,nofollow inside each file's own
+  // <meta>. Share via the exact URL only.
+  //
+  // Future: swap to /brief/:token/... when the SALOS per-recipient token
+  // flow lands (see HOSTING-AND-TRACKING.md in the brief's source folder).
   async rewrites() {
     return [
-      { source: "/brief/delta", destination: "/nebbos-delta-brief.html" },
+      { source: "/brief/financial", destination: "/nebbos-delta-brief.html" },
     ];
   },
 };
