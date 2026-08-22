@@ -1,8 +1,26 @@
 {
   "extends": ["next/core-web-vitals", "next/typescript", "plugin:jsx-a11y/recommended"],
-  "plugins": ["jsx-a11y"],
+  "plugins": ["jsx-a11y", "unicorn"],
   "rules": {
-    "jsx-a11y/anchor-is-valid": "warn"
+    "jsx-a11y/anchor-is-valid": "warn",
+    "unicorn/filename-case": [
+      "warn",
+      {
+        "cases": { "kebabCase": true, "pascalCase": false },
+        "ignore": [
+          "^\\[.*\\]$",
+          "^page\\.tsx?$",
+          "^layout\\.tsx?$",
+          "^loading\\.tsx?$",
+          "^error\\.tsx?$",
+          "^not-found\\.tsx?$",
+          "^route\\.tsx?$",
+          "^middleware\\.tsx?$",
+          "^default\\.tsx?$",
+          "^template\\.tsx?$"
+        ]
+      }
+    ]
   },
   "ignorePatterns": ["legacy-static/**", ".next/**", "node_modules/**"]
 }
