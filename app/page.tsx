@@ -6,29 +6,53 @@ import { APP_URL } from "@/lib/site";
 
 export const metadata = pageMetadata({ path: "/" });
 
-const plugsIn = [
+const rawProblems = [
   {
-    dep: "Your stack stays",
-    title: "Plugs in. Nothing ripped out.",
-    body: "Every system you already use — CRM, finance, ticketing, comms, whatever your stack is — plugs straight in. Nothing gets ripped out and replaced. Nebbos reads from the tools your teams already work in.",
+    dep: "Stateless",
+    title: "It forgets everything.",
+    body: "A raw model call starts from nothing every time — no memory of the last call, no grounding in how you work. So it drifts, and you end up re-explaining yourself on every request.",
   },
   {
-    dep: "Your models, your call",
-    title: "Any model, any country.",
-    body: "Connect whatever AI models you want — any provider, any country, swapped whenever a better one appears. You're never locked to one, and the choice stays yours as the field moves.",
+    dep: "Ungoverned",
+    title: "Nothing watches it.",
+    body: "No record of what it decided, no control over what it can touch, no stop button. When something goes wrong you find out after, with nothing to point to.",
   },
   {
-    dep: "Straight with you",
-    title: "We tell you what's done and what's coming.",
-    body: "Where a piece is still landing, we say so — in plain words, not a marketing gap. You'll always know what works today before you commit to it.",
+    dep: "Leaky",
+    title: "Your data walks out the door.",
+    body: "Whatever you send goes into the provider — where it can be mixed with everyone else's and used to train the next answer. Your private context becomes someone else's fuel.",
   },
+];
+
+const fixes = [
+  {
+    dep: "Memory",
+    title: "It remembers across every call.",
+    body: "Nebbos holds one living memory of how your operation actually works. Every call builds on the last; today builds on yesterday. The intelligence about your operation compounds for you — your data never does.",
+  },
+  {
+    dep: "Governance · Tideline",
+    title: "Every call controlled and on the record.",
+    body: "Tideline is the line every call has to stay inside. Each one is checked, written to a record that can't be altered, and stoppable — a person can halt the system at any moment. Pearls do the work; Tideline is the line they never cross.",
+  },
+  {
+    dep: "Sovereignty",
+    title: "Your data stays sealed to you.",
+    body: "Any provider, any country, swapped whenever a better one appears — no lock-in. Your data is never mixed with another customer's and never used to serve or train for anyone else. It stays yours, end to end.",
+  },
+];
+
+const buildOn = [
+  { dep: "Any model", title: "Bring whatever you connect to today.", body: "Point Nebbos at any provider or any country, swap whenever you want. The same memory, governance and sovereignty apply no matter what's behind the call — you're never locked to one." },
+  { dep: "Every customer sealed", title: "Multi-tenant sovereignty, built in.", body: "Ship to your own customers on a foundation that keeps each one's data sealed and isolated — never mixed, never used to train for the next. The hard part of trustworthy AI is already poured." },
+  { dep: "Governed by default", title: "An audit trail and a stop button, for free.", body: "Every call your product makes arrives controlled, recorded on an unalterable trail, and stoppable. You ship the feature; the accountability comes with the foundation." },
 ];
 
 const fiveQuestions = [
   {
     q: "Q1 — Signal",
     title: "What's happening right now.",
-    body: "Nebbos turns the daily exhaust of work into one clean, normalised stream of operational events — read straight from the tools your teams already use.",
+    body: "Nebbos turns the daily exhaust of work into one clean, normalized stream of operational events — read straight from the tools your teams already use.",
   },
   {
     q: "Q2 — Prediction",
@@ -52,42 +76,43 @@ const fiveQuestions = [
   },
 ];
 
-const audiences = [
-  { dep: "Operations / COO", title: "Stop finding out on Friday.", body: "The stalled handoff and the slipping deadline surface while you can still move on them — not in next week's post-mortem." },
-  { dep: "Engineering / CTO", title: "Checks before any AI cost.", body: "Works with any AI provider — no lock-in. The continuous checks run first; only a real risk reaches a model." },
-  { dep: "Finance / CFO", title: "Worth more next year.", body: "The same power for a fraction of what AI costs anyone else — the hard, expensive part is already built. And the rare tool that compounds instead of depreciating." },
-  { dep: "Risk / Legal", title: "It never acts alone.", body: "Tideline stands between an idea and a change to your data — every decision sourced, built to the EU AI Act's high-risk bar, not retrofitted to it." },
-  { dep: "Department leads", title: "A colleague who did the homework.", body: "Pearl arrives caught up and asks why the date moved — never how you feel. One agent per team." },
-  { dep: "The whole company", title: "One source of operational truth.", body: "Everyone acting on the same live read of how the work is actually moving — not five conflicting dashboards." },
+const industries = [
+  { href: "/solutions/k12", dep: "Example", title: "K-12 Education", body: "Districts surface the coverage gap and the missed deadline before they reach a family." },
+  { href: "/solutions/healthcare", dep: "Example", title: "Healthcare", body: "Coordination across shifts, handoffs and compliance, with the data handling a clinical setting demands." },
+  { href: "/solutions/financial-services", dep: "Example", title: "Financial Services", body: "Operational risk and control workflows, every decision sourced and audit-ready." },
+  { href: "/solutions/public-sector", dep: "Example", title: "Public Sector", body: "Accountable, sourced, reversible — built for the transparency public bodies are held to." },
+  { href: "/solutions/manufacturing", dep: "Example", title: "Manufacturing", body: "Cross-team handoffs and capacity crunch across production and supply." },
+  { href: "/solutions", dep: "And more", title: "Your industry too", body: "If your work runs on coordination — and any work that touches AI does — the foundation fits. See every industry and function." },
 ];
 
 const steps = [
-  { n: "01", title: "Connect", body: "Link existing tools through secure connectors. Nebbos reads events — never replaces the systems they live in." },
-  { n: "02", title: "Observe", body: "Your living memory builds itself from day-one data, learning how work really moves." },
-  { n: "03", title: "Predict", body: "As soon as there's enough signal, your first Pearl surfaces what's about to go wrong — with reasoning attached." },
-  { n: "04", title: "Act", body: "You approve, edit or decline. Every decision and its rationale is recorded — and the system sharpens." },
+  { n: "01", title: "Connect", body: "Point Nebbos at your models and link the tools you already run through secure connectors. Nothing gets ripped out." },
+  { n: "02", title: "Remember", body: "Your living memory builds itself from day-one data, so every call is grounded in how your operation actually works." },
+  { n: "03", title: "Govern", body: "Every call runs inside Tideline — controlled, recorded on an unalterable trail, stoppable, and sealed to you." },
+  { n: "04", title: "Compound", body: "The longer it runs, the sharper it gets about your operation. Intelligence compounds for you; your data never does." },
 ];
 
 export default function HomePage() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO — the message leads: Intelligence that compounds */}
       <section className="page-hero">
         <div className="glow" style={{ width: 520, height: 520, background: "var(--blue-deep)", top: -180, right: -120 }} aria-hidden />
         <div className="glow" style={{ width: 420, height: 420, background: "var(--blue)", bottom: -220, left: -140, opacity: 0.35 }} aria-hidden />
         <div className="container" style={{ position: "relative" }}>
-          <p className="eyebrow">Operations Intelligence</p>
+          <p className="eyebrow">The foundation for AI you can trust</p>
           <h1 style={{ marginTop: 20, maxWidth: "20ch" }}>
-            An intelligent operating system that runs how your{" "}
-            <span className="text-blue">organization runs</span>.
+            Intelligence that <span className="text-blue">compounds</span>. Your data never does.
           </h1>
-          <p className="lead" style={{ marginTop: 28, maxWidth: "52ch" }}>
-            Dashboards tell you what already broke. Nebbos tells you what&rsquo;s about to — reading the
-            signal your operation emits, predicting where it&rsquo;s heading, and putting the fix in
-            front of you while you can still use it.
+          <p className="lead" style={{ marginTop: 28, maxWidth: "58ch" }}>
+            Nebbos sits between your app and any AI model, so every call gains three things a raw model
+            call never has: <strong>memory</strong>, so the intelligence about your operation compounds
+            for you; <strong>governance</strong> — Tideline keeps every call in bounds, on the record, and
+            stoppable; and <strong>sovereignty</strong>, so your data stays sealed, on any provider, with
+            no lock-in. For anyone connecting to any model, in any industry.
           </p>
           <p className="mono" style={{ marginTop: 28, color: "var(--mist)", letterSpacing: "0.04em", fontSize: 14 }}>
-            Signal → Prediction → Reasoning → Action → Learning
+            Memory → Governance → Sovereignty · any model, any provider
           </p>
           <div style={{ marginTop: 32, display: "flex", flexWrap: "wrap", gap: 12 }}>
             <ButtonLink href="/demo" variant="primary">
@@ -100,20 +125,65 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* PLUGS IN — nothing replaced */}
+      {/* TWO PATHS — both flow from compounding intelligence */}
       <Section divider>
-        <p className="eyebrow">Plugs in</p>
-        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "20ch" }}>
-          It sits on top of what you already run.
+        <p className="eyebrow">One foundation, two ways to use it</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "24ch" }}>
+          Run your organization on AI — or build your AI on Nebbos.
+        </h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
+          Both start from the same idea: intelligence that compounds for you while your data stays
+          sealed. Underneath, the same memory, governance and sovereignty apply to every call. On top,
+          two paths.
+        </p>
+        <div className="grid grid-2" style={{ marginTop: 48, gap: 40 }}>
+          <Tile label="Run your organization on AI" title="AI running your operations">
+            Our flagship application, Pearls, watches how your organization actually runs and tells you
+            what&rsquo;s about to go wrong, why, and what to do — under your oversight. One specialist
+            agent per department, getting sharper about your operation every day.
+          </Tile>
+          <Tile label="Build your AI on Nebbos" title="Your product on a foundation that holds">
+            Building your own AI product? Put it on a foundation that remembers across calls, governs
+            every one, and keeps each of your customers&rsquo; data sovereign — any model, any provider.
+            Ship the feature; the hard part is already poured.
+          </Tile>
+        </div>
+      </Section>
+
+      {/* THE PROBLEM — raw LLM calls are stateless, ungoverned, leaky */}
+      <Section divider>
+        <p className="eyebrow">The problem with raw AI</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "22ch" }}>
+          A call straight to a model leaves you exposed three ways.
         </h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "58ch" }}>
-          Nebbos isn&rsquo;t another system to migrate to. It&rsquo;s the layer that reads everything
-          you already have — keep your tools, keep your models, keep your data where it is.
+          It doesn&rsquo;t matter which provider you connect to or what you&rsquo;re building on top of
+          it. The moment your app talks to a model directly, you inherit all three of these at once.
         </p>
         <div className="grid grid-3" style={{ marginTop: 48 }}>
-          {plugsIn.map((p) => (
+          {rawProblems.map((p) => (
             <Tile key={p.dep} label={p.dep} title={p.title}>
               {p.body}
+            </Tile>
+          ))}
+        </div>
+      </Section>
+
+      {/* THE FIX — memory, governance (Tideline), sovereignty, on every call */}
+      <Section divider>
+        <p className="eyebrow">What Nebbos adds</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "20ch" }}>
+          One layer that fixes all three — on every call.
+        </h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "58ch" }}>
+          Put Nebbos between your app and the models. Every call you make passes through it and comes
+          back with memory, governance and sovereignty already attached — nothing for you to wire up
+          each time.
+        </p>
+        <div className="grid grid-3" style={{ marginTop: 48 }}>
+          {fixes.map((f) => (
+            <Tile key={f.dep} label={f.dep} title={f.title}>
+              {f.body}
             </Tile>
           ))}
         </div>
@@ -128,7 +198,7 @@ export default function HomePage() {
               It knows how you work — so it doesn&rsquo;t drift.
             </h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "52ch" }}>
-              Hand a raw AI a job with more than a few steps and it starts from nothing every time — no
+              Hand a raw model a job with more than a few steps and it starts from nothing every time — no
               memory of the last step, no grounding in how you work. So it drifts, and you end up
               re-explaining yourself.
             </p>
@@ -163,25 +233,7 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* FIVE QUESTIONS */}
-      <Section divider>
-        <p className="eyebrow">End to end</p>
-        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)" }}>The five questions, in order.</h2>
-        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
-          Every organization runs on five questions: what&rsquo;s happening, what&rsquo;s about to go
-          wrong, why, what to do, and what it just learned. Nebbos answers them in order — each built on
-          the one beneath it — and shows its work as it goes.
-        </p>
-        <div className="grid grid-3" style={{ marginTop: 48 }}>
-          {fiveQuestions.map((s) => (
-            <Tile key={s.q} label={s.q} title={s.title}>
-              {s.body}
-            </Tile>
-          ))}
-        </div>
-      </Section>
-
-      {/* INTELLIGENCE THAT COMPOUNDS — your data stays yours */}
+      {/* INTELLIGENCE THAT COMPOUNDS — sovereignty + Tideline */}
       <Section divider>
         <p className="eyebrow">Your data stays yours</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(30px,4.6vw,58px)", maxWidth: "16ch" }}>
@@ -225,37 +277,49 @@ export default function HomePage() {
         </div>
       </Section>
 
-      {/* WHO IT'S FOR */}
+      {/* BUILD ON NEBBOS — the builder / developer track */}
       <Section divider>
-        <p className="eyebrow">Who it&rsquo;s for</p>
-        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "20ch" }}>
-          Everyone in the company needs something different.
+        <p className="eyebrow">Build on Nebbos</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "22ch" }}>
+          Building on an AI model? Put it on a foundation that holds.
         </h2>
-        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "56ch" }}>
-          One signal, read five ways. The same living memory answers the question each person is actually asking.
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "62ch" }}>
+          If your app talks to an AI model, you&rsquo;re solving memory, governance and data isolation
+          yourself — over and over, for every customer. Build on Nebbos instead: a foundation that
+          remembers, governs, and keeps every customer&rsquo;s data sovereign, on any model, any
+          provider. You write the product; the trust comes with the ground you stand on.
         </p>
         <div className="grid grid-3" style={{ marginTop: 48 }}>
-          {audiences.map((a) => (
-            <Tile key={a.dep} label={a.dep} title={a.title}>
-              {a.body}
+          {buildOn.map((b) => (
+            <Tile key={b.dep} label={b.dep} title={b.title}>
+              {b.body}
             </Tile>
           ))}
         </div>
+        <div style={{ marginTop: 40, display: "flex", flexWrap: "wrap", gap: 12 }}>
+          <ButtonLink href="/platform" variant="ghost">
+            See the platform →
+          </ButtonLink>
+          <ButtonLink href="/contact" variant="ghost">
+            Talk to us about building on Nebbos →
+          </ButtonLink>
+        </div>
       </Section>
 
-      {/* PEARL */}
+      {/* PEARL — the flagship application */}
       <Section divider>
         <div className="grid grid-2" style={{ alignItems: "start", gap: 56 }}>
           <div>
-            <p className="eyebrow">The agent</p>
-            <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "14ch" }}>
-              Meet Pearl — one per department.
+            <p className="eyebrow">The flagship application</p>
+            <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "16ch" }}>
+              Meet Pearl — AI running your operations.
             </h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "46ch" }}>
-              Pearl watches a single department&rsquo;s signal, surfaces only what&rsquo;s worth your
-              attention, and asks at most a couple of sharp questions when it genuinely can&rsquo;t
-              explain something. It never asks how you feel — it asks about the one data point it
-              can&rsquo;t account for, then learns from your answer.
+              Pearls are the application we built on the foundation: one specialist agent per department.
+              Each watches a single team&rsquo;s signal, surfaces only what&rsquo;s worth your attention,
+              and asks at most a couple of sharp questions when it genuinely can&rsquo;t explain
+              something. It never asks how you feel — it asks about the one data point it can&rsquo;t
+              account for, then learns from your answer.
             </p>
             <div style={{ marginTop: 32 }}>
               <ButtonLink href="/pearl" variant="ghost">
@@ -278,12 +342,51 @@ export default function HomePage() {
         </div>
       </Section>
 
+      {/* FIVE QUESTIONS — how the Pearls application works */}
+      <Section divider>
+        <p className="eyebrow">How Pearls work</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)" }}>The five questions, in order.</h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
+          Every organization runs on five questions: what&rsquo;s happening, what&rsquo;s about to go
+          wrong, why, what to do, and what it just learned. The Pearls application answers them in order —
+          each built on the one beneath it, all on the same foundation — and shows its work as it goes.
+        </p>
+        <div className="grid grid-3" style={{ marginTop: 48 }}>
+          {fiveQuestions.map((s) => (
+            <Tile key={s.q} label={s.q} title={s.title}>
+              {s.body}
+            </Tile>
+          ))}
+        </div>
+      </Section>
+
+      {/* INDUSTRIES — breadth proof, any industry */}
+      <Section divider>
+        <p className="eyebrow">Any industry</p>
+        <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)", maxWidth: "22ch" }}>
+          Every industry that runs on AI runs on the same foundation.
+        </h2>
+        <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "60ch" }}>
+          Memory, governance and sovereignty aren&rsquo;t specific to one field — every organization
+          that touches AI needs all three. Here are a few of the industries already building on Nebbos;
+          they&rsquo;re examples, not limits.
+        </p>
+        <div className="grid grid-3" style={{ marginTop: 48 }}>
+          {industries.map((i) => (
+            <a key={i.href} href={i.href} style={{ display: "block" }}>
+              <Tile label={i.dep} title={i.title}>{i.body}</Tile>
+            </a>
+          ))}
+        </div>
+      </Section>
+
       {/* HOW IT WORKS */}
       <Section divider>
         <p className="eyebrow">Getting started</p>
         <h2 style={{ marginTop: 20, fontSize: "clamp(28px,4vw,50px)" }}>Live in days, not quarters.</h2>
         <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "54ch" }}>
-          Nebbos reads from the stack you already run. Nothing for your teams to adopt, no new place for them to log work.
+          Point Nebbos at your models and the stack you already run. Nothing for your teams to adopt, no
+          new place for them to log work — and every call governed and sealed from day one.
         </p>
         <div className="grid grid-4" style={{ marginTop: 48 }}>
           {steps.map((s) => (
@@ -305,8 +408,9 @@ export default function HomePage() {
               The same power, for a fraction of what AI costs anyone else.
             </h2>
             <p className="mist" style={{ marginTop: 24, fontSize: 19, maxWidth: "50ch" }}>
-              The hard, expensive part is already built. The continuous checks watch for free and only a
-              real problem reaches a model — so you pay for problems solved, not events processed.
+              The hard, expensive part — the foundation that remembers, governs and seals every call — is
+              already built. You build on top of it instead of rebuilding it yourself, so you pay for what
+              you ship, not for plumbing.
             </p>
             <div style={{ marginTop: 32 }}>
               <ButtonLink href="/pricing" variant="ghost">
@@ -316,8 +420,8 @@ export default function HomePage() {
           </div>
           <div style={{ display: "flex", flexWrap: "wrap", gap: 10 }}>
             <Chip lead>The expensive part is built</Chip>
-            <Chip>Watch for free</Chip>
-            <Chip>Pay for problems, not events</Chip>
+            <Chip>Any model, no lock-in</Chip>
+            <Chip>Pay for what you ship</Chip>
             <Chip>Compounds instead of depreciating</Chip>
           </div>
         </div>
@@ -327,10 +431,10 @@ export default function HomePage() {
       <Section divider>
         <div className="panel" style={{ textAlign: "center", padding: "56px 28px" }}>
           <h2 style={{ fontSize: "clamp(26px,3.4vw,42px)", maxWidth: "40ch", marginInline: "auto" }}>
-            See what your operations are about to do.
+            Put your AI on a foundation that holds.
           </h2>
           <p className="mist" style={{ marginTop: 20, fontSize: 19 }}>
-            Book a demo and we&rsquo;ll get your first Pearl watching your data.
+            Book a demo and we&rsquo;ll show you memory, governance and sovereignty on your own calls.
           </p>
           <div style={{ marginTop: 32, display: "flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
             <ButtonLink href="/demo" variant="light">
