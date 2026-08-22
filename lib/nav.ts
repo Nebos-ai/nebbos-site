@@ -1,84 +1,45 @@
-// Canonical information architecture.
-// Drives the header nav, footer, and sitemap. Single source of truth.
+// Canonical information architecture — rebuild-2026 v4.
+//
+// 8 flat destinations (no dropdowns). Palantir / Linear / Anthropic pattern.
+// Delta brief editorial system consumed uniformly.
 
-export type NavLink = { label: string; href: string; external?: boolean };
+export type NavLink = { label: string; href: string; external?: boolean; strap?: string };
 export type NavGroup = { label: string; links: NavLink[] };
 
-export const primaryNav: NavGroup[] = [
-  {
-    label: "Platform",
-    links: [
-      { label: "Overview", href: "/platform" },
-      { label: "How it works", href: "/platform/how-it-works" },
-      { label: "Architecture", href: "/platform/architecture" },
-      { label: "Integrations", href: "/platform/integrations" },
-      { label: "Pearl", href: "/pearl" },
-    ],
-  },
-  {
-    label: "Solutions",
-    links: [
-      { label: "Overview", href: "/solutions" },
-      { label: "K-12 Education", href: "/solutions/k12" },
-      { label: "Healthcare", href: "/solutions/healthcare" },
-      { label: "Financial Services", href: "/solutions/financial-services" },
-      { label: "Public Sector", href: "/solutions/public-sector" },
-      { label: "Manufacturing", href: "/solutions/manufacturing" },
-      { label: "Operations", href: "/solutions/operations" },
-      { label: "Finance", href: "/solutions/finance" },
-      { label: "People", href: "/solutions/people" },
-    ],
-  },
-  {
-    label: "Trust",
-    links: [
-      { label: "Overview", href: "/trust" },
-      { label: "Security", href: "/security" },
-      { label: "Tideline", href: "/governance" },
-      { label: "Compliance", href: "/compliance" },
-    ],
-  },
-  {
-    label: "Resources",
-    links: [
-      { label: "Resource hub", href: "/resources" },
-      { label: "Blog", href: "/blog" },
-      { label: "Customers", href: "/customers" },
-      { label: "Changelog", href: "/changelog" },
-      { label: "Docs", href: "/docs" },
-    ],
-  },
-  {
-    label: "Company",
-    links: [
-      { label: "About", href: "/about" },
-      { label: "Careers", href: "/careers" },
-      { label: "Press", href: "/press" },
-      { label: "Contact", href: "/contact" },
-    ],
-  },
+export const primaryNav: NavLink[] = [
+  { label: "Platform",  href: "/platform",  strap: "Five questions. In order." },
+  { label: "How",       href: "/platform/how-it-works", strap: "Live in days, not quarters." },
+  { label: "Pricing",   href: "/pricing",   strap: "One flat per-user price." },
+  { label: "Solutions", href: "/solutions", strap: "Coordination is where the work lives." },
+  { label: "Trust",     href: "/trust",     strap: "Accountable by architecture." },
+  { label: "About",     href: "/about",     strap: "The tool for building your company's brain." },
+  { label: "Blog",      href: "/blog",      strap: "Notes from Nebbos." },
+  { label: "Contact",   href: "/contact",   strap: "Put a Pearl on your hardest department." },
 ];
 
-// Footer adds Pricing, Trust legal, and utility links.
 export const footerNav: NavGroup[] = [
   {
     label: "Product",
     links: [
       { label: "Platform", href: "/platform" },
-      { label: "Pearl", href: "/pearl" },
+      { label: "How it works", href: "/platform/how-it-works" },
+      { label: "Architecture", href: "/platform/architecture" },
       { label: "Integrations", href: "/platform/integrations" },
+      { label: "Pearl", href: "/pearl" },
       { label: "Pricing", href: "/pricing" },
-      { label: "Status", href: "/status" },
     ],
   },
   {
     label: "Solutions",
     links: [
+      { label: "Operations", href: "/solutions/operations" },
+      { label: "Finance", href: "/solutions/finance" },
+      { label: "People", href: "/solutions/people" },
       { label: "K-12 Education", href: "/solutions/k12" },
       { label: "Healthcare", href: "/solutions/healthcare" },
       { label: "Financial Services", href: "/solutions/financial-services" },
-      { label: "Public Sector", href: "/solutions/public-sector" },
       { label: "Manufacturing", href: "/solutions/manufacturing" },
+      { label: "Public Sector", href: "/solutions/public-sector" },
     ],
   },
   {
@@ -96,7 +57,6 @@ export const footerNav: NavGroup[] = [
       { label: "Blog", href: "/blog" },
       { label: "Customers", href: "/customers" },
       { label: "Changelog", href: "/changelog" },
-      { label: "Docs", href: "/docs" },
     ],
   },
   {
@@ -104,8 +64,8 @@ export const footerNav: NavGroup[] = [
     links: [
       { label: "About", href: "/about" },
       { label: "Careers", href: "/careers" },
-      { label: "Press", href: "/press" },
       { label: "Contact", href: "/contact" },
+      { label: "Book a demo", href: "/demo" },
     ],
   },
   {

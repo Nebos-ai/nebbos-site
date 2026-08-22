@@ -1,241 +1,367 @@
 /*
- * Nebbos marketing — global styles.
+ * Nebbos marketing — global styles · rebuild-2026 v4 · Delta brief editorial
  *
- * Brand tokens come from the shared @nebbos/brand package — the
- * single source of brand truth, consumed by BOTH Folio (@nebos/ui) and this
- * marketing site. We import the canonical theme.css below; its :root block
- * defines the Folio token vocabulary (--ink / --text / --action / --accent-* /
- * --ok / --warn / --w-* …). The marketing CSS uses its OWN legacy var names
- * (--paper, --blue, --tomato …), so the :root alias block beneath the import
- * maps the marketing names onto the package's canonical vars. A rebrand is now
- * a package version bump (#vX.Y.Z) — the values below follow automatically.
+ * Founder direction (2026-08-22): "every level of the front end every level
+ * of the design system needs to all be uniformed" + "use what you got in the
+ * sales page that is the right design system not the old one".
  *
- * NOTE on Tailwind: theme.css is the Folio THEME CONTRACT and its @theme blocks
- * are Tailwind v4 at-rules. This site does NOT use Tailwind, so those @theme
- * registrations are inert here — but the plain :root{}/[data-theme] blocks
- * (which carry every brand primitive + semantic value) DO apply, which is all
- * the marketing site consumes. The alias layer below is what bridges the names.
+ * The Delta brief editorial system (paper-first, orange accent, Trust 3A /
+ * Newsreader / Host Grotesk / JetBrains Mono, cut-corner cards, orange
+ * plus-marker device) is now THE single Nebbos design system. Applied
+ * uniformly across every marketing page.
  *
- * Restrained, editorial, DARK aesthetic (Palantir.com inspired).
+ * Tokens from ~/.claude/skills/delta-brief-editorial/assets/tokens.css
+ * Signature devices from ~/.claude/skills/delta-brief-editorial/assets/components.css
+ * Ratified wordmark: same nb-logo symbol used by the live Delta brief.
  */
 
-@import "@nebbos/brand/theme.css";
-
+/* ══════════════════════════════════════════════════════════════════════
+   TOKENS — paper-first, light default (per data-theme="light" on <html>)
+   ══════════════════════════════════════════════════════════════════════ */
 :root {
-  /* ── Marketing legacy names → @nebbos/brand canonical vars ──────────────
-     Where the package exposes a semantic equivalent we alias to it so the
-     value is owned by the package. Three stops the package's :root does not
-     expose as CSS vars (mid-slate ink-700/600, blue-deep, tomato accent) are
-     pinned to the package's canonical slate-ramp / accent hexes documented in
-     theme.css — see token-gap notes in lib/brand/tokens.ts. */
+  color-scheme: light;
 
-  /* Ink surfaces — package primitives (founder refresh 2026-06-26 palette) */
-  --ink-900: var(--ink);           /* #0c0e12  slate-950 */
-  --ink-800: var(--ink-2);         /* #13161b  slate-900 */
-  --ink-700: #22262f;              /* slate-800 (package slate ramp; no :root var) */
-  --ink-600: #373a41;              /* slate-700 (package slate ramp; no :root var) */
+  /* Typography — Newsreader as primary display face (self-hosted via
+     next/font); Trust 3A first in cascade so Adobe Typekit renders when
+     the client has it, Newsreader when not. Host Grotesk = body sans.
+     JetBrains Mono = numerics + kbd + code. */
+  --font-serif: var(--font-newsreader), "trust-3a", "Trust 3A",
+                "Newsreader", "Charter", "Iowan Old Style", Georgia, serif;
+  --font-sans:  var(--font-host-grotesk), "Host Grotesk",
+                -apple-system, BlinkMacSystemFont, "Segoe UI",
+                system-ui, sans-serif;
+  --font-mono:  var(--font-jetbrains-mono), "JetBrains Mono",
+                "SF Mono", Menlo, Consolas, monospace;
+  --w-xlight: 200;
+  --w-light:  300;
+  --w-bold:   700;
+  --lh-display: 1.08;
+  --lh-text:    1.55;
 
-  /* Text */
-  --paper: var(--text);            /* #fafafa  slate-25 */
-  --mist: var(--muted-text);       /* rgba(250,250,250,.60) */
-  --faint: var(--faint);           /* package exposes --faint directly */
+  /* Paper — background layers, lightest to darkest */
+  --paper:     #FFFFFF;
+  --paper-2:   #EDEEEB;
+  --paper-3:   #E1DAD0;
 
-  /* Blue / accent family */
-  --blue: var(--accent-1);         /* #637dff  Blue Aura — primary */
-  --blue-deep: #3b4470;            /* package "Muted Dark Blue" accent (theme.css note) */
-  --blue-soft: var(--accent-3);    /* #bbc7ff  pastel light indigo */
-  --sky: var(--accent-3);          /* #bbc7ff  (package retired the legacy --sky #c9d3ff) */
-  --tomato: #f6926c;               /* legacy accent — package theme has no tomato (see gap note) */
+  /* Ink — text scale, darkest to lightest */
+  --ink:       #1D1C22;
+  --ink-2:     #3F4045;
+  --ink-3:     #606162;
+  --muted:     #5F6067;
 
-  --hairline: var(--edge);         /* rgba(255,255,255,.10) translucency edge */
-  --content-max: 1160px;           /* site-specific layout constant (not a brand token) */
+  /* Navy — cool accent, sparingly */
+  --navy:      #557994;
+  --navy-2:    #6B8089;
+  --navy-3:    #A3C1DB;
+  --navy-4:    #557994;
 
-  /* Fonts: the package's --font-sans/--font-mono are Folio stacks keyed on
-     --font-inter/--font-geist-mono. The marketing site ships DM Sans/DM Mono
-     via next/font, so it overrides these two with its own brand stacks. */
-  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Gold / accent — the Nebbos brand orange */
+  --accent:    #A36630;
+  --accent-2:  #F6A03F;
+  --gold:      #A36630;
+  --gold-2:    #F6A03F;
+
+  /* Semantic — reserved for confirmed status only */
+  --success:   #3F7A5C;
+  --warning:   #B8862B;
+
+  /* Rules */
+  --rule:      #D8D6D5;
+  --rule-2:    #E7E7E7;
+
+  /* Marketing legacy aliases (old code still refers to these) */
+  --hairline:  var(--rule);
+  --hairline-strong: var(--ink-3);
+  --mist:      var(--ink-3);
+  --faint:     var(--muted);
+  --blue:      var(--navy);
+  --ink-900:   var(--paper);        /* legacy naming inversion; now paper is bg */
+  --ink-800:   var(--paper-2);
+  --ink-700:   var(--paper-3);
+  --sky:       var(--navy-3);
+  --content-max: 1180px;
+  --gutter:    24px;
+  --section-y: clamp(72px, 8vw, 128px);
+
+  /* Motion — restrained editorial */
+  --dur-instant: 75ms;
+  --dur-fast:    120ms;
+  --dur-default: 180ms;
+  --ease-out:    cubic-bezier(.22, 1, .36, 1);
 }
 
+/* Dark by system preference (only if not pinned to light) */
+:root:not([data-theme="light"]) {
+  @media (prefers-color-scheme: dark) {
+    color-scheme: dark;
+    --paper:     #1D1C22;
+    --paper-2:   #1B1B20;
+    --paper-3:   #232329;
+    --ink:       #F4F4F6;
+    --ink-2:     #C9CACF;
+    --ink-3:     #9C9C9D;
+    --muted:     #7E7F87;
+    --navy:      #A3C1DB;
+    --navy-2:    #AEB6C1;
+    --navy-3:    #BBC1BF;
+    --navy-4:    #6D7787;
+    --accent:    #F6A03F;
+    --accent-2:  #FDDA88;
+    --gold:      #F6A03F;
+    --gold-2:    #FDDA88;
+    --success:   #6BB596;
+    --warning:   #E0AC44;
+    --rule:      #2E2E34;
+    --rule-2:    #212127;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   BASE
+   ══════════════════════════════════════════════════════════════════════ */
 *,
 *::before,
 *::after {
   box-sizing: border-box;
 }
-
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
 }
-
-body {
+html, body {
   margin: 0;
-  background: var(--ink-900);
-  color: var(--paper);
+  padding: 0;
+}
+body {
+  background: var(--paper);
+  color: var(--ink);
   font-family: var(--font-sans);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: var(--lh-text);
+  letter-spacing: -0.005em;
+  font-feature-settings: "ss01", "cv11", "tnum";
+  font-variant-numeric: tabular-nums;
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-h1,
-h2,
-h3,
-h4 {
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-}
-
-h1 {
-  letter-spacing: -0.04em;
-  font-size: clamp(38px, 5.6vw, 76px);
-}
-
-p {
-  margin: 0;
+::selection {
+  background: color-mix(in srgb, var(--gold-2) 45%, transparent);
+  color: var(--ink);
 }
 
 :focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-  border-radius: 4px;
+  outline: 2px solid var(--accent-2);
+  outline-offset: 2px;
+  border-radius: 2px;
 }
 
-/* ---- Layout primitives ---- */
-.container {
-  width: 100%;
-  max-width: var(--content-max);
-  margin-inline: auto;
-  padding-inline: 24px;
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
-.section {
-  padding-block: clamp(64px, 9vw, 128px);
+/* ══════════════════════════════════════════════════════════════════════
+   TYPOGRAPHIC PRIMITIVES
+   ══════════════════════════════════════════════════════════════════════ */
+a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid var(--rule);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out);
+}
+a:hover {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
 }
 
-.hairline-top {
-  border-top: 1px solid var(--hairline);
+p {
+  margin: 0 0 1em;
+  max-width: 68ch;
 }
 
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 100;
-  background: var(--blue);
-  color: var(--ink-900);
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-.skip-link:focus {
-  left: 16px;
-  top: 16px;
+strong {
+  font-weight: 700;
+  color: var(--ink);
 }
 
-/* ---- Type helpers ---- */
+code, kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--ink-2);
+  background: var(--paper-2);
+  border: 1px solid var(--rule-2);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+
+/* Signature eyebrow — mono, uppercase, orange, 0.18em tracking */
 .eyebrow {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.18em;
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
   text-transform: uppercase;
-  color: var(--blue-soft);
-}
-.lead {
-  font-size: clamp(17px, 1.5vw, 21px);
-  color: var(--mist);
-  max-width: 56ch;
-}
-.mist {
-  color: var(--mist);
-}
-.faint {
-  color: var(--faint);
-}
-.mono {
-  font-family: var(--font-mono);
-}
-.text-blue {
-  color: var(--blue);
-}
-.text-tomato {
-  color: var(--tomato);
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin: 0;
 }
 
-/* ---- Header ---- */
+.mono {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+.serif {
+  font-family: var(--font-serif);
+  font-feature-settings: "ss01", "cv11";
+}
+.mist  { color: var(--ink-3); }
+.faint { color: var(--muted); }
+
+.hairline-top    { border-top:    1px solid var(--rule); }
+.hairline-bottom { border-bottom: 1px solid var(--rule); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   LAYOUT
+   ══════════════════════════════════════════════════════════════════════ */
+.container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+.section {
+  padding-block: var(--section-y);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SIGNATURE DEVICES (from delta-brief-editorial/assets/components.css)
+   ══════════════════════════════════════════════════════════════════════ */
+
+/*  Orange plus-marker — 19×1.5 + 1.5×19 orange cross, drawn at the
+    top-left of any container carrying `.plus-marker` (attach via CSS on
+    section wrappers or via component prop). Signature Nebbos device. */
+.plus-marker {
+  position: relative;
+}
+.plus-marker::before,
+.plus-marker::after {
+  content: "";
+  position: absolute;
+  background: var(--accent-2);
+  display: block;
+}
+.plus-marker::before {
+  top: 0;
+  left: -20px;
+  width: 19px;
+  height: 1.5px;
+}
+.plus-marker::after {
+  top: -9px;
+  left: -11px;
+  width: 1.5px;
+  height: 19px;
+}
+
+/*  Cut-corner card — single top-right cut. Emphasis surface for callouts
+    and stat panels. Radius asymmetry is the signature. */
+.cut-corner {
+  border-radius: 0 30px 0 0;
+  background: var(--paper-2);
+  padding: 24px 28px;
+  border: 1px solid var(--rule-2);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SKIP LINK + STAGING BANNER
+   ══════════════════════════════════════════════════════════════════════ */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: -48px;
+  padding: 10px 14px;
+  background: var(--accent);
+  color: var(--paper);
+  font-weight: 500;
+  border-radius: 4px;
+  border-bottom: none;
+  z-index: 1000;
+  transition: top var(--dur-fast) var(--ease-out);
+}
+.skip-link:focus { inset-block-start: 12px; }
+
+.staging-banner {
+  background: var(--accent-2);
+  color: var(--ink);
+  text-align: center;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   SITE HEADER
+   ══════════════════════════════════════════════════════════════════════ */
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(11, 11, 16, 0.72);
-  border-bottom: 1px solid var(--hairline);
+  z-index: 40;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--rule);
 }
 .site-header__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
+  gap: 32px;
   height: 64px;
+  padding-inline: var(--gutter);
+  max-width: var(--content-max);
+  margin: 0 auto;
 }
 .brandmark {
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  font-size: 19px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+  border-bottom: none;
+  transition: color var(--dur-fast) var(--ease-out);
 }
+.brandmark:hover { color: var(--accent); }
+
 .nav {
-  display: none;
-  gap: 28px;
-}
-.nav__item {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  justify-content: center;
 }
 .nav__trigger {
-  font-size: 15px;
-  color: var(--mist);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 8px 0;
-}
-.nav__item:hover .nav__trigger,
-.nav__trigger:focus-visible {
-  color: var(--paper);
-}
-.nav__menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 220px;
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  padding: 8px;
-  display: none;
-  flex-direction: column;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
-}
-.nav__item:hover .nav__menu,
-.nav__item:focus-within .nav__menu {
-  display: flex;
-}
-.nav__menu a {
+  display: inline-flex;
+  align-items: center;
   padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--mist);
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--ink-2);
+  border-bottom: none;
+  border-radius: 3px;
+  transition: color var(--dur-fast) var(--ease-out),
+              background var(--dur-fast) var(--ease-out);
 }
-.nav__menu a:hover {
-  background: var(--ink-700);
-  color: var(--paper);
+.nav__trigger:hover {
+  color: var(--ink);
+  background: var(--paper-2);
 }
 .header-actions {
   display: flex;
@@ -243,223 +369,82 @@ p {
   gap: 12px;
 }
 
-@media (min-width: 1024px) {
-  .nav {
-    display: flex;
-  }
-}
-
-/* ---- Buttons ---- */
+/* ══════════════════════════════════════════════════════════════════════
+   BUTTONS — editorial. Dark ink fill on paper, hairline ghost.
+   ══════════════════════════════════════════════════════════════════════ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 15px;
+  justify-content: center;
+  height: 40px;
+  padding: 0 20px;
+  font-family: var(--font-sans);
+  font-size: 14px;
   font-weight: 500;
-  padding: 11px 18px;
-  border-radius: 10px;
+  letter-spacing: -0.005em;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  border-radius: 3px;
   cursor: pointer;
-}
-.btn:hover {
-  transform: translateY(-1px);
+  text-decoration: none;
+  transition: background var(--dur-fast) var(--ease-out),
+              color var(--dur-fast) var(--ease-out),
+              border-color var(--dur-fast) var(--ease-out);
+  border-bottom: 1px solid transparent;
 }
 .btn-primary {
-  background: var(--blue);
-  color: var(--ink-900);
+  background: var(--ink);
+  color: var(--paper);
+  border-color: var(--ink);
 }
 .btn-primary:hover {
-  background: var(--blue-soft);
-}
-.btn-light {
-  background: var(--paper);
-  color: var(--ink-900);
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--paper);
 }
 .btn-ghost {
-  border-color: var(--hairline);
-  color: var(--paper);
   background: transparent;
+  color: var(--ink);
+  border-color: var(--rule);
 }
 .btn-ghost:hover {
-  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--paper-2);
+  border-color: var(--ink-3);
+  color: var(--ink);
+}
+.btn-light {
+  background: var(--paper-2);
+  color: var(--ink);
+  border-color: var(--rule-2);
+}
+.btn-light:hover {
+  background: var(--paper-3);
+  border-color: var(--rule);
+  color: var(--ink);
 }
 
-/* ---- Glow accent ---- */
-.glow {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(110px);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ---- Cards / tiles ---- */
-.tile {
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 24px;
-}
-.tile h3 {
-  font-size: 19px;
-  margin-top: 8px;
-}
-.tile p {
-  color: var(--mist);
-  font-size: 15px;
-  margin-top: 8px;
-}
-.dep {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blue-soft);
-}
-.panel {
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 18px;
-  padding: 28px;
-}
-.qmark {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-/* ---- Grids ---- */
-.grid {
-  display: grid;
-  gap: 16px;
-}
-.grid-2 {
-  grid-template-columns: 1fr;
-}
-.grid-3 {
-  grid-template-columns: 1fr;
-}
-.grid-4 {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* ---- Chips ---- */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  font-size: 13px;
-  padding: 7px 13px;
-  border-radius: 999px;
-  border: 1px solid var(--hairline);
-  color: var(--mist);
-  background: var(--ink-800);
-}
-.chip.lead {
-  border-color: rgba(99, 125, 255, 0.4);
-  color: var(--sky);
-}
-
-/* ---- Footer ---- */
+/* ══════════════════════════════════════════════════════════════════════
+   FOOTER
+   ══════════════════════════════════════════════════════════════════════ */
 .site-footer {
-  border-top: 1px solid var(--hairline);
-  background: var(--ink-900);
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-}
-@media (min-width: 768px) {
-  .footer-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-.footer-col h4 {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 14px;
-}
-.footer-col a {
-  display: block;
+  border-top: 1px solid var(--rule);
+  background: var(--paper-2);
+  padding-block: 64px 40px;
+  color: var(--ink-3);
   font-size: 14px;
-  color: var(--mist);
-  padding: 4px 0;
 }
-.footer-col a:hover {
-  color: var(--paper);
-}
-
-/* ---- Prose (MDX content) ---- */
-.prose {
-  max-width: 70ch;
-}
-.prose h2 {
-  font-size: clamp(24px, 3vw, 34px);
-  margin-top: 48px;
-}
-.prose h3 {
-  font-size: 21px;
-  margin-top: 32px;
-}
-.prose p {
-  color: var(--mist);
-  margin-top: 18px;
-  font-size: 17px;
-}
-.prose ul,
-.prose ol {
-  color: var(--mist);
-  margin-top: 18px;
-  padding-left: 22px;
-}
-.prose li {
-  margin-top: 8px;
-}
-.prose a {
-  color: var(--blue-soft);
-  text-decoration: underline;
-}
-.prose code {
+.site-footer h4 {
   font-family: var(--font-mono);
-  background: var(--ink-700);
-  padding: 2px 6px;
-  border-radius: 5px;
-  font-size: 0.9em;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--gold);
+  margin: 0 0 14px;
 }
-
-/* ---- Page hero spacing ---- */
-.page-hero {
-  position: relative;
-  overflow: hidden;
-  padding-top: clamp(96px, 14vw, 176px);
-  padding-bottom: clamp(48px, 8vw, 96px);
+.site-footer a {
+  color: var(--ink-2);
+  border-bottom: none;
+  display: inline-block;
+  padding-block: 4px;
 }
-
-/* ---- Staging banner ---- */
-.staging-banner {
-  background: var(--tomato);
-  color: var(--ink-900);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  text-align: center;
-  padding: 6px 12px;
-  letter-spacing: 0.04em;
-}
+.site-footer a:hover { color: var(--accent); }
