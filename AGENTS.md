@@ -1,5 +1,7 @@
 # AGENTS.md — nebbos-site
 
+<!-- derives-from: nebos-governance/docs/agents/BASELINE.md -->
+
 Governs AI agent behavior in this repo. Canonical shared rules in [`Nebos-ai/nebos-governance:AGENTS.md`](https://github.com/Nebos-ai/nebos-governance/blob/main/AGENTS.md).
 
 ## What this repo is
