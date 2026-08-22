@@ -1,62 +1,66 @@
 /*
- * Nebbos marketing — global styles.
+ * Nebbos marketing — global styles · rebuild-2026 v3
  *
- * Brand tokens come from the shared @nebbos/brand package — the
- * single source of brand truth, consumed by BOTH Folio (@nebos/ui) and this
- * marketing site. We import the canonical theme.css below; its :root block
- * defines the Folio token vocabulary (--ink / --text / --action / --accent-* /
- * --ok / --warn / --w-* …). The marketing CSS uses its OWN legacy var names
- * (--paper, --blue, --tomato …), so the :root alias block beneath the import
- * maps the marketing names onto the package's canonical vars. A rebrand is now
- * a package version bump (#vX.Y.Z) — the values below follow automatically.
+ * Design system: dense-pro DISCIPLINE at marketing readability.
+ * Brand tokens: @nebbos/brand v1.0.0 (Blue Aura + slate + status ramp).
  *
- * NOTE on Tailwind: theme.css is the Folio THEME CONTRACT and its @theme blocks
- * are Tailwind v4 at-rules. This site does NOT use Tailwind, so those @theme
- * registrations are inert here — but the plain :root{}/[data-theme] blocks
- * (which carry every brand primitive + semantic value) DO apply, which is all
- * the marketing site consumes. The alias layer below is what bridges the names.
+ * The brand package ships a complete OKLCH token system (12-stop ramps,
+ * translucency ladder, full semantic layer, fluid type ramp, easing curves,
+ * radius scale). This file:
+ *   1. Imports the brand's theme contract.
+ *   2. Provides the Folio font vars from next/font (Bricolage + Inter + Geist Mono).
+ *   3. Applies dense-pro discipline (tight radii, hairline borders, no shadows,
+ *      motion ≤150ms, single semantic accent, tabular numerals default).
+ *   4. Aliases marketing-legacy names (--paper / --ink-900 / --mist / --blue /
+ *      --hairline) onto brand semantic tokens so existing components keep working.
  *
- * Restrained, editorial, DARK aesthetic (Palantir.com inspired).
+ * Palantir-dense-pro reference; Apple-simple voice; Nebbos brand identity.
  */
 
 @import "@nebbos/brand/theme.css";
 
+/* ══════════════════════════════════════════════════════════════════════
+   Marketing-legacy aliases + dense-pro overrides
+   ══════════════════════════════════════════════════════════════════════ */
 :root {
-  /* ── Marketing legacy names → @nebbos/brand canonical vars ──────────────
-     Where the package exposes a semantic equivalent we alias to it so the
-     value is owned by the package. Three stops the package's :root does not
-     expose as CSS vars (mid-slate ink-700/600, blue-deep, tomato accent) are
-     pinned to the package's canonical slate-ramp / accent hexes documented in
-     theme.css — see token-gap notes in lib/brand/tokens.ts. */
+  /* ── Font system — provided by next/font in layout.tsx ─────────────── */
+  /* --font-bricolage, --font-inter, --font-geist-mono are set on <html>.
+     The brand theme.css wires them into --font-display, --font-sans,
+     --font-mono. Marketing pages reference the brand names. */
 
-  /* Ink surfaces — package primitives (founder refresh 2026-06-26 palette) */
-  --ink-900: var(--ink);           /* #0c0e12  slate-950 */
-  --ink-800: var(--ink-2);         /* #13161b  slate-900 */
-  --ink-700: #22262f;              /* slate-800 (package slate ramp; no :root var) */
-  --ink-600: #373a41;              /* slate-700 (package slate ramp; no :root var) */
+  /* ── Marketing legacy aliases → brand semantic tokens ──────────────── */
+  /* Existing components use these names; they now resolve to the
+     brand's canonical semantic layer, so a rebrand is a package bump. */
+  --paper:    var(--text);         /* body foreground */
+  --ink-900:  var(--ink);          /* deepest bg (slate-950) */
+  --ink-800:  var(--ink-2);        /* raised surface (slate-900) */
+  --ink-700:  var(--w-08);         /* subtle surface */
+  --mist:     var(--muted-text);   /* muted body */
+  --faint:    var(--faint);        /* faint metadata */
+  --blue:     var(--accent-1);     /* Blue Aura — primary accent */
+  --sky:      var(--accent-2);     /* cyan — focus */
+  --hairline: var(--edge);         /* hairline border 10% alpha */
+  --hairline-strong: var(--edge-2); /* 16% alpha */
 
-  /* Text */
-  --paper: var(--text);            /* #fafafa  slate-25 */
-  --mist: var(--muted-text);       /* rgba(250,250,250,.60) */
-  --faint: var(--faint);           /* package exposes --faint directly */
+  /* ── Dense-pro discipline overrides ─────────────────────────────── */
+  --radius-control: 4px;
+  --radius-surface: 6px;
+  --radius-overlay: 8px;
 
-  /* Blue / accent family */
-  --blue: var(--accent-1);         /* #637dff  Blue Aura — primary */
-  --blue-deep: #3b4470;            /* package "Muted Dark Blue" accent (theme.css note) */
-  --blue-soft: var(--accent-3);    /* #bbc7ff  pastel light indigo */
-  --sky: var(--accent-3);          /* #bbc7ff  (package retired the legacy --sky #c9d3ff) */
-  --tomato: #f6926c;               /* legacy accent — package theme has no tomato (see gap note) */
+  /* Marketing layout container */
+  --content-max: 1160px;
+  --gutter: 20px;
+  --section-y: clamp(64px, 8vw, 128px);
 
-  --hairline: var(--edge);         /* rgba(255,255,255,.10) translucency edge */
-  --content-max: 1160px;           /* site-specific layout constant (not a brand token) */
-
-  /* Fonts: the package's --font-sans/--font-mono are Folio stacks keyed on
-     --font-inter/--font-geist-mono. The marketing site ships DM Sans/DM Mono
-     via next/font, so it overrides these two with its own brand stacks. */
-  --font-sans: var(--font-dm-sans), "DM Sans", system-ui, -apple-system, sans-serif;
-  --font-mono: var(--font-dm-mono), "DM Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Motion tokens — dense-pro spec ≤150ms */
+  --dur-instant: 75ms;
+  --dur-fast: 100ms;
+  --dur-default: 150ms;
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   Base
+   ══════════════════════════════════════════════════════════════════════ */
 *,
 *::before,
 *::after {
@@ -65,177 +69,220 @@
 
 html {
   scroll-behavior: smooth;
+  color-scheme: dark;
+  -webkit-text-size-adjust: 100%;
 }
 
 body {
   margin: 0;
-  background: var(--ink-900);
-  color: var(--paper);
+  background: var(--ink);
+  color: var(--text);
   font-family: var(--font-sans);
-  font-size: 17px;
+  font-size: 15.5px;           /* Marketing readability, denser than 17 */
   line-height: 1.55;
+  letter-spacing: -0.005em;
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "ss01", "cv11", "tnum";
+  font-optical-sizing: auto;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
 }
 
+/* Selection uses Blue Aura at 30% */
+::selection {
+  background: color-mix(in oklab, var(--accent-1) 30%, transparent);
+  color: var(--text);
+}
+
+/* Focus-visible: 2px cyan ring, 2px offset per WCAG 2.4.7 */
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 3px;
+}
+
+/* Reduced-motion: shorten transitions, kill decorative animation */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Typographic primitives
+   ══════════════════════════════════════════════════════════════════════ */
 a {
-  color: inherit;
+  color: var(--text);
   text-decoration: none;
+  border-bottom: 1px solid var(--edge);
+  transition: border-color var(--dur-fast) ease-out, color var(--dur-fast) ease-out;
 }
-
-h1,
-h2,
-h3,
-h4 {
-  margin: 0;
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  line-height: 1.08;
-}
-
-h1 {
-  letter-spacing: -0.04em;
-  font-size: clamp(38px, 5.6vw, 76px);
+a:hover {
+  color: var(--accent-1);
+  border-bottom-color: var(--accent-1);
 }
 
 p {
+  margin: 0 0 1em;
+  max-width: 68ch;
+}
+
+strong {
+  font-weight: 600;
+  color: var(--text);
+}
+
+code,
+kbd {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  color: var(--muted-text);
+  background: var(--w-06);
+  border: 1px solid var(--edge);
+  border-radius: var(--radius-control);
+  padding: 0.1em 0.35em;
+}
+
+kbd {
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+}
+
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.3;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--muted-text);
   margin: 0;
 }
 
-:focus-visible {
-  outline: 2px solid var(--blue);
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* ---- Layout primitives ---- */
-.container {
-  width: 100%;
-  max-width: var(--content-max);
-  margin-inline: auto;
-  padding-inline: 24px;
-}
-
-.section {
-  padding-block: clamp(64px, 9vw, 128px);
-}
-
-.hairline-top {
-  border-top: 1px solid var(--hairline);
-}
-
-.skip-link {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 100;
-  background: var(--blue);
-  color: var(--ink-900);
-  padding: 10px 16px;
-  border-radius: 6px;
-  font-weight: 600;
-}
-.skip-link:focus {
-  left: 16px;
-  top: 16px;
-}
-
-/* ---- Type helpers ---- */
-.eyebrow {
+.mono {
   font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.18em;
-  text-transform: uppercase;
-  color: var(--blue-soft);
+  font-variant-numeric: tabular-nums;
 }
-.lead {
-  font-size: clamp(17px, 1.5vw, 21px);
-  color: var(--mist);
-  max-width: 56ch;
+
+.serif {
+  font-family: var(--font-display);
 }
+
 .mist {
-  color: var(--mist);
+  color: var(--muted-text);
 }
 .faint {
   color: var(--faint);
 }
-.mono {
-  font-family: var(--font-mono);
+
+/* Utility surfaces */
+.hairline-top {
+  border-top: 1px solid var(--edge);
 }
-.text-blue {
-  color: var(--blue);
-}
-.text-tomato {
-  color: var(--tomato);
+.hairline-bottom {
+  border-bottom: 1px solid var(--edge);
 }
 
-/* ---- Header ---- */
+/* ══════════════════════════════════════════════════════════════════════
+   Layout — container + section rhythm
+   ══════════════════════════════════════════════════════════════════════ */
+.container {
+  max-width: var(--content-max);
+  margin: 0 auto;
+  padding-inline: var(--gutter);
+}
+
+.section {
+  padding-block: var(--section-y);
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Skip link + staging banner
+   ══════════════════════════════════════════════════════════════════════ */
+.skip-link {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: -40px;
+  padding: 8px 12px;
+  background: var(--accent-1);
+  color: var(--ink);
+  font-weight: 600;
+  border-radius: var(--radius-control);
+  border-bottom: none;
+  z-index: 1000;
+  transition: top var(--dur-fast) ease-out;
+}
+.skip-link:focus {
+  inset-block-start: 12px;
+}
+
+.staging-banner {
+  background: var(--warn);
+  color: var(--ink);
+  text-align: center;
+  padding: 6px 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   Site header
+   ══════════════════════════════════════════════════════════════════════ */
 .site-header {
   position: sticky;
   top: 0;
-  z-index: 50;
-  backdrop-filter: blur(12px);
-  background: rgba(11, 11, 16, 0.72);
-  border-bottom: 1px solid var(--hairline);
+  z-index: 40;
+  background: color-mix(in oklab, var(--ink) 82%, transparent);
+  backdrop-filter: saturate(140%) blur(12px);
+  -webkit-backdrop-filter: saturate(140%) blur(12px);
+  border-bottom: 1px solid var(--edge);
 }
 .site-header__inner {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  gap: 24px;
-  height: 64px;
+  gap: 32px;
+  height: 56px;
+  padding-inline: var(--gutter);
 }
 .brandmark {
-  font-weight: 700;
-  letter-spacing: -0.04em;
-  font-size: 19px;
+  display: inline-flex;
+  align-items: center;
+  color: var(--text);
+  border-bottom: none;
+  transition: color var(--dur-fast) ease-out;
+}
+.brandmark:hover {
+  color: var(--accent-1);
 }
 .nav {
-  display: none;
-  gap: 28px;
-}
-.nav__item {
-  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  justify-content: center;
 }
 .nav__trigger {
-  font-size: 15px;
-  color: var(--mist);
-  background: none;
-  border: none;
-  cursor: pointer;
-  font-family: inherit;
-  padding: 8px 0;
+  display: inline-flex;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--muted-text);
+  border-bottom: none;
+  border-radius: var(--radius-control);
+  transition: color var(--dur-fast) ease-out, background var(--dur-fast) ease-out;
 }
-.nav__item:hover .nav__trigger,
-.nav__trigger:focus-visible {
-  color: var(--paper);
-}
-.nav__menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 220px;
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 12px;
-  padding: 8px;
-  display: none;
-  flex-direction: column;
-  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
-}
-.nav__item:hover .nav__menu,
-.nav__item:focus-within .nav__menu {
-  display: flex;
-}
-.nav__menu a {
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
-  color: var(--mist);
-}
-.nav__menu a:hover {
-  background: var(--ink-700);
-  color: var(--paper);
+.nav__trigger:hover {
+  color: var(--text);
+  background: var(--w-06);
 }
 .header-actions {
   display: flex;
@@ -243,223 +290,82 @@ p {
   gap: 12px;
 }
 
-@media (min-width: 1024px) {
-  .nav {
-    display: flex;
-  }
-}
-
-/* ---- Buttons ---- */
+/* ══════════════════════════════════════════════════════════════════════
+   Buttons — dense-pro spec (28px height, tight padding, no elevation)
+   ══════════════════════════════════════════════════════════════════════ */
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-size: 15px;
+  justify-content: center;
+  height: 36px;
+  padding: 0 16px;
+  font-family: var(--font-sans);
+  font-size: 14px;
   font-weight: 500;
-  padding: 11px 18px;
-  border-radius: 10px;
+  letter-spacing: -0.005em;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  border-radius: var(--radius-control);
   cursor: pointer;
-}
-.btn:hover {
-  transform: translateY(-1px);
+  text-decoration: none;
+  transition: background var(--dur-fast) ease-out, color var(--dur-fast) ease-out,
+    border-color var(--dur-fast) ease-out;
+  border-bottom: 1px solid transparent;
 }
 .btn-primary {
-  background: var(--blue);
-  color: var(--ink-900);
+  background: var(--accent-1);
+  color: var(--ink);
+  border-color: var(--accent-1);
 }
 .btn-primary:hover {
-  background: var(--blue-soft);
-}
-.btn-light {
-  background: var(--paper);
-  color: var(--ink-900);
+  background: color-mix(in oklab, var(--accent-1) 88%, white);
+  border-color: color-mix(in oklab, var(--accent-1) 88%, white);
+  color: var(--ink);
 }
 .btn-ghost {
-  border-color: var(--hairline);
-  color: var(--paper);
   background: transparent;
+  color: var(--text);
+  border-color: var(--edge);
 }
 .btn-ghost:hover {
-  border-color: rgba(255, 255, 255, 0.24);
+  background: var(--w-06);
+  color: var(--text);
+  border-color: var(--edge-2);
+}
+.btn-light {
+  background: var(--w-06);
+  color: var(--text);
+  border-color: var(--edge);
+}
+.btn-light:hover {
+  background: var(--w-08);
+  border-color: var(--edge-2);
+  color: var(--text);
 }
 
-/* ---- Glow accent ---- */
-.glow {
-  position: absolute;
-  border-radius: 9999px;
-  filter: blur(110px);
-  opacity: 0.5;
-  pointer-events: none;
-  z-index: 0;
-}
-
-/* ---- Cards / tiles ---- */
-.tile {
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 16px;
-  padding: 24px;
-}
-.tile h3 {
-  font-size: 19px;
-  margin-top: 8px;
-}
-.tile p {
-  color: var(--mist);
-  font-size: 15px;
-  margin-top: 8px;
-}
-.dep {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--blue-soft);
-}
-.panel {
-  background: var(--ink-800);
-  border: 1px solid var(--hairline);
-  border-radius: 18px;
-  padding: 28px;
-}
-.qmark {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  color: var(--faint);
-}
-
-/* ---- Grids ---- */
-.grid {
-  display: grid;
-  gap: 16px;
-}
-.grid-2 {
-  grid-template-columns: 1fr;
-}
-.grid-3 {
-  grid-template-columns: 1fr;
-}
-.grid-4 {
-  grid-template-columns: 1fr;
-}
-@media (min-width: 768px) {
-  .grid-2 {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  .grid-3 {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  .grid-4 {
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-/* ---- Chips ---- */
-.chip {
-  display: inline-flex;
-  align-items: center;
-  font-size: 13px;
-  padding: 7px 13px;
-  border-radius: 999px;
-  border: 1px solid var(--hairline);
-  color: var(--mist);
-  background: var(--ink-800);
-}
-.chip.lead {
-  border-color: rgba(99, 125, 255, 0.4);
-  color: var(--sky);
-}
-
-/* ---- Footer ---- */
+/* ══════════════════════════════════════════════════════════════════════
+   Footer
+   ══════════════════════════════════════════════════════════════════════ */
 .site-footer {
-  border-top: 1px solid var(--hairline);
-  background: var(--ink-900);
-}
-.footer-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 32px;
-}
-@media (min-width: 768px) {
-  .footer-grid {
-    grid-template-columns: repeat(6, 1fr);
-  }
-}
-.footer-col h4 {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--faint);
-  margin-bottom: 14px;
-}
-.footer-col a {
-  display: block;
+  border-top: 1px solid var(--edge);
+  padding-block: 64px 40px;
+  color: var(--muted-text);
   font-size: 14px;
-  color: var(--mist);
-  padding: 4px 0;
 }
-.footer-col a:hover {
-  color: var(--paper);
-}
-
-/* ---- Prose (MDX content) ---- */
-.prose {
-  max-width: 70ch;
-}
-.prose h2 {
-  font-size: clamp(24px, 3vw, 34px);
-  margin-top: 48px;
-}
-.prose h3 {
-  font-size: 21px;
-  margin-top: 32px;
-}
-.prose p {
-  color: var(--mist);
-  margin-top: 18px;
-  font-size: 17px;
-}
-.prose ul,
-.prose ol {
-  color: var(--mist);
-  margin-top: 18px;
-  padding-left: 22px;
-}
-.prose li {
-  margin-top: 8px;
-}
-.prose a {
-  color: var(--blue-soft);
-  text-decoration: underline;
-}
-.prose code {
+.site-footer h4 {
   font-family: var(--font-mono);
-  background: var(--ink-700);
-  padding: 2px 6px;
-  border-radius: 5px;
-  font-size: 0.9em;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--faint);
+  margin: 0 0 14px;
 }
-
-/* ---- Page hero spacing ---- */
-.page-hero {
-  position: relative;
-  overflow: hidden;
-  padding-top: clamp(96px, 14vw, 176px);
-  padding-bottom: clamp(48px, 8vw, 96px);
+.site-footer a {
+  color: var(--muted-text);
+  border-bottom: none;
+  display: inline-block;
+  padding-block: 4px;
 }
-
-/* ---- Staging banner ---- */
-.staging-banner {
-  background: var(--tomato);
-  color: var(--ink-900);
-  font-family: var(--font-mono);
-  font-size: 12px;
-  text-align: center;
-  padding: 6px 12px;
-  letter-spacing: 0.04em;
+.site-footer a:hover {
+  color: var(--text);
 }

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Sans, DM_Mono } from "next/font/google";
+import { Bricolage_Grotesque, Inter, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -11,23 +11,34 @@ import {
   SITE_ORIGIN,
 } from "@/lib/site";
 
-const dmSans = DM_Sans({
+// Font system per @nebbos/brand Folio contract:
+//   --font-display → Bricolage Grotesque (display headlines)
+//   --font-sans    → Inter (body + UI)
+//   --font-mono    → Geist Mono (numerics + code + kbd shortcuts)
+// All self-hosted via next/font, `display: swap` so first paint never blocks.
+const bricolage = Bricolage_Grotesque({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-dm-sans",
+  variable: "--font-bricolage",
   display: "swap",
 });
-const dmMono = DM_Mono({
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-inter",
+  display: "swap",
+});
+const geistMono = Geist_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-dm-mono",
+  variable: "--font-geist-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),
   title: {
-    default: `${SITE_NAME} — Operations Intelligence`,
+    default: `${SITE_NAME} — The tool for building your company's brain`,
     template: `%s — ${SITE_NAME}`,
   },
   description: SITE_DESCRIPTION,
@@ -35,17 +46,23 @@ export const metadata: Metadata = {
   robots: IS_PRODUCTION
     ? { index: true, follow: true }
     : { index: false, follow: false },
-  icons: { icon: "/favicon.svg" },
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "any" },
+    ],
+    apple: "/favicon.svg",
+  },
   openGraph: {
     type: "website",
     siteName: SITE_NAME,
     url: SITE_ORIGIN,
-    title: `${SITE_NAME} — Operations Intelligence`,
+    title: `${SITE_NAME} — The tool for building your company's brain`,
     description: SITE_DESCRIPTION,
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — Operations Intelligence`,
+    title: `${SITE_NAME} — The tool for building your company's brain`,
     description: SITE_DESCRIPTION,
   },
 };
@@ -56,8 +73,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${dmSans.variable} ${dmMono.variable}`}>
-      <body style={{ fontFamily: "var(--font-dm-sans), var(--font-sans)" }}>
+    <html
+      lang="en"
+      className={`${bricolage.variable} ${inter.variable} ${geistMono.variable}`}
+    >
+      <body>
         <script
           type="application/ld+json"
           // eslint-disable-next-line react/no-danger

@@ -8,6 +8,10 @@ const nextConfig: NextConfig = {
   experimental: {
     mdxRs: true,
   },
+  // The @nebbos/brand package ships raw .tsx / .ts source (its exports map
+  // ./logo → logo/index.tsx directly). Next won't compile TSX inside
+  // node_modules by default — transpilePackages routes them through swc.
+  transpilePackages: ["@nebbos/brand"],
   // Hidden client-facing artifacts (briefs, decks, one-pagers).
   //
   // URL slugs are CATEGORICAL, not client-named, so the URL itself doesn't
