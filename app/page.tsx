@@ -2,22 +2,20 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
+import { ArchitectureGrid } from "@/components/ui/ArchitectureGrid";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
 
 export const metadata = constructMetadata({ path: "/" });
 
-// Doctrine v2 §7 NEW-G · SSG default + force-static + revalidate=false on
-// every customer-facing route. Home is a pure server component, no dynamic
-// content, no per-request work. Prerender once, serve forever.
 export const dynamic = "force-static";
 export const revalidate = false;
 
 /**
- * Home — rebuild-2026 v4 · Delta brief editorial.
+ * Home — rebuild-2026 v4 · Delta brief editorial + doctrine v2 Shape 3.
  *
- * Paper white, serif hero, orange plus-markers, cut-corner CTA. Apple-simple
- * voice: three ideas, everyday-person accessible. Same design system as
- * every bilateral client brief.
+ * Hero now carries the signature 5-band × 3-layer ArchitectureGrid as its
+ * `visual` slot — the site's central impressive artifact. All 15 layers
+ * visible in one glance; hover any cell for capability detail.
  */
 export default function HomePage() {
   return (
@@ -27,17 +25,45 @@ export default function HomePage() {
         eyebrow="Nebbos"
         title={
           <>
-            See Friday&rsquo;s problem
+            Build your company&rsquo;s
             <br />
-            on <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Monday</em>.
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>brain</em>.
           </>
         }
-        deck="Your company's brain. Owned by you."
+        deck="Fifteen layers. One system. Owned by you."
       >
         <ButtonLink href="/demo" variant="primary">
           Book a demo
         </ButtonLink>
       </Hero>
+
+      {/* Signature 15-layer architecture grid — the site's central visual. */}
+      <section
+        style={{
+          padding: "24px 0 96px",
+          borderTop: "1px solid var(--rule)",
+        }}
+      >
+        <div className="container" style={{ maxWidth: 1240 }}>
+          <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
+            <p className="eyebrow" style={{ margin: 0 }}>The architecture</p>
+            <h2
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(24px, 2.6vw, 32px)",
+                lineHeight: 1.1,
+                letterSpacing: "-0.018em",
+                fontWeight: 500,
+                color: "var(--ink)",
+                margin: 0,
+              }}
+            >
+              What you deploy · foundation to surface.
+            </h2>
+          </div>
+          <ArchitectureGrid />
+        </div>
+      </section>
 
       <FeatureRow
         eyebrow="What it does"
