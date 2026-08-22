@@ -87,12 +87,42 @@
   --dur-instant: 75ms;
   --dur-fast:    120ms;
   --dur-default: 180ms;
+  --dur-slow:    275ms;   /* scroll-reveal fade, cut-corner card enter, modal fade */
+  --dur-page:    400ms;   /* View Transitions API only */
   --ease-out:    cubic-bezier(.22, 1, .36, 1);
+  --ease-settle: cubic-bezier(.19, 1, .22, 1);   /* Palantir §4 primary "settle" curve (expo-out) */
 }
 
-/* Dark by system preference (only if not pinned to light) */
-:root:not([data-theme="light"]) {
-  @media (prefers-color-scheme: dark) {
+/* Dark theme — two paths (per doctrine v2 §5 NEW-A two-tier discipline):
+     (1) explicit data-theme="dark" toggle wins (attribute swap)
+     (2) prefers-color-scheme:dark applies IF data-theme isn't pinned */
+
+/* Dark palette shared by both paths — the raw values live here once. */
+:root[data-theme="dark"],
+:root:not([data-theme="light"]) [data-theme-scope="dark"] {
+  color-scheme: dark;
+  --paper:     #1D1C22;
+  --paper-2:   #1B1B20;
+  --paper-3:   #232329;
+  --ink:       #F4F4F6;
+  --ink-2:     #C9CACF;
+  --ink-3:     #9C9C9D;
+  --muted:     #7E7F87;
+  --navy:      #A3C1DB;
+  --navy-2:    #AEB6C1;
+  --navy-3:    #BBC1BF;
+  --navy-4:    #6D7787;
+  --accent:    #F6A03F;
+  --accent-2:  #FDDA88;
+  --gold:      #F6A03F;
+  --gold-2:    #FDDA88;
+  --success:   #6BB596;
+  --warning:   #E0AC44;
+  --rule:      #2E2E34;
+  --rule-2:    #212127;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
     color-scheme: dark;
     --paper:     #1D1C22;
     --paper-2:   #1B1B20;
@@ -174,6 +204,7 @@ body {
 a {
   color: var(--ink);
   text-decoration: none;
+  text-decoration-skip-ink: auto;   /* Palantir §11 Steal 6 — cleaner descenders */
   border-bottom: 1px solid var(--rule);
   transition: border-color var(--dur-fast) var(--ease-out),
               color var(--dur-fast) var(--ease-out);
@@ -272,12 +303,20 @@ code, kbd {
 }
 
 /*  Cut-corner card — single top-right cut. Emphasis surface for callouts
-    and stat panels. Radius asymmetry is the signature. */
+    and stat panels. Radius asymmetry is the signature.
+    Interactive variant lifts 2px on hover per Linear §5 (hairline-lift-only,
+    no drop-shadow). */
 .cut-corner {
   border-radius: 0 30px 0 0;
   background: var(--paper-2);
   padding: 24px 28px;
   border: 1px solid var(--rule-2);
+  transition: transform var(--dur-default) var(--ease-out),
+              border-color var(--dur-default) var(--ease-out);
+}
+.cut-corner:hover {
+  transform: translateY(-2px);
+  border-color: var(--rule);
 }
 
 /* ══════════════════════════════════════════════════════════════════════
@@ -313,14 +352,19 @@ code, kbd {
 /* ══════════════════════════════════════════════════════════════════════
    SITE HEADER
    ══════════════════════════════════════════════════════════════════════ */
+/* Sticky nav — OPAQUE, no backdrop-blur (per doctrine v2 §5 Node H reject).
+   Border-bottom is transparent at scrollY=0; scrollY-listener in layout.tsx
+   toggles data-scrolled="true" on <html>, which paints the hairline. */
 .site-header {
   position: sticky;
   top: 0;
   z-index: 40;
-  background: color-mix(in srgb, var(--paper) 88%, transparent);
-  backdrop-filter: saturate(140%) blur(12px);
-  -webkit-backdrop-filter: saturate(140%) blur(12px);
-  border-bottom: 1px solid var(--rule);
+  background: var(--paper);
+  border-bottom: 1px solid transparent;
+  transition: border-bottom-color var(--dur-fast) var(--ease-out);
+}
+html[data-scrolled="true"] .site-header {
+  border-bottom-color: var(--rule);
 }
 .site-header__inner {
   display: grid;

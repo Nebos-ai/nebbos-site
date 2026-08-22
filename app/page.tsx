@@ -2,9 +2,15 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
-import { pageMetadata } from "@/lib/seo";
+import { constructMetadata } from "@/lib/seo/constructMetadata";
 
-export const metadata = pageMetadata({ path: "/" });
+export const metadata = constructMetadata({ path: "/" });
+
+// Doctrine v2 §7 NEW-G · SSG default + force-static + revalidate=false on
+// every customer-facing route. Home is a pure server component, no dynamic
+// content, no per-request work. Prerender once, serve forever.
+export const dynamic = "force-static";
+export const revalidate = false;
 
 /**
  * Home — rebuild-2026 v4 · Delta brief editorial.

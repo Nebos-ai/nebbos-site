@@ -94,6 +94,18 @@ export default function RootLayout({
           // eslint-disable-next-line react/no-danger
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
+        {/*
+          Sticky-nav hairline-on-scroll · doctrine v2 §5 NEW-G.
+          Sets data-scrolled="true" on <html> when scrollY > 8. Server-inlined
+          so it runs before hydration — no flash on paint. Passive listener
+          for perf. Removes on unload. ~15 lines total.
+        */}
+        <script
+          // eslint-disable-next-line react/no-danger
+          dangerouslySetInnerHTML={{
+            __html: `(function(){function u(){var s=window.scrollY>8;var h=document.documentElement;if(s!==(h.dataset.scrolled==='true'))h.dataset.scrolled=s?'true':'false';}u();window.addEventListener('scroll',u,{passive:true});})();`,
+          }}
+        />
         <a href="#main" className="skip-link">
           Skip to content
         </a>

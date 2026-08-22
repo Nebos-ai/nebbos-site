@@ -7,6 +7,15 @@ const nextConfig: NextConfig = {
   pageExtensions: ["ts", "tsx", "md", "mdx"],
   experimental: {
     mdxRs: true,
+    // View Transitions API for same-taxonomy route changes (doctrine v2 §5).
+    // Behind a flag in Next 15.5.x; safe to enable — no-op in unsupported
+    // browsers. Adopted in Wave 2 for /customers → /customers/[slug] pairs.
+    viewTransition: true,
+  },
+  // Image optimization ON explicitly (reject Cal/Dub `unoptimized:true`
+  // per doctrine v2 §7). AVIF preferred, WebP fallback.
+  images: {
+    formats: ["image/avif", "image/webp"],
   },
   // The @nebbos/brand package ships raw .tsx / .ts source (its exports map
   // ./logo → logo/index.tsx directly). Next won't compile TSX inside
