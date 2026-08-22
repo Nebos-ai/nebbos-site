@@ -17,27 +17,33 @@ export default function BlogIndexPage() {
     <>
       <Hero
         eyebrow="Blog"
-        title={<>Notes<br />from Nebbos.</>}
+        title={
+          <>
+            Notes from
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Nebbos</em>.
+          </>
+        }
         deck="Foresight. Governance. The shape of operational work."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
-      <section style={{ padding: "56px 0", borderTop: "1px solid var(--hairline)" }}>
+      <section style={{ padding: "72px 0", borderTop: "1px solid var(--rule)" }}>
         <div className="container">
-          <div style={{ display: "grid", gap: 16 }}>
-            {posts.map((p) => (
-              <Link key={p.slug} href={`/blog/${encodeURIComponent(p.slug)}`} className="tile" style={{ display: "block" }}>
-                {p.frontmatter.date ? <div className="dep">{p.frontmatter.date}</div> : null}
-                <h3 style={{ marginTop: 8 }}>{p.frontmatter.title}</h3>
-                {p.frontmatter.description ? <p className="mist" style={{ marginTop: 8 }}>{p.frontmatter.description}</p> : null}
+          <div style={{ display: "grid", gap: 0 }}>
+            {posts.map((p, i) => (
+              <Link key={p.slug} href={`/blog/${encodeURIComponent(p.slug)}`} style={{ display: "block", padding: "24px 0", borderTop: i === 0 ? "1px solid var(--rule)" : "none", borderBottom: "1px solid var(--rule)" }}>
+                {p.frontmatter.date ? <p className="eyebrow" style={{ margin: 0 }}>{p.frontmatter.date}</p> : null}
+                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 500, letterSpacing: "-0.02em", margin: "10px 0 0", color: "var(--ink)" }}>{p.frontmatter.title}</h3>
+                {p.frontmatter.description ? <p style={{ margin: "8px 0 0", color: "var(--ink-3)", maxWidth: "60ch" }}>{p.frontmatter.description}</p> : null}
               </Link>
             ))}
           </div>
         </div>
       </section>
 
-      <CTABand headline="See what your operations are about to do." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See what your operations are about to do." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

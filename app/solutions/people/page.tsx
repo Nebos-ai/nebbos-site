@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "The gap. Not the person.",
 });
 
+/** People — rebuild-2026 v4 · Delta brief editorial. */
 export default function PeoplePage() {
   return (
     <>
       <Hero
         eyebrow="People"
-        title={<>The gap.<br />Not the person.</>}
+        title={
+          <>
+            The <em style={{ fontStyle: "italic", color: "var(--gold)" }}>gap</em>.
+            <br />
+            Not the person.
+          </>
+        }
         deck="Where the work is stuck. Not who to blame for it."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function PeoplePage() {
         body={<p style={{ margin: 0 }}>Pearl reads the handoffs, not the headcount. What surfaces is where the work slows — and what to change so it stops.</p>}
       />
 
-      <CTABand headline="See the seam on your own team." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See the seam on your own team." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Catch the crunch before the line.",
 });
 
+/** Manufacturing — rebuild-2026 v4 · Delta brief editorial. */
 export default function ManufacturingPage() {
   return (
     <>
       <Hero
         eyebrow="Manufacturing"
-        title={<>Catch the crunch<br />before the line.</>}
+        title={
+          <>
+            Catch the crunch
+            <br />
+            before the <em style={{ fontStyle: "italic", color: "var(--gold)" }}>line</em>.
+          </>
+        }
         deck="Suppliers, schedules, shifts — one view before the shortage."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function ManufacturingPage() {
         body={<p style={{ margin: 0 }}>Pearl reads the orders, the schedules, the callouts. The crunch surfaces upstream, while there&rsquo;s still room to move.</p>}
       />
 
-      <CTABand headline="See next week&rsquo;s crunch, this week." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See next week&rsquo;s crunch, this week." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

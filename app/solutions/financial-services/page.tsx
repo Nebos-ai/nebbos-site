@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Catch the control before it breaches.",
 });
 
+/** Financial Services — rebuild-2026 v4 · Delta brief editorial. */
 export default function FinancialServicesPage() {
   return (
     <>
       <Hero
         eyebrow="Financial Services"
-        title={<>Catch the control<br />before it breaches.</>}
+        title={
+          <>
+            Catch the control
+            <br />
+            before it <em style={{ fontStyle: "italic", color: "var(--gold)" }}>breaches</em>.
+          </>
+        }
         deck="Every exception, every approval, held to the same line."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function FinancialServicesPage() {
         body={<p style={{ margin: 0 }}>Pearl reads the approvals, the exceptions, the sign-offs. Drift surfaces before it hardens into a finding.</p>}
       />
 
-      <CTABand headline="See the control before it breaches." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See the control before it breaches." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Resources",
   path: "/resources",
-  description: "Every read in one place. Blog. Customers. Changelog. Docs.",
+  description: "Every read in one place. Blog. Customers. Changelog.",
 });
 
 export default function ResourcesPage() {
@@ -14,13 +14,10 @@ export default function ResourcesPage() {
       size="lg"
       eyebrow="Resources"
       title="Every read in one place."
-      deck="Blog. Customers. Changelog. Docs."
+      deck="Blog. Customers. Changelog."
     >
       <ButtonLink href="/blog" variant="primary">
         Read the blog →
-      </ButtonLink>
-      <ButtonLink href="/customers" variant="ghost">
-        See customers
       </ButtonLink>
     </Hero>
   );

@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Press",
   path: "/press",
-  description: "For journalists writing about Nebbos. Facts, contact, and the mark, on request.",
+  description: "For journalists writing about Nebbos. Facts, contact, and the mark.",
 });
 
 export default function PressPage() {
@@ -14,9 +14,9 @@ export default function PressPage() {
       size="lg"
       eyebrow="Press"
       title="For journalists writing about Nebbos."
-      deck="Facts, contact, and the mark, on request."
+      deck="Facts, contact, and the mark."
     >
-      <ButtonLink href="mailto:press@nebbos.ai" variant="primary">
+      <ButtonLink href="mailto:press@nebbos.ai" variant="primary" external>
         Email press@nebbos.ai →
       </ButtonLink>
     </Hero>

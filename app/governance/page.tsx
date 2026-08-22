@@ -15,10 +15,16 @@ export default function GovernancePage() {
     <>
       <Hero
         eyebrow="Tideline"
-        title={<>Nothing<br />skips scrutiny.</>}
+        title={
+          <>
+            Nothing skips
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>scrutiny</em>.
+          </>
+        }
         deck="Tideline is the line your AI never crosses."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
         <ButtonLink href="/security" variant="ghost">How oversight works</ButtonLink>
       </Hero>
 
@@ -37,7 +43,7 @@ export default function GovernancePage() {
 
       <CTABand
         headline="See the gates on your own operation."
-        primary={{ label: "Book a demo →", href: "/demo" }}
+        primary={{ label: "Book a demo", href: "/demo" }}
         secondary={{ label: "Compliance posture", href: "/compliance" }}
       />
     </>

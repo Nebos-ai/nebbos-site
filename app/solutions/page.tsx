@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Coordination is where the work lives. A Pearl for every department.",
 });
 
+/** Solutions — rebuild-2026 v4 · Delta brief editorial. */
 export default function SolutionsPage() {
   return (
     <>
       <Hero
         eyebrow="Solutions"
-        title={<>Coordination is where<br />the work lives.</>}
+        title={
+          <>
+            Coordination is where
+            <br />
+            the <em style={{ fontStyle: "italic", color: "var(--gold)" }}>work</em> lives.
+          </>
+        }
         deck="A Pearl for every department that has to answer for it."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function SolutionsPage() {
         body={<p style={{ margin: 0 }}>One Pearl per department. Each fluent in its work, each honest about what it sees the others miss.</p>}
       />
 
-      <CTABand headline="Start with the department that hurts most." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="Start with the department that hurts most." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

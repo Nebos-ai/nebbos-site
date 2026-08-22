@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Predictable cost. A tool that compounds.",
 });
 
+/** Finance — rebuild-2026 v4 · Delta brief editorial. */
 export default function FinancePage() {
   return (
     <>
       <Hero
         eyebrow="Finance"
-        title={<>Predictable cost.<br />A tool that compounds.</>}
+        title={
+          <>
+            Predictable cost.
+            <br />
+            A tool that <em style={{ fontStyle: "italic", color: "var(--gold)" }}>compounds</em>.
+          </>
+        }
         deck="One flat price. Intelligence that grows into your business."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function FinancePage() {
         body={<p style={{ margin: 0 }}>One flat price for everything. Billed annually with a 15% prepay discount. The value compounds; the invoice doesn&rsquo;t.</p>}
       />
 
-      <CTABand headline="One price. See it pay for itself." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="One price. See it pay for itself." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

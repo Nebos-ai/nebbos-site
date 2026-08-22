@@ -7,7 +7,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Trust Center",
   path: "/trust",
-  description: "Security, governance, and compliance — designed into the architecture, not retrofitted to it.",
+  description: "Security, governance, and compliance designed into the architecture, not retrofitted to it.",
 });
 
 export default function TrustPage() {
@@ -15,17 +15,23 @@ export default function TrustPage() {
     <>
       <Hero
         eyebrow="Trust center"
-        title={<>Accountable<br />by architecture.</>}
+        title={
+          <>
+            Accountable by
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>architecture</em>.
+          </>
+        }
         deck="Read the guarantees. Then read the code."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
         <ButtonLink href="/security" variant="ghost">Security</ButtonLink>
       </Hero>
 
       <FeatureRow
         eyebrow="The premise"
         title="Trust you can read, not take on faith."
-        body={<p style={{ margin: 0 }}>Nebbos was built for the high-risk AI bar. Oversight, minimisation, and audit are properties of the platform — not a policy page.</p>}
+        body={<p style={{ margin: 0 }}>Nebbos was built to the high-risk AI bar. Oversight, minimisation, and audit are properties of the platform — not a policy page.</p>}
       />
 
       <FeatureRow
@@ -37,7 +43,7 @@ export default function TrustPage() {
 
       <CTABand
         headline="Bring the security questionnaire."
-        primary={{ label: "Book a demo →", href: "/demo" }}
+        primary={{ label: "Book a demo", href: "/demo" }}
         secondary={{ label: "Talk to us", href: "/contact" }}
       />
     </>

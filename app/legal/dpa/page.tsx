@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Data Processing Agreement",
   path: "/legal/dpa",
-  description: "Article 28 processor terms available under NDA. Contact legal@nebbos.ai.",
+  description: "Article 28 processor terms under NDA. Contact legal@nebbos.ai.",
 });
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
       size="lg"
       eyebrow="Legal"
       title="Data Processing Agreement."
-      deck="Article 28 processor terms available under NDA. Contact legal@nebbos.ai."
+      deck="Article 28 processor terms under NDA. Contact legal@nebbos.ai."
     >
       <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
         Request DPA →

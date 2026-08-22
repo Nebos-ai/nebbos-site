@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Accountable by construction. Every decision, traceable.",
 });
 
+/** Public Sector — rebuild-2026 v4 · Delta brief editorial. */
 export default function PublicSectorPage() {
   return (
     <>
       <Hero
         eyebrow="Public Sector"
-        title={<>Accountable<br />by construction.</>}
+        title={
+          <>
+            Accountable
+            <br />
+            by <em style={{ fontStyle: "italic", color: "var(--gold)" }}>construction</em>.
+          </>
+        }
         deck="Every decision traceable. Every handoff on the record."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function PublicSectorPage() {
         body={<p style={{ margin: 0 }}>Pearl reads the handoffs as they happen. The trail is intact before anyone has to reconstruct it.</p>}
       />
 
-      <CTABand headline="See the trail on your own casework." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See the trail on your own casework." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

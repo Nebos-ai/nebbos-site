@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "See the coverage gap before it reaches a family.",
 });
 
+/** K-12 — rebuild-2026 v4 · Delta brief editorial. */
 export default function K12Page() {
   return (
     <>
       <Hero
         eyebrow="K-12"
-        title={<>See the coverage gap<br />before it reaches a family.</>}
+        title={
+          <>
+            See the gap before
+            <br />
+            it reaches a <em style={{ fontStyle: "italic", color: "var(--gold)" }}>family</em>.
+          </>
+        }
         deck="The absence, the substitute, the parent email — all in one view."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function K12Page() {
         body={<p style={{ margin: 0 }}>Pearl reads the schedule, the callouts, the sub pool. You see the gap in time to close it before a family notices.</p>}
       />
 
-      <CTABand headline="See next week&rsquo;s coverage on your data." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See next week&rsquo;s coverage on your data." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

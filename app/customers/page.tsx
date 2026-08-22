@@ -17,28 +17,34 @@ export default function CustomersIndexPage() {
     <>
       <Hero
         eyebrow="Customers"
-        title={<>Put a Pearl<br />on your hardest department.</>}
+        title={
+          <>
+            Put a Pearl on your
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>hardest</em> department.
+          </>
+        }
         deck="How teams use Nebbos on the work that matters."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
-      <section style={{ padding: "56px 0", borderTop: "1px solid var(--hairline)" }}>
+      <section style={{ padding: "72px 0", borderTop: "1px solid var(--rule)" }}>
         <div className="container">
-          <div className="grid grid-2">
-            {stories.map((s) => (
-              <Link key={s.slug} href={`/customers/${encodeURIComponent(s.slug)}`} className="tile" style={{ display: "block" }}>
-                <div className="dep">{s.frontmatter.industry ?? s.frontmatter.company}</div>
-                <h3 style={{ marginTop: 8 }}>{s.frontmatter.title}</h3>
-                {s.frontmatter.description ? <p className="mist" style={{ marginTop: 8 }}>{s.frontmatter.description}</p> : null}
+          <div style={{ display: "grid", gap: 0 }}>
+            {stories.map((s, i) => (
+              <Link key={s.slug} href={`/customers/${encodeURIComponent(s.slug)}`} style={{ display: "block", padding: "24px 0", borderTop: i === 0 ? "1px solid var(--rule)" : "none", borderBottom: "1px solid var(--rule)" }}>
+                <p className="eyebrow" style={{ margin: 0 }}>{s.frontmatter.industry ?? s.frontmatter.company}</p>
+                <h3 style={{ fontFamily: "var(--font-serif)", fontSize: 26, fontWeight: 500, letterSpacing: "-0.02em", margin: "10px 0 0", color: "var(--ink)" }}>{s.frontmatter.title}</h3>
+                {s.frontmatter.description ? <p style={{ margin: "8px 0 0", color: "var(--ink-3)", maxWidth: "60ch" }}>{s.frontmatter.description}</p> : null}
               </Link>
             ))}
           </div>
-          <p className="mono faint" style={{ marginTop: 24, fontSize: 12 }}>Stories shown are illustrative.</p>
+          <p className="mono" style={{ marginTop: 24, fontSize: 12, color: "var(--muted)" }}>Stories shown are illustrative.</p>
         </div>
       </section>
 
-      <CTABand headline="See it on your own data." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See it on your own data." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

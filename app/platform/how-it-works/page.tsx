@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Live in days, not quarters. Connect the stack. Turn on a Pearl.",
 });
 
+/** How it works — rebuild-2026 v4 · Delta brief editorial. */
 export default function HowItWorksPage() {
   return (
     <>
       <Hero
         eyebrow="How it works"
-        title={<>Live in days,<br />not quarters.</>}
+        title={
+          <>
+            Live in <em style={{ fontStyle: "italic", color: "var(--gold)" }}>days</em>,
+            <br />
+            not quarters.
+          </>
+        }
         deck="Connect the stack. Turn on a Pearl. Watch the work."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function HowItWorksPage() {
         body={<p style={{ margin: 0 }}>Pick the department that hurts most. A Pearl starts answering the five questions on your data, in your voice.</p>}
       />
 
-      <CTABand headline="Days to first answer. Quarters to compound." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="Days to first answer. Quarters to compound." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

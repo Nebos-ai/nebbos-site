@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Stop finding out on Friday.",
 });
 
+/** Operations — rebuild-2026 v4 · Delta brief editorial. */
 export default function OperationsPage() {
   return (
     <>
       <Hero
         eyebrow="Operations"
-        title={<>Stop finding out<br />on Friday.</>}
+        title={
+          <>
+            Stop finding out
+            <br />
+            on <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Friday</em>.
+          </>
+        }
         deck="The week&rsquo;s misses, surfaced while there&rsquo;s still a week."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function OperationsPage() {
         body={<p style={{ margin: 0 }}>Pearl reads the handoffs, the deadlines, the decisions. Friday&rsquo;s headline shows up in Monday&rsquo;s view.</p>}
       />
 
-      <CTABand headline="See Friday&rsquo;s problem on Monday." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See Friday&rsquo;s problem on Monday." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

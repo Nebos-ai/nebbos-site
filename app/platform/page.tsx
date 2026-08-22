@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Five questions. In order. The platform behind every Pearl.",
 });
 
+/** Platform — rebuild-2026 v4 · Delta brief editorial. */
 export default function PlatformPage() {
   return (
     <>
       <Hero
         eyebrow="Platform"
-        title={<>Five questions.<br />In order.</>}
+        title={
+          <>
+            Five questions.
+            <br />
+            In <em style={{ fontStyle: "italic", color: "var(--gold)" }}>order</em>.
+          </>
+        }
         deck="What&rsquo;s changing. What breaks next. What to do."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function PlatformPage() {
         body={<p style={{ margin: 0 }}>Cradle holds the memory. Shell keeps it honest. Pearl does the work.</p>}
       />
 
-      <CTABand headline="See the five questions on your data." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See the five questions on your data." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

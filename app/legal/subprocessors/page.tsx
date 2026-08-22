@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Subprocessors",
   path: "/legal/subprocessors",
-  description: "The current register is available under NDA. Contact legal@nebbos.ai.",
+  description: "Current register under NDA. Contact legal@nebbos.ai.",
 });
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
       size="lg"
       eyebrow="Legal"
       title="Subprocessors."
-      deck="The current register is available under NDA. Contact legal@nebbos.ai."
+      deck="Current register under NDA. Contact legal@nebbos.ai."
     >
       <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
         Request register →

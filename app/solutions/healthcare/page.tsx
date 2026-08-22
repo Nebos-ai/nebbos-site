@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "Every shift, accounted for. Coverage before the ward feels it.",
 });
 
+/** Healthcare — rebuild-2026 v4 · Delta brief editorial. */
 export default function HealthcarePage() {
   return (
     <>
       <Hero
         eyebrow="Healthcare"
-        title={<>Every shift,<br />accounted for.</>}
+        title={
+          <>
+            Every <em style={{ fontStyle: "italic", color: "var(--gold)" }}>shift</em>,
+            <br />
+            accounted for.
+          </>
+        }
         deck="Coverage, licenses, escalations — held before the ward feels it."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function HealthcarePage() {
         body={<p style={{ margin: 0 }}>Pearl reads the roster, the credentials, the escalation log. The miss surfaces where it can still be fixed.</p>}
       />
 
-      <CTABand headline="See the next uncovered shift, this week." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="See the next uncovered shift, this week." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

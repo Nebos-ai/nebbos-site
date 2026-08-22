@@ -10,15 +10,22 @@ export const metadata = pageMetadata({
   description: "One Pearl per department. Pre-educated. Yours to keep.",
 });
 
+/** Pearl — rebuild-2026 v4 · Delta brief editorial. */
 export default function PearlPage() {
   return (
     <>
       <Hero
         eyebrow="Pearl"
-        title={<>One Pearl<br />per department.</>}
+        title={
+          <>
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>One</em> Pearl
+            <br />
+            per department.
+          </>
+        }
         deck="Pre-educated in the work. Yours to keep."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
@@ -34,7 +41,7 @@ export default function PearlPage() {
         body={<p style={{ margin: 0 }}>Everything a Pearl learns lives in your tenant. Portable to you, compounding every quarter, trained on nobody else.</p>}
       />
 
-      <CTABand headline="Put a Pearl on your hardest department." primary={{ label: "Book a demo →", href: "/demo" }} />
+      <CTABand headline="Put a Pearl on your hardest department." primary={{ label: "Book a demo", href: "/demo" }} />
     </>
   );
 }

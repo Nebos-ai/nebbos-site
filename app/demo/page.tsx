@@ -15,15 +15,21 @@ export default function DemoPage() {
     <>
       <Hero
         eyebrow="Book a demo"
-        title={<>See what your operations<br />are about to do.</>}
+        title={
+          <>
+            See what your operations
+            <br />
+            are <em style={{ fontStyle: "italic", color: "var(--gold)" }}>about</em> to do.
+          </>
+        }
         deck="Connect your stack. Your first Pearl starts watching."
       >
         <ButtonLink href="/pricing" variant="ghost">See pricing</ButtonLink>
       </Hero>
 
-      <section style={{ padding: "56px 0", borderTop: "1px solid var(--hairline)" }}>
+      <section style={{ padding: "72px 0", borderTop: "1px solid var(--rule)" }}>
         <div className="container">
-          <div className="panel" style={{ maxWidth: 640 }}>
+          <div className="cut-corner" style={{ maxWidth: 640, padding: "32px 36px" }}>
             <ContactForm />
           </div>
         </div>

@@ -15,29 +15,35 @@ export default function CompliancePage() {
     <>
       <Hero
         eyebrow="Compliance"
-        title={<>Written for<br />the high-risk bar.</>}
+        title={
+          <>
+            Written for the
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>high-risk</em> bar.
+          </>
+        }
         deck="EU AI Act high-risk ready. GDPR-aligned."
       >
-        <ButtonLink href="/contact" variant="primary">Request documentation →</ButtonLink>
+        <ButtonLink href="/contact" variant="primary">Request documentation</ButtonLink>
         <ButtonLink href="/security" variant="ghost">Security guarantees</ButtonLink>
       </Hero>
 
       <FeatureRow
         eyebrow="The premise"
-        title="Compliance you can demonstrate, not just assert."
+        title="Compliance you can demonstrate, not assert."
         body={<p style={{ margin: 0 }}>Human oversight, traceable decisions, data minimisation — the things a regulator looks for are properties of how Nebbos was built. The evidence already exists.</p>}
       />
 
       <FeatureRow
         reverse
         eyebrow="Control frameworks"
-        title="The controls we build to, stated honestly."
+        title="Stated honestly, not decorated."
         body={<p style={{ margin: 0 }}>Nebbos was engineered to the SOC 2 and ISO 27001 controls — not a certificate currently held. The security package is available under NDA.</p>}
       />
 
       <CTABand
         headline="Running an evaluation? Request the pack."
-        primary={{ label: "Request documentation →", href: "/contact" }}
+        primary={{ label: "Request documentation", href: "/contact" }}
         secondary={{ label: "How governance works", href: "/governance" }}
       />
     </>

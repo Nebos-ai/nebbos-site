@@ -15,15 +15,21 @@ export default function ContactPage() {
     <>
       <Hero
         eyebrow="Contact"
-        title={<>Put a Pearl<br />on your hardest department.</>}
+        title={
+          <>
+            Put a Pearl on your
+            <br />
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>hardest</em> department.
+          </>
+        }
         deck="Tell us where to start."
       >
-        <ButtonLink href="/demo" variant="primary">Book a demo →</ButtonLink>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
-      <section style={{ padding: "56px 0", borderTop: "1px solid var(--hairline)" }}>
+      <section style={{ padding: "72px 0", borderTop: "1px solid var(--rule)" }}>
         <div className="container">
-          <div className="panel" style={{ maxWidth: 640 }}>
+          <div className="cut-corner" style={{ maxWidth: 640, padding: "32px 36px" }}>
             <ContactForm />
           </div>
         </div>
@@ -31,7 +37,7 @@ export default function ContactPage() {
 
       <CTABand
         headline="One price. Every seat. Every capability."
-        primary={{ label: "Book a demo →", href: "/demo" }}
+        primary={{ label: "Book a demo", href: "/demo" }}
         secondary={{ label: "See pricing", href: "/pricing" }}
       />
     </>
