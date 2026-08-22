@@ -1,28 +1,24 @@
-import { LegalPage } from "@/components/ui/LegalPage";
+import { ButtonLink } from "@/components/ui/Button";
+import { Hero } from "@/components/ui/Hero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Cookie policy",
+  title: "Cookies",
   path: "/legal/cookies",
-  description: "How the Nebbos website uses cookies and similar technologies.",
+  description: "Nebbos uses only functional cookies. Counsel-reviewed policy lands with production.",
 });
 
 export default function CookiesPage() {
   return (
-    <LegalPage
-      title="Cookie policy"
-      lead={
-        <>
-          How the Nebbos website uses cookies and similar technologies. <span className="faint">Template — to be completed and reviewed by counsel before publishing.</span>
-        </>
-      }
+    <Hero
+      size="lg"
+      eyebrow="Legal"
+      title="Cookie policy."
+      deck="Nebbos uses only functional cookies. Counsel-reviewed policy lands with production."
     >
-      <h2>What we use</h2>
-      <p>The marketing site aims to run with minimal cookies. [List any strictly-necessary, analytics or preference cookies actually set, with purpose and duration.]</p>
-      <h2>Your choices</h2>
-      <p>[Describe the consent mechanism and how to change preferences, in line with ePrivacy / GDPR where applicable.]</p>
-      <h2>Contact</h2>
-      <p>Questions: <a href="mailto:hello@nebbos.ai">hello@nebbos.ai</a>.</p>
-    </LegalPage>
+      <ButtonLink href="/contact" variant="primary">
+        Get in touch →
+      </ButtonLink>
+    </Hero>
   );
 }

@@ -1,46 +1,39 @@
-import { Section } from "@/components/ui/Section";
-import { Tile } from "@/components/ui/Card";
-import { PageHero } from "@/components/ui/PageHero";
+import { ButtonLink } from "@/components/ui/Button";
+import { Hero } from "@/components/ui/Hero";
+import { CTABand } from "@/components/ui/CTABand";
 import { pageMetadata } from "@/lib/seo";
 import { ContactForm } from "@/app/contact/ContactForm";
 
 export const metadata = pageMetadata({
   title: "Book a demo",
   path: "/demo",
-  description:
-    "See Nebbos on your own data. Connect your stack and your first Pearl starts watching — predictions begin as soon as there's enough signal.",
+  description: "See Nebbos on your own data. Connect your stack. Your first Pearl starts watching.",
 });
-
-const expect = [
-  { dep: "30 minutes", title: "A walkthrough on your operation", body: "We map the five questions to your hardest department and show what Pearl would surface first." },
-  { dep: "Your stack", title: "No rip-and-replace", body: "We talk through the connectors you already run and confirm coverage before anything is connected." },
-  { dep: "Your review", title: "Security-ready", body: "Bring the questionnaire. Oversight is enforced in the architecture, and we built for it." },
-];
 
 export default function DemoPage() {
   return (
     <>
-      <PageHero
+      <Hero
         eyebrow="Book a demo"
-        title="See what your operations are about to do."
-        lead="Connect your stack and your first Pearl — your department's agent — starts watching. Predictions begin as soon as there's enough signal. Tell us where to start and we'll set up a walkthrough on your own data."
-      />
+        title={<>See what your operations<br />are about to do.</>}
+        deck="Connect your stack. Your first Pearl starts watching."
+      >
+        <ButtonLink href="/pricing" variant="ghost">See pricing</ButtonLink>
+      </Hero>
 
-      <Section>
-        <div className="grid grid-2" style={{ alignItems: "start", gap: 64 }}>
-          <div className="panel">
+      <section style={{ padding: "56px 0", borderTop: "1px solid var(--hairline)" }}>
+        <div className="container">
+          <div className="panel" style={{ maxWidth: 640 }}>
             <ContactForm />
           </div>
-          <div>
-            <p className="eyebrow">What to expect</p>
-            <div style={{ marginTop: 24, display: "grid", gap: 16 }}>
-              {expect.map((e) => (
-                <Tile key={e.dep} label={e.dep} title={e.title}>{e.body}</Tile>
-              ))}
-            </div>
-          </div>
         </div>
-      </Section>
+      </section>
+
+      <CTABand
+        headline="One flat price. Every seat gets everything."
+        primary={{ label: "See pricing", href: "/pricing" }}
+        secondary={{ label: "Talk to us", href: "/contact" }}
+      />
     </>
   );
 }

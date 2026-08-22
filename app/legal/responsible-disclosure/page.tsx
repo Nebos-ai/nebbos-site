@@ -1,32 +1,24 @@
-import { LegalPage } from "@/components/ui/LegalPage";
+import { ButtonLink } from "@/components/ui/Button";
+import { Hero } from "@/components/ui/Hero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Responsible disclosure",
+  title: "Responsible Disclosure",
   path: "/legal/responsible-disclosure",
-  description: "How to report a security vulnerability to Nebbos.",
+  description: "Report a vulnerability to security@nebbos.ai. Full policy lands with production.",
 });
 
 export default function ResponsibleDisclosurePage() {
   return (
-    <LegalPage
-      title="Responsible disclosure"
-      lead={
-        <>
-          How to report a security vulnerability to Nebbos, and what to expect. <span className="faint">Template — to be completed and reviewed by counsel before publishing.</span>
-        </>
-      }
+    <Hero
+      size="lg"
+      eyebrow="Legal"
+      title="Responsible disclosure."
+      deck="Report a vulnerability to security@nebbos.ai. Full policy lands with production."
     >
-      <h2>Reporting</h2>
-      <p>If you believe you&rsquo;ve found a security issue, email <a href="mailto:security@nebbos.ai">security@nebbos.ai</a> with enough detail to reproduce it. [Confirm the security inbox before publishing.]</p>
-      <h2>Our commitment</h2>
-      <ul>
-        <li>We&rsquo;ll acknowledge your report and keep you updated.</li>
-        <li>We won&rsquo;t pursue good-faith research that respects user privacy and avoids service disruption.</li>
-        <li>We&rsquo;ll credit you once the issue is resolved, if you&rsquo;d like.</li>
-      </ul>
-      <h2>Scope</h2>
-      <p>[Define in-scope domains and systems, and anything explicitly out of scope.]</p>
-    </LegalPage>
+      <ButtonLink href="mailto:security@nebbos.ai" variant="primary">
+        Email security@nebbos.ai →
+      </ButtonLink>
+    </Hero>
   );
 }
