@@ -302,6 +302,62 @@ code, kbd {
   height: 19px;
 }
 
+/*  Orange plus-marker · animated variant per doctrine v2 §5.
+    On elements marked `.plus-marker--animated`, the two arms of the cross
+    draw in via clip-path when the element (or an ancestor) gains
+    `.is-visible` via ScrollReveal. Signature Nebbos motion device. */
+.plus-marker--animated::before,
+.plus-marker--animated::after {
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path var(--dur-default) var(--ease-settle);
+}
+.plus-marker--animated.is-visible::before,
+.plus-marker--animated.is-visible::after,
+.plus-marker--animated::before,   /* fallback when no ScrollReveal — reveal at rest */
+.plus-marker--animated::after {
+  clip-path: inset(0 0 0 0);
+}
+/* Reduced-motion: no draw-on transition — reveal at rest immediately. */
+@media (prefers-reduced-motion: reduce) {
+  .plus-marker--animated::before,
+  .plus-marker--animated::after {
+    transition: none;
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   VIEW TRANSITIONS · doctrine v2 §5 same-taxonomy pairs
+   Subtle crossfade on route change. Browser-level API; no polyfill for
+   older browsers (they just get default navigation).
+   ══════════════════════════════════════════════════════════════════════ */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: var(--dur-page);
+  animation-timing-function: var(--ease-settle);
+}
+::view-transition-old(root) {
+  animation-name: nebbos-page-out;
+}
+::view-transition-new(root) {
+  animation-name: nebbos-page-in;
+}
+@keyframes nebbos-page-out {
+  to { opacity: 0; }
+}
+@keyframes nebbos-page-in {
+  from { opacity: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none;
+  }
+}
+
 /*  Cut-corner card — single top-right cut. Emphasis surface for callouts
     and stat panels. Radius asymmetry is the signature.
     Interactive variant lifts 2px on hover per Linear §5 (hairline-lift-only,
@@ -376,60 +432,35 @@ code, kbd {
 
 .arch-cell {
   position: relative;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: flex-start;
+  display: grid;
+  grid-template-rows: auto auto 1fr;
   gap: 6px;
-  padding: 16px 18px;
+  padding: 18px 20px;
   background: var(--paper);
   border: 0;
   border-left: 1px solid var(--rule);
-  border-bottom: 0;
   cursor: pointer;
   text-align: left;
   font-family: var(--font-sans);
   color: var(--ink);
-  transition: background var(--dur-fast) var(--ease-out),
-              border-color var(--dur-fast) var(--ease-out);
+  transition: background var(--dur-fast) var(--ease-out);
   outline: none;
+  min-height: 108px;
 }
 .arch-cell:first-of-type { border-left: 0; }
 
-/* signature orange plus at the top-left of every cell */
-.arch-cell::before,
-.arch-cell::after {
-  content: "";
-  position: absolute;
-  background: var(--accent-2);
-  opacity: 0.75;
-  transition: opacity var(--dur-fast) var(--ease-out);
-}
-.arch-cell::before {
-  top: 12px;
-  left: 12px;
-  width: 8px;
-  height: 1px;
-}
-.arch-cell::after {
-  top: 8.5px;
-  left: 15.5px;
-  width: 1px;
-  height: 8px;
-}
-
 .arch-cell-n {
   font-family: var(--font-mono);
-  font-size: 10px;
+  font-size: 10.5px;
   letter-spacing: 0.14em;
-  color: var(--ink-3);
-  padding-left: 24px;
+  color: var(--gold);
+  line-height: 1;
 }
 .arch-cell-name {
   font-family: var(--font-serif);
-  font-size: 17px;
+  font-size: 20px;
   line-height: 1.15;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.012em;
   color: var(--ink);
   font-weight: 500;
 }
@@ -438,32 +469,39 @@ code, kbd {
   font-size: 10.5px;
   color: var(--ink-3);
   letter-spacing: 0.02em;
+  line-height: 1.35;
+  align-self: end;
 }
 
+/* Left orange rail on hover / active — signature Nebbos accent applied
+   INSIDE the cell (not overlapping text). */
+.arch-cell::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 3px;
+  height: 100%;
+  background: var(--accent-2);
+  opacity: 0;
+  transition: opacity var(--dur-fast) var(--ease-out);
+}
+.arch-cell:hover::before,
+.arch-cell:focus-visible::before,
+.arch-cell.is-active::before {
+  opacity: 1;
+}
 .arch-cell:hover,
 .arch-cell:focus-visible,
 .arch-cell.is-active {
   background: var(--paper-2);
-  border-color: var(--rule);
-}
-.arch-cell:hover::before,
-.arch-cell:hover::after,
-.arch-cell:focus-visible::before,
-.arch-cell:focus-visible::after,
-.arch-cell.is-active::before,
-.arch-cell.is-active::after {
-  opacity: 1;
 }
 .arch-cell.is-pinned {
   background: var(--paper-2);
 }
-.arch-cell.is-pinned::after {
-  height: 14px;
-  top: 5.5px;
-}
 .arch-cell.is-pinned::before {
-  width: 14px;
-  left: 9px;
+  opacity: 1;
+  width: 4px;
 }
 
 /* --- DETAIL PANEL --------------------------------------------------- */
