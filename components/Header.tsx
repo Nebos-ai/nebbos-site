@@ -4,9 +4,13 @@ import { APP_URL } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/Button";
 
 /**
- * Site header reflecting the canonical IA (AD-6). CSS-driven hover/focus
- * dropdowns keep this a server component (no client JS needed for the menu).
- * "Log in" links external to app.nebbos.ai; "Book a demo" is the primary CTA.
+ * Site header — rebuild-2026. Flat 8-destination nav, no dropdowns.
+ *
+ * The five-group hover-dropdown pattern was noise on a marketing site whose
+ * job is to sell to a founder / operator who wants to skim. Flat nav lets
+ * the reader see the whole IA at a glance (Platform / How / Pricing /
+ * Solutions / Trust / About / Blog / Contact) and pick the destination
+ * they need in one click. Server component — zero client JS.
  */
 export function Header() {
   return (
@@ -17,27 +21,20 @@ export function Header() {
         </Link>
 
         <nav className="nav" aria-label="Primary">
-          {primaryNav.map((group) => (
-            <div key={group.label} className="nav__item">
-              <button className="nav__trigger" aria-haspopup="true">
-                {group.label}
-              </button>
-              <div className="nav__menu" role="menu">
-                {group.links.map((link) => (
-                  <Link key={link.href} href={link.href} role="menuitem">
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
-            </div>
+          {primaryNav.map((link) => (
+            <Link key={link.href} href={link.href} className="nav__trigger">
+              {link.label}
+            </Link>
           ))}
-          <Link href="/pricing" className="nav__trigger" style={{ display: "inline-block" }}>
-            Pricing
-          </Link>
         </nav>
 
         <div className="header-actions">
-          <a href={APP_URL} className="nav__trigger" style={{ color: "var(--mist)" }} rel="noreferrer">
+          <a
+            href={APP_URL}
+            className="nav__trigger"
+            style={{ color: "var(--mist)" }}
+            rel="noreferrer"
+          >
             Log in
           </a>
           <ButtonLink href="/demo" variant="primary">
