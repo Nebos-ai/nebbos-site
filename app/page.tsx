@@ -7,15 +7,11 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({ path: "/" });
 
 /**
- * Home — rebuild-2026 v2 (simplified).
+ * Home — rebuild-2026 v4 · Delta brief editorial.
  *
- * Per founder 2026-08-22: "we dont want to give too much away we want it
- * exciting but not over explaining simpler the better ... thats what made
- * apple great they simplified it for the everyday person."
- *
- * Four sections. No jargon (no FastMCP, no LangGraph, no RLS). No 4-block
- * evidence panels. Three headlines that a non-engineer will feel. Book a
- * demo to see the rest.
+ * Paper white, serif hero, orange plus-markers, cut-corner CTA. Apple-simple
+ * voice: three ideas, everyday-person accessible. Same design system as
+ * every bilateral client brief.
  */
 export default function HomePage() {
   return (
@@ -25,15 +21,15 @@ export default function HomePage() {
         eyebrow="Nebbos"
         title={
           <>
-            See Friday&apos;s problem
+            See Friday&rsquo;s problem
             <br />
-            on Monday.
+            on <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Monday</em>.
           </>
         }
-        deck="Your company&apos;s brain. Owned by you."
+        deck="Your company's brain. Owned by you."
       >
         <ButtonLink href="/demo" variant="primary">
-          Book a demo →
+          Book a demo
         </ButtonLink>
       </Hero>
 
@@ -42,8 +38,8 @@ export default function HomePage() {
         title="It watches the work. Not the people."
         body={
           <p style={{ margin: 0 }}>
-            Nebbos reads the signal your work already emits — decisions, handoffs,
-            deadlines — and shows you what breaks next.
+            Nebbos reads the signal your work already emits — decisions,
+            handoffs, deadlines — and shows you what breaks next.
           </p>
         }
       />
@@ -61,7 +57,13 @@ export default function HomePage() {
 
       <FeatureRow
         eyebrow="Why it matters"
-        title="Every other AI tool trains someone else’s model."
+        title={
+          <>
+            Every other AI trains{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>someone else&rsquo;s</em>{" "}
+            model.
+          </>
+        }
         body={
           <p style={{ margin: 0 }}>
             Nebbos trains yours. The intelligence, the memory, the moat — owned
@@ -72,7 +74,7 @@ export default function HomePage() {
 
       <CTABand
         headline="Put a Pearl on your hardest department."
-        primary={{ label: "Book a demo →", href: "/demo" }}
+        primary={{ label: "Book a demo", href: "/demo" }}
       />
     </>
   );

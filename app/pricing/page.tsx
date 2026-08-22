@@ -11,12 +11,8 @@ export const metadata = pageMetadata({
 });
 
 /**
- * Pricing — rebuild-2026 v2 (simplified). Apple bar.
- *
- * Canonical $150/user/mo flat per memory reference-nebos-pricing-canonical
- * Correction #6 (2026-08-22).
- *
- * Kept dead simple. One price. What's included. One CTA.
+ * Pricing — rebuild-2026 v4 · Delta brief editorial.
+ * Canonical $150/user/mo flat per memory reference-nebos-pricing-canonical.
  */
 export default function PricingPage() {
   return (
@@ -27,13 +23,13 @@ export default function PricingPage() {
           <>
             $150 per user
             <br />
-            per month.
+            per <em style={{ fontStyle: "italic", color: "var(--gold)" }}>month</em>.
           </>
         }
         deck="One flat price. Every seat gets everything."
       >
         <ButtonLink href="/demo" variant="primary">
-          Book a demo →
+          Book a demo
         </ButtonLink>
         <ButtonLink href="/contact" variant="ghost">
           Talk to sales
@@ -45,8 +41,8 @@ export default function PricingPage() {
         title="Every seat. Every capability."
         body={
           <p style={{ margin: 0 }}>
-            One price, every feature. Billed annually with a 15% prepay discount.
-            Ten-user minimum.
+            One price, every feature. Billed annually with a 15% prepay
+            discount. Ten-user minimum.
           </p>
         }
       />
@@ -65,7 +61,7 @@ export default function PricingPage() {
 
       <CTABand
         headline="One price. See it pay for itself."
-        primary={{ label: "Book a demo →", href: "/demo" }}
+        primary={{ label: "Book a demo", href: "/demo" }}
         secondary={{ label: "Talk to sales", href: "/contact" }}
       />
     </>

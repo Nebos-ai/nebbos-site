@@ -2,33 +2,18 @@ import type { ReactNode } from "react";
 
 type EyebrowProps = {
   children: ReactNode;
-  /** Visual tone. `accent` = Blue Aura, `faint` = --mist, default = --paper. */
-  tone?: "default" | "accent" | "faint";
-  /** Optional micro-icon or dot before the label (component or string). */
-  lead?: ReactNode;
+  tone?: "default" | "ink" | "muted";
 };
 
 /**
- * Small-caps mono label used above every display heading. Canonical form —
- * replaces the inline `<p class="eyebrow">` that was hand-rolled across 40
- * pages. Palantir uses this to name the section register before the reader
- * hits the display line.
+ * Signature eyebrow — mono, uppercase, 0.18em tracked, Nebbos orange.
+ * Sits above every display heading + section title. Delta brief pattern.
  */
-export function Eyebrow({ children, tone = "default", lead }: EyebrowProps) {
+export function Eyebrow({ children, tone = "default" }: EyebrowProps) {
   const color =
-    tone === "accent" ? "var(--blue)" : tone === "faint" ? "var(--mist)" : "var(--paper)";
+    tone === "ink" ? "var(--ink)" : tone === "muted" ? "var(--ink-3)" : "var(--gold)";
   return (
-    <p
-      className="eyebrow"
-      style={{
-        color,
-        display: lead ? "inline-flex" : undefined,
-        alignItems: lead ? "center" : undefined,
-        gap: lead ? "8px" : undefined,
-        margin: 0,
-      }}
-    >
-      {lead ? <span aria-hidden>{lead}</span> : null}
+    <p className="eyebrow" style={{ color, margin: 0 }}>
       {children}
     </p>
   );

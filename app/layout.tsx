@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Bricolage_Grotesque, Inter, Geist_Mono } from "next/font/google";
+import { Newsreader, Host_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
 import { Footer } from "@/components/Footer";
@@ -11,27 +11,33 @@ import {
   SITE_ORIGIN,
 } from "@/lib/site";
 
-// Font system per @nebbos/brand Folio contract:
-//   --font-display → Bricolage Grotesque (display headlines)
-//   --font-sans    → Inter (body + UI)
-//   --font-mono    → Geist Mono (numerics + code + kbd shortcuts)
-// All self-hosted via next/font, `display: swap` so first paint never blocks.
-const bricolage = Bricolage_Grotesque({
+/**
+ * Font system — Delta brief editorial (rebuild-2026 v4).
+ *
+ * Newsreader (serif) as the display face. Trust 3A first in the CSS
+ * cascade so Adobe Typekit takes over when the client has it — Newsreader
+ * is the self-hosted fallback and reads honestly close.
+ *
+ * Host Grotesk = body sans.
+ * JetBrains Mono = numerics, kbd, eyebrows.
+ */
+const newsreader = Newsreader({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-bricolage",
+  weight: ["300", "400", "500", "600", "700"],
+  style: ["normal", "italic"],
+  variable: "--font-newsreader",
   display: "swap",
 });
-const inter = Inter({
+const hostGrotesk = Host_Grotesk({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-  variable: "--font-inter",
+  weight: ["300", "400", "500", "600", "700"],
+  variable: "--font-host-grotesk",
   display: "swap",
 });
-const geistMono = Geist_Mono({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-geist-mono",
+  variable: "--font-jetbrains-mono",
   display: "swap",
 });
 
@@ -49,7 +55,6 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/favicon.svg", type: "image/svg+xml" },
-      { url: "/favicon.ico", sizes: "any" },
     ],
     apple: "/favicon.svg",
   },
@@ -75,8 +80,14 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${bricolage.variable} ${inter.variable} ${geistMono.variable}`}
+      data-theme="light"
+      className={`${newsreader.variable} ${hostGrotesk.variable} ${jetbrainsMono.variable}`}
     >
+      <head>
+        {/* Adobe Typekit for Trust 3A — cascades before Newsreader.
+            Degrades gracefully when the network / kit is blocked. */}
+        <link rel="stylesheet" href="https://use.typekit.net/gkk3ycm.css" />
+      </head>
       <body>
         <script
           type="application/ld+json"

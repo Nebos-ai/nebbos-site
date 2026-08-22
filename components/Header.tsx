@@ -1,21 +1,21 @@
 import Link from "next/link";
-import { NebbosLogo } from "@nebbos/brand/logo";
 import { primaryNav } from "@/lib/nav";
 import { APP_URL } from "@/lib/site";
 import { ButtonLink } from "@/components/ui/Button";
+import { NbLogo } from "@/components/ui/NbLogo";
 
 /**
- * Site header — rebuild-2026 v3.
- * - Ratified `<NebbosLogo>` from @nebbos/brand/logo (SVG mark, not ASCII).
- * - Sticky, blurred, hairline-bordered. Dense-pro spec (56px height).
- * - Flat 8-destination nav. Server component. Zero client JS.
+ * Site header — rebuild-2026 v4 · Delta brief editorial system.
+ *
+ * Ratified nb-logo wordmark inline via <NbLogo>. Sticky, hairline-bordered
+ * on paper. Flat 8-destination nav. Server component. Zero client JS.
  */
 export function Header() {
   return (
     <header className="site-header">
       <div className="site-header__inner">
         <Link href="/" className="brandmark" aria-label="Nebbos home">
-          <NebbosLogo size="sm" title="Nebbos" />
+          <NbLogo size="md" title="Nebbos" />
         </Link>
 
         <nav className="nav" aria-label="Primary">
@@ -30,7 +30,7 @@ export function Header() {
           <a
             href={APP_URL}
             className="nav__trigger"
-            style={{ color: "var(--faint)" }}
+            style={{ color: "var(--muted)" }}
             rel="noreferrer"
           >
             Log in
