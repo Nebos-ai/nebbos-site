@@ -5,19 +5,19 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Terms",
   path: "/legal/terms",
-  description: "Counsel-reviewed terms of service land with production.",
+  description: "For the current terms of service, contact legal@nebbos.ai.",
 });
 
-export default function TermsPage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
-      title="Terms of service."
-      deck="Counsel-reviewed terms land with production. Ask us for the current version."
+      title="Terms."
+      deck="For the current terms of service, contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Contact legal →
       </ButtonLink>
     </Hero>
   );

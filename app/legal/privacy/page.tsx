@@ -5,19 +5,19 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Privacy",
   path: "/legal/privacy",
-  description: "Counsel-reviewed privacy policy lands with production.",
+  description: "For GDPR disclosures and the current policy, contact legal@nebbos.ai.",
 });
 
-export default function PrivacyPage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
-      title="Privacy policy."
-      deck="Counsel-reviewed policy lands with production. Ask us for the current disclosure."
+      title="Privacy."
+      deck="For GDPR disclosures and the current policy, contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Contact legal →
       </ButtonLink>
     </Hero>
   );

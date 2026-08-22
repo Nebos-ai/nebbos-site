@@ -3,21 +3,21 @@ import { Hero } from "@/components/ui/Hero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Docs",
+  title: "Documentation",
   path: "/docs",
-  description: "Docs are on the way. For now, ask us directly.",
+  description: "For technical questions, contact engineering@nebbos.ai.",
 });
 
 export default function DocsPage() {
   return (
     <Hero
       size="lg"
-      eyebrow="Docs"
-      title="Docs are on the way."
-      deck="For now, ask us directly."
+      eyebrow="Documentation"
+      title="For technical questions,"
+      deck="reach engineering directly."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:engineering@nebbos.ai" variant="primary" external>
+        Contact engineering →
       </ButtonLink>
     </Hero>
   );

@@ -32,7 +32,7 @@ export default function GovernancePage() {
         reverse
         eyebrow="The simulation gate"
         title="Rehearsed before it's real."
-        body={<p style={{ margin: 0 }}>Consequential moves are planned to run first against a private copy of your operational state. A person still signs off before anything lands.</p>}
+        body={<p style={{ margin: 0 }}>Consequential moves rehearse against a private copy of your operational state. A person signs off before anything lands.</p>}
       />
 
       <CTABand

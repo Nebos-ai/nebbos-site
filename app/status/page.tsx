@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Status",
   path: "/status",
-  description: "Live status feed lands with production.",
+  description: "Systems operational. For incident reporting: security@nebbos.ai.",
 });
 
 export default function StatusPage() {
@@ -13,11 +13,11 @@ export default function StatusPage() {
     <Hero
       size="lg"
       eyebrow="Status"
-      title="All systems operational."
-      deck="Live status feed lands with production."
+      title="Systems operational."
+      deck="For incident reporting: security@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:security@nebbos.ai" variant="primary" external>
+        Report an incident →
       </ButtonLink>
     </Hero>
   );

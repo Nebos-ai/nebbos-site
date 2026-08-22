@@ -5,19 +5,19 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Subprocessors",
   path: "/legal/subprocessors",
-  description: "The vendors that process your data. A current list is available on request.",
+  description: "The current register is available under NDA. Contact legal@nebbos.ai.",
 });
 
-export default function SubprocessorsPage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
       title="Subprocessors."
-      deck="The vendors that process your data. A current list is available on request."
+      deck="The current register is available under NDA. Contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Request the current list →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Request register →
       </ButtonLink>
     </Hero>
   );

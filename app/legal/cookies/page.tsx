@@ -5,19 +5,19 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Cookies",
   path: "/legal/cookies",
-  description: "Nebbos uses only functional cookies. Counsel-reviewed policy lands with production.",
+  description: "Nebbos uses only functional cookies. For the current disclosure, contact legal@nebbos.ai.",
 });
 
-export default function CookiesPage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
-      title="Cookie policy."
-      deck="Nebbos uses only functional cookies. Counsel-reviewed policy lands with production."
+      title="Cookies."
+      deck="Nebbos uses only functional cookies. For the current disclosure, contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Contact legal →
       </ButtonLink>
     </Hero>
   );

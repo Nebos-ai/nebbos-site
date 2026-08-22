@@ -5,19 +5,19 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Data Processing Agreement",
   path: "/legal/dpa",
-  description: "Counsel-reviewed DPA lands with production. A current draft is available on request.",
+  description: "Article 28 processor terms available under NDA. Contact legal@nebbos.ai.",
 });
 
-export default function DpaPage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
       title="Data Processing Agreement."
-      deck="Counsel-reviewed DPA lands with production. A current draft is available on request."
+      deck="Article 28 processor terms available under NDA. Contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Request the current draft →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Request DPA →
       </ButtonLink>
     </Hero>
   );

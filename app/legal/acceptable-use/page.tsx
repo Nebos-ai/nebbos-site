@@ -3,21 +3,21 @@ import { Hero } from "@/components/ui/Hero";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata = pageMetadata({
-  title: "Acceptable Use",
+  title: "Acceptable use",
   path: "/legal/acceptable-use",
-  description: "Counsel-reviewed acceptable use policy lands with production.",
+  description: "For the current AUP, contact legal@nebbos.ai.",
 });
 
-export default function AcceptableUsePage() {
+export default function Page() {
   return (
     <Hero
       size="lg"
       eyebrow="Legal"
-      title="Acceptable use policy."
-      deck="Counsel-reviewed policy lands with production. Ask us for the current version."
+      title="Acceptable use."
+      deck="For the current AUP, contact legal@nebbos.ai."
     >
-      <ButtonLink href="/contact" variant="primary">
-        Get in touch →
+      <ButtonLink href="mailto:legal@nebbos.ai" variant="primary" external>
+        Contact legal →
       </ButtonLink>
     </Hero>
   );
