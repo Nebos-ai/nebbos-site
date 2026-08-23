@@ -1,5 +1,9 @@
 import Link from "next/link";
-import { SCENES_IN_ORDER } from "@/content/stills";
+import {
+  SCENES_IN_ORDER,
+  type SceneId,
+  type PerspectiveId,
+} from "@/content/stills";
 import { LAYERS } from "@/lib/architecture";
 import { layerPath } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
@@ -7,6 +11,20 @@ import { SceneStill } from "@/components/ui/SceneStill";
 import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 
 const ROMAN = ["", "II", "III", "IV", "V", "VI"];
+
+/**
+ * Per-scene featured perspective for the HomeStory triptych.
+ * Hero + CTA use character-forward scene shots (v1 / v4). HomeStory uses
+ * these DIFFERENT perspectives so nothing repeats across the scroll.
+ *   Scene 1 → perspective 1 (street workers planting)
+ *   Scene 2 → perspective 5 (empty office wide)
+ *   Scene 3 → perspective 7 (Mediterranean vista alone)
+ */
+const STORY_PERSPECTIVES: Record<SceneId, PerspectiveId> = {
+  1: 1,
+  2: 5,
+  3: 7,
+};
 
 /**
  * HomeStory · v2 rebuild 2026-08-23 (revised: full-bleed images, no framing).
@@ -95,7 +113,7 @@ export function HomeStory() {
                 borderBottom: "1px solid var(--rule)",
               }}
             >
-              <SceneStill scene={scene.id} variant={1} shape="fullBleed" />
+              <SceneStill perspective={STORY_PERSPECTIVES[scene.id]} pVariant={1} shape="fullBleed" />
 
               {/* Editorial overlay: grain + vignette + bottom scrim */}
               <SceneOverlay scrim="bottom" />

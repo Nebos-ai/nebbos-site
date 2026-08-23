@@ -84,3 +84,49 @@ export function stillPath(sceneId: SceneId, variant: VariantId = 1): string {
  * The scenes as an ordered array — for iteration across a page.
  */
 export const SCENES_IN_ORDER: Scene[] = [SCENES[1], SCENES[2], SCENES[3]];
+
+/* ── Perspectives ─────────────────────────────────────────────────────
+ * Second image library — 9 alternate perspectives × 2 variants = 18 stills.
+ * Each perspective maps to one of the 3 core scenes. Every perspective
+ * has its own description + is trackable via public/vision-board/manifest.json.
+ * Founder directive 2026-08-23: "the images can be from different perspectives"
+ * ────────────────────────────────────────────────────────────────────── */
+
+export type PerspectiveId = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9;
+export type PerspectiveVariantId = 1 | 2;
+
+export type Perspective = {
+  id: PerspectiveId;
+  slug: string;
+  scene: SceneId;
+  hasCharacters: boolean;
+  description: string;
+};
+
+export const PERSPECTIVES: Record<PerspectiveId, Perspective> = {
+  1: { id: 1, slug: "coffee-shop-street-workers",     scene: 1, hasCharacters: true,  description: "Wide street exterior — workers planting the sapling, the woman inside barely visible in warm interior light" },
+  2: { id: 2, slug: "coffee-shop-hands-cup-detail",   scene: 1, hasCharacters: true,  description: "Macro detail — hands wrapped around the ceramic cup on the Carrara marble, steam curling up" },
+  3: { id: 3, slug: "coffee-shop-wide-interior-empty", scene: 1, hasCharacters: false, description: "Very wide interior — the whole coffee shop drawn architecturally, the woman is a small figure in the far corner" },
+  4: { id: 4, slug: "nyc-park-view-through-window",   scene: 2, hasCharacters: false, description: "Central Park view through the arched window — London Plane middle-distance, autumn canopy, Upper West Side skyline" },
+  5: { id: 5, slug: "nyc-office-wide-empty",          scene: 2, hasCharacters: false, description: "The entire corner office empty between meetings — Nakashima desk, Eames chair, coffered ceiling, floor-to-ceiling window" },
+  6: { id: 6, slug: "nyc-hands-ceramic-cup",          scene: 2, hasCharacters: true,  description: "Tight detail — the executive&rsquo;s hands wrapped around the ceramic cup at collarbone, ecru silk crepe visible" },
+  7: { id: 7, slug: "amalfi-mediterranean-vista",     scene: 3, hasCharacters: false, description: "Very wide coastal vista — the Mediterranean, terraced hillsides, distant village with campanile, two seagulls" },
+  8: { id: 8, slug: "amalfi-olive-and-wall-detail",   scene: 3, hasCharacters: false, description: "The ancient Rotondella olive alone — 500-year gnarled trunks, dry-stone wall with wild caper growing from a crack" },
+  9: { id: 9, slug: "amalfi-porsche-alone-vista",     scene: 3, hasCharacters: false, description: "The vintage Porsche 911 alone at the coastal pullout — no driver, no owner, just the car in the landscape waiting" },
+} as const;
+
+/**
+ * Build a perspective path relative to /public.
+ * Every perspective image lives at public/vision-board/perspective-{id}-v{variant}.png.
+ */
+export function perspectivePath(id: PerspectiveId, variant: PerspectiveVariantId = 1): string {
+  return `/vision-board/perspective-${id}-v${variant}.png`;
+}
+
+/**
+ * All perspectives for a given scene — used to distribute across pages
+ * without repeating the same character shot everywhere.
+ */
+export function perspectivesForScene(sceneId: SceneId): Perspective[] {
+  return Object.values(PERSPECTIVES).filter((p) => p.scene === sceneId);
+}

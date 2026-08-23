@@ -1,46 +1,83 @@
 import Image from "next/image";
-import { SCENES, stillPath, type SceneId, type VariantId } from "@/content/stills";
+import {
+  SCENES,
+  PERSPECTIVES,
+  stillPath,
+  perspectivePath,
+  type SceneId,
+  type VariantId,
+  type PerspectiveId,
+  type PerspectiveVariantId,
+} from "@/content/stills";
 
 /**
  * SceneStill · v2 primitive
  *
- * Reusable Next Image wrapper for the 12 vision-board stills that carry the
- * site's visual spine. Auto-derives filename from scene + variant. Provides
- * three display shapes: full-bleed (hero backgrounds), framed (cards/tiles),
- * and inline (in-copy anchor).
+ * Reusable next/image wrapper for the vision-board stills that carry the
+ * site's visual spine. Every visual appearance of a scene or perspective
+ * on the site MUST go through this component — never hard-code image paths.
  *
- * Every visual appearance of a scene on the site MUST go through this
- * component — never hard-code the /vision-board/*.png path in a page.
+ * Two source modes:
+ *   - `scene` + `variant`  → renders /vision-board/scene-{N}-v{V}.png
+ *   - `perspective` + `pVariant`  → renders /vision-board/perspective-{N}-v{V}.png
  *
- * Usage:
- *   <SceneStill scene={1} variant={1} shape="fullBleed" priority />
- *   <SceneStill scene={2} shape="framed" caption="Where it grows" />
+ * Two shapes:
+ *   - `fullBleed`  — Image with fill + object-cover; parent MUST be relative
+ *   - `inline`     — Image with fixed dimensions; sits in flow
+ *
+ * Founder directive 2026-08-23: "the images should never be framed they
+ * should always be full screen." The old `framed` shape (figure + border +
+ * aspect-ratio wrapper) has been removed. Use `fullBleed` inside a
+ * position:relative section wrapper.
  */
 
-type Shape = "fullBleed" | "framed" | "inline";
+type Shape = "fullBleed" | "inline";
 
-type Props = {
-  scene: SceneId;
-  variant?: VariantId;
+type BaseProps = {
   shape?: Shape;
   priority?: boolean;
   sizes?: string;
-  caption?: string;
   className?: string;
+  caption?: string;
 };
 
-export function SceneStill({
-  scene,
-  variant = 1,
-  shape = "framed",
-  priority = false,
-  sizes,
-  caption,
-  className,
-}: Props) {
-  const sceneMeta = SCENES[scene];
-  const src = stillPath(scene, variant);
-  const alt = caption || `Scene ${scene}: ${sceneMeta.chapter} — ${sceneMeta.strap}`;
+type SceneProps = BaseProps & {
+  scene: SceneId;
+  variant?: VariantId;
+  perspective?: never;
+  pVariant?: never;
+};
+
+type PerspectiveProps = BaseProps & {
+  perspective: PerspectiveId;
+  pVariant?: PerspectiveVariantId;
+  scene?: never;
+  variant?: never;
+};
+
+type Props = SceneProps | PerspectiveProps;
+
+function resolveSource(props: Props): { src: string; alt: string } {
+  if ("perspective" in props && props.perspective) {
+    const p = PERSPECTIVES[props.perspective];
+    return {
+      src: perspectivePath(props.perspective, props.pVariant ?? 1),
+      alt: props.caption || p.description,
+    };
+  }
+  if ("scene" in props && props.scene) {
+    const s = SCENES[props.scene];
+    return {
+      src: stillPath(props.scene, props.variant ?? 1),
+      alt: props.caption || `${s.chapter} — ${s.strap}`,
+    };
+  }
+  throw new Error("SceneStill requires either scene or perspective");
+}
+
+export function SceneStill(props: Props) {
+  const { shape = "fullBleed", priority = false, sizes, className } = props;
+  const { src, alt } = resolveSource(props);
 
   if (shape === "fullBleed") {
     return (
@@ -57,62 +94,16 @@ export function SceneStill({
     );
   }
 
-  if (shape === "inline") {
-    return (
-      <Image
-        src={src}
-        alt={alt}
-        width={1400}
-        height={787}
-        sizes={sizes ?? "(max-width: 900px) 100vw, 780px"}
-        className={className}
-        style={{ display: "block", width: "100%", height: "auto" }}
-      />
-    );
-  }
-
-  // shape === "framed"
+  // shape === "inline"
   return (
-    <figure
+    <Image
+      src={src}
+      alt={alt}
+      width={1400}
+      height={787}
+      sizes={sizes ?? "(max-width: 900px) 100vw, 780px"}
       className={className}
-      style={{
-        margin: 0,
-        display: "flex",
-        flexDirection: "column",
-        gap: 12,
-      }}
-    >
-      <div
-        style={{
-          position: "relative",
-          aspectRatio: "16 / 9",
-          background: "var(--paper-2)",
-          border: "1px solid var(--rule)",
-          overflow: "hidden",
-        }}
-      >
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          priority={priority}
-          sizes={sizes ?? "(max-width: 900px) 100vw, 50vw"}
-          style={{ objectFit: "cover" }}
-        />
-      </div>
-      {caption && (
-        <figcaption
-          style={{
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "var(--ink-3)",
-          }}
-        >
-          {caption}
-        </figcaption>
-      )}
-    </figure>
+      style={{ display: "block", width: "100%", height: "auto" }}
+    />
   );
 }

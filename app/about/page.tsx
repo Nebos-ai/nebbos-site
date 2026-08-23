@@ -191,7 +191,7 @@ export default function AboutPage() {
           borderBottom: "1px solid var(--rule)",
         }}
       >
-        <SceneStill scene={2} variant={2} shape="fullBleed" />
+        <SceneStill perspective={4} pVariant={1} shape="fullBleed" />
         <SceneOverlay scrim="bottom" />
         <SceneMetadataPlate chapter="IV" label="Where we&rsquo;re going" position="top-right" />
         <div className="container" style={{ position: "relative", zIndex: 2, paddingBlock: "clamp(48px, 8vh, 96px)" }}>

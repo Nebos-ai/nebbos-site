@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="robots" content="noindex,nofollow">
-  <title>Vision board · nebbos hero film · pick one per scene</title>
+  <title>Vision board · Nebbos stills library</title>
   <style>
     :root {
       --paper: #F4F1EA;
@@ -14,7 +14,7 @@
       --ink-3: #7A7365;
       --rule: #C9C1B4;
       --gold: #A36630;
-      --accent: #F6A03F;
+      --accent-2: #F6A03F;
       --font-serif: 'Newsreader', Georgia, serif;
       --font-mono: 'JetBrains Mono', ui-monospace, monospace;
       --font-sans: 'Host Grotesk', -apple-system, system-ui, sans-serif;
@@ -22,82 +22,162 @@
     * { box-sizing: border-box; margin: 0; padding: 0; }
     html, body { background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
     body { min-height: 100vh; padding: clamp(24px, 4vw, 48px); }
-    header { max-width: 900px; margin-bottom: 48px; }
+    header { max-width: 1200px; margin-bottom: 40px; }
     .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
-    h1 { font-family: var(--font-serif); font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.022em; font-weight: 500; margin-bottom: 16px; }
-    h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
-    .deck { font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 62ch; }
-    .instructions { margin-top: 24px; padding: 16px 20px; border: 1px solid var(--rule); background: var(--paper-2); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-2); }
-    .instructions code { color: var(--gold); font-weight: 500; }
-    section { margin-top: 56px; }
-    .scene-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
-    .scene-n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
-    .scene-name { font-family: var(--font-serif); font-size: 22px; letter-spacing: -0.012em; color: var(--ink); font-weight: 500; }
-    .scene-caption { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.02em; margin-left: auto; }
+    h1 { font-family: var(--font-serif); font-size: clamp(32px, 4.4vw, 56px); line-height: 1.05; letter-spacing: -0.022em; font-weight: 400; margin-bottom: 16px; }
+    h1 em { font-style: italic; color: var(--gold); font-weight: 400; }
+    .deck { font-family: var(--font-serif); font-size: 18px; line-height: 1.55; color: var(--ink-2); max-width: 62ch; margin-bottom: 24px; }
+    .controls { display: flex; flex-wrap: wrap; gap: 12px; padding: 16px 0; border-block: 1px solid var(--rule); margin-bottom: 32px; align-items: center; }
+    .filter-group { display: flex; align-items: center; gap: 8px; }
+    .filter-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-3); }
+    .filter-btn { padding: 6px 12px; background: transparent; border: 1px solid var(--rule); font-family: var(--font-mono); font-size: 12px; color: var(--ink-2); cursor: pointer; transition: all 180ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .filter-btn:hover { border-color: var(--ink-2); }
+    .filter-btn.active { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+    #search { flex: 1; min-width: 240px; padding: 8px 14px; border: 1px solid var(--rule); font-family: var(--font-sans); font-size: 14px; background: var(--paper); color: var(--ink); }
+    #search:focus { outline: 2px solid var(--gold); outline-offset: 2px; }
+    #count { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; color: var(--ink-3); text-transform: uppercase; }
     .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
-    .tile { display: flex; flex-direction: column; border: 1px solid var(--rule); background: #000; overflow: hidden; text-decoration: none; color: inherit; transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms; }
-    .tile:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .tile { display: flex; flex-direction: column; border: 1px solid var(--rule); background: var(--paper); overflow: hidden; transition: border-color 180ms cubic-bezier(0.22, 1, 0.36, 1), transform 180ms cubic-bezier(0.22, 1, 0.36, 1); }
+    .tile:hover { border-color: var(--accent-2); }
     .tile img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; }
-    .tile-caption { padding: 12px 16px; background: var(--paper); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); display: flex; justify-content: space-between; align-items: center; }
-    .tile-caption .pick { color: var(--ink-3); }
+    .tile-meta { padding: 16px 18px; display: flex; flex-direction: column; gap: 10px; }
+    .tile-chip-row { display: flex; align-items: center; gap: 8px; }
+    .tile-chip { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 8px; background: var(--paper-2); border: 1px solid var(--rule); color: var(--ink-2); }
+    .tile-chip.kind-scene { border-color: var(--gold); color: var(--gold); }
+    .tile-chip.kind-perspective { border-color: var(--ink-3); color: var(--ink-3); }
+    .tile-name { font-family: var(--font-serif); font-size: 16px; font-weight: 500; color: var(--ink); }
+    .tile-desc { font-family: var(--font-sans); font-size: 13px; line-height: 1.5; color: var(--ink-2); }
+    .tile-file { font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); letter-spacing: 0.04em; margin-top: 4px; display: flex; justify-content: space-between; align-items: center; }
+    .tile-file a { color: var(--gold); text-decoration: none; }
+    .tile-file a:hover { text-decoration: underline; }
+    .tile-prompt-toggle { padding: 6px 10px; background: transparent; border: 1px solid var(--rule); font-family: var(--font-mono); font-size: 10px; color: var(--ink-3); cursor: pointer; margin-top: 8px; text-align: left; letter-spacing: 0.06em; text-transform: uppercase; }
+    .tile-prompt-toggle:hover { border-color: var(--ink-2); color: var(--ink-2); }
+    .tile-prompt { display: none; margin-top: 8px; padding: 12px; background: var(--paper-2); border: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; line-height: 1.55; color: var(--ink-2); max-height: 320px; overflow-y: auto; }
+    .tile-prompt.open { display: block; }
     footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-3); }
-    footer a { color: var(--gold); }
+    .empty { grid-column: 1/-1; padding: 64px; text-align: center; font-family: var(--font-serif); font-style: italic; color: var(--ink-3); }
   </style>
 </head>
 <body>
   <header>
-    <div class="eyebrow">Nebbos · Hero film · Vision board v1</div>
-    <h1>Twelve stills. <em>Pick one</em> per scene.</h1>
-    <p class="deck">Each scene generated four variants via Nano Banana Pro (<code style="font-family:var(--font-mono);color:var(--gold)">gemini-3-pro-image</code>). Your winning variant per scene becomes the first-frame reference conditioning Veo 3.1 for the video finals.</p>
-    <div class="instructions">
-      Click any tile to view full-size · reply with <code>Scene 1 · v2 · Scene 2 · v4 · Scene 3 · v1</code> style pick · flag any scene that misses (I re-prompt that scene for another $0.16)
+    <div class="eyebrow">Nebbos · Stills library</div>
+    <h1>Every still with its <em>exact prompt</em>.</h1>
+    <p class="deck">30 vision-board images across the three-scene narrative (Coffee shop · NYC executive · Amalfi elder), split into scenes (character-forward) and perspectives (wides · details · character-free variants). Each entry carries the full generation prompt so nothing is orphan and every image is reproducible.</p>
+    <div class="controls">
+      <input id="search" type="search" placeholder="Search descriptions + prompts..." aria-label="Search">
+      <div class="filter-group">
+        <span class="filter-label">Kind</span>
+        <button class="filter-btn active" data-filter="kind" data-value="all">All</button>
+        <button class="filter-btn" data-filter="kind" data-value="scene">Scenes</button>
+        <button class="filter-btn" data-filter="kind" data-value="perspective">Perspectives</button>
+      </div>
+      <div class="filter-group">
+        <span class="filter-label">Scene</span>
+        <button class="filter-btn active" data-filter="scene" data-value="all">All</button>
+        <button class="filter-btn" data-filter="scene" data-value="1">01 Coffee shop</button>
+        <button class="filter-btn" data-filter="scene" data-value="2">02 NYC</button>
+        <button class="filter-btn" data-filter="scene" data-value="3">03 Amalfi</button>
+      </div>
+      <span id="count"></span>
     </div>
   </header>
 
-  <section>
-    <div class="scene-header">
-      <span class="scene-n">01</span>
-      <span class="scene-name">Coffee shop · sapling · young woman 20</span>
-      <span class="scene-caption">"Where it starts."</span>
-    </div>
-    <div class="grid">
-      <a class="tile" href="scene-1-v1.png" target="_blank"><img src="scene-1-v1.png" alt="Scene 1 variant 1"><div class="tile-caption"><span>scene-1-v1</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-1-v2.png" target="_blank"><img src="scene-1-v2.png" alt="Scene 1 variant 2"><div class="tile-caption"><span>scene-1-v2</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-1-v3.png" target="_blank"><img src="scene-1-v3.png" alt="Scene 1 variant 3"><div class="tile-caption"><span>scene-1-v3</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-1-v4.png" target="_blank"><img src="scene-1-v4.png" alt="Scene 1 variant 4"><div class="tile-caption"><span>scene-1-v4</span><span class="pick">click for full-size</span></div></a>
-    </div>
-  </section>
-
-  <section>
-    <div class="scene-header">
-      <span class="scene-n">02</span>
-      <span class="scene-name">NYC office · Central Park · London Plane · Black woman 40</span>
-      <span class="scene-caption">"Where it grows."</span>
-    </div>
-    <div class="grid">
-      <a class="tile" href="scene-2-v1.png" target="_blank"><img src="scene-2-v1.png" alt="Scene 2 variant 1"><div class="tile-caption"><span>scene-2-v1</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-2-v2.png" target="_blank"><img src="scene-2-v2.png" alt="Scene 2 variant 2"><div class="tile-caption"><span>scene-2-v2</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-2-v3.png" target="_blank"><img src="scene-2-v3.png" alt="Scene 2 variant 3"><div class="tile-caption"><span>scene-2-v3</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-2-v4.png" target="_blank"><img src="scene-2-v4.png" alt="Scene 2 variant 4"><div class="tile-caption"><span>scene-2-v4</span><span class="pick">click for full-size</span></div></a>
-    </div>
-  </section>
-
-  <section>
-    <div class="scene-header">
-      <span class="scene-n">03</span>
-      <span class="scene-name">Amalfi coast · vintage 911 · ancient olive · Italian man 60</span>
-      <span class="scene-caption">"Where it endures."</span>
-    </div>
-    <div class="grid">
-      <a class="tile" href="scene-3-v1.png" target="_blank"><img src="scene-3-v1.png" alt="Scene 3 variant 1"><div class="tile-caption"><span>scene-3-v1</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-3-v2.png" target="_blank"><img src="scene-3-v2.png" alt="Scene 3 variant 2"><div class="tile-caption"><span>scene-3-v2</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-3-v3.png" target="_blank"><img src="scene-3-v3.png" alt="Scene 3 variant 3"><div class="tile-caption"><span>scene-3-v3</span><span class="pick">click for full-size</span></div></a>
-      <a class="tile" href="scene-3-v4.png" target="_blank"><img src="scene-3-v4.png" alt="Scene 3 variant 4"><div class="tile-caption"><span>scene-3-v4</span><span class="pick">click for full-size</span></div></a>
-    </div>
-  </section>
+  <div class="grid" id="grid"></div>
 
   <footer>
-    Generated 2026-08-23 · Nano Banana Pro (gemini-3-pro-image) · $0.48 total · Governed by <a href="https://nebbos.ai/">nebbos.ai</a> design charter · noindex to search engines · this URL becomes the /how meta-demo evidence after the film ships
+    Generated via Nano Banana Pro (gemini-3-pro-image) · $1.20 total across the two prompt batches · noindex · manifest at <a href="/vision-board/manifest.json" style="color:var(--gold)">manifest.json</a> · governed by ~/.claude/skills/nebbos-design-charter
   </footer>
+
+  <script>
+    let stills = [];
+    let filters = { kind: "all", scene: "all", search: "" };
+
+    async function boot() {
+      const res = await fetch("/vision-board/manifest.json");
+      const manifest = await res.json();
+      stills = manifest.stills;
+      render();
+    }
+
+    function render() {
+      const grid = document.getElementById("grid");
+      const filtered = stills.filter(s => {
+        if (filters.kind !== "all" && s.kind !== filters.kind) return false;
+        const sceneMatch = String(s.maps_to_scene || s.id);
+        if (filters.scene !== "all" && sceneMatch !== filters.scene) return false;
+        if (filters.search) {
+          const q = filters.search.toLowerCase();
+          if (!s.description.toLowerCase().includes(q) &&
+              !s.prompt.toLowerCase().includes(q) &&
+              !s.name.toLowerCase().includes(q) &&
+              !s.filename.toLowerCase().includes(q)) return false;
+        }
+        return true;
+      });
+
+      document.getElementById("count").textContent = `${filtered.length} of ${stills.length}`;
+
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="empty">No stills match those filters.</div>';
+        return;
+      }
+
+      grid.innerHTML = filtered.map(s => {
+        const kindLabel = s.kind === "scene" ? "SCENE" : "PERSPECTIVE";
+        const kindClass = s.kind === "scene" ? "kind-scene" : "kind-perspective";
+        return `
+          <article class="tile">
+            <a href="${s.path}" target="_blank" rel="noopener">
+              <img src="${s.path}" alt="${escapeHtml(s.description)}" loading="lazy">
+            </a>
+            <div class="tile-meta">
+              <div class="tile-chip-row">
+                <span class="tile-chip ${kindClass}">${kindLabel} ${String(s.id).padStart(2, "0")}</span>
+                <span class="tile-chip">V${s.variant}</span>
+                <span class="tile-chip">Scene ${s.maps_to_scene || s.id}</span>
+              </div>
+              <div class="tile-name">${escapeHtml(s.name)}</div>
+              <div class="tile-desc">${escapeHtml(s.description)}</div>
+              <div class="tile-file">
+                <a href="${s.path}" target="_blank" rel="noopener">${s.filename}</a>
+                <span>${s.size_kb} KB</span>
+              </div>
+              <button class="tile-prompt-toggle" onclick="togglePrompt(this)">Show full prompt →</button>
+              <div class="tile-prompt">${escapeHtml(s.prompt)}</div>
+            </div>
+          </article>
+        `;
+      }).join("");
+    }
+
+    function togglePrompt(btn) {
+      const panel = btn.nextElementSibling;
+      const isOpen = panel.classList.toggle("open");
+      btn.textContent = isOpen ? "Hide prompt ←" : "Show full prompt →";
+    }
+
+    function escapeHtml(s) {
+      return String(s || "").replace(/[&<>"']/g, c => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[c]));
+    }
+
+    document.querySelectorAll(".filter-btn").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const filterKey = btn.dataset.filter;
+        document.querySelectorAll(`[data-filter="${filterKey}"]`).forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        filters[filterKey] = btn.dataset.value;
+        render();
+      });
+    });
+
+    document.getElementById("search").addEventListener("input", (e) => {
+      filters.search = e.target.value;
+      render();
+    });
+
+    boot();
+  </script>
 </body>
 </html>
