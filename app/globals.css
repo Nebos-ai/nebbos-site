@@ -1111,88 +1111,40 @@ html[data-scrolled="true"] .site-header {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   IMMERSIVE MODE · Wave 3i · founder directive 2026-08-23:
-   "The entire site feels 2d its needs to feel 12d [3D]"
+   INSTITUTIONAL RESERVE · Wave 3k · founder directive 2026-08-23:
+   "we want to interest them not give the house away … refined leadership
+    to find the information impressive but aesthetically very pleasing."
+   "we are perfecting the voice and the look of the site."
 
-   Delta-brief editorial's original "hairline + no shadow" clause is
-   AMENDED to admit depth. Every card, section, and interactive surface
-   now carries either an ambient shadow OR a translateZ elevation on
-   interaction. The paper substrate stays; what sits on it now floats.
+   The W3i immersive-3D pass is REVERTED. Nebbos.ai returns to flat
+   editorial — cream, hairlines, air, silence. Depth was the wrong
+   answer for the felt-target (peace + future vision + quaintness).
+   Restraint IS the design.
    ══════════════════════════════════════════════════════════════════════ */
 
-/* Global ambient background — subtle radial-gradient wash so the whole
-   page has an atmospheric "somewhere in space" feel rather than
-   a printed flat page. Renders via body::before so it doesn't take a
-   z-index slot. */
-body::before {
-  content: "";
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  background:
-    radial-gradient(120% 80% at 82% -10%, rgba(246, 160, 63, 0.06), transparent 55%),
-    radial-gradient(100% 70% at -8% 100%, rgba(163, 102, 48, 0.05), transparent 50%);
-}
-body > * { position: relative; z-index: 1; }
+/* Body — flat cream, no ambient wash, no perspective. Silence. */
+main { /* no perspective, no transform-style */ }
 
-/* Global perspective root — all top-level sections get z-context so any
-   `translateZ` inside them composes as real 3D depth. */
-main { perspective: 1600px; transform-style: preserve-3d; }
-
-/* Depth-enhanced cut-corner card — replaces the flat border-only variant.
-   Ambient shadow at rest + spring-eased lift on hover. */
+/* Cut-corner card — reverts to hairline-only. No shadow. No lift on hover.
+   Restraint reads as institutional confidence; shadows read as SaaS. */
 .cut-corner {
-  box-shadow:
-    0 1px 2px rgba(20, 18, 15, 0.04),
-    0 4px 12px rgba(20, 18, 15, 0.05),
-    0 20px 40px rgba(20, 18, 15, 0.04);
-  transition:
-    transform var(--dur-default) var(--ease-out),
-    box-shadow var(--dur-default) var(--ease-out),
-    border-color var(--dur-default) var(--ease-out);
+  transition: border-color var(--dur-default) var(--ease-out);
 }
 .cut-corner:hover {
-  transform: translateY(-4px) translateZ(20px);
-  box-shadow:
-    0 4px 8px rgba(20, 18, 15, 0.06),
-    0 12px 32px rgba(20, 18, 15, 0.08),
-    0 40px 80px rgba(163, 102, 48, 0.08);
+  border-color: var(--rule);
 }
 
-/* Sticky site header gets a subtle depth-lift as you scroll — creates
-   a floating chrome-bar effect (Vercel/Linear-class). */
-.site-header {
-  transition: box-shadow var(--dur-default) var(--ease-out), backdrop-filter var(--dur-default) var(--ease-out);
-}
+/* Site header — flat. No backdrop-filter. No shadow. Just the hairline
+   bottom border already carried by .site-header itself. */
 html[data-scrolled="true"] .site-header {
-  box-shadow: 0 1px 0 rgba(20, 18, 15, 0.04), 0 8px 24px rgba(20, 18, 15, 0.06);
-  backdrop-filter: saturate(140%) blur(10px);
-  background: color-mix(in oklab, var(--paper) 82%, transparent);
+  /* intentionally empty — the header stays exactly the same on scroll */
 }
 
-/* Hero title carries a subtle multi-layer text-shadow for weight. Very
-   restrained — the display serif reads with atmosphere, not gloss. */
-.display h1,
-.display h2 {
-  text-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.4),
-    0 8px 24px rgba(20, 18, 15, 0.04);
-}
-
-/* Section rule + light source — every section-mono panel gets a faint
-   gradient wash from top-right, matching the ambient body::before hue,
-   so light appears to come from one direction site-wide. */
+/* Section-mono — flat. No radial wash inside. */
 .section-mono {
   position: relative;
 }
-.section-mono::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: radial-gradient(80% 60% at 90% 0%, rgba(246, 160, 63, 0.04), transparent 55%);
-  pointer-events: none;
-}
+/* .section-mono::before intentionally removed */
 
 /* ══════════════════════════════════════════════════════════════════════
    ARCHITECTURE GRAPH · Wave 3i · immersive 3D · founder feedback:
