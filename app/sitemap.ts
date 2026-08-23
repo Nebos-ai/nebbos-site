@@ -20,6 +20,7 @@ const staticPaths = [
   "/solutions/operations",
   "/solutions/finance",
   "/solutions/people",
+  "/solutions/model-training",
   "/trust",
   "/security",
   "/governance",

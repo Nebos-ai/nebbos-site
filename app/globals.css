@@ -851,6 +851,265 @@ html[data-scrolled="true"] .site-header {
   border: 0;
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   ECOSYSTEM BRIDGE · Wave 3e · two flanking ecosystems + Nebbos spine
+   Desktop: full SVG bridge. Mobile (≤900px): stacked HTML list fallback.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.eco-bridge-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  container-type: inline-size;
+}
+
+.eco-bridge {
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 12px;
+  border-radius: 0 30px 0 0;
+  overflow: hidden;
+}
+.eco-bridge-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+/* Column headers */
+.eco-header {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.24em;
+  text-anchor: middle;
+  text-transform: uppercase;
+  fill: var(--ink-3);
+}
+.eco-header--nebbos { fill: var(--gold); font-weight: 500; }
+.eco-strap {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 11px;
+  fill: var(--ink-3);
+}
+
+/* Nebbos primitives — bright orange filled circles (the center) */
+.eco-node--prim .eco-prim-body {
+  fill: var(--accent-2);
+  stroke: var(--accent-2);
+  stroke-width: 1;
+  transition: fill var(--dur-fast) var(--ease-out), stroke-width var(--dur-fast) var(--ease-out);
+  filter: drop-shadow(0 1px 3px rgba(20, 18, 15, 0.06));
+}
+.eco-node--prim.is-active .eco-prim-body,
+.eco-node--prim.is-highlighted .eco-prim-body {
+  stroke-width: 2;
+  fill: var(--gold);
+}
+.eco-prim-label {
+  font-family: var(--font-serif);
+  font-size: 12px;
+  text-anchor: middle;
+  fill: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.008em;
+  pointer-events: none;
+  user-select: none;
+}
+.eco-node--prim.is-active .eco-prim-label {
+  fill: var(--accent);
+}
+
+/* Ecosystem actors — quiet hairline outlined circles */
+.eco-actor-body {
+  fill: var(--paper-2);
+  stroke: var(--ink-3);
+  stroke-width: 1;
+  transition: stroke var(--dur-fast) var(--ease-out), stroke-width var(--dur-fast) var(--ease-out);
+}
+.eco-node--actor.is-highlighted .eco-actor-body {
+  stroke: var(--accent-2);
+  stroke-width: 1.5;
+}
+.eco-node--actor.is-active .eco-actor-body {
+  stroke: var(--accent-2);
+  stroke-width: 2;
+  fill: var(--paper);
+}
+.eco-actor-label {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  fill: var(--ink-2);
+  pointer-events: none;
+  user-select: none;
+}
+.eco-node--actor.is-highlighted .eco-actor-label,
+.eco-node--actor.is-active .eco-actor-label {
+  fill: var(--accent);
+}
+
+/* Edges — dashed hairline between actor and primitive */
+.eco-bridge-edge {
+  stroke: var(--rule);
+  stroke-width: 1;
+  stroke-dasharray: 3 4;
+  stroke-opacity: 0;
+  transition:
+    stroke var(--dur-fast) var(--ease-out),
+    stroke-opacity var(--dur-default) var(--ease-settle),
+    stroke-width var(--dur-fast) var(--ease-out);
+}
+.eco-bridge.is-visible .eco-bridge-edge {
+  stroke-opacity: 0.5;
+  transition-delay: calc(var(--eco-i, 0) * 1ms + 400ms);
+}
+.eco-bridge-edge.is-highlighted {
+  stroke: var(--accent-2);
+  stroke-opacity: 1;
+  stroke-width: 1.75;
+  transition-delay: 0ms;
+}
+
+.eco-hit {
+  cursor: pointer;
+  outline: none;
+}
+.eco-hit:focus-visible ~ .eco-prim-body,
+.eco-hit:focus-visible ~ .eco-actor-body {
+  stroke: var(--accent-2);
+  stroke-width: 2;
+}
+
+/* ── Detail rail (shared across desktop + mobile) ─────────────────── */
+.eco-bridge-detail {
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+  padding: 16px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 84px;
+}
+.eco-bridge-detail-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.eco-bridge-detail-name {
+  font-family: var(--font-serif);
+  font-size: 22px;
+  line-height: 1.15;
+  color: var(--ink);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+}
+.eco-bridge-detail-body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  color: var(--ink-2);
+  line-height: 1.5;
+}
+.eco-bridge-detail--hint .eco-bridge-detail-body { color: var(--ink-3); }
+
+/* ── Mobile fallback (≤900px) ─────────────────────────────────────── */
+.eco-bridge-mobile { display: none; }
+
+@media (max-width: 900px) {
+  .eco-bridge { display: none; }
+  .eco-bridge-mobile {
+    display: grid;
+    gap: 24px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    padding: 20px;
+    border-radius: 0 30px 0 0;
+  }
+  .eco-bridge-mobile-heading {
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule);
+    margin-bottom: 12px;
+  }
+  .eco-bridge-mobile-strap {
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-3);
+    margin: 0 0 14px;
+  }
+  .eco-bridge-mobile ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .eco-bridge-mobile-prims ul {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 8px;
+  }
+  .eco-prim-chip {
+    display: inline-block;
+    padding: 4px 10px;
+    background: var(--accent-2);
+    color: var(--paper);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+    margin-right: 8px;
+  }
+  .eco-prim-chip-caption {
+    font-family: var(--font-sans);
+    font-size: 12px;
+    color: var(--ink-3);
+    display: block;
+    margin-top: 4px;
+  }
+  .eco-actor-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: baseline;
+    border-top: 1px solid var(--rule-2);
+    padding-top: 12px;
+  }
+  .eco-actor-row-name {
+    font-family: var(--font-serif);
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    letter-spacing: -0.008em;
+  }
+  .eco-actor-row-role {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    color: var(--ink-3);
+    letter-spacing: 0.02em;
+    text-align: right;
+  }
+  .eco-actor-row-consumes {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    color: var(--ink-2);
+    margin-top: 4px;
+    letter-spacing: 0.02em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eco-node, .eco-bridge-edge {
+    transition: none;
+    animation: none;
+  }
+  .eco-bridge .eco-node { opacity: 1; }
+}
+
 /*  Skeleton loading blocks — hairline-bordered paper-2 tiles with a subtle
     left-to-right sweep. Matches editorial calm; NEVER a spinner. */
 .skeleton {
