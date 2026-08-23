@@ -1,0 +1,33 @@
+{
+  "$schema": "internal · nebbos-hero-film · vision-board-prompts v1",
+  "$authored": "2026-08-23",
+  "$sourced_from": "scratchpad/nebbos-hero-film-still-prompts.md · treatment via ~/.claude/skills/hollywood-screenwriting-craft · reference library via ~/.claude/skills/visual-reference-research · prompts via ~/.claude/skills/ai-still-image-prompting",
+  "$governed_by": "~/.claude/skills/nebbos-design-charter · ~/.claude/projects/-Users-matic/memory/reference_nebbos_voice_north_star_hope_for_the_future.md · reference_nebbos_visual_bar_hand_of_god.md",
+
+  "config": {
+    "model": "gemini-3-pro-image",
+    "aspect_ratio": "16:9",
+    "variants_per_scene": 4,
+    "output_dir": "public/vision-board",
+    "output_prefix": "scene",
+    "total_estimated_cost_usd": 0.48
+  },
+
+  "scenes": [
+    {
+      "id": 1,
+      "name": "coffee-shop-sapling",
+      "prompt": "Interior of a warm third-wave coffee shop at first light. A young woman in her early twenties in a soft-layered casual cardigan sits at a small marble table by an east-facing window. Warm brass Edison-bulb pendant light overhead. Matte-white ceramic cup steaming in the foreground. Her face angled three-quarters away from camera toward the window. Through the glass, city workers in high-vis yellow-green vests are placing a young sapling into a fresh sidewalk cutout. Warm oak counter and brass fixtures behind. Morning sun raking the interior from camera-left as motivated single-source through the window. 2700K color temperature, deep shadow foregrounds. Palette of warm oak, brass, cream, pale morning ochre. Shot on ARRI ALEXA 65 with Zeiss Master Anamorphic 40mm. Kodak Vision3 500T warm film grain. Wim Wenders Perfect Days interior register crossed with Sam Levy Frances Ha intimate cafe warmth. Locked static composition, contemplative pacing. No text, no logos, no branded signage, no LED elements, no readable menu, no visible face detail. Quiet. Production-grade cinematography."
+    },
+    {
+      "id": 2,
+      "name": "nyc-office-central-park-london-plane",
+      "prompt": "Interior of a high-floor Manhattan corner office at mid-morning October. An African American woman in her early forties stands at a large single-pane window in tailored business-casual attire, a silk blouse in warm ecru, dark trousers, natural hair worn in an elegant twist-out. Her face in three-quarter profile toward the window, both hands wrapped around a matte-white ceramic cup at her collarbone. Slight lean toward the glass, quiet reflection posture. Through the window, Central Park spreads wide below in autumn color. The mature canopy of a London Plane tree with distinctive mottled camouflage bark visible on the trunk far below, broad spreading crown, hand-sized lobed leaves in yellow-orange dominates the foreground of the view. Pre-war limestone architecture implied on the corner. Large single-pane window, minimal mullion. Warm-neutral interior with walnut desk edge visible. Morning sun raking from camera-left, east, motivated. Overhead lights off, natural light dominant. Palette of warm ecru, walnut brown, faded urban slate, and yellow-orange October canopy. Shot on ARRI ALEXA 65 with Zeiss Master Anamorphic 40mm. Kodak Vision3 500T warm film grain. Bradford Young Selma underexposed-rich-skin-tone lighting technique crossed with Barry Jenkins If Beale Street Could Talk portraiture register. Locked static. No text, no logos, no branded signage, no visible face detail, no readable computer screens. Dignified. Production-grade cinematography."
+    },
+    {
+      "id": 3,
+      "name": "amalfi-porsche-olive",
+      "prompt": "Coastal cliff pullout on the southern Italian Amalfi coast at golden hour. An Italian man in his early sixties stands beside a vintage 1980s German air-cooled sports coupe with classic narrow-body 911 silhouette, pre-993 impact-bumper era, Grand Prix White paint with warm patina, whale-tail rear spoiler, round headlights, chrome window trim, Fuchs 5-spoke starburst alloy wheels. The coupe is parked on a warm stone shoulder. The man wears a crisp light linen shirt in pale ecru with unbuttoned collar, pale sand chinos, leather Chelsea boots patinated brown, Persol tortoise aviator sunglasses pushed up on his head. He stands with weight on one hip, three-quarter back to camera, briefly glancing down at his phone. Beside him, a monumental 500-year-old gnarled multi-trunk Rotondella cultivar olive tree rooted into a terraced dry-stone wall. Three to five primary trunks emerging from a single ancient root ball, deeply-fissured gray-brown bark, silver-green foliage catching the raking sun as pale mint. The Mediterranean spreads far below into hazy warm summer infinity, sun cresting the cliff ridge to the west with camera-right rake. Palette of ochre, terracotta, patinated Grand Prix White, silver-green olive foliage, and faded coastal blue. Shot on ARRI ALEXA 65 with Zeiss Master Anamorphic 40mm. Kodak Vision3 500T warm film grain. Daria D'Antonio The Hand of God warm Mediterranean palette crossed with Anthony Minghella The Talented Mr Ripley coastal cinematographic register. Locked static. No text, no logos, no readable license plates, no visible face detail, no readable phone screen. Majestic, nostalgic, sun-soaked, sacred stillness. Paolo Sorrentino contemplative warmth. Production-grade cinematography."
+    }
+  ]
+}

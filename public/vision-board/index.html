@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
+  <title>Vision board · nebbos hero film · pick one per scene</title>
+  <style>
+    :root {
+      --paper: #F4F1EA;
+      --paper-2: #EFEBE2;
+      --ink: #14120F;
+      --ink-2: #403C36;
+      --ink-3: #7A7365;
+      --rule: #C9C1B4;
+      --gold: #A36630;
+      --accent: #F6A03F;
+      --font-serif: 'Newsreader', Georgia, serif;
+      --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+      --font-sans: 'Host Grotesk', -apple-system, system-ui, sans-serif;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: var(--paper); color: var(--ink); font-family: var(--font-sans); }
+    body { min-height: 100vh; padding: clamp(24px, 4vw, 48px); }
+    header { max-width: 900px; margin-bottom: 48px; }
+    .eyebrow { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); margin-bottom: 12px; }
+    h1 { font-family: var(--font-serif); font-size: clamp(28px, 4vw, 44px); line-height: 1.05; letter-spacing: -0.022em; font-weight: 500; margin-bottom: 16px; }
+    h1 em { font-style: italic; color: var(--gold); font-weight: 500; }
+    .deck { font-size: 16px; line-height: 1.55; color: var(--ink-2); max-width: 62ch; }
+    .instructions { margin-top: 24px; padding: 16px 20px; border: 1px solid var(--rule); background: var(--paper-2); font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.04em; color: var(--ink-2); }
+    .instructions code { color: var(--gold); font-weight: 500; }
+    section { margin-top: 56px; }
+    .scene-header { display: flex; align-items: baseline; gap: 16px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--rule); }
+    .scene-n { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: var(--gold); }
+    .scene-name { font-family: var(--font-serif); font-size: 22px; letter-spacing: -0.012em; color: var(--ink); font-weight: 500; }
+    .scene-caption { font-family: var(--font-mono); font-size: 11px; color: var(--ink-3); letter-spacing: 0.02em; margin-left: auto; }
+    .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .tile { display: flex; flex-direction: column; border: 1px solid var(--rule); background: #000; overflow: hidden; text-decoration: none; color: inherit; transition: transform 180ms cubic-bezier(0.22, 1, 0.36, 1), border-color 180ms; }
+    .tile:hover { transform: translateY(-2px); border-color: var(--accent); }
+    .tile img { display: block; width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; }
+    .tile-caption { padding: 12px 16px; background: var(--paper); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold); display: flex; justify-content: space-between; align-items: center; }
+    .tile-caption .pick { color: var(--ink-3); }
+    footer { margin-top: 96px; padding-top: 32px; border-top: 1px solid var(--rule); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.06em; color: var(--ink-3); }
+    footer a { color: var(--gold); }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="eyebrow">Nebbos · Hero film · Vision board v1</div>
+    <h1>Twelve stills. <em>Pick one</em> per scene.</h1>
+    <p class="deck">Each scene generated four variants via Nano Banana Pro (<code style="font-family:var(--font-mono);color:var(--gold)">gemini-3-pro-image</code>). Your winning variant per scene becomes the first-frame reference conditioning Veo 3.1 for the video finals.</p>
+    <div class="instructions">
+      Click any tile to view full-size · reply with <code>Scene 1 · v2 · Scene 2 · v4 · Scene 3 · v1</code> style pick · flag any scene that misses (I re-prompt that scene for another $0.16)
+    </div>
+  </header>
+
+  <section>
+    <div class="scene-header">
+      <span class="scene-n">01</span>
+      <span class="scene-name">Coffee shop · sapling · young woman 20</span>
+      <span class="scene-caption">"Where it starts."</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="scene-1-v1.png" target="_blank"><img src="scene-1-v1.png" alt="Scene 1 variant 1"><div class="tile-caption"><span>scene-1-v1</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-1-v2.png" target="_blank"><img src="scene-1-v2.png" alt="Scene 1 variant 2"><div class="tile-caption"><span>scene-1-v2</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-1-v3.png" target="_blank"><img src="scene-1-v3.png" alt="Scene 1 variant 3"><div class="tile-caption"><span>scene-1-v3</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-1-v4.png" target="_blank"><img src="scene-1-v4.png" alt="Scene 1 variant 4"><div class="tile-caption"><span>scene-1-v4</span><span class="pick">click for full-size</span></div></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="scene-header">
+      <span class="scene-n">02</span>
+      <span class="scene-name">NYC office · Central Park · London Plane · Black woman 40</span>
+      <span class="scene-caption">"Where it grows."</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="scene-2-v1.png" target="_blank"><img src="scene-2-v1.png" alt="Scene 2 variant 1"><div class="tile-caption"><span>scene-2-v1</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-2-v2.png" target="_blank"><img src="scene-2-v2.png" alt="Scene 2 variant 2"><div class="tile-caption"><span>scene-2-v2</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-2-v3.png" target="_blank"><img src="scene-2-v3.png" alt="Scene 2 variant 3"><div class="tile-caption"><span>scene-2-v3</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-2-v4.png" target="_blank"><img src="scene-2-v4.png" alt="Scene 2 variant 4"><div class="tile-caption"><span>scene-2-v4</span><span class="pick">click for full-size</span></div></a>
+    </div>
+  </section>
+
+  <section>
+    <div class="scene-header">
+      <span class="scene-n">03</span>
+      <span class="scene-name">Amalfi coast · vintage 911 · ancient olive · Italian man 60</span>
+      <span class="scene-caption">"Where it endures."</span>
+    </div>
+    <div class="grid">
+      <a class="tile" href="scene-3-v1.png" target="_blank"><img src="scene-3-v1.png" alt="Scene 3 variant 1"><div class="tile-caption"><span>scene-3-v1</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-3-v2.png" target="_blank"><img src="scene-3-v2.png" alt="Scene 3 variant 2"><div class="tile-caption"><span>scene-3-v2</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-3-v3.png" target="_blank"><img src="scene-3-v3.png" alt="Scene 3 variant 3"><div class="tile-caption"><span>scene-3-v3</span><span class="pick">click for full-size</span></div></a>
+      <a class="tile" href="scene-3-v4.png" target="_blank"><img src="scene-3-v4.png" alt="Scene 3 variant 4"><div class="tile-caption"><span>scene-3-v4</span><span class="pick">click for full-size</span></div></a>
+    </div>
+  </section>
+
+  <footer>
+    Generated 2026-08-23 · Nano Banana Pro (gemini-3-pro-image) · $0.48 total · Governed by <a href="https://nebbos.ai/">nebbos.ai</a> design charter · noindex to search engines · this URL becomes the /how meta-demo evidence after the film ships
+  </footer>
+</body>
+</html>
