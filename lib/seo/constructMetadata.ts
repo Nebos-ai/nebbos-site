@@ -59,7 +59,13 @@ export function constructMetadata({
   const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — The tool for building your company's brain`;
   const desc = description ?? SITE_DESCRIPTION;
   const url = canonicalUrl(path);
-  const image = ogImage ? `${SITE_ORIGIN}${ogImage}` : `${SITE_ORIGIN}/og-default.png`;
+  // Wave 3a: dynamic OG image via `/og?title=...&eyebrow=...&deck=...` edge route.
+  // Callers can override with a pre-built image via `ogImage`.
+  const ogTitle = title ?? "Build your company's brain";
+  const ogEyebrow = SITE_NAME;
+  const image = ogImage
+    ? `${SITE_ORIGIN}${ogImage}`
+    : `${SITE_ORIGIN}/og?title=${encodeURIComponent(ogTitle)}&eyebrow=${encodeURIComponent(ogEyebrow)}`;
 
   const robotsPolicy = IS_PRODUCTION
     ? { index: robots?.index ?? true, follow: robots?.follow ?? true }
