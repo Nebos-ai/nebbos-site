@@ -77,11 +77,32 @@ type V3Props = BaseProps & {
   pVariant?: never;
   v2Scene?: never;
   v2Variant?: never;
+  family?: never;
+  familyVariant?: never;
 };
 
-type Props = SceneProps | PerspectiveProps | V2Props | V3Props;
+type FamilyProps = BaseProps & {
+  family: string;
+  familyVariant?: 1 | 2;
+  scene?: never;
+  variant?: never;
+  perspective?: never;
+  pVariant?: never;
+  v2Scene?: never;
+  v2Variant?: never;
+  v3Scene?: never;
+  v3Variant?: never;
+};
+
+type Props = SceneProps | PerspectiveProps | V2Props | V3Props | FamilyProps;
 
 function resolveSource(props: Props): { src: string; alt: string } {
+  if ("family" in props && props.family) {
+    return {
+      src: `/vision-board/family-${props.family}-v${props.familyVariant ?? 1}.png`,
+      alt: props.caption || "",
+    };
+  }
   if ("v3Scene" in props && props.v3Scene) {
     return {
       src: `/vision-board/v3-${props.v3Scene}-v${props.v3Variant ?? 1}.png`,

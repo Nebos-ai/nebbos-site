@@ -74,6 +74,8 @@ export type SectionBase = {
   imagePerspective?: number;
   imageV2?: number;
   imageV3?: number;                           // v3 concept-mapped batch
+  imageFamily?: string;                       // v4 · concept family key (e.g. "band-substrate")
+  imageFamilyVariant?: 1 | 2;                 // 1 (default) or 2
 };
 
 export type Page = {
