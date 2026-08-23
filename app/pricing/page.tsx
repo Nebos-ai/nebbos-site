@@ -42,7 +42,7 @@ export default function PricingPage() {
         body={
           <p style={{ margin: 0 }}>
             One price, every feature. Billed annually with a 15% prepay
-            discount. Ten-user minimum.
+            discount. Twenty-user minimum.
           </p>
         }
       />
