@@ -88,37 +88,24 @@ export function SiteHeader() {
         gap: 32,
         minHeight: 68,
       }}>
-        {/* Logo · brand mark + Nebbos wordmark */}
+        {/* Logo · brand mark only (the mark IS the identity; no wordmark) */}
         <Link
           href="/"
           aria-label="Nebbos home"
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 10,
             color: "var(--ink)",
             textDecoration: "none",
           }}
         >
           <Image
             src="/nebbos-mark-dark.svg"
-            alt=""
-            aria-hidden="true"
-            width={32}
-            height={33}
+            alt="Nebbos"
+            width={36}
+            height={37}
             priority
           />
-          <span
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 20,
-              fontWeight: 500,
-              letterSpacing: "-0.012em",
-              color: "var(--ink)",
-            }}
-          >
-            Nebbos
-          </span>
         </Link>
 
         {/* Primary nav — desktop */}
