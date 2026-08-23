@@ -1119,14 +1119,93 @@ html[data-scrolled="true"] .site-header {
   margin-top: 12px;
 }
 
+/* ── Wave 2E · note-card overlay (in-graph micro-panel on pin) ────── */
+.arch-graph-note {
+  pointer-events: none;
+}
+.arch-graph-note-connector {
+  stroke: var(--accent-2);
+  stroke-width: 1;
+  stroke-opacity: 0.6;
+  stroke-dasharray: 3 3;
+}
+.arch-graph-note-body {
+  fill: var(--paper);
+  stroke: var(--accent-2);
+  stroke-width: 1;
+  filter: drop-shadow(0 2px 8px rgba(20, 18, 15, 0.08));
+}
+.arch-graph-note-n {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  fill: var(--accent);
+  font-weight: 500;
+}
+.arch-graph-note-name {
+  font-family: var(--font-serif);
+  font-size: 16px;
+  letter-spacing: -0.012em;
+  fill: var(--ink);
+  font-weight: 500;
+}
+.arch-graph-note-caption {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  letter-spacing: 0.02em;
+  fill: var(--ink-3);
+}
+.arch-graph-note-proof {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  fill: var(--ink-2);
+  letter-spacing: 0.01em;
+}
+
+/* ── Wave 2E · scroll-linked band-label reveal ─────────────────────
+   Progressive-enhancement: modern browsers (Chrome 115+ / Safari 26+)
+   use `animation-timeline: view()` to link band-label reveal to the
+   graph section's scroll position; everywhere else the fallback CSS
+   entry animation (via `.is-visible` toggled by IntersectionObserver)
+   handles it. Detected via @supports so we do not double-animate. */
+@supports (animation-timeline: view()) {
+  .arch-graph-band-label {
+    opacity: 0;
+    transform: translateX(-6px);
+    animation: arch-band-label-reveal linear both;
+    animation-timeline: view();
+    animation-range: entry 5% cover 40%;
+    animation-delay: calc(var(--band-i, 0) * 40ms);
+  }
+  @keyframes arch-band-label-reveal {
+    to { opacity: 1; transform: translateX(0); }
+  }
+}
+@supports not (animation-timeline: view()) {
+  .arch-graph-band-label {
+    opacity: 0;
+    transform: translateX(-6px);
+    transition:
+      opacity var(--dur-slow) var(--ease-settle),
+      transform var(--dur-slow) var(--ease-settle);
+  }
+  .arch-graph.is-visible .arch-graph-band-label {
+    opacity: 1;
+    transform: translateX(0);
+    transition-delay: calc(var(--band-i, 0) * 60ms);
+  }
+}
+
 /* Reduced-motion honors: no entry stagger, no pulse — instantly at rest. */
 @media (prefers-reduced-motion: reduce) {
   .arch-graph-node,
-  .arch-graph-edge {
+  .arch-graph-edge,
+  .arch-graph-band-label {
     transition: none;
     animation: none;
   }
   .arch-graph .arch-graph-node { opacity: 1; transform: scale(1); }
+  .arch-graph .arch-graph-band-label { opacity: 1; transform: translateX(0); }
   .arch-graph.is-visible .arch-graph-edge { transition: none; }
   .arch-graph-node.is-active .arch-graph-node-halo,
   .arch-graph-node.is-pinned .arch-graph-node-halo {

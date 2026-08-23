@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@nebbos/brand": "github:Nebos-ai/nebbos-brand#v1.0.0",
+    "motion": "^13.1.1",
     "next": "15.5.21",
     "react": "19.1.0",
     "react-dom": "19.1.0"

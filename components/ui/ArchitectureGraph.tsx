@@ -7,6 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { AnimatePresence, motion } from "motion/react";
 import {
   BANDS,
   EDGES,
@@ -17,35 +18,27 @@ import {
 } from "@/lib/architecture";
 
 /**
- * ArchitectureGraph · Wave 2D · founder directive 2026-08-23:
+ * ArchitectureGraph · Wave 2D + 2E · founder directive 2026-08-23:
  * "your table should look like a knowledge graph with each point being a note.
- *  we should use high level animation for this next js stuff."
+ *  we should use high level animation for this next js stuff." + "i want all
+ *  of them" — enabling all four Wave 2E polish moves:
+ *    (1) scroll-linked band highlight via CSS animation-timeline: view()
+ *    (2) node "note" mode — pinned node spawns an in-graph note card
+ *    (3) force-layout jitter on load (~300ms spring settle from random offsets)
+ *    (4) motion library — 3.8KB successor to framer-motion, doctrine amendment
  *
- * Replaces the earlier 5×3 <ArchitectureGrid> table with a proper SVG-native
- * knowledge graph — 15 layer nodes, ~35 edges (peer + cross-band-depends),
- * hover highlights the node + its connected edges + its neighbors, click pins,
- * escape unpins. Detail side-panel unchanged.
- *
- * Animation register (hand-rolled, no library — doctrine v2 clause preserved):
- *  - Entry: nodes + edges fade + scale in bottom-up on scroll-into-view, staggered
- *    per band via CSS custom property `--graph-i` (IntersectionObserver toggle).
- *  - Edge draw-in: `stroke-dasharray: 1000` + `stroke-dashoffset` transition
- *    at `--dur-slow` when parent `.is-visible`.
- *  - Hover: node fill morphs paper → orange at `--dur-fast`; connected edges
- *    lift `stroke-opacity` 0.35 → 1 and `stroke` → var(--accent-2); connected
- *    nodes stroke → var(--accent-2). Neighbors known via precomputed adjacency.
- *  - Pin: `is-pinned` class widens node stroke 1.5 → 2 and locks the highlight.
- *  - Reduced-motion: all transitions disabled; static rendering.
- *
- * Aspect-locked SVG (viewBox 0 0 800 720) — scales fluidly.
- * Mobile: SVG scales to container width; detail-panel stacks below.
+ * See `feedback_doctrine_v2_motion_library_amendment` for the library-approval
+ * memory that supersedes the doctrine v2 "no motion library" clause.
  */
 
 const VB_W = 800;
 const VB_H = 720;
 const NODE_R = 22;
+const NOTE_W = 200;
+const NOTE_H = 108;
+const NOTE_GAP = 28;
 
-// Precomputed adjacency: for each layer n, the set of connected layer numbers.
+// Precomputed adjacency for O(1) neighborhood lookup on hover.
 const ADJACENCY: Record<number, Set<number>> = (() => {
   const map: Record<number, Set<number>> = {};
   for (const layer of LAYERS) map[layer.n] = new Set<number>();
@@ -56,16 +49,33 @@ const ADJACENCY: Record<number, Set<number>> = (() => {
   return map;
 })();
 
-// Band color mapping — orange progression foundation → surface.
+// Deterministic seeded jitter — hash the layer.n to a small offset so
+// the entry-jitter is stable across renders (no hydration mismatch).
+function jitterFor(n: number): { x: number; y: number } {
+  const seed = (n * 2654435761) % 2 ** 32;
+  const jx = (((seed >> 8) & 0xff) / 255 - 0.5) * 32;
+  const jy = (((seed >> 16) & 0xff) / 255 - 0.5) * 32;
+  return { x: jx, y: jy };
+}
+
 function bandColor(band: number): string {
   switch (band) {
-    case 1: return "var(--ink-3)";      // Substrate — deepest, quietest
-    case 2: return "var(--ink-2)";      // Boundary
-    case 3: return "var(--ink)";        // Intelligence
-    case 4: return "var(--gold)";       // Agent — deep gold
-    case 5: return "var(--accent-2)";   // Commerce — bright orange, roof
+    case 1: return "var(--ink-3)";
+    case 2: return "var(--ink-2)";
+    case 3: return "var(--ink)";
+    case 4: return "var(--gold)";
+    case 5: return "var(--accent-2)";
     default: return "var(--ink)";
   }
+}
+
+/** Choose which side of the node to place the note card so it stays in the viewBox. */
+function notePlacement(nodeX: number, nodeY: number): { x: number; y: number; anchorX: number } {
+  const wantsRight = nodeX < VB_W / 2;
+  const x = wantsRight ? nodeX + NODE_R + NOTE_GAP : nodeX - NODE_R - NOTE_GAP - NOTE_W;
+  const y = Math.min(Math.max(nodeY - NOTE_H / 2, 12), VB_H - NOTE_H - 12);
+  const anchorX = wantsRight ? x : x + NOTE_W;
+  return { x, y, anchorX };
 }
 
 export function ArchitectureGraph() {
@@ -78,6 +88,11 @@ export function ArchitectureGraph() {
     const n = pinned ?? active ?? 1;
     return LAYERS.find((l) => l.n === n) ?? null;
   }, [active, pinned]);
+
+  const pinnedLayer: Layer | null = useMemo(() => {
+    if (pinned == null) return null;
+    return LAYERS.find((l) => l.n === pinned) ?? null;
+  }, [pinned]);
 
   const highlightedNodes = useMemo(() => {
     const n = pinned ?? active;
@@ -97,7 +112,6 @@ export function ArchitectureGraph() {
     return idxs;
   }, [active, pinned]);
 
-  // Escape unpins. Handled globally so any focus target releases the pin.
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -109,7 +123,6 @@ export function ArchitectureGraph() {
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // Scroll-into-view: sets `.is-visible` on the SVG to trigger CSS entry animations.
   useEffect(() => {
     const el = rootRef.current;
     if (!el) return;
@@ -151,7 +164,6 @@ export function ArchitectureGraph() {
           preserveAspectRatio="xMidYMid meet"
         >
           <defs>
-            {/* Soft glow filter for the hovered/pinned node. */}
             <filter id="arch-glow" x="-40%" y="-40%" width="180%" height="180%">
               <feGaussianBlur stdDeviation="4" result="b" />
               <feMerge>
@@ -161,14 +173,21 @@ export function ArchitectureGraph() {
             </filter>
           </defs>
 
-          {/* Band-label strip (left column, quiet mono text) */}
+          {/* Band labels — Wave 2E: reveal with CSS animation-timeline: view()
+              on modern browsers (Chrome 115+ / Safari 26+) for scroll-linked
+              entry; degrades to the JS `.is-visible` fallback everywhere else. */}
           <g className="arch-graph-band-labels" aria-hidden="true">
-            {BANDS.slice().reverse().map((band) => {
+            {BANDS.slice().reverse().map((band, i) => {
               const layer = LAYERS.find((l) => l.band === band.n);
               if (!layer) return null;
               const y = NODE_POSITIONS[layer.n].y;
               return (
-                <g key={band.n} className="arch-graph-band-label" transform={`translate(24 ${y})`}>
+                <g
+                  key={band.n}
+                  className="arch-graph-band-label"
+                  transform={`translate(24 ${y})`}
+                  style={{ ["--band-i" as string]: i }}
+                >
                   <text className="band-n" x={0} y={-4}>{`0${band.n}`}</text>
                   <text className="band-name" x={0} y={12}>{band.name}</text>
                 </g>
@@ -176,7 +195,7 @@ export function ArchitectureGraph() {
             })}
           </g>
 
-          {/* Edges — rendered BEHIND nodes. */}
+          {/* Edges — drawn behind nodes. */}
           <g className="arch-graph-edges">
             {EDGES.map((edge, i) => {
               const isHighlighted = highlightedEdges.has(i);
@@ -192,25 +211,44 @@ export function ArchitectureGraph() {
             })}
           </g>
 
-          {/* Nodes — foreground. Each is a <g> containing circle + numeral + label. */}
+          {/* Nodes — Wave 2E: force-layout jitter on entry via motion spring. */}
           <g className="arch-graph-nodes">
             {LAYERS.map((layer, i) => {
               const pos = NODE_POSITIONS[layer.n];
+              const jitter = jitterFor(layer.n);
               const isActive = shownLayer?.n === layer.n;
               const isHighlighted = highlightedNodes.has(layer.n);
               const isPinned = pinned === layer.n;
               const color = bandColor(layer.band);
               return (
-                <g
+                <motion.g
                   key={layer.n}
                   className={`arch-graph-node${isActive ? " is-active" : ""}${isHighlighted ? " is-highlighted" : ""}${isPinned ? " is-pinned" : ""}`}
-                  transform={`translate(${pos.x} ${pos.y})`}
                   style={{
                     ["--node-color" as string]: color,
-                    ["--graph-i" as string]: i * 45,
+                    transformBox: "fill-box",
+                    transformOrigin: "center",
                   }}
+                  initial={{
+                    x: pos.x + jitter.x,
+                    y: pos.y + jitter.y,
+                    opacity: 0,
+                    scale: 0.72,
+                  }}
+                  animate={
+                    visible
+                      ? { x: pos.x, y: pos.y, opacity: 1, scale: 1 }
+                      : { x: pos.x + jitter.x, y: pos.y + jitter.y, opacity: 0, scale: 0.72 }
+                  }
+                  transition={{
+                    type: "spring",
+                    stiffness: 260,
+                    damping: 22,
+                    mass: 0.9,
+                    delay: visible ? 0.05 + i * 0.035 : 0,
+                  }}
+                  whileHover={{ scale: 1.06 }}
                 >
-                  {/* Hit target — larger invisible circle for pointer/keyboard reach. */}
                   <circle
                     className="arch-graph-node-hit"
                     r={NODE_R + 12}
@@ -232,22 +270,87 @@ export function ArchitectureGraph() {
                       }
                     }}
                   />
-                  {/* Halo — pulses on hover. */}
                   <circle className="arch-graph-node-halo" r={NODE_R + 6} />
-                  {/* Body — the node itself. */}
                   <circle className="arch-graph-node-body" r={NODE_R} />
-                  {/* Numeral inside. */}
                   <text className="arch-graph-node-n" x={0} y={0}>
                     {String(layer.n).padStart(2, "0")}
                   </text>
-                  {/* Label below. */}
                   <text className="arch-graph-node-label" x={0} y={NODE_R + 18}>
                     {layer.name}
                   </text>
-                </g>
+                </motion.g>
               );
             })}
           </g>
+
+          {/* Wave 2E: note-card overlay for the pinned node. In-graph micro-panel
+              positioned to whichever side keeps it inside the viewBox. Uses
+              AnimatePresence for enter/exit; connecting line from card to node. */}
+          <AnimatePresence>
+            {pinnedLayer ? (() => {
+              const pos = NODE_POSITIONS[pinnedLayer.n];
+              const placement = notePlacement(pos.x, pos.y);
+              const proofLine = pinnedLayer.proof[0] ?? "";
+              return (
+                <motion.g
+                  key={pinnedLayer.n}
+                  className="arch-graph-note"
+                  initial={{ opacity: 0, scale: 0.85 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 24 }}
+                  style={{ transformOrigin: `${pos.x}px ${pos.y}px`, transformBox: "fill-box" }}
+                >
+                  {/* Connecting line from node edge to card edge — hairline orange. */}
+                  <line
+                    className="arch-graph-note-connector"
+                    x1={pos.x}
+                    y1={pos.y}
+                    x2={placement.anchorX}
+                    y2={placement.y + NOTE_H / 2}
+                  />
+                  {/* Card body — cut-corner rect echoing the site's signature shape. */}
+                  <rect
+                    className="arch-graph-note-body"
+                    x={placement.x}
+                    y={placement.y}
+                    width={NOTE_W}
+                    height={NOTE_H}
+                    rx={0}
+                    ry={0}
+                  />
+                  <text
+                    className="arch-graph-note-n"
+                    x={placement.x + 14}
+                    y={placement.y + 22}
+                  >
+                    +{" "}{String(pinnedLayer.n).padStart(2, "0")}
+                  </text>
+                  <text
+                    className="arch-graph-note-name"
+                    x={placement.x + 14}
+                    y={placement.y + 46}
+                  >
+                    {pinnedLayer.name}
+                  </text>
+                  <text
+                    className="arch-graph-note-caption"
+                    x={placement.x + 14}
+                    y={placement.y + 66}
+                  >
+                    {pinnedLayer.caption}
+                  </text>
+                  <text
+                    className="arch-graph-note-proof"
+                    x={placement.x + 14}
+                    y={placement.y + 92}
+                  >
+                    {proofLine.length > 32 ? proofLine.slice(0, 30) + "…" : proofLine}
+                  </text>
+                </motion.g>
+              );
+            })() : null}
+          </AnimatePresence>
         </svg>
       </div>
 
@@ -260,7 +363,13 @@ export function ArchitectureGraph() {
 
 function GraphDetail({ layer, pinned }: { layer: Layer; pinned: boolean }) {
   return (
-    <div className="arch-graph-detail-inner" key={layer.n}>
+    <motion.div
+      className="arch-graph-detail-inner"
+      key={layer.n}
+      initial={{ opacity: 0, y: 6 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.22, ease: [0.19, 1, 0.22, 1] }}
+    >
       <div className="arch-graph-detail-header">
         <span className="arch-graph-detail-n">{String(layer.n).padStart(2, "0")}</span>
         <div>
@@ -277,6 +386,6 @@ function GraphDetail({ layer, pinned }: { layer: Layer; pinned: boolean }) {
       <div className="arch-graph-detail-hint">
         {pinned ? "pinned · press esc to release" : "hover any node · click to pin"}
       </div>
-    </div>
+    </motion.div>
   );
 }
