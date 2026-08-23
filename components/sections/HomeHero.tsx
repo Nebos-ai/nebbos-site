@@ -73,14 +73,13 @@ export function HomeHero() {
               color: "var(--paper)",
               margin: 0,
               textWrap: "balance",
-              textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
+              textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
             }}
           >
-            The{" "}
+            Their AI doesn&rsquo;t train on your data.{" "}
             <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
-              company brain
-            </em>{" "}
-            your team never had time to build.
+              Nebbos does.
+            </em>
           </h1>
           <p
             style={{
@@ -88,13 +87,13 @@ export function HomeHero() {
               fontStyle: "italic",
               fontSize: "clamp(17px, 1.6vw, 21px)",
               lineHeight: 1.55,
-              color: "rgba(244, 241, 234, 0.86)",
-              maxWidth: "52ch",
+              color: "rgba(244, 241, 234, 0.92)",
+              maxWidth: "56ch",
               margin: 0,
-              textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
+              textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
             }}
           >
-            One Pearl per department. Fifteen governance layers underneath. One flat price per seat.
+            One Pearl per department. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.
           </p>
         </div>
       </div>

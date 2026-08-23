@@ -97,18 +97,18 @@ export function SceneOverlay({
 }
 
 function scrimBackground(shape: ScrimShape): string {
-  // Scrim strengths tuned so text over the image is legible in every crop.
-  // Founder critique 2026-08-23: "letters bleed into the colors of the image"
-  // — previous versions were too soft; boosted across the board.
+  // Scrim strengths — third pass (2026-08-23) after founder critique
+  // "we still need the overlay on all the heros even darker its still too light."
+  // Pushed to near-black at focal zones; text should pop hard now.
   switch (shape) {
     case "even":
-      return "linear-gradient(180deg, rgba(20,18,15,0.32) 0%, rgba(20,18,15,0.32) 100%)";
+      return "linear-gradient(180deg, rgba(20,18,15,0.52) 0%, rgba(20,18,15,0.52) 100%)";
     case "bottom":
-      return "linear-gradient(180deg, transparent 0%, rgba(20,18,15,0.06) 25%, rgba(20,18,15,0.38) 60%, rgba(20,18,15,0.72) 90%, rgba(20,18,15,0.82) 100%)";
+      return "linear-gradient(180deg, transparent 0%, rgba(20,18,15,0.18) 20%, rgba(20,18,15,0.58) 55%, rgba(20,18,15,0.85) 85%, rgba(20,18,15,0.94) 100%)";
     case "left":
-      return "linear-gradient(90deg, rgba(20,18,15,0.78) 0%, rgba(20,18,15,0.52) 38%, rgba(20,18,15,0.14) 72%, transparent 100%)";
+      return "linear-gradient(90deg, rgba(20,18,15,0.90) 0%, rgba(20,18,15,0.68) 32%, rgba(20,18,15,0.28) 68%, rgba(20,18,15,0.08) 92%, transparent 100%)";
     case "right":
-      return "linear-gradient(270deg, rgba(20,18,15,0.78) 0%, rgba(20,18,15,0.52) 38%, rgba(20,18,15,0.14) 72%, transparent 100%)";
+      return "linear-gradient(270deg, rgba(20,18,15,0.90) 0%, rgba(20,18,15,0.68) 32%, rgba(20,18,15,0.28) 68%, rgba(20,18,15,0.08) 92%, transparent 100%)";
     default:
       return "transparent";
   }

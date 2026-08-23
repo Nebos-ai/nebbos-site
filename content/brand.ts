@@ -20,10 +20,10 @@ export const BRAND = {
   name: "Nebbos",
 
   /** Home-page hero title (canonical, most reused). */
-  taglineShort: "The company brain your team never had time to build.",
+  taglineShort: "Their AI doesn't train on your data. Nebbos does.",
 
   /** Slightly longer version used in <title> tags. */
-  taglineLong: "The operating system for the enterprise that ships its own intelligence.",
+  taglineLong: "Their AI doesn't train on your data. Nebbos does. — the operating system for the AI-native enterprise.",
 
   /** Category the company sits in — market label used in press / SEO only. */
   category: "Company-brain infrastructure for enterprise",
@@ -37,7 +37,7 @@ export const BRAND = {
 
   /** One-line site description (SEO meta + share previews). */
   descriptionShort:
-    "Nebbos is the operating system your enterprise never had time to build — one Pearl per department, fifteen governance layers underneath.",
+    "Their AI doesn't train on your data. Nebbos does. One Pearl per department, fifteen governance layers underneath, every decision your team makes trains your model — not someone else's.",
 
   /** Long-form site description (for landing-page bodies + doc). */
   descriptionLong:
