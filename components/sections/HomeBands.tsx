@@ -41,11 +41,11 @@ export function HomeBands() {
               textWrap: "balance",
             }}
           >
-            Five bands.{" "}
+            What&rsquo;s underneath{" "}
             <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-              Fifteen layers.
+              every agent
             </em>{" "}
-            One system.
+            you run.
           </h2>
           <p
             style={{
@@ -57,10 +57,11 @@ export function HomeBands() {
               marginTop: 20,
             }}
           >
-            Not a stack of AI features bolted onto your operation. A substrate
-            organized like an institution: what persists at the bottom, how the
-            world crosses in, how the system reasons, who acts and who checks
-            them, how the whole thing is owned and paid for at the top.
+            Fifteen governance layers, grouped as five bands. The data your
+            company knows. The boundaries the world crosses at. The way the
+            system reasons across providers. The agents that act, and the
+            humans who approve them. The commerce that keeps it running.
+            Ship an agent, all fifteen apply.
           </p>
         </div>
 

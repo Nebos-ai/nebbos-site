@@ -75,11 +75,11 @@ export function HomeHero() {
               textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
             }}
           >
-            An{" "}
+            The AI agents your team{" "}
             <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
-              institutional
+              never had time
             </em>{" "}
-            substrate for enterprise AI agents.
+            to build.
           </h1>
           <p
             style={{
@@ -93,7 +93,7 @@ export function HomeHero() {
               textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
             }}
           >
-            Fifteen layers, five bands, three lives they hold together.
+            One agent per department. Fifteen governance layers underneath. One flat price per user.
           </p>
         </div>
       </div>

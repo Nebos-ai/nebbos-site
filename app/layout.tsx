@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Newsreader, Host_Grotesk, JetBrains_Mono } from "next/font/google";
+import { Fraunces, Manrope, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { BRAND } from "@/content/brand";
@@ -7,39 +7,41 @@ import { BRAND } from "@/content/brand";
 import "./globals.css";
 
 /**
- * Root layout · Nebbos site v2 (rebuild-2026-08-23).
+ * Root layout · Nebbos site v2 · font stack 2026-08-23 revision
  *
  * The IA is organized around the 15-layer architecture (5 bands × 3 layers)
- * plus standard enterprise satellite pages. The 12 vision-board stills carry
- * the site's visual spine — three scenes ("Where it starts / grows / endures")
- * that map to the 5 bands and appear across product + solutions + about pages.
+ * plus standard enterprise satellite pages. The 12+18 vision-board stills
+ * carry the site's visual spine.
  *
- * Registered fonts (Institutional Reserve register):
- *   Newsreader     — display serif (H1/H2/H3, italic for accent)
- *   Host Grotesk   — UI + body sans
- *   JetBrains Mono — eyebrows, numerals, code
+ * Font stack (post founder critique · lifestyle-exclusivity register):
+ *   Fraunces  — variable serif for display (H1/H2/H3). Real italic. Warm
+ *               editorial feel — Loro Piana / Kinfolk register. Optical
+ *               sizing on; softness at 50 for gentle warmth; no wonkiness.
+ *   Manrope   — clean neo-grotesque for UI + body copy. Quiet, restrained.
+ *   Fira Code — mono for eyebrows, numerals, code.
  *
- * All three loaded self-hosted via next/font so no external CSS fetch on
- * first paint (CLS-safe). Variable-font axes exposed so italic + weight
- * variations don't trigger a second download.
+ * All three self-hosted via next/font so no external CSS fetch on first
+ * paint (CLS-safe). Variable axes exposed so italic + weight variation
+ * don't trigger a second download.
  */
 
-const serif = Newsreader({
+const serif = Fraunces({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
+  axes: ["SOFT", "opsz"],
   display: "swap",
   variable: "--font-serif",
 });
 
-const sans = Host_Grotesk({
+const sans = Manrope({
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   variable: "--font-sans",
 });
 
-const mono = JetBrains_Mono({
+const mono = Fira_Code({
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",

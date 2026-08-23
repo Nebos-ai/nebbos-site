@@ -38,20 +38,21 @@ export default function AboutPage() {
                 textWrap: "balance",
               }}
             >
-              The tool for building your company&rsquo;s{" "}
+              Built to run the agents you{" "}
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                brain
-              </em>.
+                never had time
+              </em>{" "}
+              to build.
             </h1>
             <p
               style={{
                 fontFamily: "var(--font-serif)",
                 fontStyle: "italic",
-                fontSize: "clamp(20px, 2vw, 26px)",
-                lineHeight: 1.4,
+                fontSize: "clamp(19px, 1.7vw, 23px)",
+                lineHeight: 1.5,
                 color: "var(--ink-2)",
                 margin: "24px 0 0 0",
-                maxWidth: "56ch",
+                maxWidth: "58ch",
               }}
             >
               {BRAND.descriptionLong}

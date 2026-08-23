@@ -38,7 +38,7 @@ export default function PricingPage() {
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
                 {PRICING.perUser}
               </em>{" "}
-              per user per month.
+              a seat. Every layer.
             </h1>
             <p
               style={{
@@ -48,10 +48,10 @@ export default function PricingPage() {
                 lineHeight: 1.4,
                 color: "var(--ink-2)",
                 margin: "24px 0 0 0",
-                maxWidth: "48ch",
+                maxWidth: "50ch",
               }}
             >
-              {PRICING.minimumWord}-user minimum. {PRICING.cadenceAndDiscountPhrase}
+              {PRICING.minimumWord}-seat minimum. {PRICING.cadenceAndDiscountPhrase} No per-agent surcharge, no per-department upsell.
             </p>
           </div>
         </div>

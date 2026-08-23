@@ -72,11 +72,10 @@ export function HomeStory() {
                 textWrap: "balance",
               }}
             >
-              The system is the invisible half.{" "}
+              What Nebbos runs{" "}
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                The life
-              </em>{" "}
-              is what remains.
+                while you take your morning.
+              </em>
             </h2>
             <p
               style={{
@@ -88,9 +87,10 @@ export function HomeStory() {
                 marginTop: 20,
               }}
             >
-              Three lives the substrate makes possible. A morning by the window. A
-              mid-morning at the park. An evening by the sea. Beneath each, the
-              architecture is doing exactly what it was designed to do — quietly.
+              Three moments across an enterprise&rsquo;s day. Under each, the
+              specific work Nebbos is doing so your team doesn&rsquo;t have to
+              build it — the ingest, the reasoning, the approval graph, the audit
+              trail. Named, not implied.
             </p>
           </div>
         </div>

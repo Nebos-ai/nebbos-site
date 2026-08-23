@@ -82,10 +82,10 @@ a:hover {
   --scene-2:    #A8874F;  /* Central Park autumn */
   --scene-3:    #8FA5B0;  /* Mediterranean coast */
 
-  /* Typography */
-  --font-serif: var(--font-serif), Newsreader, Georgia, serif;
-  --font-sans:  var(--font-sans), "Host Grotesk", -apple-system, system-ui, sans-serif;
-  --font-mono:  var(--font-mono), "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  /* Typography · Fraunces (serif · display) + Manrope (sans · UI) + Fira Code (mono) */
+  --font-serif: var(--font-serif), "Fraunces", Georgia, serif;
+  --font-sans:  var(--font-sans), "Manrope", -apple-system, system-ui, sans-serif;
+  --font-mono:  var(--font-mono), "Fira Code", ui-monospace, SFMono-Regular, monospace;
 
   /* Type scale (fluid, clamp-based) */
   --size-hero:      clamp(48px, 6vw, 96px);
