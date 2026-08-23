@@ -46,7 +46,7 @@ export function generateStaticParams(): Params[] {
 }
 
 export async function generateMetadata({ params }: { params: Promise<Params> }): Promise<Metadata> {
-  const { band: bandSlug, layer: layerSlug } = await params;
+  const { layer: layerSlug } = await params;
   const layerN = Object.entries(LAYER_SLUGS).find(([, s]) => s === layerSlug)?.[0];
   const layer = layerN ? LAYERS.find((l) => l.n === parseInt(layerN, 10)) : undefined;
   if (!layer) return {};
@@ -57,8 +57,8 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 export default async function LayerPage({ params }: { params: Promise<Params> }) {
-  const { band: bandSlug, layer: layerSlug } = await params;
-  const bandN = BAND_SLUGS[bandSlug];
+  const { band: bandParam, layer: layerSlug } = await params;
+  const bandN = BAND_SLUGS[bandParam];
   const band = BANDS.find((b) => b.n === bandN);
   const layerNStr = Object.entries(LAYER_SLUGS).find(([, s]) => s === layerSlug)?.[0];
   const layer = layerNStr ? LAYERS.find((l) => l.n === parseInt(layerNStr, 10) && l.band === bandN) : undefined;
