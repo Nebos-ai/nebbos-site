@@ -1111,6 +1111,183 @@ html[data-scrolled="true"] .site-header {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
+   ARCHITECTURE GRAPH · Wave 3h · founder feedback 2026-08-23:
+   "your graph size is tiny this needs to be a entire section and the popups
+    should be next to each note. this is heavy next js and css this is
+    amature what you did."
+
+   The graph is now the STAR of its section — full-viewport canvas, big
+   nodes (r=32, was 22), inline note-cards that follow the hovered node.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.arch-graph-canvas {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  container-type: inline-size;
+}
+
+/* Override the older `.arch-graph` sizing — now sized to fill an entire
+   section (min-height keyed to viewport). Overflow visible so the inline
+   note-card can extend slightly outside if needed. */
+.arch-graph {
+  position: relative;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  padding: 16px;
+  border-radius: 0 40px 0 0;
+  min-height: min(72vh, 720px);
+  overflow: visible;
+}
+.arch-graph-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-height: min(72vh, 720px);
+}
+
+/* Node body — bigger radius means bigger label sizes */
+.arch-graph-node-n {
+  font-size: 13px !important;
+}
+.arch-graph-node-label {
+  font-size: 15px !important;
+}
+
+/* Dimming for un-highlighted nodes when something IS highlighted —
+   focuses attention on the active neighborhood. */
+.arch-graph-node.is-dimmed {
+  filter: saturate(0.5);
+}
+
+/* Inline note-card (HTML overlay) — sits next to the hovered node,
+   auto-flipped L/R via `--left` and `--right` variant. */
+.arch-graph-note-inline {
+  position: absolute;
+  background: var(--paper);
+  border: 1px solid var(--accent-2);
+  border-radius: 0 24px 0 0;
+  padding: 18px 22px 16px;
+  box-shadow:
+    0 1px 2px rgba(20, 18, 15, 0.04),
+    0 8px 24px rgba(20, 18, 15, 0.08),
+    0 24px 60px rgba(163, 102, 48, 0.06);
+  z-index: 10;
+  pointer-events: none;
+  transform-origin: center;
+  container-type: inline-size;
+}
+.arch-graph-note-head {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 12px;
+  align-items: start;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--rule);
+  margin-bottom: 12px;
+}
+.arch-graph-note-n {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  font-weight: 500;
+  padding-top: 4px;
+}
+.arch-graph-note-name {
+  font-family: var(--font-serif);
+  font-size: 20px;
+  line-height: 1.12;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  font-weight: 500;
+}
+.arch-graph-note-caption {
+  font-family: var(--font-mono);
+  font-size: 10.5px;
+  color: var(--ink-3);
+  letter-spacing: 0.06em;
+  margin-top: 4px;
+}
+.arch-graph-note-body {
+  font-family: var(--font-sans);
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin: 0 0 12px;
+}
+.arch-graph-note-proof {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.arch-graph-note-proof li {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--ink-2);
+  padding-left: 12px;
+  position: relative;
+  letter-spacing: 0.01em;
+  line-height: 1.4;
+}
+.arch-graph-note-proof li::before {
+  content: "+";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: var(--accent-2);
+  font-weight: 700;
+}
+.arch-graph-note-pinbar {
+  margin-top: 10px;
+  padding-top: 8px;
+  border-top: 1px dashed var(--rule);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: var(--gold);
+  text-transform: uppercase;
+}
+
+/* Hint bar below the canvas — small mono line */
+.arch-graph-hint {
+  padding: 8px 4px;
+  text-align: center;
+}
+.arch-graph-hint-line {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+}
+
+/* Larger halo pulse for the more visible design */
+.arch-graph-node.is-active .arch-graph-node-halo,
+.arch-graph-node.is-pinned .arch-graph-node-halo {
+  opacity: 0.22 !important;
+}
+
+/* Note-inline responsive: on narrow viewports collapse to full-width below the graph */
+@media (max-width: 720px) {
+  .arch-graph-note-inline {
+    position: static;
+    width: 100% !important;
+    left: auto !important;
+    top: auto !important;
+    margin-top: 16px;
+  }
+  .arch-graph {
+    min-height: 60vh;
+    padding: 8px;
+  }
+}
+
+/* ══════════════════════════════════════════════════════════════════════
    MOBILE PASS · Wave 3g · founder directive 2026-08-23:
    "the site needs to be built for all screen sizes including mobile"
    ══════════════════════════════════════════════════════════════════════ */
