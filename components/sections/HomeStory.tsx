@@ -2,7 +2,6 @@ import Link from "next/link";
 import {
   SCENES_IN_ORDER,
   type SceneId,
-  type PerspectiveId,
 } from "@/content/stills";
 import { LAYERS } from "@/lib/architecture";
 import { layerPath } from "@/lib/nav";
@@ -12,12 +11,14 @@ import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 
 const ROMAN = ["", "II", "III", "IV", "V", "VI"];
 
-// Corporate-only imagery per founder direction — no travel-adjacent scenes.
-// Retired: perspective 1 (coffee street), perspective 7 (Mediterranean vista).
-const STORY_PERSPECTIVES: Record<SceneId, PerspectiveId> = {
-  1: 3,  // coffee-shop interior wide (architectural, no travel)
-  2: 5,  // NYC office empty (corporate, no travel)
-  3: 5,  // NYC office empty repeat (deferred; v3 corporate scene coming)
+// v4 concept-family mapping — three chapters map to the story arc:
+//   Scene 1 (Where it starts)  → family-band-substrate    (the foundation)
+//   Scene 2 (Where it grows)   → family-band-intelligence (the mind compounds)
+//   Scene 3 (Where it endures) → family-band-commerce     (ownership + duration)
+const STORY_FAMILIES: Record<SceneId, string> = {
+  1: "band-substrate",
+  2: "band-intelligence",
+  3: "band-commerce",
 };
 
 /**
@@ -109,7 +110,7 @@ export function HomeStory() {
                 borderBottom: "1px solid var(--rule)",
               }}
             >
-              <SceneStill perspective={STORY_PERSPECTIVES[scene.id]} pVariant={1} shape="fullBleed" />
+              <SceneStill family={STORY_FAMILIES[scene.id]} familyVariant={1} shape="fullBleed" />
               <SceneOverlay scrim="bottom" />
               <SceneMetadataPlate
                 chapter={ROMAN[chapterNum]}

@@ -23,8 +23,13 @@ import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
  */
 
 const BAND_ROMANS: Record<number, string> = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V" };
-const BAND_IMAGES: Record<number, number> = {
-  1: 1, 2: 4, 3: 7, 4: 9, 5: 6,
+// v4 concept families — same visual identity everywhere each band appears
+const BAND_FAMILIES: Record<number, string> = {
+  1: "band-substrate",
+  2: "band-boundary",
+  3: "band-intelligence",
+  4: "band-action",
+  5: "band-commerce",
 };
 
 export function HomeBands() {
@@ -118,7 +123,7 @@ export function HomeBands() {
                 borderRight: i < productTree.length - 1 ? "1px solid var(--rule)" : "none",
               }}
             >
-              <SceneStill v2Scene={BAND_IMAGES[band.n]} v2Variant={1} shape="fullBleed" />
+              <SceneStill family={BAND_FAMILIES[band.n]} familyVariant={1} shape="fullBleed" />
               <SceneOverlay scrim={isActive ? "bottom" : "even"} vignetteStrength={0.55} />
 
               {isActive ? (

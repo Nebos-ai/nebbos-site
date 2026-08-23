@@ -28,8 +28,9 @@ export function HomeCTA() {
         borderTop: "1px solid var(--rule)",
       }}
     >
-      {/* v2-7 corporate boardroom — corporate, not travel */}
-      <SceneStill v2Scene={7} v2Variant={1} shape="fullBleed" />
+      {/* family-concept-tenant-onboarding — closing to the customer onboarding
+          moment, the natural next-step after walking the site. */}
+      <SceneStill family="concept-tenant-onboarding" familyVariant={1} shape="fullBleed" />
 
       {/* Editorial overlay: grain + vignette + left scrim for text legibility */}
       <SceneOverlay scrim="left" />

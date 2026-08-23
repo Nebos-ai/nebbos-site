@@ -31,9 +31,10 @@ export function HomeHero() {
         borderBottom: "1px solid var(--rule)",
       }}
     >
-      {/* Full-bleed background — v2-2 hero: NYC executive at arched window,
-          autumn Central Park view, cinematic depth */}
-      <SceneStill v2Scene={2} v2Variant={1} shape="fullBleed" priority />
+      {/* Full-bleed background — family-band-intelligence (Memory-forward,
+          the differentiator). Same visual family used wherever Intelligence
+          appears site-wide. */}
+      <SceneStill family="band-intelligence" familyVariant={1} shape="fullBleed" priority />
 
       {/* Editorial overlay: grain + vignette + heavy bottom scrim so copy pops */}
       <SceneOverlay scrim="bottom" vignetteStrength={0.5} />

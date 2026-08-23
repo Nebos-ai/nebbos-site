@@ -65,7 +65,7 @@ export default async function BandPage({ params }: { params: Promise<Params> }) 
           borderBottom: "1px solid var(--rule)",
         }}
       >
-        <SceneStill scene={sceneId} variant={((band.n % 4) + 1) as 1 | 2 | 3 | 4} shape="fullBleed" priority />
+        <SceneStill family={bandFamily(band.n)} familyVariant={1} shape="fullBleed" priority />
         <div
           aria-hidden="true"
           style={{
@@ -389,4 +389,12 @@ function getSceneForBand(bandN: number): SceneId {
   if (bandN <= 2) return 1;
   if (bandN === 3) return 2;
   return 3;
+}
+
+function bandFamily(bandN: number): string {
+  const map: Record<number, string> = {
+    1: "band-substrate", 2: "band-boundary", 3: "band-intelligence",
+    4: "band-action",    5: "band-commerce",
+  };
+  return map[bandN] ?? "band-intelligence";
 }
