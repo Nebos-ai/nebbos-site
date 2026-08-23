@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { NebbosLogo } from "@nebbos/brand/logo";
+import Image from "next/image";
 import { footerNav } from "@/lib/nav";
 import { BRAND } from "@/content/brand";
 
@@ -38,9 +38,26 @@ export function SiteFooter() {
             <Link
               href="/"
               aria-label="Nebbos home"
-              style={{ display: "inline-flex", color: "var(--ink)", marginBottom: 20 }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 10, color: "var(--ink)", marginBottom: 20, textDecoration: "none" }}
             >
-              <NebbosLogo size="sm" title="Nebbos" />
+              <Image
+                src="/nebbos-mark-dark.svg"
+                alt=""
+                aria-hidden="true"
+                width={40}
+                height={41}
+              />
+              <span
+                style={{
+                  fontFamily: "var(--font-serif)",
+                  fontSize: 24,
+                  fontWeight: 500,
+                  letterSpacing: "-0.012em",
+                  color: "var(--ink)",
+                }}
+              >
+                Nebbos
+              </span>
             </Link>
             <p
               style={{

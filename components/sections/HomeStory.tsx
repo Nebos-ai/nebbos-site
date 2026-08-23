@@ -12,10 +12,12 @@ import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 
 const ROMAN = ["", "II", "III", "IV", "V", "VI"];
 
+// Corporate-only imagery per founder direction — no travel-adjacent scenes.
+// Retired: perspective 1 (coffee street), perspective 7 (Mediterranean vista).
 const STORY_PERSPECTIVES: Record<SceneId, PerspectiveId> = {
-  1: 1,
-  2: 5,
-  3: 7,
+  1: 3,  // coffee-shop interior wide (architectural, no travel)
+  2: 5,  // NYC office empty (corporate, no travel)
+  3: 5,  // NYC office empty repeat (deferred; v3 corporate scene coming)
 };
 
 /**

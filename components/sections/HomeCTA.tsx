@@ -28,7 +28,8 @@ export function HomeCTA() {
         borderTop: "1px solid var(--rule)",
       }}
     >
-      <SceneStill scene={CTA_SCENE.id} variant={4} shape="fullBleed" />
+      {/* v2-7 corporate boardroom — corporate, not travel */}
+      <SceneStill v2Scene={7} v2Variant={1} shape="fullBleed" />
 
       {/* Editorial overlay: grain + vignette + left scrim for text legibility */}
       <SceneOverlay scrim="left" />

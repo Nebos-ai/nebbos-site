@@ -64,17 +64,23 @@ a:hover {
 /* ── 2. DESIGN TOKENS ─────────────────────────────────────────────────── */
 
 :root {
-  /* Color · warm paper palette (Institutional Reserve, per design/tokens.json) */
-  --paper:      #F4F1EA;
-  --paper-2:    #EFEBE2;
-  --ink:        #14120F;
-  --ink-2:      #403C36;
-  --ink-3:      #7A7365;
-  --muted:      #9A9284;
-  --rule:       #C9C1B4;
-  --rule-2:     #DAD2C4;
-  --gold:       #A36630;  /* deep · reserved · used for accents */
-  --accent-2:   #F6A03F;  /* bright Nebbos orange · italic emphasis */
+  /* Color · Nebbos brand palette 2026-08-23 (per founder-supplied SVG marks)
+   * Locked brand colors:
+   *   #F6A03F — Nebbos orange (accent, italic emphasis, mark)
+   *   #1D1C22 — Nebbos dark (ink, mark on light)
+   *   #FFFFFF — Nebbos white (paper, mark on dark)
+   * All other tokens derive as neutral steps between these anchors.
+   */
+  --paper:      #FFFFFF;  /* Nebbos white · brand */
+  --paper-2:    #F7F5F1;  /* barely-off-white for hairline elevation */
+  --ink:        #1D1C22;  /* Nebbos dark · brand */
+  --ink-2:      #4A4952;  /* secondary text */
+  --ink-3:      #7C7B84;  /* tertiary text · muted */
+  --muted:      #A0A0A8;  /* disabled · hint */
+  --rule:       #E8E6E2;  /* hairline border · sits on white */
+  --rule-2:     #F0EEE9;  /* softer hairline · sub-dividers */
+  --gold:       #A36630;  /* deep · reserved secondary accent */
+  --accent-2:   #F6A03F;  /* Nebbos orange · brand · primary accent */
   --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
 
   /* Scene palette (Hand-of-God register) — used in scene-adjacent surfaces */

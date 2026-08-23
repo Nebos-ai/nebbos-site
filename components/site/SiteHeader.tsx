@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { NebbosLogo } from "@nebbos/brand/logo";
+import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import {
   primaryNav,
@@ -88,18 +88,37 @@ export function SiteHeader() {
         gap: 32,
         minHeight: 68,
       }}>
-        {/* Logo */}
+        {/* Logo · brand mark + Nebbos wordmark */}
         <Link
           href="/"
           aria-label="Nebbos home"
           style={{
             display: "inline-flex",
             alignItems: "center",
+            gap: 10,
             color: "var(--ink)",
             textDecoration: "none",
           }}
         >
-          <NebbosLogo size="sm" title="Nebbos" />
+          <Image
+            src="/nebbos-mark-dark.svg"
+            alt=""
+            aria-hidden="true"
+            width={32}
+            height={33}
+            priority
+          />
+          <span
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: 20,
+              fontWeight: 500,
+              letterSpacing: "-0.012em",
+              color: "var(--ink)",
+            }}
+          >
+            Nebbos
+          </span>
         </Link>
 
         {/* Primary nav — desktop */}
