@@ -56,6 +56,15 @@ export function constructMetadata({
   robots,
   keywords,
 }: ConstructMetadataInput = {}): Metadata {
+  // Wave 3g fix: layout.tsx already carries `template: '%s — Nebbos'`, so
+  // passing a plain-string title makes Next apply the template — a page that
+  // sends "Pricing" gets "<title>Pricing — Nebbos</title>", correctly.
+  // Passing an object with `absolute` bypasses the template entirely.
+  // Prior bug: constructMetadata sent `"Pricing — Nebbos"` AND the layout
+  // template appended `" — Nebbos"` → `"Pricing — Nebbos — Nebbos"`.
+  const titleField = title
+    ? title
+    : { absolute: `${SITE_NAME} — The tool for building your company's brain` };
   const fullTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — The tool for building your company's brain`;
   const desc = description ?? SITE_DESCRIPTION;
   const url = canonicalUrl(path);
@@ -73,7 +82,7 @@ export function constructMetadata({
 
   return {
     metadataBase: new URL(SITE_ORIGIN),
-    title: fullTitle,
+    title: titleField,
     description: desc,
     applicationName: SITE_NAME,
     robots: robotsPolicy,
