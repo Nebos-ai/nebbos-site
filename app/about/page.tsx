@@ -3,6 +3,7 @@ import { BRAND } from "@/content/brand";
 import { FACTS } from "@/content/facts";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
+import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 import { Button } from "@/components/ui/Button";
 
 export const metadata: Metadata = {
@@ -179,62 +180,61 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* Scene · Amalfi CTA anchor */}
+      {/* Scene · NYC full-bleed anchor */}
       <section
         style={{
-          background: "var(--paper-2)",
-          paddingBlock: "clamp(64px, 9vh, 128px)",
+          position: "relative",
+          minHeight: "min(70vh, 720px)",
+          display: "flex",
+          alignItems: "flex-end",
+          overflow: "hidden",
           borderBottom: "1px solid var(--rule)",
         }}
       >
-        <div className="container">
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
-              gap: "clamp(32px, 5vw, 72px)",
-              alignItems: "center",
-            }}
-            className="about-cta-grid"
-          >
-            <SceneStill scene={2} variant={2} shape="framed" />
+        <SceneStill scene={2} variant={2} shape="fullBleed" />
+        <SceneOverlay scrim="bottom" />
+        <SceneMetadataPlate chapter="IV" label="Where we&rsquo;re going" position="top-right" />
+        <div className="container" style={{ position: "relative", zIndex: 2, paddingBlock: "clamp(48px, 8vh, 96px)" }}>
+          <div style={{ maxWidth: "48ch", display: "flex", flexDirection: "column", gap: 24 }}>
+            <h2
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(32px, 4vw, 56px)",
+                lineHeight: 1.05,
+                letterSpacing: "-0.022em",
+                fontWeight: 400,
+                color: "var(--paper)",
+                margin: 0,
+                maxWidth: "22ch",
+                textWrap: "balance",
+                textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
+              }}
+            >
+              An{" "}
+              <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
+                institution
+              </em>{" "}
+              that watches the work.
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                fontSize: "clamp(17px, 1.5vw, 20px)",
+                lineHeight: 1.55,
+                color: "rgba(244, 241, 234, 0.9)",
+                margin: 0,
+                maxWidth: "48ch",
+                textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
+              }}
+            >
+              Nebbos is a substrate. Fifteen layers, five bands, one system.
+              Owned by the enterprise that runs it, portable to the models it
+              trusts, quiet enough that the humans it serves get their
+              mornings, mid-mornings, and evenings back.
+            </p>
             <div>
-              <SectionNumeral n="04" label="Where we&rsquo;re going" />
-              <h2
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "clamp(28px, 3.2vw, 40px)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.018em",
-                  fontWeight: 400,
-                  color: "var(--ink)",
-                  margin: "20px 0 20px 0",
-                  maxWidth: "22ch",
-                  textWrap: "balance",
-                }}
-              >
-                An{" "}
-                <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                  institution
-                </em>{" "}
-                that watches the work.
-              </h2>
-              <p
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: 18,
-                  lineHeight: 1.6,
-                  color: "var(--ink-2)",
-                  margin: "0 0 28px 0",
-                  maxWidth: "48ch",
-                }}
-              >
-                Nebbos is a substrate. Fifteen layers, five bands, one system.
-                Owned by the enterprise that runs it, portable to the models it
-                trusts, quiet enough that the humans it serves get their
-                mornings, mid-mornings, and evenings back.
-              </p>
-              <Button href="/product" size="lg">See the system</Button>
+              <Button href="/product" variant="solid-light" size="lg">See the system</Button>
             </div>
           </div>
         </div>
@@ -242,7 +242,7 @@ export default function AboutPage() {
 
       <style>{`
         @media (max-width: 900px) {
-          .about-grid, .about-cta-grid {
+          .about-grid {
             grid-template-columns: minmax(0, 1fr) !important;
           }
         }

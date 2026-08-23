@@ -4,210 +4,238 @@ import { LAYERS } from "@/lib/architecture";
 import { layerPath } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
+import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
+
+const ROMAN = ["", "II", "III", "IV", "V", "VI"];
 
 /**
- * HomeStory · v2 rebuild 2026-08-23
+ * HomeStory · v2 rebuild 2026-08-23 (revised: full-bleed images, no framing).
  *
- * Three scenes told back-to-back: coffee shop (Where it starts) → NYC
- * executive (Where it grows) → Amalfi elder (Where it endures). Each tile
- * carries TWO registers of copy — the life narrative (what the person is
- * doing) and the tech narrative (what Nebbos is doing quietly underneath).
- * Together they answer the founder directive: "the 15 points can be told
- * through these images as well · you are missing the tech aspect."
+ * Founder directive: "the images should never be framed they should always
+ * be full screen."
  *
- * Every tile pairs its scene with the specific architecture layers that
- * scene carries, rendered as numbered chips. Together the three tiles
- * cover all 15 layers.
+ * Each of three scenes = ONE full-bleed cinematic section (80vh) with the
+ * scene image spanning the viewport, a warm scrim, chapter chip top-right,
+ * and life-narrative + strap overlaid at the bottom-left (hero-style).
+ * A tech-narrative + layer chips block sits underneath each scene section
+ * in a plain container — giving the detail copy room to breathe without
+ * fighting the image for legibility.
  */
 export function HomeStory() {
   return (
     <section
       aria-labelledby="story-heading"
       style={{
-        background: "var(--paper-2)",
-        paddingBlock: "var(--section-y-lg)",
+        background: "var(--paper)",
       }}
     >
-      <div className="container">
-        <div style={{ maxWidth: "68ch", marginBottom: "clamp(48px, 6vh, 80px)" }}>
-          <SectionNumeral n="03" label="The story" />
-          <h2
-            id="story-heading"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(32px, 4.4vw, 56px)",
-              lineHeight: 1.06,
-              letterSpacing: "-0.022em",
-              fontWeight: 400,
-              color: "var(--ink)",
-              margin: "20px 0 0 0",
-              maxWidth: "24ch",
-              textWrap: "balance",
-            }}
-          >
-            The system is the invisible half.{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-              The life
-            </em>{" "}
-            is what remains.
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 17,
-              lineHeight: 1.6,
-              color: "var(--ink-2)",
-              maxWidth: "58ch",
-              marginTop: 20,
-            }}
-          >
-            Three lives the substrate makes possible. A morning by the window. A
-            mid-morning at the park. An evening by the sea. Beneath each, the
-            architecture is doing exactly what it was designed to do — quietly.
-          </p>
+      {/* Section header */}
+      <div
+        style={{
+          background: "var(--paper-2)",
+          paddingBlock: "var(--section-y-lg)",
+          borderBottom: "1px solid var(--rule)",
+        }}
+      >
+        <div className="container">
+          <div style={{ maxWidth: "68ch" }}>
+            <SectionNumeral n="03" label="The story" />
+            <h2
+              id="story-heading"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(32px, 4.4vw, 56px)",
+                lineHeight: 1.06,
+                letterSpacing: "-0.022em",
+                fontWeight: 400,
+                color: "var(--ink)",
+                margin: "20px 0 0 0",
+                maxWidth: "24ch",
+                textWrap: "balance",
+              }}
+            >
+              The system is the invisible half.{" "}
+              <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+                The life
+              </em>{" "}
+              is what remains.
+            </h2>
+            <p
+              style={{
+                fontFamily: "var(--font-sans)",
+                fontSize: 17,
+                lineHeight: 1.6,
+                color: "var(--ink-2)",
+                maxWidth: "58ch",
+                marginTop: 20,
+              }}
+            >
+              Three lives the substrate makes possible. A morning by the window. A
+              mid-morning at the park. An evening by the sea. Beneath each, the
+              architecture is doing exactly what it was designed to do — quietly.
+            </p>
+          </div>
         </div>
       </div>
 
       {SCENES_IN_ORDER.map((scene, idx) => {
-        const flip = idx % 2 === 1;
         const bandLayers = LAYERS.filter((l) => scene.bands.includes(l.band));
+        const chapterNum = idx + 4;
 
         return (
-          <article
-            key={scene.id}
-            style={{
-              borderTop: "1px solid var(--rule)",
-              paddingBlock: "clamp(56px, 8vh, 96px)",
-            }}
-          >
-            <div
-              className="container"
+          <article key={scene.id}>
+            {/* Full-bleed cinematic scene section */}
+            <section
               style={{
-                display: "grid",
-                gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
-                gap: "clamp(32px, 5vw, 72px)",
-                alignItems: "center",
+                position: "relative",
+                minHeight: "min(80vh, 820px)",
+                display: "flex",
+                alignItems: "flex-end",
+                overflow: "hidden",
+                borderBottom: "1px solid var(--rule)",
               }}
             >
-              {/* Media */}
-              <div style={{ order: flip ? 2 : 1 }} className="story-media">
-                <SceneStill scene={scene.id} variant={1} shape="framed" />
-              </div>
+              <SceneStill scene={scene.id} variant={1} shape="fullBleed" />
 
-              {/* Copy */}
+              {/* Editorial overlay: grain + vignette + bottom scrim */}
+              <SceneOverlay scrim="bottom" />
+
+              {/* Editorial metadata plate · top-right */}
+              <SceneMetadataPlate chapter={ROMAN[idx + 2]} label={scene.chapter} position="top-right" />
+
+              {/* Copy · bottom-left overlay */}
               <div
+                className="container"
                 style={{
-                  order: flip ? 1 : 2,
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: 24,
+                  position: "relative",
+                  zIndex: 2,
+                  paddingBlock: "clamp(48px, 8vh, 96px)",
                 }}
-                className="story-copy"
               >
-                <div>
-                  <SectionNumeral n={`0${idx + 4}`} label={scene.chapter} />
+                <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: "52ch" }}>
+                  <span
+                    style={{
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 11,
+                      letterSpacing: "0.24em",
+                      textTransform: "uppercase",
+                      color: "rgba(244, 241, 234, 0.86)",
+                    }}
+                  >
+                    Chapter {String(chapterNum).padStart(2, "0")} · {scene.chapter}
+                  </span>
                   <h3
                     style={{
                       fontFamily: "var(--font-serif)",
-                      fontSize: "clamp(24px, 2.8vw, 34px)",
-                      lineHeight: 1.15,
-                      letterSpacing: "-0.014em",
-                      fontWeight: 500,
-                      color: "var(--ink)",
-                      margin: "16px 0 0 0",
+                      fontSize: "clamp(32px, 4vw, 60px)",
+                      lineHeight: 1.05,
+                      letterSpacing: "-0.02em",
+                      fontWeight: 400,
+                      color: "var(--paper)",
+                      margin: 0,
                       textWrap: "balance",
+                      textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
                     }}
                   >
                     {scene.strap}
                   </h3>
-                </div>
-
-                {/* Life narrative */}
-                <p
-                  style={{
-                    fontFamily: "var(--font-serif)",
-                    fontSize: 17,
-                    lineHeight: 1.6,
-                    color: "var(--ink-2)",
-                    margin: 0,
-                    maxWidth: "48ch",
-                    fontStyle: "italic",
-                  }}
-                >
-                  {scene.narrative}
-                </p>
-
-                {/* Tech narrative */}
-                <div
-                  style={{
-                    borderTop: "1px solid var(--rule)",
-                    paddingTop: 20,
-                    marginTop: 4,
-                  }}
-                >
-                  <div className="eyebrow" style={{ marginBottom: 12 }}>
-                    Under the surface
-                  </div>
                   <p
                     style={{
-                      fontFamily: "var(--font-sans)",
-                      fontSize: 15,
-                      lineHeight: 1.65,
-                      color: "var(--ink-2)",
+                      fontFamily: "var(--font-serif)",
+                      fontStyle: "italic",
+                      fontSize: "clamp(17px, 1.5vw, 20px)",
+                      lineHeight: 1.55,
+                      color: "rgba(244, 241, 234, 0.9)",
                       margin: 0,
                       maxWidth: "48ch",
+                      textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
                     }}
                   >
-                    {scene.techNarrative}
+                    {scene.narrative}
                   </p>
                 </div>
+              </div>
+            </section>
 
-                {/* Layer chips + band links */}
-                <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 4 }}>
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                    {bandLayers.map((layer) => (
-                      <Link
-                        key={layer.n}
-                        href={layerPath(layer)}
-                        style={{
-                          display: "inline-flex",
-                          alignItems: "center",
-                          gap: 8,
-                          padding: "6px 12px",
-                          background: "var(--paper)",
-                          border: "1px solid var(--rule)",
-                          fontFamily: "var(--font-mono)",
-                          fontSize: 11,
-                          letterSpacing: "0.06em",
-                          color: "var(--ink-2)",
-                          textDecoration: "none",
-                          transition: "border-color var(--dur-fast) var(--ease-out)",
-                        }}
-                        className="layer-chip"
-                      >
-                        <span style={{ color: "var(--gold)", fontWeight: 600 }}>
-                          {String(layer.n).padStart(2, "0")}
-                        </span>
-                        <span>{layer.name}</span>
-                      </Link>
-                    ))}
+            {/* Tech narrative + layer chips · plain container below the image */}
+            <section
+              style={{
+                background: idx % 2 === 0 ? "var(--paper)" : "var(--paper-2)",
+                paddingBlock: "clamp(48px, 8vh, 96px)",
+                borderBottom: "1px solid var(--rule)",
+              }}
+            >
+              <div className="container">
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "minmax(0, 5fr) minmax(0, 7fr)",
+                    gap: "clamp(32px, 5vw, 88px)",
+                    alignItems: "start",
+                  }}
+                  className="story-detail-grid"
+                >
+                  <div>
+                    <div className="eyebrow" style={{ marginBottom: 12 }}>
+                      Under the surface
+                    </div>
+                    <p
+                      style={{
+                        fontFamily: "var(--font-sans)",
+                        fontSize: 17,
+                        lineHeight: 1.65,
+                        color: "var(--ink-2)",
+                        margin: 0,
+                        maxWidth: "52ch",
+                      }}
+                    >
+                      {scene.techNarrative}
+                    </p>
+                  </div>
+                  <div>
+                    <div className="eyebrow" style={{ marginBottom: 12 }}>
+                      Layers this scene carries
+                    </div>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                      {bandLayers.map((layer) => (
+                        <Link
+                          key={layer.n}
+                          href={layerPath(layer)}
+                          style={{
+                            display: "inline-flex",
+                            alignItems: "center",
+                            gap: 8,
+                            padding: "8px 14px",
+                            background: "var(--paper)",
+                            border: "1px solid var(--rule)",
+                            fontFamily: "var(--font-mono)",
+                            fontSize: 12,
+                            letterSpacing: "0.06em",
+                            color: "var(--ink-2)",
+                            textDecoration: "none",
+                            transition: "border-color var(--dur-fast) var(--ease-out)",
+                          }}
+                          className="layer-chip"
+                        >
+                          <span style={{ color: "var(--gold)", fontWeight: 600 }}>
+                            {String(layer.n).padStart(2, "0")}
+                          </span>
+                          <span>{layer.name}</span>
+                        </Link>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+            </section>
           </article>
         );
       })}
 
       <style>{`
-        .layer-chip:hover {
-          border-color: var(--ink) !important;
-        }
+        .layer-chip:hover { border-color: var(--ink) !important; }
         @media (max-width: 900px) {
-          .story-media, .story-copy {
-            order: unset !important;
-          }
-          article > .container {
+          .story-detail-grid {
             grid-template-columns: minmax(0, 1fr) !important;
           }
         }
@@ -215,4 +243,3 @@ export function HomeStory() {
     </section>
   );
 }
-

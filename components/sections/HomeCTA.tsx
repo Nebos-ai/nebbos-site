@@ -1,5 +1,6 @@
 import { SCENES } from "@/content/stills";
 import { SceneStill } from "@/components/ui/SceneStill";
+import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 import { Button } from "@/components/ui/Button";
 
 /**
@@ -29,37 +30,11 @@ export function HomeCTA() {
     >
       <SceneStill scene={CTA_SCENE.id} variant={4} shape="fullBleed" />
 
-      {/* Warm scrim — heavier on the left where the copy lives */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          background:
-            "linear-gradient(90deg, rgba(20,18,15,0.62) 0%, rgba(20,18,15,0.36) 42%, rgba(20,18,15,0.08) 78%, transparent 100%)",
-        }}
-      />
+      {/* Editorial overlay: grain + vignette + left scrim for text legibility */}
+      <SceneOverlay scrim="left" />
 
-      {/* Chapter chip · top-right closes the arc opened at hero */}
-      <div
-        style={{
-          position: "absolute",
-          top: "clamp(24px, 5vh, 56px)",
-          right: "clamp(24px, 4vw, 48px)",
-          zIndex: 2,
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          letterSpacing: "0.24em",
-          textTransform: "uppercase",
-          color: "rgba(244, 241, 234, 0.9)",
-          padding: "8px 14px",
-          border: "1px solid rgba(244, 241, 234, 0.32)",
-          backdropFilter: "blur(6px)",
-        }}
-      >
-        07 · {CTA_SCENE.chapter}
-      </div>
+      {/* Editorial metadata plate · top-right — closes the arc opened at hero */}
+      <SceneMetadataPlate chapter="VII" label={CTA_SCENE.chapter} position="top-right" />
 
       <div
         className="container"

@@ -1,5 +1,6 @@
 import { SCENES } from "@/content/stills";
 import { SceneStill } from "@/components/ui/SceneStill";
+import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 import { BRAND } from "@/content/brand";
 
 /**
@@ -33,37 +34,11 @@ export function HomeHero() {
       {/* Full-bleed background */}
       <SceneStill scene={HERO_SCENE.id} variant={1} shape="fullBleed" priority />
 
-      {/* Warm legibility scrim */}
-      <div
-        aria-hidden="true"
-        style={{
-          position: "absolute",
-          inset: 0,
-          zIndex: 1,
-          background:
-            "linear-gradient(180deg, rgba(20,18,15,0.10) 0%, transparent 30%, transparent 55%, rgba(20,18,15,0.22) 78%, rgba(20,18,15,0.52) 100%)",
-        }}
-      />
+      {/* Editorial overlay: grain + vignette + bottom scrim */}
+      <SceneOverlay scrim="bottom" />
 
-      {/* Chapter chip · top-right */}
-      <div
-        style={{
-          position: "absolute",
-          top: "clamp(24px, 5vh, 56px)",
-          right: "clamp(24px, 4vw, 48px)",
-          zIndex: 2,
-          fontFamily: "var(--font-mono)",
-          fontSize: 11,
-          letterSpacing: "0.24em",
-          textTransform: "uppercase",
-          color: "rgba(244, 241, 234, 0.9)",
-          padding: "8px 14px",
-          border: "1px solid rgba(244, 241, 234, 0.32)",
-          backdropFilter: "blur(6px)",
-        }}
-      >
-        01 · {HERO_SCENE.chapter}
-      </div>
+      {/* Editorial metadata plate · top-right */}
+      <SceneMetadataPlate chapter="I" label={HERO_SCENE.chapter} position="top-right" />
 
       {/* Copy overlay · bottom-left */}
       <div
