@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Newsreader, Host_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Header } from "@/components/Header";
@@ -40,6 +40,26 @@ const jetbrainsMono = JetBrains_Mono({
   variable: "--font-jetbrains-mono",
   display: "swap",
 });
+
+/**
+ * Viewport · Wave 3g mobile pass · founder directive 2026-08-23:
+ * "the site needs to be built for all screen sizes including mobile"
+ *
+ * width=device-width means the browser uses the real device viewport instead
+ * of the desktop-sized 980px default. initialScale=1 avoids the iOS zoom.
+ * The paper theme-color hides the phone chrome bar behind the same background,
+ * so notch + status bar blend into the page.
+ */
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  minimumScale: 1,
+  viewportFit: "cover",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F4F1EA" },
+    { media: "(prefers-color-scheme: dark)",  color: "#14120F" },
+  ],
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_ORIGIN),

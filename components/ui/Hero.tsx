@@ -30,7 +30,14 @@ type HeroProps = {
  * text takes ~55% of width, visual ~40%, with editorial gap.
  */
 export function Hero({ eyebrow, title, deck, children, size = "xl", visual }: HeroProps) {
-  const padding = { xl: "128px 0 88px", lg: "88px 0 64px", md: "64px 0 48px" }[size];
+  // Wave 3g mobile pass: `clamp()` scales padding fluidly from mobile floor to
+  // desktop ceiling, so a 375px phone doesn't waste 128px above the fold.
+  const paddingBySize: Record<NonNullable<HeroProps["size"]>, string> = {
+    xl: "clamp(64px, 10vh, 128px) 0 clamp(48px, 8vh, 88px)",
+    lg: "clamp(48px, 8vh, 88px) 0 clamp(36px, 6vh, 64px)",
+    md: "clamp(36px, 6vh, 64px) 0 clamp(28px, 5vh, 48px)",
+  };
+  const padding = paddingBySize[size];
   const displaySize = size;
   const gap = { xl: 28, lg: 22, md: 18 }[size];
 
@@ -62,15 +69,10 @@ export function Hero({ eyebrow, title, deck, children, size = "xl", visual }: He
     <section style={{ padding }}>
       <div className="container">
         {visual ? (
-          <div
-            className="hero-grid"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 1.15fr) minmax(0, 1fr)",
-              gap: 64,
-              alignItems: "center",
-            }}
-          >
+          // Wave 3g mobile pass: `hero-grid` gets a mobile stacking rule in
+          // globals.css so <900px collapses to single-column with a gap that
+          // reads correctly on a phone.
+          <div className="hero-grid hero-grid--with-visual">
             {textCol}
             <div style={{ minWidth: 0 }}>{visual}</div>
           </div>

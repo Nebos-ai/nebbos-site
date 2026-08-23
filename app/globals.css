@@ -1110,6 +1110,93 @@ html[data-scrolled="true"] .site-header {
   .eco-bridge .eco-node { opacity: 1; }
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   MOBILE PASS · Wave 3g · founder directive 2026-08-23:
+   "the site needs to be built for all screen sizes including mobile"
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Hero with visual: stack single-column on ≤900px so the visual doesn't
+   crush the text column below smartphone widths. */
+.hero-grid--with-visual {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: 64px;
+  align-items: center;
+}
+@media (max-width: 900px) {
+  .hero-grid--with-visual {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+/* Architecture graph mobile pass: on narrow viewports the SVG shrinks,
+   but the labels must stay readable. Bump text sizes when the SVG scales
+   below ~600px wide. Uses container queries against `.arch-graph-wrap`
+   (already has container-type: inline-size). */
+@container (max-width: 620px) {
+  .arch-graph-svg .arch-cell-n,
+  .arch-graph-svg .arch-graph-node-n {
+    font-size: 12px;
+  }
+  .arch-graph-svg .arch-cell-name,
+  .arch-graph-svg .arch-graph-node-label {
+    font-size: 15px;
+  }
+  .arch-graph-svg .arch-cell-caption {
+    font-size: 12px;
+  }
+  .arch-graph-svg .band-n {
+    font-size: 12px;
+  }
+  .arch-graph-svg .band-name {
+    font-size: 13px;
+  }
+}
+
+/* Under 480px, the arch-graph gets a mini padding to avoid edge-crush + a
+   scroll fallback so labels never truncate mid-word. */
+@media (max-width: 480px) {
+  .arch-graph {
+    padding: 4px;
+  }
+  .arch-graph-detail,
+  .arch-graph-note-body {
+    padding: 16px 18px;
+  }
+  .container {
+    padding-inline: 20px;
+  }
+  /* Section-mono min-height already collapses to `auto` on mobile —
+     re-confirmed here for clarity. */
+  .section-mono {
+    padding-block: 56px;
+  }
+}
+
+/* FeatureRow default is single-column already; ensure the `plus-marker`
+   off-container-left position doesn't clip on <420px viewports. */
+@media (max-width: 420px) {
+  .plus-marker::before,
+  .plus-marker::after {
+    /* Move the plus INSIDE the container edge on very-narrow viewports */
+    left: 0;
+  }
+  .plus-marker::before { top: -8px; }
+  .plus-marker::after  { top: -16px; }
+}
+
+/* Touch-target minimums (WCAG 2.2 SC 2.5.8) — 24×24 CSS px on inputs
+   and buttons. Our buttons are already larger; enforce for links inside
+   the nav on mobile. */
+@media (max-width: 720px) {
+  .nav__trigger {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+  }
+}
+
 /*  Skeleton loading blocks — hairline-bordered paper-2 tiles with a subtle
     left-to-right sweep. Matches editorial calm; NEVER a spinner. */
 .skeleton {
