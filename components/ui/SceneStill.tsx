@@ -64,11 +64,30 @@ type V2Props = BaseProps & {
   variant?: never;
   perspective?: never;
   pVariant?: never;
+  v3Scene?: never;
+  v3Variant?: never;
 };
 
-type Props = SceneProps | PerspectiveProps | V2Props;
+type V3Props = BaseProps & {
+  v3Scene: number;
+  v3Variant?: 1 | 2;
+  scene?: never;
+  variant?: never;
+  perspective?: never;
+  pVariant?: never;
+  v2Scene?: never;
+  v2Variant?: never;
+};
+
+type Props = SceneProps | PerspectiveProps | V2Props | V3Props;
 
 function resolveSource(props: Props): { src: string; alt: string } {
+  if ("v3Scene" in props && props.v3Scene) {
+    return {
+      src: `/vision-board/v3-${props.v3Scene}-v${props.v3Variant ?? 1}.png`,
+      alt: props.caption || "",
+    };
+  }
   if ("v2Scene" in props && props.v2Scene) {
     return {
       src: `/vision-board/v2-${props.v2Scene}-v${props.v2Variant ?? 1}.png`,

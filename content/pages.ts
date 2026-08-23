@@ -70,9 +70,10 @@ export type SectionBase = {
   items?: ListItem[];
   ctaPrimary?: CTA;
   ctaSecondary?: CTA;
-  imageScene?: 1 | 2 | 3;                     // full-bleed hero
-  imagePerspective?: number;                  // OR a perspective id
-  imageV2?: number;                           // OR a v2 still id (when v2 lands)
+  imageScene?: 1 | 2 | 3;
+  imagePerspective?: number;
+  imageV2?: number;
+  imageV3?: number;                           // v3 concept-mapped batch
 };
 
 export type Page = {

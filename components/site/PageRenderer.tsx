@@ -63,7 +63,9 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
         borderBottom: "1px solid var(--rule)",
       }}
     >
-      {s.imageV2 ? (
+      {s.imageV3 ? (
+        <SceneStill v3Scene={s.imageV3} v3Variant={1} shape="fullBleed" priority />
+      ) : s.imageV2 ? (
         <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" priority />
       ) : s.imageScene ? (
         <SceneStill scene={s.imageScene} variant={1} shape="fullBleed" priority />
@@ -114,7 +116,7 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
 /* ── Hero: paper (no image) — for deep pages · auto-switches to full-bleed
        when any image field is set on the section ────────────────── */
 function HeroPaper({ s }: { s: SectionBase }) {
-  if (s.imageV2 || s.imageScene || s.imagePerspective) return <HeroFullBleed s={s} />;
+  if (s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) return <HeroFullBleed s={s} />;
   return (
     <section
       style={{
