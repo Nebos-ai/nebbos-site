@@ -1,142 +1,109 @@
 import type { Metadata, Viewport } from "next";
 import { Newsreader, Host_Grotesk, JetBrains_Mono } from "next/font/google";
+import { SiteHeader } from "@/components/site/SiteHeader";
+import { SiteFooter } from "@/components/site/SiteFooter";
+import { BRAND } from "@/content/brand";
+
 import "./globals.css";
-import { Header } from "@/components/Header";
-import { Footer } from "@/components/Footer";
-import { organizationJsonLd } from "@/lib/seo";
-import {
-  IS_PRODUCTION,
-  SITE_DESCRIPTION,
-  SITE_NAME,
-  SITE_ORIGIN,
-} from "@/lib/site";
 
 /**
- * Font system — Delta brief editorial (rebuild-2026 v4).
+ * Root layout · Nebbos site v2 (rebuild-2026-08-23).
  *
- * Newsreader (serif) as the display face. Trust 3A first in the CSS
- * cascade so Adobe Typekit takes over when the client has it — Newsreader
- * is the self-hosted fallback and reads honestly close.
+ * The IA is organized around the 15-layer architecture (5 bands × 3 layers)
+ * plus standard enterprise satellite pages. The 12 vision-board stills carry
+ * the site's visual spine — three scenes ("Where it starts / grows / endures")
+ * that map to the 5 bands and appear across product + solutions + about pages.
  *
- * Host Grotesk = body sans.
- * JetBrains Mono = numerics, kbd, eyebrows.
+ * Registered fonts (Institutional Reserve register):
+ *   Newsreader     — display serif (H1/H2/H3, italic for accent)
+ *   Host Grotesk   — UI + body sans
+ *   JetBrains Mono — eyebrows, numerals, code
+ *
+ * All three loaded self-hosted via next/font so no external CSS fetch on
+ * first paint (CLS-safe). Variable-font axes exposed so italic + weight
+ * variations don't trigger a second download.
  */
-const newsreader = Newsreader({
+
+const serif = Newsreader({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600"],
   style: ["normal", "italic"],
-  variable: "--font-newsreader",
   display: "swap",
+  variable: "--font-serif",
 });
-const hostGrotesk = Host_Grotesk({
+
+const sans = Host_Grotesk({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-host-grotesk",
+  weight: ["400", "500", "600", "700"],
   display: "swap",
+  variable: "--font-sans",
 });
-const jetbrainsMono = JetBrains_Mono({
+
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
-  variable: "--font-jetbrains-mono",
   display: "swap",
+  variable: "--font-mono",
 });
 
-/**
- * Viewport · Wave 3g mobile pass · founder directive 2026-08-23:
- * "the site needs to be built for all screen sizes including mobile"
- *
- * width=device-width means the browser uses the real device viewport instead
- * of the desktop-sized 980px default. initialScale=1 avoids the iOS zoom.
- * The paper theme-color hides the phone chrome bar behind the same background,
- * so notch + status bar blend into the page.
- */
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  minimumScale: 1,
-  viewportFit: "cover",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#F4F1EA" },
-    { media: "(prefers-color-scheme: dark)",  color: "#14120F" },
-  ],
-};
-
 export const metadata: Metadata = {
-  metadataBase: new URL(SITE_ORIGIN),
+  metadataBase: new URL("https://nebbos.ai"),
   title: {
-    default: `${SITE_NAME} — The tool for building your company's brain`,
-    template: `%s — ${SITE_NAME}`,
+    default: `${BRAND.name} — ${BRAND.taglineLong}`,
+    template: `%s — ${BRAND.name}`,
   },
-  description: SITE_DESCRIPTION,
-  applicationName: SITE_NAME,
-  robots: IS_PRODUCTION
-    ? { index: true, follow: true }
-    : { index: false, follow: false },
-  icons: {
-    icon: [
-      { url: "/favicon.svg", type: "image/svg+xml" },
-    ],
-    apple: "/favicon.svg",
-  },
+  description: BRAND.descriptionShort,
+  applicationName: BRAND.name,
+  authors: [{ name: BRAND.name }],
+  keywords: [
+    "AI agent governance",
+    "enterprise AI substrate",
+    "model-training data",
+    "AI observability",
+    "AI approval workflow",
+  ],
   openGraph: {
     type: "website",
-    siteName: SITE_NAME,
-    url: SITE_ORIGIN,
-    title: `${SITE_NAME} — The tool for building your company's brain`,
-    description: SITE_DESCRIPTION,
+    siteName: BRAND.name,
+    title: `${BRAND.name} — ${BRAND.taglineLong}`,
+    description: BRAND.descriptionShort,
+    url: "https://nebbos.ai",
   },
   twitter: {
     card: "summary_large_image",
-    title: `${SITE_NAME} — The tool for building your company's brain`,
-    description: SITE_DESCRIPTION,
+    title: `${BRAND.name} — ${BRAND.taglineLong}`,
+    description: BRAND.descriptionShort,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#F4F1EA" },
+    { media: "(prefers-color-scheme: dark)", color: "#14120F" },
+  ],
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html
-      lang="en"
-      data-theme="light"
-      className={`${newsreader.variable} ${hostGrotesk.variable} ${jetbrainsMono.variable}`}
-    >
-      <head>
-        {/* Adobe Typekit for Trust 3A — cascades before Newsreader.
-            Degrades gracefully when the network / kit is blocked. */}
-        <link rel="stylesheet" href="https://use.typekit.net/gkk3ycm.css" />
-      </head>
+    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
       <body>
-        <script
-          type="application/ld+json"
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
-        />
-        {/*
-          Sticky-nav hairline-on-scroll · doctrine v2 §5 NEW-G.
-          Sets data-scrolled="true" on <html> when scrollY > 8. Server-inlined
-          so it runs before hydration — no flash on paint. Passive listener
-          for perf. Removes on unload. ~15 lines total.
-        */}
-        <script
-          // eslint-disable-next-line react/no-danger
-          dangerouslySetInnerHTML={{
-            __html: `(function(){function u(){var s=window.scrollY>8;var h=document.documentElement;if(s!==(h.dataset.scrolled==='true'))h.dataset.scrolled=s?'true':'false';}u();window.addEventListener('scroll',u,{passive:true});})();`,
-          }}
-        />
-        <a href="#main" className="skip-link">
-          Skip to content
-        </a>
-        {!IS_PRODUCTION ? (
-          <div className="staging-banner" role="status">
-            STAGING — idvor.ai · noindex · not the production site
-          </div>
-        ) : null}
-        <Header />
+        <a href="#main" className="skip-link">Skip to content</a>
+        <SiteHeader />
         <main id="main">{children}</main>
-        <Footer />
+        <SiteFooter />
       </body>
     </html>
   );

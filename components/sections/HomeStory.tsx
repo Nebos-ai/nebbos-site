@@ -1,75 +1,71 @@
-import Image from "next/image";
+import Link from "next/link";
 import { SCENES_IN_ORDER } from "@/content/stills";
 import { LAYERS } from "@/lib/architecture";
+import { layerPath } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
+import { SceneStill } from "@/components/ui/SceneStill";
 
 /**
- * FRAME · Home / 02 · The story
- * PARENT · app/page.tsx (/)
- * PURPOSE · Three scene tiles that carry the site's narrative arc + name the
- *           15 architecture layers by scene. Each tile pairs a still with two
- *           registers of copy: LIFE (what the person is doing) and TECH (what
- *           Nebbos is doing quietly underneath). Together they answer the
- *           founder directive "the 15 points can be told through these images
- *           as well · you are missing the tech aspect of these scenes".
+ * HomeStory · v2 rebuild 2026-08-23
  *
- * Layout · alternating architectural block:
+ * Three scenes told back-to-back: coffee shop (Where it starts) → NYC
+ * executive (Where it grows) → Amalfi elder (Where it endures). Each tile
+ * carries TWO registers of copy — the life narrative (what the person is
+ * doing) and the tech narrative (what Nebbos is doing quietly underneath).
+ * Together they answer the founder directive: "the 15 points can be told
+ * through these images as well · you are missing the tech aspect."
  *
- *   ┌────────────────────────────┬──────────────────────┐
- *   │   [Scene 1 · full-bleed]   │  01 · Where it starts │
- *   │                            │  Life copy...         │
- *   │                            │  Tech copy...         │
- *   │                            │  Layer chips...       │
- *   └────────────────────────────┴──────────────────────┘
- *
- * Tile 2 flips (image right / copy left). Tile 3 flips back. Institutional
- * Reserve register — paper cream ground, serif display, mono eyebrows,
- * hairline dividers between tiles.
+ * Every tile pairs its scene with the specific architecture layers that
+ * scene carries, rendered as numbered chips. Together the three tiles
+ * cover all 15 layers.
  */
 export function HomeStory() {
   return (
     <section
+      aria-labelledby="story-heading"
       style={{
-        background: "var(--paper)",
-        borderBlock: "1px solid var(--rule)",
-        paddingBlock: "clamp(72px, 10vh, 128px)",
+        background: "var(--paper-2)",
+        paddingBlock: "var(--section-y-lg)",
       }}
     >
-      <div className="container" style={{ marginBottom: "clamp(48px, 6vh, 80px)" }}>
-        <SectionNumeral n="02" label="The story" />
-        <h2
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(32px, 4.4vw, 56px)",
-            lineHeight: 1.06,
-            letterSpacing: "-0.022em",
-            fontWeight: 400,
-            color: "var(--ink)",
-            margin: "20px 0 0 0",
-            maxWidth: "22ch",
-            textWrap: "balance",
-          }}
-        >
-          Fifteen layers,{" "}
-          <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-            three lives
-          </em>{" "}
-          they hold together.
-        </h2>
-        <p
-          style={{
-            fontFamily: "var(--font-sans)",
-            fontSize: 17,
-            lineHeight: 1.55,
-            color: "var(--ink-2)",
-            maxWidth: "58ch",
-            marginTop: 20,
-          }}
-        >
-          The architecture is real. So are the lives it makes possible. Here is
-          how a substrate becomes a morning by the window, a mid-morning at the
-          park, an evening by the sea — and what is quietly running beneath each.
-        </p>
+      <div className="container">
+        <div style={{ maxWidth: "68ch", marginBottom: "clamp(48px, 6vh, 80px)" }}>
+          <SectionNumeral n="03" label="The story" />
+          <h2
+            id="story-heading"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(32px, 4.4vw, 56px)",
+              lineHeight: 1.06,
+              letterSpacing: "-0.022em",
+              fontWeight: 400,
+              color: "var(--ink)",
+              margin: "20px 0 0 0",
+              maxWidth: "24ch",
+              textWrap: "balance",
+            }}
+          >
+            The system is the invisible half.{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+              The life
+            </em>{" "}
+            is what remains.
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: 17,
+              lineHeight: 1.6,
+              color: "var(--ink-2)",
+              maxWidth: "58ch",
+              marginTop: 20,
+            }}
+          >
+            Three lives the substrate makes possible. A morning by the window. A
+            mid-morning at the park. An evening by the sea. Beneath each, the
+            architecture is doing exactly what it was designed to do — quietly.
+          </p>
+        </div>
       </div>
 
       {SCENES_IN_ORDER.map((scene, idx) => {
@@ -93,28 +89,12 @@ export function HomeStory() {
                 alignItems: "center",
               }}
             >
-              {/* Media block */}
-              <div
-                style={{
-                  order: flip ? 2 : 1,
-                  position: "relative",
-                  aspectRatio: "16 / 9",
-                  background: "var(--paper-2)",
-                  border: "1px solid var(--rule)",
-                  overflow: "hidden",
-                }}
-              >
-                <Image
-                  src={`/vision-board/scene-${scene.id}-v1.png`}
-                  alt={`Scene ${scene.id}: ${scene.chapter} — ${scene.strap}`}
-                  fill
-                  sizes="(max-width: 900px) 100vw, 50vw"
-                  style={{ objectFit: "cover" }}
-                  priority={idx === 0}
-                />
+              {/* Media */}
+              <div style={{ order: flip ? 2 : 1 }} className="story-media">
+                <SceneStill scene={scene.id} variant={1} shape="framed" />
               </div>
 
-              {/* Copy block */}
+              {/* Copy */}
               <div
                 style={{
                   order: flip ? 1 : 2,
@@ -122,12 +102,10 @@ export function HomeStory() {
                   flexDirection: "column",
                   gap: 24,
                 }}
+                className="story-copy"
               >
                 <div>
-                  <SectionNumeral
-                    n={`0${idx + 3}`}
-                    label={scene.chapter}
-                  />
+                  <SectionNumeral n={`0${idx + 4}`} label={scene.chapter} />
                   <h3
                     style={{
                       fontFamily: "var(--font-serif)",
@@ -159,7 +137,7 @@ export function HomeStory() {
                   {scene.narrative}
                 </p>
 
-                {/* Tech narrative — separated by a hairline + mono heading */}
+                {/* Tech narrative */}
                 <div
                   style={{
                     borderTop: "1px solid var(--rule)",
@@ -167,23 +145,14 @@ export function HomeStory() {
                     marginTop: 4,
                   }}
                 >
-                  <div
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
-                      letterSpacing: "0.24em",
-                      textTransform: "uppercase",
-                      color: "var(--gold)",
-                      marginBottom: 12,
-                    }}
-                  >
+                  <div className="eyebrow" style={{ marginBottom: 12 }}>
                     Under the surface
                   </div>
                   <p
                     style={{
                       fontFamily: "var(--font-sans)",
                       fontSize: 15,
-                      lineHeight: 1.6,
+                      lineHeight: 1.65,
                       color: "var(--ink-2)",
                       margin: 0,
                       maxWidth: "48ch",
@@ -193,42 +162,36 @@ export function HomeStory() {
                   </p>
                 </div>
 
-                {/* Layer chips — the specific architecture layers this scene carries */}
-                <div
-                  style={{
-                    display: "flex",
-                    flexWrap: "wrap",
-                    gap: 8,
-                    marginTop: 4,
-                  }}
-                >
-                  {bandLayers.map((layer) => (
-                    <span
-                      key={layer.n}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: 8,
-                        padding: "6px 12px",
-                        background: "var(--paper-2)",
-                        border: "1px solid var(--rule)",
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 11,
-                        letterSpacing: "0.06em",
-                        color: "var(--ink-2)",
-                      }}
-                    >
-                      <span
+                {/* Layer chips + band links */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 12, marginTop: 4 }}>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
+                    {bandLayers.map((layer) => (
+                      <Link
+                        key={layer.n}
+                        href={layerPath(layer)}
                         style={{
-                          color: "var(--gold)",
-                          fontWeight: 600,
+                          display: "inline-flex",
+                          alignItems: "center",
+                          gap: 8,
+                          padding: "6px 12px",
+                          background: "var(--paper)",
+                          border: "1px solid var(--rule)",
+                          fontFamily: "var(--font-mono)",
+                          fontSize: 11,
+                          letterSpacing: "0.06em",
+                          color: "var(--ink-2)",
+                          textDecoration: "none",
+                          transition: "border-color var(--dur-fast) var(--ease-out)",
                         }}
+                        className="layer-chip"
                       >
-                        {String(layer.n).padStart(2, "0")}
-                      </span>
-                      <span>{layer.name}</span>
-                    </span>
-                  ))}
+                        <span style={{ color: "var(--gold)", fontWeight: 600 }}>
+                          {String(layer.n).padStart(2, "0")}
+                        </span>
+                        <span>{layer.name}</span>
+                      </Link>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
@@ -236,18 +199,20 @@ export function HomeStory() {
         );
       })}
 
-      {/* Mobile — collapse to single column */}
       <style>{`
+        .layer-chip:hover {
+          border-color: var(--ink) !important;
+        }
         @media (max-width: 900px) {
-          .container > div[style*="grid-template-columns"] {
-            grid-template-columns: minmax(0, 1fr) !important;
-          }
-          .container > div[style*="grid-template-columns"] > div[style*="order: 1"],
-          .container > div[style*="grid-template-columns"] > div[style*="order: 2"] {
+          .story-media, .story-copy {
             order: unset !important;
+          }
+          article > .container {
+            grid-template-columns: minmax(0, 1fr) !important;
           }
         }
       `}</style>
     </section>
   );
 }
+
