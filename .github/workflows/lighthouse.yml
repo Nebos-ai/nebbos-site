@@ -1,0 +1,34 @@
+name: lighthouse
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Advisory-only for now — failures print but do NOT block merge.
+# Promote to blocking once budget is stable across a few PRs.
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lhci:
+    name: lighthouse-ci
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: install
+        run: npm install --no-audit --no-fund
+      - name: build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_ENV: staging
+      - name: lighthouse ci
+        # `|| true` keeps this advisory. Remove once budget is stable.
+        run: npx lhci autorun --config=.lighthouserc.json || true

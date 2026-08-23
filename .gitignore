@@ -28,3 +28,10 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
+
+# W3b CI · playwright + lighthouse artifacts
+/playwright-report
+/test-results
+/blob-report
+/.lighthouseci
+

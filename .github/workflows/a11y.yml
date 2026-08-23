@@ -1,0 +1,42 @@
+name: a11y
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: a11y-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  axe-sweep:
+    name: axe-core WCAG 2.2 AA
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: install
+        run: npm install --no-audit --no-fund
+      - name: install playwright browsers
+        run: npx playwright install --with-deps chromium
+      - name: build
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_ENV: staging
+      - name: run a11y sweep
+        # `|| true` keeps this advisory during initial rollout. Promote to
+        # blocking once the first clean sweep lands.
+        run: npm run test:a11y || true
+      - name: upload html report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 7
