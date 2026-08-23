@@ -39,12 +39,21 @@ from google import genai
 from google.genai import types
 
 DEFAULT_PROMPT = (
-    "Ambient landscape · drifting fog rolls slowly over a single mountain peak "
-    "at first light · warm-cool color balance · muted ochre and slate palette · "
-    "subtle 35mm film grain · silent · no cuts · one continuous shot · 8 seconds · "
-    "horizontal composition · natural-history-monograph aesthetic · "
-    "quiet institutional beauty · editorial cinematography · "
-    "no text · no people · no logos."
+    # Hollywood-tier · Nebbos target v2 · majestic + nostalgic + Hand-of-God warmth.
+    # See ~/.claude/skills/ai-video-generation-prompting/SKILL.md for prompt anatomy.
+    "A single monumental mountain peak at golden hour, warm sun-through-fog "
+    "atmosphere · vast alpine valley below, morning haze holding low, "
+    "cathedral-scale sublime · shot on ARRI ALEXA 65 with Zeiss Master "
+    "Anamorphic 40mm · motivated natural light only, sun cresting behind the "
+    "summit, warm golden-hour transitioning · Daria D'Antonio × The Hand of "
+    "God warm Mediterranean palette (ochre + terracotta + faded alpine blue) "
+    "crossed with Emmanuel Lubezki × Tree of Life natural-sublime pacing · "
+    "Kodak Vision3 500T warm film grain · locked static camera, glacial "
+    "contemplative pacing, warm fog drifts imperceptibly across the valley "
+    "floor left-to-right · 8 seconds · 16:9 anamorphic · no cuts, no people, "
+    "no text, no logos, no titles · silent · majestic, nostalgic, sun-soaked, "
+    "Paolo Sorrentino contemplative warmth, sacred stillness · Planet Earth "
+    "atmospheric register · production-grade cinematography."
 )
 
 DEFAULT_MODEL = "veo-3.1-generate-preview"
