@@ -165,16 +165,22 @@ h1, h2, h3, h4, h5, h6 {
   letter-spacing: -0.018em;
   color: var(--ink);
   text-wrap: balance;
-  /* Editorial small-caps · founder direction 2026-08-23:
-     first letter of each word bigger (uppercase), remaining letters
-     render as smaller caps. Fraunces supports OpenType small-caps. */
-  font-variant: small-caps;
 }
 
-h1 { font-size: var(--size-h1); line-height: 1.04; letter-spacing: -0.024em; font-weight: 400; }
-h2 { font-size: var(--size-h2); line-height: 1.08; letter-spacing: -0.02em; }
-h3 { font-size: var(--size-h3); line-height: 1.15; letter-spacing: -0.014em; }
-h4 { font-size: var(--size-h4); line-height: 1.25; }
+/* Small-caps on h2/h3/h4 (works well at those sizes). Hero h1 stays
+   natural case with a heavier weight — small-caps at 60-100px reads
+   awkward (small caps of "Nebbos" still 60px, uneven proportions). */
+h1 {
+  font-size: var(--size-h1);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  font-variant: normal;
+  font-optical-sizing: auto;
+}
+h2 { font-size: var(--size-h2); line-height: 1.08; letter-spacing: -0.02em; font-variant: small-caps; }
+h3 { font-size: var(--size-h3); line-height: 1.15; letter-spacing: -0.014em; font-variant: small-caps; }
+h4 { font-size: var(--size-h4); line-height: 1.25; font-variant: small-caps; }
 
 em {
   font-style: italic;

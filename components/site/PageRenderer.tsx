@@ -89,7 +89,7 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
                 textWrap: "balance",
                 textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
               }}
-              dangerouslySetInnerHTML={{ __html: s.h1 }}
+              dangerouslySetInnerHTML={{ __html: s.h1! }}
             />
           )}
           {s.deck && (
@@ -104,7 +104,7 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
                 margin: 0,
                 textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
               }}
-              dangerouslySetInnerHTML={{ __html: s.deck }}
+              dangerouslySetInnerHTML={{ __html: s.deck! }}
             />
           )}
         </div>
@@ -162,7 +162,7 @@ function HeroPaper({ s }: { s: SectionBase }) {
                 maxWidth: "22ch",
                 textWrap: "balance",
               }}
-              dangerouslySetInnerHTML={{ __html: s.h1 }}
+              dangerouslySetInnerHTML={{ __html: s.h1! }}
             />
           )}
           {s.deck && (
@@ -176,13 +176,13 @@ function HeroPaper({ s }: { s: SectionBase }) {
                 marginTop: 24,
                 maxWidth: "56ch",
               }}
-              dangerouslySetInnerHTML={{ __html: s.deck }}
+              dangerouslySetInnerHTML={{ __html: s.deck! }}
             />
           )}
           {s.ctaPrimary && (
             <div style={{ marginTop: 32 }}>
-              <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">
-                {s.ctaPrimary.label}
+              <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "primary"} size="lg">
+                {s.ctaPrimary!.label}
               </Button>
             </div>
           )}
@@ -212,7 +212,7 @@ function TextBlock({ s }: { s: SectionBase }) {
                 maxWidth: "26ch",
                 textWrap: "balance",
               }}
-              dangerouslySetInnerHTML={{ __html: s.h2 }}
+              dangerouslySetInnerHTML={{ __html: s.h2! }}
             />
           )}
           {s.body && (
@@ -255,11 +255,11 @@ function SplitColumns({ s }: { s: SectionBase }) {
                   maxWidth: "22ch",
                   textWrap: "balance",
                 }}
-                dangerouslySetInnerHTML={{ __html: s.h2 }}
+                dangerouslySetInnerHTML={{ __html: s.h2! }}
               />
             )}
             {s.deck && (
-              <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: 0, maxWidth: "48ch" }} dangerouslySetInnerHTML={{ __html: s.deck }} />
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: 0, maxWidth: "48ch" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />
             )}
           </div>
           <div>
@@ -279,7 +279,7 @@ function ListNumbered({ s }: { s: SectionBase }) {
       <div className="container" style={{ maxWidth: 900 }}>
         {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
         {s.h2 && (
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />
         )}
         <ol style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
           {(s.items ?? []).map((item, i) => (
@@ -314,7 +314,7 @@ function ListPlain({ s }: { s: SectionBase }) {
     <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ maxWidth: 900 }}>
         {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "02"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
         {/* Special-case: about product-line list is sourced from FACTS.productLine */}
         {(s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build") ? (
           <PlainList items={FACTS.productLine.map((title) => ({ title }))} />
@@ -340,7 +340,7 @@ function TableRows({ s }: { s: SectionBase }) {
     <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ maxWidth: 900 }}>
         {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
         <dl style={{ display: "grid", gap: 0 }}>
           {rows.map(([label, value], i) => (
             <div key={label} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 18, display: "grid", gridTemplateColumns: "180px minmax(0, 1fr)", gap: 20, alignItems: "baseline" }}>
@@ -359,10 +359,10 @@ function CTABandInline({ s }: { s: SectionBase }) {
   return (
     <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(64px, 9vh, 128px)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ textAlign: "center" }}>
-        {s.h2 && <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 3vw, 34px)", color: "var(--ink)", margin: "0 auto 28px", maxWidth: "34ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+        {s.h2 && <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 3vw, 34px)", color: "var(--ink)", margin: "0 auto 28px", maxWidth: "34ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
         <div style={{ display: "inline-flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-          {s.ctaPrimary && <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">{s.ctaPrimary.label}</Button>}
-          {s.ctaSecondary && <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost"} size="lg">{s.ctaSecondary.label}</Button>}
+          {s.ctaPrimary && <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "primary"} size="lg">{s.ctaPrimary!.label}</Button>}
+          {s.ctaSecondary && <Button href={s.ctaSecondary!.href} variant={s.ctaSecondary!.variant ?? "ghost"} size="lg">{s.ctaSecondary!.label}</Button>}
         </div>
       </div>
     </section>
@@ -378,11 +378,11 @@ function CTAFullBleed({ s }: { s: SectionBase }) {
       {s.eyebrow && <SceneMetadataPlate chapter="VII" label={s.eyebrow} position="top-right" />}
       <div className="container" style={{ position: "relative", zIndex: 2, paddingBlock: "clamp(48px, 8vh, 96px)" }}>
         <div style={{ maxWidth: "44ch", display: "flex", flexDirection: "column", gap: 24 }}>
-          {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4.6vw, 60px)", lineHeight: 1.05, letterSpacing: "-0.022em", fontWeight: 400, color: "var(--paper)", margin: 0, textWrap: "balance", textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: "clamp(16px, 1.4vw, 19px)", lineHeight: 1.55, color: "rgba(244, 241, 234, 0.9)", margin: 0, textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.deck }} />}
+          {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4.6vw, 60px)", lineHeight: 1.05, letterSpacing: "-0.022em", fontWeight: 400, color: "var(--paper)", margin: 0, textWrap: "balance", textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
+          {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: "clamp(16px, 1.4vw, 19px)", lineHeight: 1.55, color: "rgba(244, 241, 234, 0.9)", margin: 0, textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />}
           <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 4 }}>
-            {s.ctaPrimary && <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "solid-light"} size="lg">{s.ctaPrimary.label}</Button>}
-            {s.ctaSecondary && <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost-light"} size="lg" arrow={false}>{s.ctaSecondary.label}</Button>}
+            {s.ctaPrimary && <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "solid-light"} size="lg">{s.ctaPrimary!.label}</Button>}
+            {s.ctaSecondary && <Button href={s.ctaSecondary!.href} variant={s.ctaSecondary!.variant ?? "ghost-light"} size="lg" arrow={false}>{s.ctaSecondary!.label}</Button>}
           </div>
         </div>
       </div>
@@ -407,8 +407,8 @@ function InboxRouter({ s }: { s: SectionBase }) {
         {(s.eyebrow || s.h2) && (
           <div style={{ maxWidth: "68ch", marginBottom: 40 }}>
             {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-            {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 0 0" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-            {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: "16px 0 0 0", maxWidth: "50ch" }} dangerouslySetInnerHTML={{ __html: s.deck }} />}
+            {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 0 0" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
+            {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: "16px 0 0 0", maxWidth: "50ch" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />}
           </div>
         )}
         <ul style={{ listStyle: "none", display: "grid", gap: 0 }}>
