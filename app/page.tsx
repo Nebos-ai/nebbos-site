@@ -17,8 +17,11 @@ import { HomeCTA } from "@/components/sections/HomeCTA";
  * touching the others. Data flows from content/stills.ts (scene registry)
  * and lib/nav.ts (product tree derived from lib/architecture.ts).
  */
-export const dynamic = "force-static";
-export const revalidate = false;
+// No dynamic/revalidate exports — Next defaults to static pre-render at build
+// time with normal cache semantics. Setting revalidate=false pins s-maxage
+// to one year on the CDN, which is wrong for iterative marketing launches.
+// Post-launch, we can add revalidate = 3600 (1h) or similar to opt in to
+// heavier caching.
 
 export default function HomePage() {
   return (

@@ -40,6 +40,29 @@ const nextConfig: NextConfig = {
       { source: "/brief/financial", destination: "/nebbos-delta-brief.html" },
     ];
   },
+  // Cache headers · rapid-iteration marketing site.
+  // Default Next behavior on `force-static` + `revalidate:false` was
+  // Cache-Control: s-maxage=31536000 (1 year on CDN) which meant every
+  // deploy stayed invisible to browsers with the old page cached. Override
+  // per-route-type: HTML pages revalidate quickly (~60s CDN, ~30s browser),
+  // static assets under /_next/static/ keep the immutable long TTL, images
+  // under /vision-board/ get a modest CDN TTL so re-generations propagate.
+  async headers() {
+    return [
+      {
+        source: "/((?!_next/static|_next/image|vision-board).*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=30, s-maxage=60, stale-while-revalidate=300" },
+        ],
+      },
+      {
+        source: "/vision-board/(.*)",
+        headers: [
+          { key: "Cache-Control", value: "public, max-age=300, s-maxage=3600, stale-while-revalidate=86400" },
+        ],
+      },
+    ];
+  },
 };
 
 const withMDX = createMDX({
