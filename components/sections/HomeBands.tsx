@@ -32,7 +32,7 @@ const BAND_IMAGES: Record<number, number> = {
   2: 4,   // Boundary → v2-4 logistics dispatch
   3: 7,   // Intelligence → v2-7 corporate boardroom
   4: 9,   // Action → v2-9 manufacturing workshop
-  5: 12,  // Commerce → v2-12 financial services dawn
+  5: 6,   // Commerce → v2-6 tech startup desk (v2-12 gen incomplete; v3 dawn-trading incoming)
 };
 
 export function HomeBands() {
