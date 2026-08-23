@@ -35,6 +35,14 @@ export type Layer = {
   detail: string;
   /** Capability proof-points — illustrative only, no internal identifiers. */
   proof: string[];
+  /** WHO uses / runs / owns this layer (optional, cascades to placeholder when absent) */
+  who?: string;
+  /** WHERE this layer sits in the architecture (upstream / downstream) */
+  where?: string;
+  /** WHEN this layer matters — situations that trigger it */
+  when?: string[];
+  /** WHY this layer is worth caring about — the compounding value */
+  why?: string;
 };
 
 export type Band = {
@@ -119,6 +127,16 @@ export const LAYERS: Layer[] = [
       "Same authorization on both surfaces",
       "Rate limits enforced uniformly",
     ],
+    who: "Every Pearl running inside your tenant, every integration your team wires in, every external system that needs to read from or write to Nebbos. Your engineers when they build against Nebbos. Your CISO when they audit which calls hit which endpoints.",
+    where: "Sits at the boundary — between the substrate below (Data · Identity · Departments) and the world above (Ingest · Integrations). Every call from a Pearl to any Nebbos capability crosses this layer. Every third-party integration crosses this layer. The single choke point for authorization + rate limits + audit.",
+    when: [
+      "You&rsquo;re building an integration that reads Nebbos data",
+      "You&rsquo;re wiring a Pearl to act on external systems",
+      "Your CISO asks how machine callers authenticate",
+      "You need one audit trail across UI + programmatic access",
+      "You&rsquo;re rate-limiting a runaway agent-driven workload",
+    ],
+    why: "One contract eliminates the divergence problem where the UI can do things the API can&rsquo;t (or vice versa). Every capability is exposed identically to humans and to Pearls, so there&rsquo;s no shadow API surface for the security team to worry about. The MCP layer means any modern AI model — yours, a provider&rsquo;s, or a future one — can call Nebbos tools without a bespoke wrapper. Uniform rate limits mean a misbehaving Pearl can&rsquo;t take down the humans who share its tenant.",
   },
   {
     n: 6,

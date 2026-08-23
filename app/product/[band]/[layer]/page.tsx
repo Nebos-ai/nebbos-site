@@ -263,6 +263,71 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
         </div>
       </section>
 
+      {/* WHO · who uses / runs / owns this layer */}
+      {layer.who && (
+        <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container">
+            <div style={{ maxWidth: "68ch" }}>
+              <SectionNumeral n="03" label="Who" />
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(19px, 1.8vw, 24px)", lineHeight: 1.6, color: "var(--ink)", margin: "20px 0 0 0", maxWidth: "62ch" }}>
+                {layer.who}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* WHERE · where this layer sits in the architecture */}
+      {layer.where && (
+        <section style={{ background: "var(--paper)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container">
+            <div style={{ maxWidth: "68ch" }}>
+              <SectionNumeral n="04" label="Where it fits" />
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(19px, 1.8vw, 24px)", lineHeight: 1.6, color: "var(--ink)", margin: "20px 0 0 0", maxWidth: "62ch" }}>
+                {layer.where}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* WHEN · situations that trigger this layer's use */}
+      {layer.when && layer.when.length > 0 && (
+        <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 900 }}>
+            <SectionNumeral n="05" label="When it matters" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "28ch", textWrap: "balance" }}>
+              Situations that put {layer.name} in the frame.
+            </h2>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
+              {layer.when.map((item, i) => (
+                <li key={item} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 18, display: "grid", gridTemplateColumns: "40px minmax(0, 1fr)", gap: 20, alignItems: "baseline" }}>
+                  <span className="eyebrow" style={{ color: "var(--gold)" }}>{String(i + 1).padStart(2, "0")}</span>
+                  <span style={{ fontFamily: "var(--font-serif)", fontSize: 18, lineHeight: 1.5, color: "var(--ink)" }}>{item}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* WHY · the compounding value */}
+      {layer.why && (
+        <section style={{ background: "var(--paper)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container">
+            <div style={{ maxWidth: "68ch" }}>
+              <SectionNumeral n="06" label="Why it matters" />
+              <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 20px 0", maxWidth: "28ch", textWrap: "balance" }}>
+                The compounding value of {layer.name}.
+              </h2>
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(19px, 1.8vw, 24px)", lineHeight: 1.6, color: "var(--ink-2)", margin: 0, maxWidth: "62ch" }}>
+                {layer.why}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* Scene context — this layer sits in Scene X of the story */}
       <section
         style={{
@@ -273,7 +338,7 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
       >
         <div className="container">
           <div style={{ maxWidth: "68ch" }}>
-            <SectionNumeral n="03" label="In the story" />
+            <SectionNumeral n="07" label="In the story" />
             <p
               style={{
                 fontFamily: "var(--font-serif)",

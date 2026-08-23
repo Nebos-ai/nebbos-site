@@ -88,50 +88,64 @@ export function SiteHeader() {
         gap: 32,
         minHeight: 68,
       }}>
-        {/* Logo · brand mark, context-aware:
-            - at top (over hero image, no scroll): white mark (dark scrim behind)
-            - after scroll (paper bg): dark mark
-            Both variants preloaded so swap is instant. */}
+        {/* Logo · brand mark + Nebbos wordmark next to it. Mark cross-fades
+            orange (over hero) → dark (on scroll). Wordmark cross-fades
+            paper → ink. Founder direction: "this needs to be next to the
+            favicon." */}
         <Link
           href="/"
           aria-label="Nebbos home"
           style={{
             display: "inline-flex",
             alignItems: "center",
+            gap: 12,
             color: "var(--ink)",
             textDecoration: "none",
-            position: "relative",
-            width: 36,
-            height: 37,
           }}
         >
-          <Image
-            src="/nebbos-mark-white.svg"
-            alt="Nebbos"
-            width={36}
-            height={37}
-            priority
+          <div style={{ position: "relative", width: 44, height: 45 }}>
+            <Image
+              src="/nebbos-mark-orange.svg"
+              alt="Nebbos"
+              width={44}
+              height={45}
+              priority
+              style={{
+                position: "absolute",
+                inset: 0,
+                opacity: scrolled ? 0 : 1,
+                transition: "opacity var(--dur-med) var(--ease-out)",
+                filter: "drop-shadow(0 1px 3px rgba(20, 18, 15, 0.32))",
+              }}
+            />
+            <Image
+              src="/nebbos-mark-dark.svg"
+              alt=""
+              aria-hidden="true"
+              width={44}
+              height={45}
+              priority
+              style={{
+                position: "absolute",
+                inset: 0,
+                opacity: scrolled ? 1 : 0,
+                transition: "opacity var(--dur-med) var(--ease-out)",
+              }}
+            />
+          </div>
+          <span
             style={{
-              position: "absolute",
-              inset: 0,
-              opacity: scrolled ? 0 : 1,
-              transition: "opacity var(--dur-med) var(--ease-out)",
+              fontFamily: "var(--font-serif)",
+              fontSize: 22,
+              fontWeight: 500,
+              letterSpacing: "-0.014em",
+              color: scrolled ? "var(--ink)" : "var(--paper)",
+              transition: "color var(--dur-med) var(--ease-out)",
+              textShadow: scrolled ? "none" : "0 1px 3px rgba(20, 18, 15, 0.42)",
             }}
-          />
-          <Image
-            src="/nebbos-mark-dark.svg"
-            alt=""
-            aria-hidden="true"
-            width={36}
-            height={37}
-            priority
-            style={{
-              position: "absolute",
-              inset: 0,
-              opacity: scrolled ? 1 : 0,
-              transition: "opacity var(--dur-med) var(--ease-out)",
-            }}
-          />
+          >
+            Nebbos
+          </span>
         </Link>
 
         {/* Primary nav — desktop */}
