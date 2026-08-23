@@ -12,14 +12,6 @@ import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 
 const ROMAN = ["", "II", "III", "IV", "V", "VI"];
 
-/**
- * Per-scene featured perspective for the HomeStory triptych.
- * Hero + CTA use character-forward scene shots (v1 / v4). HomeStory uses
- * these DIFFERENT perspectives so nothing repeats across the scroll.
- *   Scene 1 → perspective 1 (street workers planting)
- *   Scene 2 → perspective 5 (empty office wide)
- *   Scene 3 → perspective 7 (Mediterranean vista alone)
- */
 const STORY_PERSPECTIVES: Record<SceneId, PerspectiveId> = {
   1: 1,
   2: 5,
@@ -27,86 +19,88 @@ const STORY_PERSPECTIVES: Record<SceneId, PerspectiveId> = {
 };
 
 /**
- * HomeStory · v2 rebuild 2026-08-23 (revised: full-bleed images, no framing).
+ * HomeStory · editorial-minimum revision 2026-08-23
  *
- * Founder directive: "the images should never be framed they should always
- * be full screen."
+ * Founder critique: "the picture should tell the story · this is not an ERP
+ * company site." Previous version stacked chapter + strap + italic narrative
+ * paragraph + "Under the surface" tech paragraph + layer chip cluster on
+ * every scene. Read as tutorial, not magazine.
  *
- * Each of three scenes = ONE full-bleed cinematic section (80vh) with the
- * scene image spanning the viewport, a warm scrim, chapter chip top-right,
- * and life-narrative + strap overlaid at the bottom-left (hero-style).
- * A tech-narrative + layer chips block sits underneath each scene section
- * in a plain container — giving the detail copy room to breathe without
- * fighting the image for legibility.
+ * New shape per scene:
+ *   [full-bleed image]
+ *   Chapter · Roman numeral · label      (metadata plate on the image)
+ *   ONE editorial line overlaid           (like a magazine caption)
+ *   Layer names as a tiny hairline row below (footer chips, minimal)
+ *
+ * No paragraphs. No "under the surface" heading. No tutorial voice.
+ * The image is the story. Words are a caption.
  */
+
+// One short editorial caption per scene. Not a paragraph. Not a tutorial.
+// Reads as a magazine spread's title card.
+const SCENE_CAPTIONS: Record<SceneId, { title: string; sub: string }> = {
+  1: {
+    title: "The company begins the way any garden does.",
+    sub: "Substrate. The foundation takes shape.",
+  },
+  2: {
+    title: "At scale, the same hand becomes a system.",
+    sub: "Intelligence. Memory compounds. Reasoning routes.",
+  },
+  3: {
+    title: "What compounds quietly outlasts what was announced loudly.",
+    sub: "Ownership. The tuned Pearl moves with you.",
+  },
+};
+
 export function HomeStory() {
   return (
-    <section
-      aria-labelledby="story-heading"
-      style={{
-        background: "var(--paper)",
-      }}
-    >
-      {/* Section header */}
+    <section aria-labelledby="story-heading" style={{ background: "var(--paper)" }}>
+      {/* Section header — tight, no deck paragraph */}
       <div
         style={{
-          background: "var(--paper-2)",
-          paddingBlock: "var(--section-y-lg)",
+          paddingBlock: "clamp(80px, 12vh, 160px) clamp(48px, 6vh, 72px)",
           borderBottom: "1px solid var(--rule)",
+          textAlign: "center",
         }}
       >
         <div className="container">
-          <div style={{ maxWidth: "68ch" }}>
-            <SectionNumeral n="03" label="The story" />
-            <h2
-              id="story-heading"
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(32px, 4.4vw, 56px)",
-                lineHeight: 1.06,
-                letterSpacing: "-0.022em",
-                fontWeight: 400,
-                color: "var(--ink)",
-                margin: "20px 0 0 0",
-                maxWidth: "24ch",
-                textWrap: "balance",
-              }}
-            >
-              What Nebbos runs{" "}
-              <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                while you take your morning.
-              </em>
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 17,
-                lineHeight: 1.6,
-                color: "var(--ink-2)",
-                maxWidth: "58ch",
-                marginTop: 20,
-              }}
-            >
-              Three moments across an enterprise&rsquo;s day. Under each, the
-              specific work Nebbos is doing so your team doesn&rsquo;t have to
-              build it — the ingest, the reasoning, the approval graph, the audit
-              trail. Named, not implied.
-            </p>
-          </div>
+          <SectionNumeral n="03" label="Three chapters" />
+          <h2
+            id="story-heading"
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(32px, 4.4vw, 56px)",
+              lineHeight: 1.04,
+              letterSpacing: "-0.022em",
+              fontWeight: 400,
+              color: "var(--ink)",
+              margin: "24px auto 0",
+              maxWidth: "24ch",
+              textWrap: "balance",
+            }}
+          >
+            One{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+              operating system.
+            </em>{" "}
+            Three chapters of a working day.
+          </h2>
         </div>
       </div>
 
       {SCENES_IN_ORDER.map((scene, idx) => {
         const bandLayers = LAYERS.filter((l) => scene.bands.includes(l.band));
-        const chapterNum = idx + 4;
+        const chapterNum = idx + 2;
+        const caption = SCENE_CAPTIONS[scene.id];
 
         return (
           <article key={scene.id}>
-            {/* Full-bleed cinematic scene section */}
+            {/* Full-bleed cinematic scene — image + short caption overlaid */}
             <section
               style={{
                 position: "relative",
-                minHeight: "min(80vh, 820px)",
+                minHeight: "min(88vh, 900px)",
                 display: "flex",
                 alignItems: "flex-end",
                 overflow: "hidden",
@@ -114,136 +108,98 @@ export function HomeStory() {
               }}
             >
               <SceneStill perspective={STORY_PERSPECTIVES[scene.id]} pVariant={1} shape="fullBleed" />
-
-              {/* Editorial overlay: grain + vignette + bottom scrim */}
               <SceneOverlay scrim="bottom" />
+              <SceneMetadataPlate
+                chapter={ROMAN[chapterNum]}
+                label={scene.chapter}
+                position="top-right"
+              />
 
-              {/* Editorial metadata plate · top-right */}
-              <SceneMetadataPlate chapter={ROMAN[idx + 2]} label={scene.chapter} position="top-right" />
-
-              {/* Copy · bottom-left overlay */}
+              {/* Copy overlay · magazine caption, not essay */}
               <div
                 className="container"
                 style={{
                   position: "relative",
                   zIndex: 2,
-                  paddingBlock: "clamp(48px, 8vh, 96px)",
+                  paddingBlock: "clamp(56px, 9vh, 112px)",
                 }}
               >
-                <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: "52ch" }}>
-                  <span
-                    style={{
-                      fontFamily: "var(--font-mono)",
-                      fontSize: 11,
-                      letterSpacing: "0.24em",
-                      textTransform: "uppercase",
-                      color: "rgba(244, 241, 234, 0.86)",
-                    }}
-                  >
-                    Chapter {String(chapterNum).padStart(2, "0")} · {scene.chapter}
-                  </span>
+                <div style={{ maxWidth: "44ch", display: "flex", flexDirection: "column", gap: 16 }}>
                   <h3
                     style={{
                       fontFamily: "var(--font-serif)",
-                      fontSize: "clamp(32px, 4vw, 60px)",
-                      lineHeight: 1.05,
+                      fontStyle: "italic",
+                      fontSize: "clamp(28px, 3.6vw, 52px)",
+                      lineHeight: 1.06,
                       letterSpacing: "-0.02em",
                       fontWeight: 400,
                       color: "var(--paper)",
                       margin: 0,
                       textWrap: "balance",
-                      textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
+                      textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
                     }}
                   >
-                    {scene.strap}
+                    {caption.title}
                   </h3>
                   <p
                     style={{
-                      fontFamily: "var(--font-serif)",
-                      fontStyle: "italic",
-                      fontSize: "clamp(17px, 1.5vw, 20px)",
-                      lineHeight: 1.55,
-                      color: "rgba(244, 241, 234, 0.9)",
+                      fontFamily: "var(--font-mono)",
+                      fontSize: 12,
+                      letterSpacing: "0.18em",
+                      textTransform: "uppercase",
+                      color: "rgba(244, 241, 234, 0.86)",
                       margin: 0,
-                      maxWidth: "48ch",
                       textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
                     }}
                   >
-                    {scene.narrative}
+                    {caption.sub}
                   </p>
                 </div>
               </div>
             </section>
 
-            {/* Tech narrative + layer chips · plain container below the image */}
+            {/* Tiny layer-name row · hairline footer, not a "cluster" */}
             <section
               style={{
                 background: idx % 2 === 0 ? "var(--paper)" : "var(--paper-2)",
-                paddingBlock: "clamp(48px, 8vh, 96px)",
+                paddingBlock: "clamp(20px, 3vh, 32px)",
                 borderBottom: "1px solid var(--rule)",
               }}
             >
-              <div className="container">
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "minmax(0, 5fr) minmax(0, 7fr)",
-                    gap: "clamp(32px, 5vw, 88px)",
-                    alignItems: "start",
-                  }}
-                  className="story-detail-grid"
-                >
-                  <div>
-                    <div className="eyebrow" style={{ marginBottom: 12 }}>
-                      Under the surface
-                    </div>
-                    <p
+              <div
+                className="container"
+                style={{
+                  display: "flex",
+                  flexWrap: "wrap",
+                  gap: 16,
+                  alignItems: "center",
+                  fontFamily: "var(--font-mono)",
+                  fontSize: 11,
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "var(--ink-3)",
+                }}
+              >
+                <span style={{ color: "var(--gold)" }}>
+                  {String(chapterNum - 1).padStart(2, "0")} · Layers active
+                </span>
+                <span aria-hidden style={{ opacity: 0.4 }}>—</span>
+                {bandLayers.map((layer, i) => (
+                  <span key={layer.n} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
+                    {i > 0 && <span aria-hidden style={{ opacity: 0.3 }}>·</span>}
+                    <Link
+                      href={layerPath(layer)}
                       style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: 17,
-                        lineHeight: 1.65,
                         color: "var(--ink-2)",
-                        margin: 0,
-                        maxWidth: "52ch",
+                        textDecoration: "none",
+                        transition: "color var(--dur-fast) var(--ease-out)",
                       }}
+                      className="layer-link"
                     >
-                      {scene.techNarrative}
-                    </p>
-                  </div>
-                  <div>
-                    <div className="eyebrow" style={{ marginBottom: 12 }}>
-                      Layers this scene carries
-                    </div>
-                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8 }}>
-                      {bandLayers.map((layer) => (
-                        <Link
-                          key={layer.n}
-                          href={layerPath(layer)}
-                          style={{
-                            display: "inline-flex",
-                            alignItems: "center",
-                            gap: 8,
-                            padding: "8px 14px",
-                            background: "var(--paper)",
-                            border: "1px solid var(--rule)",
-                            fontFamily: "var(--font-mono)",
-                            fontSize: 12,
-                            letterSpacing: "0.06em",
-                            color: "var(--ink-2)",
-                            textDecoration: "none",
-                            transition: "border-color var(--dur-fast) var(--ease-out)",
-                          }}
-                          className="layer-chip"
-                        >
-                          <span style={{ color: "var(--gold)", fontWeight: 600 }}>
-                            {String(layer.n).padStart(2, "0")}
-                          </span>
-                          <span>{layer.name}</span>
-                        </Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
+                      {layer.name}
+                    </Link>
+                  </span>
+                ))}
               </div>
             </section>
           </article>
@@ -251,12 +207,7 @@ export function HomeStory() {
       })}
 
       <style>{`
-        .layer-chip:hover { border-color: var(--ink) !important; }
-        @media (max-width: 900px) {
-          .story-detail-grid {
-            grid-template-columns: minmax(0, 1fr) !important;
-          }
-        }
+        .layer-link:hover { color: var(--gold) !important; }
       `}</style>
     </section>
   );
