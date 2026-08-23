@@ -4,6 +4,7 @@ import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
+import { CONTACT, mailto } from "@/content/contact";
 
 export const metadata = constructMetadata({
   title: "Security",
@@ -52,7 +53,7 @@ export default function SecurityPage() {
       <FeatureRow
         eyebrow={<SectionNumeral n="03" label="Responsible disclosure" />}
         title="Report a vulnerability."
-        body={<p style={{ margin: 0 }}>Email <a href="mailto:security@nebbos.ai">security@nebbos.ai</a>. We triage within one business day. See <a href="/legal/responsible-disclosure">the responsible-disclosure policy</a> for the full protocol.</p>}
+        body={<p style={{ margin: 0 }}>Email <a href={mailto(CONTACT.security)}>{CONTACT.security}</a>. We triage within one business day. See <a href="/legal/responsible-disclosure">the responsible-disclosure policy</a> for the full protocol.</p>}
       />
 
       <CTABand

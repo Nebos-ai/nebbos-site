@@ -4,11 +4,12 @@ import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
+import { PRICING } from "@/content/pricing";
 
 export const metadata = constructMetadata({
   title: "Pricing",
   path: "/pricing",
-  description: "$150 per user per month. One flat price. Every seat gets everything.",
+  description: `${PRICING.perUserFull}. One flat price. Every seat gets everything.`,
 });
 
 export const dynamic = "force-static";
@@ -25,12 +26,12 @@ export default function PricingPage() {
         eyebrow="Pricing"
         title={
           <>
-            $150 per user
+            {PRICING.perUser} per user
             <br />
             per <em style={{ fontStyle: "italic", color: "var(--gold)" }}>month</em>.
           </>
         }
-        deck="One flat price. Every seat gets everything."
+        deck={`One flat price. ${PRICING.includedPhrase}`}
       >
         <ButtonLink href="/demo" variant="primary">
           Book a demo
@@ -42,11 +43,11 @@ export default function PricingPage() {
 
       <FeatureRow
         eyebrow={<SectionNumeral n="01" label="What's included" />}
-        title="Every seat. Every capability."
+        title={PRICING.includedPhrase}
         body={
           <p style={{ margin: 0 }}>
-            One price, every feature. Billed annually with a 15% prepay
-            discount. Twenty-user minimum.
+            One price, every feature. {PRICING.cadenceAndDiscountPhrase}{" "}
+            {PRICING.minimumWord}-user minimum.
           </p>
         }
       />
@@ -69,12 +70,11 @@ export default function PricingPage() {
 
       <FeatureRow
         eyebrow={<SectionNumeral n="03" label="How overage works" />}
-        title="Nebbos tokens, not provider dollars."
+        title={`${PRICING.overageCurrency}, not provider dollars.`}
         body={
           <p style={{ margin: 0 }}>
-            AI-usage overage bills in Nebbos tokens — a stable currency
-            decoupled from LLM providers&rsquo; price swings. What you sign is
-            what you pay, month after month.
+            {PRICING.overageExplainer} What you sign is what you pay, month
+            after month.
           </p>
         }
       />

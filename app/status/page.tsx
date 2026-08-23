@@ -4,11 +4,12 @@ import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
+import { CONTACT, mailto } from "@/content/contact";
 
 export const metadata = constructMetadata({
   title: "Status",
   path: "/status",
-  description: "Systems operational. For incident reporting: security@nebbos.ai.",
+  description: `Systems operational. For incident reporting: ${CONTACT.security}.`,
 });
 
 export const dynamic = "force-static";
@@ -26,7 +27,7 @@ export default function StatusPage() {
         }
         deck="All customer-facing services green. Substrate healthy."
       >
-        <ButtonLink href="mailto:security@nebbos.ai" variant="primary" external>
+        <ButtonLink href={mailto(CONTACT.security)} variant="primary" external>
           Report an incident
         </ButtonLink>
       </Hero>
@@ -48,7 +49,7 @@ export default function StatusPage() {
         eyebrow={<SectionNumeral n="03" label="How to report one" />}
         title={
           <>
-            Email <em style={{ fontStyle: "italic", color: "var(--gold)" }}>security@nebbos.ai</em>.
+            Email <em style={{ fontStyle: "italic", color: "var(--gold)" }}>{CONTACT.security}</em>.
           </>
         }
         body={<p style={{ margin: 0 }}>Include a reproducer, the affected tenant, and the impact class. We triage within one business hour and reply with a plan.</p>}
@@ -56,7 +57,7 @@ export default function StatusPage() {
 
       <CTABand
         headline="Something wrong on your side?"
-        primary={{ label: "Email security", href: "mailto:security@nebbos.ai" }}
+        primary={{ label: "Email security", href: mailto(CONTACT.security) }}
       />
     </>
   );
