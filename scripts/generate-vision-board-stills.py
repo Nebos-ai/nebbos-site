@@ -137,7 +137,7 @@ def main() -> int:
 
     for scene in scenes:
         scene_id = scene["id"]
-        scene_name = scene["name"]
+        scene_name = scene.get("name") or scene.get("concept") or scene.get("family_key") or str(scene_id)
         prompt = scene["prompt"]
 
         print(f"\n[scene {scene_id} · {scene_name}] generating {conf['variants_per_scene']} variants...")
