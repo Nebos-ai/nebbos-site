@@ -36,6 +36,7 @@ const staticPaths = [
   "/press",
   "/demo",
   "/status",
+  "/design",
   "/legal/privacy",
   "/legal/terms",
   "/legal/dpa",
