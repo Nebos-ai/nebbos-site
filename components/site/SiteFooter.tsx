@@ -38,13 +38,20 @@ export function SiteFooter() {
             <Link
               href="/"
               aria-label="Nebbos home"
-              style={{ display: "inline-flex", alignItems: "center", color: "var(--ink)", marginBottom: 20, textDecoration: "none" }}
+              style={{ display: "inline-flex", alignItems: "center", gap: 16, color: "var(--ink)", marginBottom: 20, textDecoration: "none" }}
             >
               <Image
                 src="/nebbos-mark-dark.svg"
-                alt="Nebbos"
+                alt=""
+                aria-hidden="true"
                 width={48}
                 height={49}
+              />
+              <Image
+                src="/nebbos-wordmark-dark.svg"
+                alt="Nebbos"
+                width={172}
+                height={33}
               />
             </Link>
             <p

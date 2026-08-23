@@ -88,21 +88,22 @@ export function SiteHeader() {
         gap: 32,
         minHeight: 68,
       }}>
-        {/* Logo · brand mark + Nebbos wordmark next to it. Mark cross-fades
-            orange (over hero) → dark (on scroll). Wordmark cross-fades
-            paper → ink. Founder direction: "this needs to be next to the
-            favicon." */}
+        {/* Logo · brand mark + Nebbos wordmark SVG. Both cross-fade
+            between orange (over hero) and dark (on scroll). Wordmark
+            uses founder-supplied SVG (custom letterforms echo the mark's
+            diagonal geometry — not a random font). */}
         <Link
           href="/"
           aria-label="Nebbos home"
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: 12,
+            gap: 14,
             color: "var(--ink)",
             textDecoration: "none",
           }}
         >
+          {/* Mark · orange over hero, dark on scroll */}
           <div style={{ position: "relative", width: 44, height: 45 }}>
             <Image
               src="/nebbos-mark-orange.svg"
@@ -133,19 +134,38 @@ export function SiteHeader() {
               }}
             />
           </div>
-          <span
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: 22,
-              fontWeight: 500,
-              letterSpacing: "-0.014em",
-              color: scrolled ? "var(--ink)" : "var(--paper)",
-              transition: "color var(--dur-med) var(--ease-out)",
-              textShadow: scrolled ? "none" : "0 1px 3px rgba(20, 18, 15, 0.42)",
-            }}
-          >
-            Nebbos
-          </span>
+          {/* Wordmark · SVG (custom letterforms), same cross-fade */}
+          <div style={{ position: "relative", width: 148, height: 28 }}>
+            <Image
+              src="/nebbos-wordmark-orange.svg"
+              alt=""
+              aria-hidden="true"
+              width={148}
+              height={28}
+              priority
+              style={{
+                position: "absolute",
+                inset: 0,
+                opacity: scrolled ? 0 : 1,
+                transition: "opacity var(--dur-med) var(--ease-out)",
+                filter: "drop-shadow(0 1px 3px rgba(20, 18, 15, 0.32))",
+              }}
+            />
+            <Image
+              src="/nebbos-wordmark-dark.svg"
+              alt=""
+              aria-hidden="true"
+              width={148}
+              height={28}
+              priority
+              style={{
+                position: "absolute",
+                inset: 0,
+                opacity: scrolled ? 1 : 0,
+                transition: "opacity var(--dur-med) var(--ease-out)",
+              }}
+            />
+          </div>
         </Link>
 
         {/* Primary nav — desktop */}
