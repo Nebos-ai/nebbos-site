@@ -2,266 +2,229 @@ import Link from "next/link";
 import { productTreeByImportance as productTree } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
-import { SceneOverlay } from "@/components/ui/SceneOverlay";
+import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 
 /**
- * HomeBands · 2026-08-23 revision — each band column now has its own
- * background image, image + heavy scrim behind editorial magazine type.
+ * HomeBands · v3 2026-08-23 · 5 full-bleed stacked sections, one per band.
  *
- * Founder direction: "each of the 5 blocks on the home page should have
- * an image behind them." Applied to HomeBands (the 5-band middle block).
+ * Founder critique: "the text across the five sections with the five images
+ * is hard to read and too small · not impressive at all · everything needs
+ * to feel impressive."
  *
- * Image mapping (band → v2 industry still):
- *   Substrate    → v2-1  coffee-shop (everyday foundation)
- *   Boundary     → v2-4  logistics dispatch (threshold + flow)
- *   Intelligence → v2-7  corporate boardroom (deliberation space)
- *   Action       → v2-9  manufacturing workshop (precision execution)
- *   Commerce     → v2-12 financial services dawn (ownership + exchange)
+ * Killed: cramped 5-column masthead grid (each column ~200px wide, type
+ * shrunk to fit).
+ * New: 5 stacked full-bleed sections (each 80vh minimum), one per band.
+ * Same treatment as HomeStory scenes:
+ *   Full-bleed image (v2 industry still)
+ *   Heavy scrim + grain + vignette (letters pop)
+ *   Metadata plate top-right (Roman numeral · band name)
+ *   Copy overlaid bottom-left: eyebrow + huge serif band name + italic
+ *     strap + hairline gold rule + layer list (serif, generous size)
+ *     + "See the band →" mono link
  *
- * Each column:
- *   Full-bleed image + heavy warm scrim + grain + vignette
- *   Roman numeral + serif band name + italic strap + hairline gold rule
- *   Layer list (mono numeral + serif name)
- *   Footer link — "See the band →"
- *   Type in paper (light) since backgrounds are dark
+ * Marketing order preserved (Intelligence · Action · Substrate · Boundary · Commerce).
  */
 
-const BAND_ROMANS = ["", "I", "II", "III", "IV", "V"];
+const BAND_ROMANS: Record<number, string> = { 1: "I", 2: "II", 3: "III", 4: "IV", 5: "V" };
 const BAND_IMAGES: Record<number, number> = {
   1: 1,   // Substrate → v2-1 coffee-shop
   2: 4,   // Boundary → v2-4 logistics dispatch
   3: 7,   // Intelligence → v2-7 corporate boardroom
   4: 9,   // Action → v2-9 manufacturing workshop
-  5: 6,   // Commerce → v2-6 tech startup desk (v2-12 gen incomplete; v3 dawn-trading incoming)
+  5: 6,   // Commerce → v2-6 tech startup desk (v2-12 pending v3 dawn-trading)
 };
 
 export function HomeBands() {
   return (
-    <section
-      aria-labelledby="bands-heading"
-      style={{
-        background: "var(--paper)",
-        paddingBlock: "var(--section-y-lg) 0",
-        borderBottom: "1px solid var(--rule)",
-      }}
-    >
-      {/* Section header — paper background, still */}
-      <div className="container">
-        <div style={{ maxWidth: "68ch", marginBottom: "clamp(48px, 6vh, 72px)" }}>
-          <SectionNumeral n="02" label="The architecture" />
-          <h2
-            id="bands-heading"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(32px, 4.4vw, 56px)",
-              lineHeight: 1.06,
-              letterSpacing: "-0.022em",
-              fontWeight: 400,
-              color: "var(--ink)",
-              margin: "20px 0 0 0",
-              maxWidth: "26ch",
-              textWrap: "balance",
-            }}
-          >
-            What&rsquo;s underneath{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-              every Pearl
-            </em>{" "}
-            you deploy.
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: 17,
-              lineHeight: 1.6,
-              color: "var(--ink-2)",
-              maxWidth: "58ch",
-              marginTop: 20,
-            }}
-          >
-            Fifteen governance layers, grouped as five bands. Data at the bottom.
-            Boundaries the world crosses at. Reasoning across providers. Action
-            and the humans who approve it. Commerce at the top.
-          </p>
+    <section aria-labelledby="bands-heading" style={{ background: "var(--paper)" }}>
+      {/* Section header — paper, tight */}
+      <div
+        style={{
+          paddingBlock: "clamp(80px, 12vh, 160px) clamp(56px, 8vh, 80px)",
+          borderBottom: "1px solid var(--rule)",
+        }}
+      >
+        <div className="container">
+          <div style={{ maxWidth: "68ch" }}>
+            <SectionNumeral n="02" label="The architecture" />
+            <h2
+              id="bands-heading"
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(36px, 5vw, 64px)",
+                lineHeight: 1.04,
+                letterSpacing: "-0.022em",
+                fontWeight: 400,
+                color: "var(--ink)",
+                margin: "20px 0 0 0",
+                maxWidth: "26ch",
+                textWrap: "balance",
+              }}
+            >
+              Five bands. Fifteen layers.{" "}
+              <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+                One architecture.
+              </em>
+            </h2>
+          </div>
         </div>
       </div>
 
-      {/* 5 image-behind columns · full-bleed grid, each 88vh tall */}
-      <div
-        className="bands-toc"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-          borderTop: "1px solid var(--rule)",
-          minHeight: "88vh",
-        }}
-      >
-        {productTree.map(({ band, href, layers }, i) => (
+      {/* 5 full-bleed stacked sections — one per band, impressive scale */}
+      {productTree.map(({ band, href, layers }) => (
+        <section
+          key={band.n}
+          aria-labelledby={`band-${band.n}-title`}
+          style={{
+            position: "relative",
+            minHeight: "min(85vh, 900px)",
+            display: "flex",
+            alignItems: "flex-end",
+            overflow: "hidden",
+            borderBottom: "1px solid var(--rule)",
+          }}
+        >
+          <SceneStill v2Scene={BAND_IMAGES[band.n]} v2Variant={1} shape="fullBleed" />
+          <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
+          <SceneMetadataPlate chapter={BAND_ROMANS[band.n]} label={band.name} position="top-right" />
+
+          {/* Copy overlaid bottom-left · IMPRESSIVE scale */}
           <Link
-            key={band.n}
             href={href}
+            className="band-cell"
             style={{
               position: "relative",
-              padding: "clamp(32px, 4vh, 48px) clamp(20px, 2vw, 32px)",
+              zIndex: 2,
+              width: "100%",
+              paddingBlock: "clamp(56px, 10vh, 112px)",
               textDecoration: "none",
               color: "inherit",
-              display: "flex",
-              flexDirection: "column",
-              gap: 20,
-              borderRight: i < productTree.length - 1 ? "1px solid var(--rule)" : "none",
-              overflow: "hidden",
-              justifyContent: "space-between",
-              minHeight: 640,
             }}
-            className="band-toc-cell"
           >
-            {/* Full-bleed background image */}
-            <SceneStill v2Scene={BAND_IMAGES[band.n]} v2Variant={1} shape="fullBleed" />
-
-            {/* Heavy scrim so text pops */}
-            <SceneOverlay scrim="even" vignetteStrength={0.55} />
-
-            {/* All copy overlaid at z-index 2 */}
-            <div style={{ position: "relative", zIndex: 2, display: "flex", flexDirection: "column", gap: 20, height: "100%" }}>
-              {/* Top: roman numeral + band name + strap */}
-              <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+            <div className="container">
+              <div style={{ maxWidth: "62ch", display: "flex", flexDirection: "column", gap: 24 }}>
+                {/* Eyebrow */}
                 <div
                   style={{
-                    fontFamily: "var(--font-serif)",
-                    fontStyle: "italic",
-                    fontSize: 22,
-                    fontWeight: 400,
-                    color: "var(--accent-2)",
-                    letterSpacing: "0.02em",
-                    textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 13,
+                    letterSpacing: "0.24em",
+                    textTransform: "uppercase",
+                    color: "rgba(244, 241, 234, 0.86)",
+                    textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
                   }}
                 >
-                  {BAND_ROMANS[band.n]}
+                  Band {BAND_ROMANS[band.n]} · The architecture
                 </div>
 
-                <div
-                  className="band-name"
+                {/* HUGE serif band name */}
+                <h3
+                  id={`band-${band.n}-title`}
+                  className="band-title"
                   style={{
                     fontFamily: "var(--font-serif)",
-                    fontSize: "clamp(24px, 2vw, 32px)",
+                    fontSize: "clamp(56px, 8vw, 128px)",
+                    lineHeight: 0.96,
+                    letterSpacing: "-0.028em",
                     fontWeight: 400,
                     color: "var(--paper)",
-                    letterSpacing: "-0.014em",
-                    lineHeight: 1.04,
+                    margin: 0,
+                    textWrap: "balance",
+                    textShadow: "0 2px 6px rgba(20, 18, 15, 0.48)",
                     transition: "color var(--dur-fast) var(--ease-out)",
-                    textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
                   }}
                 >
                   {band.name}
-                </div>
+                </h3>
 
-                <div
+                {/* Italic strap — generous size */}
+                <p
                   style={{
                     fontFamily: "var(--font-serif)",
                     fontStyle: "italic",
-                    fontSize: 15,
-                    lineHeight: 1.5,
-                    color: "rgba(244, 241, 234, 0.9)",
-                    maxWidth: "22ch",
-                    textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
+                    fontSize: "clamp(20px, 2vw, 28px)",
+                    lineHeight: 1.4,
+                    color: "rgba(244, 241, 234, 0.92)",
+                    maxWidth: "40ch",
+                    margin: 0,
+                    textShadow: "0 1px 4px rgba(20, 18, 15, 0.48)",
                   }}
                 >
                   {band.strap}
-                </div>
+                </p>
 
+                {/* Hairline gold rule */}
                 <div
                   aria-hidden
                   style={{
-                    width: 32,
+                    width: 56,
                     height: 1,
                     background: "var(--accent-2)",
-                    marginTop: 12,
+                    marginBlock: 4,
                   }}
                 />
-              </div>
 
-              {/* Middle: layer list */}
-              <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 10, flex: 1 }}>
-                {layers.map(({ layer }) => (
-                  <li
-                    key={layer.n}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "24px minmax(0, 1fr)",
-                      gap: 10,
-                      alignItems: "baseline",
-                    }}
-                  >
-                    <span
+                {/* Layer list — serif, generous scale */}
+                <ul style={{ listStyle: "none", display: "flex", flexWrap: "wrap", gap: "clamp(20px, 3vw, 40px)" }}>
+                  {layers.map(({ layer }) => (
+                    <li
+                      key={layer.n}
                       style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 11,
-                        color: "rgba(244, 241, 234, 0.7)",
-                        letterSpacing: "0.04em",
-                        textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
+                        display: "flex",
+                        alignItems: "baseline",
+                        gap: 10,
                       }}
                     >
-                      {String(layer.n).padStart(2, "0")}
-                    </span>
-                    <span
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: 15,
-                        color: "rgba(244, 241, 234, 0.95)",
-                        lineHeight: 1.35,
-                        textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
-                      }}
-                    >
-                      {layer.name}
-                    </span>
-                  </li>
-                ))}
-              </ul>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-mono)",
+                          fontSize: 13,
+                          color: "rgba(244, 241, 234, 0.7)",
+                          letterSpacing: "0.06em",
+                          textShadow: "0 1px 3px rgba(20, 18, 15, 0.48)",
+                        }}
+                      >
+                        {String(layer.n).padStart(2, "0")}
+                      </span>
+                      <span
+                        style={{
+                          fontFamily: "var(--font-serif)",
+                          fontSize: "clamp(18px, 1.6vw, 22px)",
+                          color: "rgba(244, 241, 234, 0.95)",
+                          textShadow: "0 1px 3px rgba(20, 18, 15, 0.48)",
+                        }}
+                      >
+                        {layer.name}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
 
-              {/* Bottom: footer link */}
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10,
-                  letterSpacing: "0.24em",
-                  textTransform: "uppercase",
-                  color: "var(--accent-2)",
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: 6,
-                  textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
-                }}
-              >
-                See the band <span aria-hidden style={{ fontFamily: "var(--font-serif)" }}>→</span>
+                {/* Footer link */}
+                <div
+                  style={{
+                    fontFamily: "var(--font-mono)",
+                    fontSize: 12,
+                    letterSpacing: "0.24em",
+                    textTransform: "uppercase",
+                    color: "var(--accent-2)",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: 8,
+                    marginTop: 12,
+                    textShadow: "0 1px 3px rgba(20, 18, 15, 0.48)",
+                  }}
+                >
+                  See the band <span aria-hidden style={{ fontFamily: "var(--font-serif)" }}>→</span>
+                </div>
               </div>
             </div>
           </Link>
-        ))}
-      </div>
+        </section>
+      ))}
 
       <style>{`
-        .band-toc-cell:hover .band-name { color: var(--accent-2) !important; }
-        @media (max-width: 1100px) {
-          .bands-toc {
-            grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-          }
-          .bands-toc > a {
-            border-right: 1px solid var(--rule) !important;
-            border-bottom: 1px solid var(--rule) !important;
-          }
-          .bands-toc > a:nth-child(3n) { border-right: none !important; }
-        }
-        @media (max-width: 720px) {
-          .bands-toc {
-            grid-template-columns: minmax(0, 1fr) !important;
-          }
-          .bands-toc > a {
-            border-right: none !important;
-            border-bottom: 1px solid var(--rule) !important;
-            min-height: 480px !important;
-          }
-          .bands-toc > a:last-child { border-bottom: none !important; }
-        }
+        .band-cell:hover .band-title { color: var(--accent-2) !important; }
       `}</style>
     </section>
   );
