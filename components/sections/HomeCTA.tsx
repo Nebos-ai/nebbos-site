@@ -1,40 +1,35 @@
-import Image from "next/image";
-import { stillPath, SCENES } from "@/content/stills";
+import { SCENES } from "@/content/stills";
+import { SceneStill } from "@/components/ui/SceneStill";
+import { Button } from "@/components/ui/Button";
 
 /**
- * FRAME · Home / 05 · Closing CTA
- * PARENT · app/page.tsx (/)
- * PURPOSE · The final band before the site footer. Full-bleed Scene 3 still
- *           (the Amalfi elder — "Where it endures") as the closing image.
- *           Single primary action overlaid: book a demo. The narrative arc
- *           opened with Scene 1 (Where it starts) and closes here (Where it
- *           endures). Every visitor walks the same story from top to bottom.
+ * HomeCTA · v2 rebuild 2026-08-23
+ *
+ * The closing band. Full-bleed Scene 3 (Where it endures) — the Amalfi
+ * elder beside his vintage Porsche and the ancient olive, Mediterranean
+ * spread wide. The narrative arc opened at the hero with Scene 1 and
+ * closes here. Every visitor walks the same three-scene story from top
+ * to bottom.
  */
+
 const CTA_SCENE = SCENES[3];
-const CTA_STILL = stillPath(CTA_SCENE.id, 4);
 
 export function HomeCTA() {
   return (
     <section
+      aria-labelledby="cta-heading"
       style={{
         position: "relative",
-        minHeight: "72vh",
+        minHeight: "min(72vh, 720px)",
         display: "flex",
         alignItems: "center",
         overflow: "hidden",
         borderTop: "1px solid var(--rule)",
       }}
     >
-      <Image
-        src={CTA_STILL}
-        alt=""
-        aria-hidden="true"
-        fill
-        sizes="100vw"
-        style={{ objectFit: "cover", zIndex: 0 }}
-      />
+      <SceneStill scene={CTA_SCENE.id} variant={4} shape="fullBleed" />
 
-      {/* Warm scrim for text legibility — Kinfolk-style, not SaaS-heavy */}
+      {/* Warm scrim — heavier on the left where the copy lives */}
       <div
         aria-hidden="true"
         style={{
@@ -42,28 +37,28 @@ export function HomeCTA() {
           inset: 0,
           zIndex: 1,
           background:
-            "linear-gradient(90deg, rgba(20, 18, 15, 0.56) 0%, rgba(20, 18, 15, 0.32) 40%, transparent 70%)",
+            "linear-gradient(90deg, rgba(20,18,15,0.62) 0%, rgba(20,18,15,0.36) 42%, rgba(20,18,15,0.08) 78%, transparent 100%)",
         }}
       />
 
-      {/* Chapter chip — top-right, closes the arc opened at the top */}
+      {/* Chapter chip · top-right closes the arc opened at hero */}
       <div
         style={{
           position: "absolute",
-          top: "clamp(24px, 4vh, 48px)",
+          top: "clamp(24px, 5vh, 56px)",
           right: "clamp(24px, 4vw, 48px)",
           zIndex: 2,
           fontFamily: "var(--font-mono)",
           fontSize: 11,
           letterSpacing: "0.24em",
           textTransform: "uppercase",
-          color: "rgba(244, 241, 234, 0.86)",
+          color: "rgba(244, 241, 234, 0.9)",
           padding: "8px 14px",
           border: "1px solid rgba(244, 241, 234, 0.32)",
-          backdropFilter: "blur(4px)",
+          backdropFilter: "blur(6px)",
         }}
       >
-        03 · {CTA_SCENE.chapter}
+        07 · {CTA_SCENE.chapter}
       </div>
 
       <div
@@ -74,15 +69,20 @@ export function HomeCTA() {
           paddingBlock: "clamp(48px, 8vh, 96px)",
         }}
       >
-        <div
-          style={{
-            maxWidth: "42ch",
-            display: "flex",
-            flexDirection: "column",
-            gap: 32,
-          }}
-        >
+        <div style={{ maxWidth: "44ch", display: "flex", flexDirection: "column", gap: 32 }}>
+          <span
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: "rgba(244, 241, 234, 0.86)",
+            }}
+          >
+            Where you take it next
+          </span>
           <h2
+            id="cta-heading"
             style={{
               fontFamily: "var(--font-serif)",
               fontSize: "clamp(32px, 4.6vw, 60px)",
@@ -101,28 +101,25 @@ export function HomeCTA() {
             </em>{" "}
             department.
           </h2>
-          <div>
-            <a
-              href="/demo"
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: 12,
-                padding: "14px 28px",
-                background: "var(--paper)",
-                color: "var(--ink)",
-                fontFamily: "var(--font-sans)",
-                fontSize: 15,
-                fontWeight: 500,
-                letterSpacing: "0.02em",
-                textDecoration: "none",
-                border: "1px solid var(--paper)",
-                transition: "transform 180ms ease-out",
-              }}
-            >
-              Book a demo
-              <span aria-hidden style={{ fontFamily: "var(--font-serif)" }}>→</span>
-            </a>
+          <p
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+              fontSize: "clamp(16px, 1.4vw, 19px)",
+              lineHeight: 1.55,
+              color: "rgba(244, 241, 234, 0.86)",
+              margin: 0,
+              textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
+            }}
+          >
+            Live in days, not quarters. Owned by you, portable to you, compounding
+            every quarter.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 4 }}>
+            <Button href="/demo" variant="solid-light" size="lg">Book a demo</Button>
+            <Button href="/product" variant="ghost-light" size="lg" arrow={false}>
+              See the system
+            </Button>
           </div>
         </div>
       </div>

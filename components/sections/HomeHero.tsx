@@ -1,62 +1,39 @@
-import Image from "next/image";
+import { SCENES } from "@/content/stills";
+import { SceneStill } from "@/components/ui/SceneStill";
 import { BRAND } from "@/content/brand";
-import { SCENES, stillPath } from "@/content/stills";
 
 /**
- * FRAME · Home / 00 · Hero
- * PARENT · app/page.tsx (/)
- * PURPOSE · The first three seconds. Full-bleed Scene 1 still (the coffee-shop
- *           opening from the site's three-scene narrative — "Where it starts").
- *           Serif H1 overlaid bottom-left in magazine-cover composition.
+ * HomeHero · v2 rebuild 2026-08-23
  *
- * Voice · Institutional Reserve (v1 · 2026-08-23)
- *   "An institutional substrate for enterprise AI agents."
+ * The first three seconds of nebbos.ai. Full-bleed Scene 1 (Where it starts) —
+ * a young woman by the coffee-shop window while workers plant a sapling
+ * outside. The image tells "morning · beginning · nature." The overlaid
+ * serif h1 tells "institutional substrate for enterprise AI agents."
  *
- * Look · Layout A · full-bleed still + text overlay (Kinfolk / Aesop / Nat-Geo cover shape)
- *   Image: Scene 1 (see content/stills.ts). next/image with priority, fill, cover.
- *   Overlay: soft bottom-to-top scrim in warm-ink so the text stays legible without
- *     darkening the whole image (Kinfolk-style, not SaaS-hero-style).
- *   Text: bottom-left inset, mono NEBBOS eyebrow + serif H1 at hero scale, no CTA.
- *   Chapter chip: top-right mono label pointing at Scene 1 in the narrative
- *     ("Where it starts") so the visitor knows the story has begun.
- *
- * The story continues in HomeStory (section 02) which walks all three scenes
- * and names the 15 architecture layers each scene carries.
+ * The scene bigger than the character. The character at a golden-ratio
+ * intersection. The chapter chip in the top-right announces we're in
+ * chapter 01 · Where it starts. The story continues in HomeStory below.
  */
 
 const HERO_SCENE = SCENES[1];
-const HERO_STILL = stillPath(HERO_SCENE.id, 1);
 
 export function HomeHero() {
   return (
     <section
+      aria-labelledby="hero-heading"
       style={{
         position: "relative",
-        minHeight: "90vh",
+        minHeight: "min(90vh, 900px)",
         display: "flex",
         alignItems: "flex-end",
         overflow: "hidden",
-        background:
-          "linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%)",
         borderBottom: "1px solid var(--rule)",
       }}
     >
-      {/* Media layer — Scene 1 still, next/image with priority for LCP */}
-      <Image
-        src={HERO_STILL}
-        alt=""
-        aria-hidden="true"
-        fill
-        priority
-        sizes="100vw"
-        style={{
-          objectFit: "cover",
-          zIndex: 0,
-        }}
-      />
+      {/* Full-bleed background */}
+      <SceneStill scene={HERO_SCENE.id} variant={1} shape="fullBleed" priority />
 
-      {/* Legibility scrim — soft bottom-to-top warm-ink gradient over the image.
-          Kinfolk-style: light, warm, not SaaS-heavy. */}
+      {/* Warm legibility scrim */}
       <div
         aria-hidden="true"
         style={{
@@ -64,37 +41,37 @@ export function HomeHero() {
           inset: 0,
           zIndex: 1,
           background:
-            "linear-gradient(180deg, transparent 0%, transparent 45%, rgba(20, 18, 15, 0.18) 75%, rgba(20, 18, 15, 0.48) 100%)",
+            "linear-gradient(180deg, rgba(20,18,15,0.10) 0%, transparent 30%, transparent 55%, rgba(20,18,15,0.22) 78%, rgba(20,18,15,0.52) 100%)",
         }}
       />
 
-      {/* Chapter chip — top-right corner points at Scene 1 in the narrative */}
+      {/* Chapter chip · top-right */}
       <div
         style={{
           position: "absolute",
-          top: "clamp(24px, 4vh, 48px)",
+          top: "clamp(24px, 5vh, 56px)",
           right: "clamp(24px, 4vw, 48px)",
           zIndex: 2,
           fontFamily: "var(--font-mono)",
           fontSize: 11,
           letterSpacing: "0.24em",
           textTransform: "uppercase",
-          color: "rgba(244, 241, 234, 0.86)",
+          color: "rgba(244, 241, 234, 0.9)",
           padding: "8px 14px",
           border: "1px solid rgba(244, 241, 234, 0.32)",
-          backdropFilter: "blur(4px)",
+          backdropFilter: "blur(6px)",
         }}
       >
         01 · {HERO_SCENE.chapter}
       </div>
 
-      {/* Text overlay — bottom-left. Serif H1 at hero scale. Small mono eyebrow above. */}
+      {/* Copy overlay · bottom-left */}
       <div
         className="container"
         style={{
           position: "relative",
           zIndex: 2,
-          paddingBlock: "clamp(48px, 8vh, 96px)",
+          paddingBlock: "clamp(56px, 10vh, 128px)",
         }}
       >
         <div style={{ maxWidth: "68ch", display: "flex", flexDirection: "column", gap: 28 }}>
@@ -110,6 +87,7 @@ export function HomeHero() {
             {BRAND.name}
           </span>
           <h1
+            id="hero-heading"
             style={{
               fontFamily: "var(--font-serif)",
               fontSize: "clamp(40px, 6vw, 84px)",
@@ -119,21 +97,29 @@ export function HomeHero() {
               color: "var(--paper)",
               margin: 0,
               textWrap: "balance",
-              textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
+              textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
             }}
           >
             An{" "}
-            <em
-              style={{
-                fontStyle: "italic",
-                color: "var(--accent-2)",
-                fontWeight: 400,
-              }}
-            >
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
               institutional
             </em>{" "}
             substrate for enterprise AI agents.
           </h1>
+          <p
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontStyle: "italic",
+              fontSize: "clamp(17px, 1.6vw, 21px)",
+              lineHeight: 1.55,
+              color: "rgba(244, 241, 234, 0.86)",
+              maxWidth: "48ch",
+              margin: 0,
+              textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
+            }}
+          >
+            Fifteen layers, five bands, three lives they hold together.
+          </p>
         </div>
       </div>
     </section>
