@@ -66,12 +66,42 @@ def load_config(path: str) -> dict:
     return json.loads(p.read_text())
 
 
+def resolve_gemini_key() -> str | None:
+    """Resolve GEMINI_API_KEY per the Pearl-level canonical-store discipline.
+
+    Order (per feedback_secrets_live_in_canonical_store_never_chat_history):
+      1. Environment variable (Claude Code auto-injects from settings.local.json;
+         other runtimes may set it manually)
+      2. Fallback: jq-read from ~/.claude/settings.local.json .env.GEMINI_API_KEY
+      3. Return None → caller reports fatal + points at canonical location
+
+    NEVER: prompt the user to paste it. NEVER: source it from chat scrollback.
+    """
+    env_val = os.getenv("GEMINI_API_KEY")
+    if env_val:
+        return env_val
+
+    canonical = Path.home() / ".claude" / "settings.local.json"
+    if not canonical.exists():
+        return None
+    try:
+        blob = json.loads(canonical.read_text())
+        val = blob.get("env", {}).get("GEMINI_API_KEY")
+        return val if val else None
+    except (json.JSONDecodeError, OSError):
+        return None
+
+
 def main() -> int:
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = resolve_gemini_key()
     if not api_key:
-        print("[fatal] Missing GEMINI_API_KEY environment variable.", file=sys.stderr)
+        print("[fatal] GEMINI_API_KEY not found.", file=sys.stderr)
+        print("  Canonical store on this machine: ~/.claude/settings.local.json (.env.GEMINI_API_KEY)", file=sys.stderr)
+        print("  Retrieval: jq -r .env.GEMINI_API_KEY ~/.claude/settings.local.json", file=sys.stderr)
         print("  Get a key at https://ai.google.dev/gemini-api", file=sys.stderr)
+        print("  Store it in the canonical location — DO NOT paste into chat.", file=sys.stderr)
         return 1
+    os.environ["GEMINI_API_KEY"] = api_key  # genai.Client() reads from env
 
     args = parse_args()
     cfg = load_config(args.config)
