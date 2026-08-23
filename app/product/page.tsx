@@ -52,7 +52,7 @@ export default function ProductPage() {
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
                 Five bands.
               </em>{" "}
-              One system.
+              One architecture.
             </h1>
             <p
               style={{
@@ -65,10 +65,11 @@ export default function ProductPage() {
                 marginTop: 24,
               }}
             >
-              Not a stack of AI features bolted onto your operation. A substrate
-              organized like an institution — what persists at the bottom, how
-              the world crosses in, how the system reasons, who acts and who
-              checks them, how the whole thing is owned and paid for at the top.
+              The complete architecture underneath every Pearl. Data at the
+              bottom. Boundaries the world crosses at. Reasoning across
+              providers. Action and the humans who approve it. Commerce at
+              the top. Deploy Nebbos Design, Nebbos Finance, Nebbos Operations
+              — every one inherits all fifteen layers, automatically.
             </p>
           </div>
         </div>
@@ -268,7 +269,7 @@ export default function ProductPage() {
 /**
  * Which scene carries which band's story. Bands 1+2 → Scene 1 (foundation
  * era · coffee shop). Band 3 → Scene 2 (intelligence era · NYC). Bands 4+5
- * → Scene 3 (agent + commerce era · Amalfi). Mirrors content/stills.ts.
+ * → Scene 3 (action + commerce era · Amalfi). Mirrors content/stills.ts.
  */
 function getSceneForBand(bandN: number): 1 | 2 | 3 {
   if (bandN <= 2) return 1;

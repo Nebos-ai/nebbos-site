@@ -17,7 +17,7 @@ export const FACTS = {
   jurisdiction: "Serbia (RS)",
 
   /** Category positioning (mirrored to content/brand.ts for cross-file consistency). */
-  category: "AI-agent governance for enterprise",
+  category: "Company-brain infrastructure for enterprise",
 
   /** One-line legal footer. */
   legalFooter: "© 2026 TR3I d.o.o. All rights reserved.",
@@ -28,9 +28,9 @@ export const FACTS = {
 
   /** Public product line. */
   productLine: [
-    "Nebbos (governance substrate)",
-    "Pearl (per-department agent)",
-    "Shell (per-department container)",
-    "Cradle (customer's owned memory)",
+    "Nebbos (company-brain operating system)",
+    "Pearl (per-department brain — Nebbos General [Domain], tuned by use)",
+    "Shell (per-department container that holds a Pearl)",
+    "Cradle (customer&rsquo;s owned memory · portable when you leave)",
   ] as const,
 } as const;

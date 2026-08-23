@@ -66,7 +66,7 @@ export const PRIMITIVES: NebbosPrimitive[] = [
   { id: "memory",       name: "Memory",       caption: "Every interaction, timestamped",    y: 0.12 },
   { id: "approval",     name: "Approval",     caption: "Every approve / reject / edit",     y: 0.30 },
   { id: "detectors",    name: "Detectors",    caption: "Every edge case flagged",           y: 0.48 },
-  { id: "pearl",        name: "Pearl",        caption: "Every agent action + override",     y: 0.66 },
+  { id: "pearl",        name: "Pearl",        caption: "Every Pearl action + human override",     y: 0.66 },
   { id: "apimcp",       name: "API + MCP",    caption: "One export contract",               y: 0.82 },
   { id: "attestation",  name: "Attestation",  caption: "Tamper-evident audit trail",        y: 0.94 },
 ];

@@ -29,7 +29,7 @@ const BAND_SLUGS: Record<number, string> = {
   1: "substrate",
   2: "boundary",
   3: "intelligence",
-  4: "agent",
+  4: "action",
   5: "commerce",
 };
 

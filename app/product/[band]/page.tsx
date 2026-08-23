@@ -10,7 +10,7 @@ import { SceneStill } from "@/components/ui/SceneStill";
 /**
  * PAGE · /product/[band] · One of five band pages.
  *
- * Renders substrate / boundary / intelligence / agent / commerce as a
+ * Renders substrate / boundary / intelligence / action / commerce as a
  * consistent template. Full-bleed scene hero at top, then the band's three
  * layers as detail cards with proof-points, then prev/next sibling nav.
  */
@@ -21,7 +21,7 @@ const BAND_SLUGS: Record<string, number> = {
   substrate: 1,
   boundary: 2,
   intelligence: 3,
-  agent: 4,
+  action: 4,
   commerce: 5,
 };
 

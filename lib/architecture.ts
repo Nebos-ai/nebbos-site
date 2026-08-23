@@ -47,7 +47,7 @@ export const BANDS: Band[] = [
   { n: 1, name: "Substrate",    strap: "The data that persists." },
   { n: 2, name: "Boundary",     strap: "How the world crosses in and out." },
   { n: 3, name: "Intelligence", strap: "How the system reasons." },
-  { n: 4, name: "Agent",        strap: "Who acts. Who checks them." },
+  { n: 4, name: "Action",       strap: "Who acts. Who approves. Who is on the hook." },
   { n: 5, name: "Commerce",     strap: "How customers are provisioned and billed." },
 ];
 
@@ -72,7 +72,7 @@ export const LAYERS: Layer[] = [
     name: "Identity",
     caption: "auth · service tokens · trust",
     detail:
-      "Who is who, and what they can do. Enterprise SSO for humans, service tokens for machines, workload identity for agents. Every request carries an identity that cascades through the isolation gate at the substrate.",
+      "Who is who, and what they can do. Enterprise SSO for humans, service tokens for machines, workload identity for every Pearl running on the tenant. Every request carries an identity that cascades through the isolation gate at the substrate.",
     proof: [
       "Enterprise SSO with SCIM provisioning",
       "Service · workload · device credentials",
@@ -113,7 +113,7 @@ export const LAYERS: Layer[] = [
     name: "API + MCP",
     caption: "REST + MCP · one contract",
     detail:
-      "The dual interface. Every capability exposed via REST for humans is exposed to agents through MCP against the same contract, same authorization, same limits. What you can do through the UI, an agent can do through a tool call.",
+      "The dual interface. Every capability exposed via REST for humans is exposed to Pearls and integrations through MCP against the same contract, same authorization, same limits. What you can do through the UI, a Pearl can do through a tool call.",
     proof: [
       "REST and MCP against one contract",
       "Same authorization on both surfaces",
@@ -180,9 +180,9 @@ export const LAYERS: Layer[] = [
     n: 10,
     band: 4,
     name: "Pearl · Shell",
-    caption: "per-agent · per-department",
+    caption: "Nebbos [Domain] · per-department brain",
     detail:
-      "Pearl is the reasoning agent — one per department, pre-educated on your work, learning independently. Shell is the department-scoped container that gives Pearl its boundaries. Six departments at a mid-size company means six Shells, each with its own Pearl.",
+      "Pearl is the per-department brain — one per department, pre-educated on your work, tuned by use. Every Pearl starts as a Nebbos General (Nebbos General Design, Nebbos General Finance, Nebbos General Operations) — the latest version of that function&rsquo;s brain shipped by Nebbos. Deploy it, and it learns your team. Shell is the department-scoped container that gives each Pearl its boundaries. Six departments = six Shells, each with its own tuned Pearl.",
     proof: [
       "One Pearl per department",
       "Shell = department-scoped container",

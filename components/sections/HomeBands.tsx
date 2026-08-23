@@ -6,7 +6,7 @@ import { SectionNumeral } from "@/components/ui/SectionNumeral";
  * HomeBands · v2 rebuild 2026-08-23
  *
  * The site's IA made visible on the front door: five bands (Substrate ·
- * Boundary · Intelligence · Agent · Commerce), three layers each = fifteen
+ *  * Boundary · Intelligence · Action · Commerce), three layers each = fifteen
  * pages. Founder directive: "our menu items should be these 15 pages with
  * the five groups on the home page with the 3 in each."
  *
@@ -43,9 +43,9 @@ export function HomeBands() {
           >
             What&rsquo;s underneath{" "}
             <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-              every agent
+              every Pearl
             </em>{" "}
-            you run.
+            you deploy.
           </h2>
           <p
             style={{
@@ -57,11 +57,11 @@ export function HomeBands() {
               marginTop: 20,
             }}
           >
-            Fifteen governance layers, grouped as five bands. The data your
-            company knows. The boundaries the world crosses at. The way the
-            system reasons across providers. The agents that act, and the
-            humans who approve them. The commerce that keeps it running.
-            Ship an agent, all fifteen apply.
+            Fifteen governance layers, grouped as five bands. Data at the
+            bottom. Boundaries the world crosses at. Reasoning across providers.
+            Action and the humans who approve it. Commerce at the top. Deploy
+            a Pearl to any department — Nebbos Design, Nebbos Finance, Nebbos
+            Operations — and every layer applies, automatically.
           </p>
         </div>
 

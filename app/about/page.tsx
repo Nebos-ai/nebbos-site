@@ -38,11 +38,11 @@ export default function AboutPage() {
                 textWrap: "balance",
               }}
             >
-              Built to run the agents you{" "}
+              Built to be the{" "}
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                never had time
+                company brain
               </em>{" "}
-              to build.
+              your enterprise never had time to build.
             </h1>
             <p
               style={{

@@ -9,7 +9,7 @@ import { BRAND } from "@/content/brand";
  * The first three seconds of nebbos.ai. Full-bleed Scene 1 (Where it starts) —
  * a young woman by the coffee-shop window while workers plant a sapling
  * outside. The image tells "morning · beginning · nature." The overlaid
- * serif h1 tells "institutional substrate for enterprise AI agents."
+ * serif h1 names Nebbos as "the company brain your team never had time to build."
  *
  * The scene bigger than the character. The character at a golden-ratio
  * intersection. The chapter chip in the top-right announces we're in
@@ -75,11 +75,11 @@ export function HomeHero() {
               textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
             }}
           >
-            The AI agents your team{" "}
+            The{" "}
             <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
-              never had time
+              company brain
             </em>{" "}
-            to build.
+            your team never had time to build.
           </h1>
           <p
             style={{
@@ -88,12 +88,12 @@ export function HomeHero() {
               fontSize: "clamp(17px, 1.6vw, 21px)",
               lineHeight: 1.55,
               color: "rgba(244, 241, 234, 0.86)",
-              maxWidth: "48ch",
+              maxWidth: "52ch",
               margin: 0,
               textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
             }}
           >
-            One agent per department. Fifteen governance layers underneath. One flat price per user.
+            One Pearl per department. Fifteen governance layers underneath. One flat price per seat.
           </p>
         </div>
       </div>

@@ -51,7 +51,7 @@ export default function PricingPage() {
                 maxWidth: "50ch",
               }}
             >
-              {PRICING.minimumWord}-seat minimum. {PRICING.cadenceAndDiscountPhrase} No per-agent surcharge, no per-department upsell.
+              {PRICING.minimumWord}-seat minimum. {PRICING.cadenceAndDiscountPhrase} No per-Pearl surcharge, no per-department upsell.
             </p>
           </div>
         </div>

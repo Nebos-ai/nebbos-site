@@ -59,11 +59,12 @@ export const metadata: Metadata = {
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
   keywords: [
-    "AI agent governance",
-    "enterprise AI substrate",
-    "model-training data",
-    "AI observability",
+    "company brain",
+    "AI operating system",
+    "enterprise AI governance",
     "AI approval workflow",
+    "governance-first AI",
+    "Pearl per department",
   ],
   openGraph: {
     type: "website",
