@@ -1384,30 +1384,24 @@ html[data-scrolled="true"] .site-header {
   opacity: 0.22 !important;
 }
 
-/* Full-page graph section — edge-to-edge 100vw × 100vh with absolute-positioned
-   title overlay so the graph canvas fills nearly the entire viewport. */
+/* Full-page graph section · W3j fix — title is a proper STACKED header
+   above the graph (no more overlap). Graph fills the remaining viewport.
+   Header, canvas, and hint are three vertically-stacked lanes. */
 .arch-full-page {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  padding: 0;
   border-top: 1px solid var(--rule);
   display: flex;
   flex-direction: column;
 }
 .arch-full-page-header {
-  position: absolute;
-  top: 40px;
-  left: 40px;
-  right: 40px;
-  z-index: 5;
+  padding: 40px 40px 20px;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  pointer-events: none;
-  max-width: 720px;
+  max-width: 900px;
 }
-.arch-full-page-header > * { pointer-events: auto; }
 .arch-full-page-title {
   font-family: var(--font-serif);
   font-size: clamp(28px, 3.8vw, 52px);
@@ -1431,45 +1425,23 @@ html[data-scrolled="true"] .site-header {
   flex: 1;
   display: flex;
   align-items: stretch;
-  padding: 0;
-  min-height: 100vh;
+  padding: 0 40px 40px;
+  min-height: 60vh;
 }
-/* Full-bleed the graph — override the wrapping .arch-graph-canvas gap so
-   the frame sits edge-to-edge with only a subtle inset border. */
 .arch-full-page-canvas > .arch-graph-canvas {
   width: 100%;
-  gap: 0;
+  gap: 12px;
 }
 .arch-full-page-canvas > .arch-graph-canvas > .arch-graph {
   flex: 1;
-  border-radius: 0;
-  border-left: 0;
-  border-right: 0;
-  min-height: 100vh;
+  min-height: 60vh;
 }
-.arch-full-page-canvas > .arch-graph-canvas > .arch-graph-svg,
-.arch-full-page-canvas > .arch-graph-canvas > .arch-graph > .arch-graph-svg {
-  max-height: 100vh;
-}
-/* Hint bar becomes an absolute bottom-center overlay on the full-page variant */
-.arch-full-page-canvas > .arch-graph-canvas > .arch-graph-hint {
-  position: absolute;
-  bottom: 24px;
-  left: 0;
-  right: 0;
-  z-index: 4;
-  pointer-events: none;
-}
-@media (max-width: 900px) {
+@media (max-width: 720px) {
   .arch-full-page-header {
-    position: static;
-    padding: 32px 24px 0;
+    padding: 32px 20px 16px;
   }
   .arch-full-page-canvas {
-    min-height: 70vh;
-    margin-top: 24px;
-  }
-  .arch-full-page-canvas > .arch-graph-canvas > .arch-graph {
+    padding: 0 12px 24px;
     min-height: 70vh;
   }
 }
