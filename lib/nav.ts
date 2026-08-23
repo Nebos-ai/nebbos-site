@@ -101,6 +101,9 @@ export type ProductBandGroup = {
 /**
  * The 5-band product tree — feeds the primary-nav mega-menu, the home-page
  * band-overview section, and the footer product column.
+ *
+ * Architectural order (bottom-up: substrate → commerce) — used on /product
+ * detail pages and in the doctrine.
  */
 export const productTree: ProductBandGroup[] = BANDS.map((band) => ({
   band,
@@ -110,6 +113,23 @@ export const productTree: ProductBandGroup[] = BANDS.map((band) => ({
     href: layerPath(layer),
   })),
 }));
+
+/**
+ * Marketing order — most-important differentiator first (per founder
+ * 2026-08-23: "maybe we need to reorganize these from most important down").
+ *
+ *   1. Intelligence — where Memory lives, the "trains on your data" story
+ *   2. Action — where Pearl lives, the tangible per-department entity
+ *   3. Substrate — the foundation (Data, Identity, Departments)
+ *   4. Boundary — how the world connects in
+ *   5. Commerce — ownership + billing at the top
+ *
+ * Used on the home page + /product landing. URLs and doctrine unchanged.
+ */
+const MARKETING_ORDER = [3, 4, 1, 2, 5];
+export const productTreeByImportance: ProductBandGroup[] = MARKETING_ORDER
+  .map((n) => productTree.find((pt) => pt.band.n === n)!)
+  .filter(Boolean);
 
 /* ── Primary nav ──────────────────────────────────────────────────────── */
 

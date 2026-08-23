@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { productTree } from "@/lib/nav";
+import { productTreeByImportance as productTree } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
 import { SceneOverlay } from "@/components/ui/SceneOverlay";

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { productTree } from "@/lib/nav";
+import { productTreeByImportance as productTree } from "@/lib/nav";
 import { SCENES, stillPath } from "@/content/stills";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneOverlay } from "@/components/ui/SceneOverlay";

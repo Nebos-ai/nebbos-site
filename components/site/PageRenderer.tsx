@@ -111,8 +111,10 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Hero: paper (no image) — for deep pages ─────────────────────── */
+/* ── Hero: paper (no image) — for deep pages · auto-switches to full-bleed
+       when any image field is set on the section ────────────────── */
 function HeroPaper({ s }: { s: SectionBase }) {
+  if (s.imageV2 || s.imageScene || s.imagePerspective) return <HeroFullBleed s={s} />;
   return (
     <section
       style={{
