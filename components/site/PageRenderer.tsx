@@ -113,10 +113,31 @@ function HeroFullBleed({ s }: { s: SectionBase }) {
   );
 }
 
+/* Available v3 stills for auto-cascade (corporate register, no travel):
+     v3-1  populated corporate floor
+     v3-2  memory archive library
+     v3-3  logistics port dawn
+     v3-4  factory floor
+     v3-5  construction site
+     v3-6  fashion atelier
+     v3-7  fitness studio
+     v3-8  healthcare clinic
+     v3-9  Astana boardroom (v1 only) */
+const HERO_POOL: number[] = [1, 2, 9, 4, 3, 8, 6, 7, 5];
+function hashToPool(seed: string): number {
+  let h = 0;
+  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
+  return HERO_POOL[Math.abs(h) % HERO_POOL.length];
+}
+
 /* ── Hero: paper (no image) — for deep pages · auto-switches to full-bleed
-       when any image field is set on the section ────────────────── */
+       when any image field is set on the section, OR falls back to a
+       page-signature-based v3 pick so every hero has an image ──── */
 function HeroPaper({ s }: { s: SectionBase }) {
   if (s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) return <HeroFullBleed s={s} />;
+  // Auto-cascade: pick a v3 image based on section signature for variety
+  const auto = hashToPool((s.eyebrow ?? "") + (s.h1 ?? "") + s.id);
+  return <HeroFullBleed s={{ ...s, imageV3: auto }} />;
   return (
     <section
       style={{
