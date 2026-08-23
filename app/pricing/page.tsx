@@ -2,17 +2,21 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
-import { pageMetadata } from "@/lib/seo";
+import { SectionNumeral } from "@/components/ui/SectionNumeral";
+import { constructMetadata } from "@/lib/seo/constructMetadata";
 
-export const metadata = pageMetadata({
+export const metadata = constructMetadata({
   title: "Pricing",
   path: "/pricing",
   description: "$150 per user per month. One flat price. Every seat gets everything.",
 });
 
+export const dynamic = "force-static";
+export const revalidate = false;
+
 /**
- * Pricing — rebuild-2026 v4 · Delta brief editorial.
- * Canonical $150/user/mo flat per memory reference-nebos-pricing-canonical.
+ * Pricing — v4 delta-brief editorial + W3c numbered section rhythm.
+ * Canonical $150/user/mo flat per memory reference_nebos_pricing_ratified_2026_08_22.
  */
 export default function PricingPage() {
   return (
@@ -37,7 +41,7 @@ export default function PricingPage() {
       </Hero>
 
       <FeatureRow
-        eyebrow="What's included"
+        eyebrow={<SectionNumeral n="01" label="What's included" />}
         title="Every seat. Every capability."
         body={
           <p style={{ margin: 0 }}>
@@ -49,12 +53,28 @@ export default function PricingPage() {
 
       <FeatureRow
         reverse
-        eyebrow="What's separate"
-        title="The lines that scale with usage."
+        eyebrow={<SectionNumeral n="02" label="What's separate" />}
+        title={
+          <>
+            The lines that scale with <em style={{ fontStyle: "italic", color: "var(--gold)" }}>usage</em>.
+          </>
+        }
         body={
           <p style={{ margin: 0 }}>
             Storage, bring-your-own-keys, and support tiers price separately —
             never gating the product itself.
+          </p>
+        }
+      />
+
+      <FeatureRow
+        eyebrow={<SectionNumeral n="03" label="How overage works" />}
+        title="Nebbos tokens, not provider dollars."
+        body={
+          <p style={{ margin: 0 }}>
+            AI-usage overage bills in Nebbos tokens — a stable currency
+            decoupled from LLM providers&rsquo; price swings. What you sign is
+            what you pay, month after month.
           </p>
         }
       />

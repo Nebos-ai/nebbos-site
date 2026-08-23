@@ -4,6 +4,7 @@ import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { ArchitectureGraph } from "@/components/ui/ArchitectureGraph";
 import { PlusMark } from "@/components/ui/PlusMark";
+import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
 
 export const metadata = constructMetadata({ path: "/" });
@@ -16,16 +17,6 @@ export const revalidate = false;
  * Wave 2C moncalisse amendment (signature-mark density, one-idea-per-viewport,
  * numbered section rhythm).
  */
-function SectionNumeral({ n, label }: { n: string; label: string }) {
-  return (
-    <span className="section-numeral">
-      <PlusMark size="sm" color="currentColor" />
-      <span className="n">{n}</span>
-      <span aria-hidden>·</span>
-      {label}
-    </span>
-  );
-}
 
 export default function HomePage() {
   return (
