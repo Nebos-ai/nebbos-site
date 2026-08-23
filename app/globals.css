@@ -1111,13 +1111,95 @@ html[data-scrolled="true"] .site-header {
 }
 
 /* ══════════════════════════════════════════════════════════════════════
-   ARCHITECTURE GRAPH · Wave 3h · founder feedback 2026-08-23:
-   "your graph size is tiny this needs to be a entire section and the popups
-    should be next to each note. this is heavy next js and css this is
-    amature what you did."
+   IMMERSIVE MODE · Wave 3i · founder directive 2026-08-23:
+   "The entire site feels 2d its needs to feel 12d [3D]"
 
-   The graph is now the STAR of its section — full-viewport canvas, big
-   nodes (r=32, was 22), inline note-cards that follow the hovered node.
+   Delta-brief editorial's original "hairline + no shadow" clause is
+   AMENDED to admit depth. Every card, section, and interactive surface
+   now carries either an ambient shadow OR a translateZ elevation on
+   interaction. The paper substrate stays; what sits on it now floats.
+   ══════════════════════════════════════════════════════════════════════ */
+
+/* Global ambient background — subtle radial-gradient wash so the whole
+   page has an atmospheric "somewhere in space" feel rather than
+   a printed flat page. Renders via body::before so it doesn't take a
+   z-index slot. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(120% 80% at 82% -10%, rgba(246, 160, 63, 0.06), transparent 55%),
+    radial-gradient(100% 70% at -8% 100%, rgba(163, 102, 48, 0.05), transparent 50%);
+}
+body > * { position: relative; z-index: 1; }
+
+/* Global perspective root — all top-level sections get z-context so any
+   `translateZ` inside them composes as real 3D depth. */
+main { perspective: 1600px; transform-style: preserve-3d; }
+
+/* Depth-enhanced cut-corner card — replaces the flat border-only variant.
+   Ambient shadow at rest + spring-eased lift on hover. */
+.cut-corner {
+  box-shadow:
+    0 1px 2px rgba(20, 18, 15, 0.04),
+    0 4px 12px rgba(20, 18, 15, 0.05),
+    0 20px 40px rgba(20, 18, 15, 0.04);
+  transition:
+    transform var(--dur-default) var(--ease-out),
+    box-shadow var(--dur-default) var(--ease-out),
+    border-color var(--dur-default) var(--ease-out);
+}
+.cut-corner:hover {
+  transform: translateY(-4px) translateZ(20px);
+  box-shadow:
+    0 4px 8px rgba(20, 18, 15, 0.06),
+    0 12px 32px rgba(20, 18, 15, 0.08),
+    0 40px 80px rgba(163, 102, 48, 0.08);
+}
+
+/* Sticky site header gets a subtle depth-lift as you scroll — creates
+   a floating chrome-bar effect (Vercel/Linear-class). */
+.site-header {
+  transition: box-shadow var(--dur-default) var(--ease-out), backdrop-filter var(--dur-default) var(--ease-out);
+}
+html[data-scrolled="true"] .site-header {
+  box-shadow: 0 1px 0 rgba(20, 18, 15, 0.04), 0 8px 24px rgba(20, 18, 15, 0.06);
+  backdrop-filter: saturate(140%) blur(10px);
+  background: color-mix(in oklab, var(--paper) 82%, transparent);
+}
+
+/* Hero title carries a subtle multi-layer text-shadow for weight. Very
+   restrained — the display serif reads with atmosphere, not gloss. */
+.display h1,
+.display h2 {
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.4),
+    0 8px 24px rgba(20, 18, 15, 0.04);
+}
+
+/* Section rule + light source — every section-mono panel gets a faint
+   gradient wash from top-right, matching the ambient body::before hue,
+   so light appears to come from one direction site-wide. */
+.section-mono {
+  position: relative;
+}
+.section-mono::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(80% 60% at 90% 0%, rgba(246, 160, 63, 0.04), transparent 55%);
+  pointer-events: none;
+}
+
+/* ══════════════════════════════════════════════════════════════════════
+   ARCHITECTURE GRAPH · Wave 3i · immersive 3D · founder feedback:
+   "i want it full page its still 2d this needs to fele imergive"
+
+   Full-viewport, edge-to-edge, mouse-parallax 3D graph with spherical
+   nodes, glow filters, and camera-lift on active.
    ══════════════════════════════════════════════════════════════════════ */
 
 .arch-graph-canvas {
@@ -1126,26 +1208,56 @@ html[data-scrolled="true"] .site-header {
   flex-direction: column;
   gap: 24px;
   container-type: inline-size;
+  perspective: 1600px;
+  transform-style: preserve-3d;
 }
 
-/* Override the older `.arch-graph` sizing — now sized to fill an entire
-   section (min-height keyed to viewport). Overflow visible so the inline
-   note-card can extend slightly outside if needed. */
-.arch-graph {
+/* Immersive graph frame — full-viewport, atmospheric depth via radial
+   gradient + vignette, spring-eased 3D on the SVG itself. */
+.arch-graph.arch-graph--immersive {
   position: relative;
   border: 1px solid var(--rule);
-  background: var(--paper);
-  padding: 16px;
+  background: linear-gradient(180deg, var(--paper) 0%, var(--paper-2) 100%);
+  padding: 24px;
   border-radius: 0 40px 0 0;
-  min-height: min(72vh, 720px);
-  overflow: visible;
+  min-height: min(80vh, 820px);
+  overflow: hidden;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    0 2px 6px rgba(20, 18, 15, 0.04),
+    0 20px 60px rgba(20, 18, 15, 0.06),
+    0 40px 100px rgba(163, 102, 48, 0.04);
+}
+.arch-graph-ambient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 78% 8%, rgba(246, 160, 63, 0.14), transparent 60%),
+    radial-gradient(50% 55% at 20% 100%, rgba(163, 102, 48, 0.08), transparent 60%);
+  mix-blend-mode: multiply;
+}
+.arch-graph-vignette {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(120% 90% at 50% 50%, transparent 55%, rgba(20, 18, 15, 0.06) 100%);
 }
 .arch-graph-svg {
   display: block;
   width: 100%;
   height: 100%;
-  max-height: min(72vh, 720px);
+  max-height: min(80vh, 820px);
+  position: relative;
+  z-index: 1;
 }
+
+/* Spherical node highlight — the radial gradient defined in SVG defs
+   sits on top of the flat body, giving each node a 3D orb feel. */
+.arch-graph-node-sphere {
+  pointer-events: none;
+}
+.arch-graph-node.is-dimmed .arch-graph-node-sphere { opacity: 0.4; }
 
 /* Node body — bigger radius means bigger label sizes */
 .arch-graph-node-n {
@@ -1270,6 +1382,96 @@ html[data-scrolled="true"] .site-header {
 .arch-graph-node.is-active .arch-graph-node-halo,
 .arch-graph-node.is-pinned .arch-graph-node-halo {
   opacity: 0.22 !important;
+}
+
+/* Full-page graph section — edge-to-edge 100vw × 100vh with absolute-positioned
+   title overlay so the graph canvas fills nearly the entire viewport. */
+.arch-full-page {
+  position: relative;
+  min-height: 100vh;
+  width: 100%;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+}
+.arch-full-page-header {
+  position: absolute;
+  top: 40px;
+  left: 40px;
+  right: 40px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  pointer-events: none;
+  max-width: 720px;
+}
+.arch-full-page-header > * { pointer-events: auto; }
+.arch-full-page-title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 3.8vw, 52px);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  color: var(--ink);
+  margin: 0;
+  max-width: 22ch;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+.arch-full-page-deck {
+  font-family: var(--font-sans);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-3);
+  margin: 0;
+  max-width: 52ch;
+}
+.arch-full-page-canvas {
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  padding: 0;
+  min-height: 100vh;
+}
+/* Full-bleed the graph — override the wrapping .arch-graph-canvas gap so
+   the frame sits edge-to-edge with only a subtle inset border. */
+.arch-full-page-canvas > .arch-graph-canvas {
+  width: 100%;
+  gap: 0;
+}
+.arch-full-page-canvas > .arch-graph-canvas > .arch-graph {
+  flex: 1;
+  border-radius: 0;
+  border-left: 0;
+  border-right: 0;
+  min-height: 100vh;
+}
+.arch-full-page-canvas > .arch-graph-canvas > .arch-graph-svg,
+.arch-full-page-canvas > .arch-graph-canvas > .arch-graph > .arch-graph-svg {
+  max-height: 100vh;
+}
+/* Hint bar becomes an absolute bottom-center overlay on the full-page variant */
+.arch-full-page-canvas > .arch-graph-canvas > .arch-graph-hint {
+  position: absolute;
+  bottom: 24px;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+@media (max-width: 900px) {
+  .arch-full-page-header {
+    position: static;
+    padding: 32px 24px 0;
+  }
+  .arch-full-page-canvas {
+    min-height: 70vh;
+    margin-top: 24px;
+  }
+  .arch-full-page-canvas > .arch-graph-canvas > .arch-graph {
+    min-height: 70vh;
+  }
 }
 
 /* Note-inline responsive: on narrow viewports collapse to full-width below the graph */

@@ -38,61 +38,21 @@ export default function HomePage() {
         </ButtonLink>
       </Hero>
 
-      {/* Signature 15-layer knowledge graph — the site's central visual.
-          Wave 3h · full-viewport section, graph fills the canvas, inline
-          note-cards at each node. */}
-      <section
-        style={{
-          borderTop: "1px solid var(--rule)",
-          minHeight: "100vh",
-          display: "flex",
-          flexDirection: "column",
-          padding: "56px 0 72px",
-        }}
-      >
-        <div
-          className="container"
-          style={{
-            maxWidth: 1440,
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            gap: 20,
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-            <SectionNumeral n="01" label="The architecture" />
-            <h2
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(32px, 4.2vw, 52px)",
-                lineHeight: 1.04,
-                letterSpacing: "-0.022em",
-                fontWeight: 500,
-                color: "var(--ink)",
-                margin: 0,
-                maxWidth: "22ch",
-              }}
-            >
-              Fifteen layers. One system. <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Owned</em> by you.
-            </h2>
-            <p
-              style={{
-                fontFamily: "var(--font-sans)",
-                fontSize: 17,
-                lineHeight: 1.5,
-                color: "var(--ink-2)",
-                maxWidth: "52ch",
-                margin: 0,
-              }}
-            >
-              Hover any node — the layer, what it does, and its proof-points appear inline.
-              Click to pin. Escape to release.
-            </p>
-          </div>
-          <div style={{ flex: 1, display: "flex" }}>
-            <ArchitectureGraph />
-          </div>
+      {/* Signature 15-layer knowledge graph — Wave 3i: full-page, edge-to-edge,
+          3D-perspective, absolute-positioned title overlay so the graph itself
+          fills 100vw × 100vh. */}
+      <section className="arch-full-page">
+        <div className="arch-full-page-header">
+          <SectionNumeral n="01" label="The architecture" />
+          <h2 className="arch-full-page-title">
+            Fifteen layers. One system. <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Owned</em> by you.
+          </h2>
+          <p className="arch-full-page-deck">
+            Move the mouse for depth. Hover a node — the layer, what it does, and its proof-points appear inline.
+          </p>
+        </div>
+        <div className="arch-full-page-canvas">
+          <ArchitectureGraph />
         </div>
       </section>
 

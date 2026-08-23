@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, LayoutGroup, motion } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion, useMotionValue, useSpring, useTransform } from "motion/react";
 import {
   BANDS,
   EDGES,
@@ -18,34 +18,36 @@ import {
 } from "@/lib/architecture";
 
 /**
- * ArchitectureGraph · Wave 2D + 2E + 3h (bigger, inline note-cards).
+ * ArchitectureGraph · Wave 3i · founder feedback 2026-08-23:
+ *   "i want it full page its still 2d this needs to fele imergive"
  *
- * Founder feedback 2026-08-23: the graph read tiny inside a column; the
- * detail belongs INLINE next to each node (a moncalisse-style inline card),
- * not on a side rail. Reshaped:
+ * Full-viewport, edge-to-edge, 3D-perspective knowledge graph. Nodes lift
+ * toward the camera on hover; the whole graph does a mouse-tracked parallax
+ * tilt (max ±6°); an ambient radial-gradient wash + SVG glow filter give
+ * real light-through-space depth cues. Motion springs drive the camera.
  *
- *  - The SVG viewBox scales up (1200×880) and the parent section is now
- *    designed to be full-bleed one-idea-per-viewport.
- *  - Nodes bumped: r=32 (was 22), labels 15-16px (was 13), tap targets big.
- *  - On HOVER (not just pin): a note-card renders inline at the node, sized
- *    to hold the full detail (name, caption, one-line description, 3 proof
- *    points). Auto-flips L/R based on node x-position so it stays inside
- *    the viewBox.
- *  - Motion `<LayoutGroup>` wraps the note-card so it slides between nodes
- *    (shared-layout transition) when you move between hover targets.
- *  - The side detail panel is REMOVED — the note-card at the node is the
- *    primary detail surface.
- *  - Motion springs everywhere, `@property`-animated halo pulses, filter
- *    drop-shadow depth cues on the active node.
+ * Techniques (no WebGL — just CSS 3D + motion + SVG filters):
+ *  - `perspective: 1600px` on the outer wrapper; `transform-style: preserve-3d`
+ *    on the SVG so nested transforms compose as real 3D
+ *  - `useMotionValue` on mouse position → spring-eased rotateX/rotateY on
+ *    the SVG so the parallax feels weighted, not synthetic
+ *  - Active node scales AND translates toward the viewer (translateZ +20px)
+ *    while non-active nodes recede (translateZ -10px + opacity dim +
+ *    saturation drop)
+ *  - Radial gradient background inside the canvas — light source top-right —
+ *    creates atmospheric depth
+ *  - SVG feGaussianBlur glow on edges when highlighted; feDropShadow on nodes
+ *  - LayoutGroup + `layout` on the inline note-card so it glides between
+ *    hover targets via shared-layout physics
  */
 
-const VB_W = 1200;
-const VB_H = 880;
-const NODE_R = 32;
+const VB_W = 1400;
+const VB_H = 1000;
+const NODE_R = 34;
 
-const NOTE_W = 300;
-const NOTE_H_MAX = 210;
-const NOTE_GAP = 22;
+const NOTE_W = 320;
+const NOTE_H_MAX = 240;
+const NOTE_GAP = 26;
 
 // Precomputed adjacency for O(1) hover-highlight neighborhood lookup.
 const ADJACENCY: Record<number, Set<number>> = (() => {
@@ -58,8 +60,6 @@ const ADJACENCY: Record<number, Set<number>> = (() => {
   return map;
 })();
 
-// Deterministic seeded jitter — hash the layer.n to a small offset so
-// the entry-jitter is stable across renders (no hydration mismatch).
 function jitterFor(n: number): { x: number; y: number } {
   const seed = (n * 2654435761) % 2 ** 32;
   const jx = (((seed >> 8) & 0xff) / 255 - 0.5) * 32;
@@ -67,7 +67,6 @@ function jitterFor(n: number): { x: number; y: number } {
   return { x: jx, y: jy };
 }
 
-// Rescale hand-authored NODE_POSITIONS (800×720) to the new VB.
 const SCALE_X = VB_W / 800;
 const SCALE_Y = VB_H / 720;
 function nodePos(n: number): { x: number; y: number } {
@@ -86,15 +85,13 @@ function bandColor(band: number): string {
   }
 }
 
-/** Note-card placement — flips L/R + top/bottom to stay in the viewBox. */
 function notePlacement(
   nodeX: number,
   nodeY: number,
   containerW: number,
   containerH: number,
 ): { left: number; top: number; anchor: "left" | "right" } {
-  const wantsRight = nodeX < containerW / 2;
-  // Compute in viewBox coords, then scale to container.
+  const wantsRight = nodeX < VB_W / 2;
   const scaleX = containerW / VB_W;
   const scaleY = containerH / VB_H;
   const nxPx = nodeX * scaleX;
@@ -121,6 +118,12 @@ export function ArchitectureGraph() {
   const rootRef = useRef<HTMLDivElement | null>(null);
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
+  // Mouse-tracked parallax — mouse xy relative to canvas center → tilt.
+  const mouseX = useMotionValue(0);
+  const mouseY = useMotionValue(0);
+  const rotY = useSpring(useTransform(mouseX, [-1, 1], [-6, 6]), { stiffness: 90, damping: 20, mass: 0.5 });
+  const rotX = useSpring(useTransform(mouseY, [-1, 1], [4, -4]), { stiffness: 90, damping: 20, mass: 0.5 });
+
   const shownN = pinned ?? active;
   const shownLayer: Layer | null = useMemo(() => {
     if (shownN == null) return null;
@@ -143,8 +146,6 @@ export function ArchitectureGraph() {
     return idxs;
   }, [shownN]);
 
-  // Track canvas pixel size so we can position the HTML note-card overlay
-  // in the same coordinate space as the SVG.
   useEffect(() => {
     const el = canvasRef.current;
     if (!el) return;
@@ -199,6 +200,21 @@ export function ArchitectureGraph() {
     [],
   );
 
+  const onCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    // Normalize mouse position to [-1, 1] relative to canvas center.
+    const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
+    const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
+    mouseX.set(nx);
+    mouseY.set(ny);
+  }, [mouseX, mouseY]);
+
+  const onCanvasMouseLeave = useCallback(() => {
+    mouseX.set(0);
+    mouseY.set(0);
+    setActive(null);
+  }, [mouseX, mouseY]);
+
   const notePlacementCoords = useMemo(() => {
     if (!shownLayer || size.w === 0) return null;
     const pos = nodePos(shownLayer.n);
@@ -208,28 +224,46 @@ export function ArchitectureGraph() {
   return (
     <div className="arch-graph-canvas" ref={rootRef}>
       <div
-        className={`arch-graph${visible ? " is-visible" : ""}`}
+        className={`arch-graph arch-graph--immersive${visible ? " is-visible" : ""}`}
         ref={canvasRef}
-        onMouseLeave={onNodeLeave}
+        onMouseMove={onCanvasMouseMove}
+        onMouseLeave={onCanvasMouseLeave}
       >
-        <svg
+        {/* Ambient depth wash — radial gradient behind everything */}
+        <div className="arch-graph-ambient" aria-hidden />
+        <div className="arch-graph-vignette" aria-hidden />
+
+        <motion.svg
           className="arch-graph-svg"
           viewBox={`0 0 ${VB_W} ${VB_H}`}
           role="img"
           aria-label="Nebbos 15-layer architecture as a knowledge graph"
           preserveAspectRatio="xMidYMid meet"
+          style={{
+            rotateX: rotX,
+            rotateY: rotY,
+            transformPerspective: 1600,
+            transformStyle: "preserve-3d",
+          }}
         >
           <defs>
             <filter id="arch-glow" x="-50%" y="-50%" width="200%" height="200%">
-              <feGaussianBlur stdDeviation="6" result="b" />
+              <feGaussianBlur stdDeviation="8" result="b" />
               <feMerge>
                 <feMergeNode in="b" />
                 <feMergeNode in="SourceGraphic" />
               </feMerge>
             </filter>
-            <filter id="arch-depth" x="-20%" y="-20%" width="140%" height="140%">
-              <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="#14120F" floodOpacity="0.08" />
+            <filter id="arch-depth" x="-40%" y="-40%" width="180%" height="180%">
+              <feDropShadow dx="0" dy="4" stdDeviation="6" floodColor="#14120F" floodOpacity="0.14" />
             </filter>
+            <filter id="arch-depth-lift" x="-60%" y="-60%" width="220%" height="220%">
+              <feDropShadow dx="0" dy="10" stdDeviation="16" floodColor="#F6A03F" floodOpacity="0.35" />
+            </filter>
+            <radialGradient id="arch-node-sphere" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stopColor="#FFFFFF" stopOpacity="0.35" />
+              <stop offset="60%" stopColor="#FFFFFF" stopOpacity="0" />
+            </radialGradient>
           </defs>
 
           {/* Band labels down the left column */}
@@ -242,24 +276,19 @@ export function ArchitectureGraph() {
                 <g
                   key={band.n}
                   className="arch-graph-band-label"
-                  transform={`translate(36 ${y})`}
+                  transform={`translate(56 ${y})`}
                   style={{ ["--band-i" as string]: i }}
                 >
-                  <text className="band-n" x={0} y={-6}>{`0${band.n}`}</text>
-                  <text className="band-name" x={0} y={14}>{band.name}</text>
+                  <text className="band-n" x={0} y={-8}>{`0${band.n}`}</text>
+                  <text className="band-name" x={0} y={16}>{band.name}</text>
                 </g>
               );
             })}
           </g>
 
-          {/* Edges — drawn behind nodes. */}
+          {/* Edges — filter-glow when highlighted */}
           <g className="arch-graph-edges">
             {EDGES.map((edge, i) => {
-              const a = NODE_POSITIONS[edge.from];
-              const b = NODE_POSITIONS[edge.to];
-              if (!a || !b) return null;
-              // edgePath was authored against the old 800×720 viewBox.
-              // Rescale by injecting the scale factors after construction.
               const raw = edgePath(edge.from, edge.to, edge.kind);
               const scaled = raw.replace(/(\d+(?:\.\d+)?)\s+(\d+(?:\.\d+)?)/g, (_m, x, y) => {
                 return `${(parseFloat(x) * SCALE_X).toFixed(1)} ${(parseFloat(y) * SCALE_Y).toFixed(1)}`;
@@ -271,14 +300,15 @@ export function ArchitectureGraph() {
                   className={`arch-graph-edge arch-graph-edge--${edge.kind}${isHighlighted ? " is-highlighted" : ""}`}
                   d={scaled}
                   fill="none"
-                  style={{ ["--graph-i" as string]: i * 25 }}
+                  filter={isHighlighted ? "url(#arch-glow)" : undefined}
+                  style={{ ["--graph-i" as string]: i * 22 }}
                 />
               );
             })}
           </g>
 
-          {/* Nodes */}
-          <g className="arch-graph-nodes">
+          {/* Nodes — 3D lift on active via translateZ */}
+          <g className="arch-graph-nodes" style={{ transformStyle: "preserve-3d" }}>
             {LAYERS.map((layer, i) => {
               const pos = nodePos(layer.n);
               const jitter = jitterFor(layer.n);
@@ -295,30 +325,37 @@ export function ArchitectureGraph() {
                     ["--node-color" as string]: color,
                     transformBox: "fill-box",
                     transformOrigin: "center",
+                    transformStyle: "preserve-3d",
                   }}
                   initial={{
                     x: pos.x + jitter.x,
                     y: pos.y + jitter.y,
+                    z: 0,
                     opacity: 0,
                     scale: 0.7,
                   }}
                   animate={
                     visible
-                      ? { x: pos.x, y: pos.y, opacity: isDimmed ? 0.35 : 1, scale: 1 }
-                      : { x: pos.x + jitter.x, y: pos.y + jitter.y, opacity: 0, scale: 0.7 }
+                      ? {
+                          x: pos.x,
+                          y: pos.y,
+                          z: isActive ? 40 : isDimmed ? -18 : 0,
+                          opacity: isDimmed ? 0.4 : 1,
+                          scale: isActive ? 1.14 : 1,
+                        }
+                      : { x: pos.x + jitter.x, y: pos.y + jitter.y, z: 0, opacity: 0, scale: 0.7 }
                   }
                   transition={{
                     type: "spring",
-                    stiffness: 240,
-                    damping: 22,
+                    stiffness: 260,
+                    damping: 24,
                     mass: 0.9,
                     delay: visible ? 0.05 + i * 0.032 : 0,
                   }}
-                  whileHover={{ scale: 1.08 }}
                 >
                   <circle
                     className="arch-graph-node-hit"
-                    r={NODE_R + 14}
+                    r={NODE_R + 16}
                     fill="transparent"
                     tabIndex={0}
                     role="button"
@@ -335,27 +372,32 @@ export function ArchitectureGraph() {
                       }
                     }}
                   />
-                  <circle className="arch-graph-node-halo" r={NODE_R + 10} />
+                  <circle className="arch-graph-node-halo" r={NODE_R + 12} />
                   <circle
                     className="arch-graph-node-body"
                     r={NODE_R}
-                    filter="url(#arch-depth)"
+                    filter={isActive ? "url(#arch-depth-lift)" : "url(#arch-depth)"}
+                  />
+                  {/* Spherical highlight — gives the node a 3D orb feel */}
+                  <circle
+                    className="arch-graph-node-sphere"
+                    r={NODE_R}
+                    fill="url(#arch-node-sphere)"
+                    pointerEvents="none"
                   />
                   <text className="arch-graph-node-n" x={0} y={0}>
                     {String(layer.n).padStart(2, "0")}
                   </text>
-                  <text className="arch-graph-node-label" x={0} y={NODE_R + 22}>
+                  <text className="arch-graph-node-label" x={0} y={NODE_R + 24}>
                     {layer.name}
                   </text>
                 </motion.g>
               );
             })}
           </g>
-        </svg>
+        </motion.svg>
 
-        {/* Inline note-card overlay — HTML in an absolute-positioned layer
-            so it can carry rich typography. Motion LayoutGroup gives us a
-            shared-layout transition as the card glides between nodes. */}
+        {/* Inline note-card overlay */}
         <LayoutGroup>
           <AnimatePresence mode="wait">
             {shownLayer && notePlacementCoords ? (
@@ -368,9 +410,9 @@ export function ArchitectureGraph() {
                   top: notePlacementCoords.top,
                   width: NOTE_W,
                 }}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                exit={{ opacity: 0, scale: 0.92 }}
+                initial={{ opacity: 0, scale: 0.9, y: 8 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.92, y: -6 }}
                 transition={{ type: "spring", stiffness: 320, damping: 26 }}
               >
                 <div className="arch-graph-note-head">
@@ -397,10 +439,9 @@ export function ArchitectureGraph() {
         </LayoutGroup>
       </div>
 
-      {/* Ambient hint bar below the canvas */}
       <div className="arch-graph-hint">
         <span className="arch-graph-hint-line">
-          Hover any node · click to pin · <em style={{ fontStyle: "italic", color: "var(--gold)" }}>esc</em> to release
+          Move the mouse for depth · hover a node · click to pin · <em style={{ fontStyle: "italic", color: "var(--gold)" }}>esc</em> to release
         </span>
       </div>
     </div>
