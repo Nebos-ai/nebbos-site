@@ -2,7 +2,7 @@ import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
-import { ArchitectureGrid } from "@/components/ui/ArchitectureGrid";
+import { ArchitectureGraph } from "@/components/ui/ArchitectureGraph";
 import { PlusMark } from "@/components/ui/PlusMark";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
 
@@ -70,7 +70,7 @@ export default function HomePage() {
               What you deploy · <em style={{ fontStyle: "italic", color: "var(--gold)" }}>foundation</em> to surface.
             </h2>
           </div>
-          <ArchitectureGrid />
+          <ArchitectureGraph />
         </div>
       </section>
 

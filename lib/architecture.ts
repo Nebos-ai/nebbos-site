@@ -271,3 +271,110 @@ export function layersByBandTopDown(): Array<{ band: Band; layers: Layer[] }> {
       layers: LAYERS.filter((l) => l.band === band.n),
     }));
 }
+
+/**
+ * Knowledge-graph edges · Wave 2D · founder directive 2026-08-23:
+ * "your table should look like a knowledge graph with each point being a note."
+ *
+ * Two edge kinds:
+ * - `peer` — within-band cohesion; the 3 layers of a band reinforce each other.
+ * - `depends` — cross-band dependency; a higher layer requires a lower one.
+ *
+ * Rendered by `<ArchitectureGraph>` as SVG curves between node positions.
+ */
+export type EdgeKind = "peer" | "depends";
+export type Edge = { from: number; to: number; kind: EdgeKind };
+
+export const EDGES: Edge[] = [
+  // Band 1 peer triangle · Substrate
+  { from: 1, to: 2, kind: "peer" },
+  { from: 2, to: 3, kind: "peer" },
+  { from: 1, to: 3, kind: "peer" },
+  // Band 2 peer triangle · Boundary
+  { from: 4, to: 5, kind: "peer" },
+  { from: 5, to: 6, kind: "peer" },
+  { from: 4, to: 6, kind: "peer" },
+  // Band 3 peer triangle · Intelligence
+  { from: 7, to: 8, kind: "peer" },
+  { from: 8, to: 9, kind: "peer" },
+  { from: 7, to: 9, kind: "peer" },
+  // Band 4 peer triangle · Agent
+  { from: 10, to: 11, kind: "peer" },
+  { from: 11, to: 12, kind: "peer" },
+  { from: 10, to: 12, kind: "peer" },
+  // Band 5 peer triangle · Commerce
+  { from: 13, to: 14, kind: "peer" },
+  { from: 14, to: 15, kind: "peer" },
+  { from: 13, to: 15, kind: "peer" },
+
+  // Cross-band dependencies (`from` = higher layer, `to` = deeper foundation)
+  { from: 4,  to: 1,  kind: "depends" }, // Ingest → Data
+  { from: 5,  to: 1,  kind: "depends" }, // API+MCP → Data
+  { from: 5,  to: 2,  kind: "depends" }, // API+MCP → Identity
+  { from: 6,  to: 3,  kind: "depends" }, // Integrations → Departments
+  { from: 7,  to: 1,  kind: "depends" }, // Memory → Data
+  { from: 8,  to: 7,  kind: "depends" }, // Reasoning → Memory
+  { from: 9,  to: 7,  kind: "depends" }, // Detectors → Memory
+  { from: 9,  to: 4,  kind: "depends" }, // Detectors → Ingest
+  { from: 10, to: 7,  kind: "depends" }, // Pearl → Memory
+  { from: 10, to: 8,  kind: "depends" }, // Pearl → Reasoning
+  { from: 10, to: 3,  kind: "depends" }, // Pearl → Departments
+  { from: 11, to: 2,  kind: "depends" }, // Approval → Identity
+  { from: 12, to: 10, kind: "depends" }, // Orchestrator → Pearl
+  { from: 12, to: 11, kind: "depends" }, // Orchestrator → Approval
+  { from: 13, to: 2,  kind: "depends" }, // Tenant lifecycle → Identity
+  { from: 13, to: 3,  kind: "depends" }, // Tenant lifecycle → Departments
+  { from: 14, to: 12, kind: "depends" }, // Billing → Orchestrator
+  { from: 14, to: 5,  kind: "depends" }, // Billing → API+MCP
+  { from: 15, to: 11, kind: "depends" }, // Attestation → Approval
+  { from: 15, to: 14, kind: "depends" }, // Attestation → Billing
+];
+
+/**
+ * Node positions for `<ArchitectureGraph>` — hand-laid within an
+ * 800 × 720 viewBox. Rows stacked bottom (foundation) → top (surface).
+ * Per-band x-order matches per-band layer order (columns 1-2-3).
+ */
+export const NODE_POSITIONS: Record<number, { x: number; y: number }> = {
+  // Band 1 · Substrate (bottom)
+  1:  { x: 170, y: 640 },
+  2:  { x: 400, y: 640 },
+  3:  { x: 630, y: 640 },
+  // Band 2 · Boundary
+  4:  { x: 170, y: 500 },
+  5:  { x: 400, y: 500 },
+  6:  { x: 630, y: 500 },
+  // Band 3 · Intelligence
+  7:  { x: 170, y: 360 },
+  8:  { x: 400, y: 360 },
+  9:  { x: 630, y: 360 },
+  // Band 4 · Agent
+  10: { x: 170, y: 220 },
+  11: { x: 400, y: 220 },
+  12: { x: 630, y: 220 },
+  // Band 5 · Commerce (top)
+  13: { x: 170, y: 80 },
+  14: { x: 400, y: 80 },
+  15: { x: 630, y: 80 },
+};
+
+/** Edge geometry — computes a slight bezier curve so peer edges don't overlap dependency edges. */
+export function edgePath(from: number, to: number, kind: EdgeKind): string {
+  const a = NODE_POSITIONS[from];
+  const b = NODE_POSITIONS[to];
+  if (!a || !b) return "";
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  if (kind === "peer") {
+    // Peer edges (same band) — small arc above the horizontal line.
+    const mx = (a.x + b.x) / 2;
+    const my = (a.y + b.y) / 2 - Math.min(24, Math.abs(dx) * 0.12);
+    return `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`;
+  }
+  // Dependency edges (cross-band) — soft cubic bezier for organic flow.
+  const cx1 = a.x + dx * 0.25;
+  const cy1 = a.y + dy * 0.55;
+  const cx2 = a.x + dx * 0.75;
+  const cy2 = a.y + dy * 0.45;
+  return `M ${a.x} ${a.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${b.x} ${b.y}`;
+}
