@@ -27,7 +27,8 @@ import "./globals.css";
 
 const serif = Fraunces({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
+  // Variable font — loads all weights compactly and unlocks SOFT/opsz axes.
+  // next/font requires weight to be omitted or "variable" when axes is set.
   style: ["normal", "italic"],
   axes: ["SOFT", "opsz"],
   display: "swap",
