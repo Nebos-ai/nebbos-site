@@ -3,6 +3,7 @@ import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { ArchitectureGrid } from "@/components/ui/ArchitectureGrid";
+import { PlusMark } from "@/components/ui/PlusMark";
 import { constructMetadata } from "@/lib/seo/constructMetadata";
 
 export const metadata = constructMetadata({ path: "/" });
@@ -11,12 +12,21 @@ export const dynamic = "force-static";
 export const revalidate = false;
 
 /**
- * Home — rebuild-2026 v4 · Delta brief editorial + doctrine v2 Shape 3.
- *
- * Hero now carries the signature 5-band × 3-layer ArchitectureGrid as its
- * `visual` slot — the site's central impressive artifact. All 15 layers
- * visible in one glance; hover any cell for capability detail.
+ * Home — rebuild-2026 v4 · Delta brief editorial + doctrine v2 Shape 3 +
+ * Wave 2C moncalisse amendment (signature-mark density, one-idea-per-viewport,
+ * numbered section rhythm).
  */
+function SectionNumeral({ n, label }: { n: string; label: string }) {
+  return (
+    <span className="section-numeral">
+      <PlusMark size="sm" color="currentColor" />
+      <span className="n">{n}</span>
+      <span aria-hidden>·</span>
+      {label}
+    </span>
+  );
+}
+
 export default function HomePage() {
   return (
     <>
@@ -37,16 +47,15 @@ export default function HomePage() {
         </ButtonLink>
       </Hero>
 
-      {/* Signature 15-layer architecture grid — the site's central visual. */}
+      {/* Signature 15-layer architecture grid — the site's central visual.
+          Wave 2C: promoted to a `.section-mono` one-idea-per-viewport panel. */}
       <section
-        style={{
-          padding: "24px 0 96px",
-          borderTop: "1px solid var(--rule)",
-        }}
+        className="section-mono"
+        style={{ borderTop: "1px solid var(--rule)" }}
       >
         <div className="container" style={{ maxWidth: 1240 }}>
           <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 28 }}>
-            <p className="eyebrow" style={{ margin: 0 }}>The architecture</p>
+            <SectionNumeral n="01" label="The architecture" />
             <h2
               style={{
                 fontFamily: "var(--font-serif)",
@@ -58,15 +67,19 @@ export default function HomePage() {
                 margin: 0,
               }}
             >
-              What you deploy · foundation to surface.
+              What you deploy · <em style={{ fontStyle: "italic", color: "var(--gold)" }}>foundation</em> to surface.
             </h2>
           </div>
           <ArchitectureGrid />
         </div>
       </section>
 
+      <div className="section-divider-plus" aria-hidden>
+        <PlusMark size="md" />
+      </div>
+
       <FeatureRow
-        eyebrow="What it does"
+        eyebrow={<SectionNumeral n="02" label="What it does" />}
         title="It watches the work. Not the people."
         body={
           <p style={{ margin: 0 }}>
@@ -78,8 +91,12 @@ export default function HomePage() {
 
       <FeatureRow
         reverse
-        eyebrow="What you build"
-        title="One agent per department."
+        eyebrow={<SectionNumeral n="03" label="What you build" />}
+        title={
+          <>
+            One <em style={{ fontStyle: "italic", color: "var(--gold)" }}>agent</em> per department.
+          </>
+        }
         body={
           <p style={{ margin: 0 }}>
             Pre-educated in your work. Learns independently. Yours to keep.
@@ -88,7 +105,7 @@ export default function HomePage() {
       />
 
       <FeatureRow
-        eyebrow="Why it matters"
+        eyebrow={<SectionNumeral n="04" label="Why it matters" />}
         title={
           <>
             Every other AI trains{" "}

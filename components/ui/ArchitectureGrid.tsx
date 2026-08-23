@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useRef, useState, useEffect } from "react";
 import { LAYERS, layersByBandTopDown, type Layer } from "@/lib/architecture";
+import { PlusMark } from "@/components/ui/PlusMark";
 
 /**
  * ArchitectureGrid · doctrine v2 Shape 3 · the signature Nebbos hero visual.
@@ -84,7 +85,10 @@ export function ArchitectureGrid() {
                   onBlur={onCellBlur}
                   onClick={() => onCellClick(layer.n)}
                 >
-                  <span className="arch-cell-n">{String(layer.n).padStart(2, "0")}</span>
+                  <span className="arch-cell-n">
+                    <PlusMark size="xs" color="currentColor" />
+                    {String(layer.n).padStart(2, "0")}
+                  </span>
                   <span className="arch-cell-name">{layer.name}</span>
                   <span className="arch-cell-caption">{layer.caption}</span>
                 </button>
@@ -105,7 +109,10 @@ function ArchDetail({ layer, pinned }: { layer: Layer; pinned: boolean }) {
   return (
     <div className="arch-detail-inner" key={layer.n}>
       <div className="arch-detail-header">
-        <span className="arch-detail-n">{String(layer.n).padStart(2, "0")}</span>
+        <span className="arch-detail-n">
+          <PlusMark size="sm" color="currentColor" />
+          {String(layer.n).padStart(2, "0")}
+        </span>
         <div>
           <div className="arch-detail-name">{layer.name}</div>
           <div className="arch-detail-caption">{layer.caption}</div>

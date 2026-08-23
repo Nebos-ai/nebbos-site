@@ -358,6 +358,54 @@ code, kbd {
   }
 }
 
+/* ══════════════════════════════════════════════════════════════════════
+   SECTION DISCIPLINE · Wave 2C · moncalisse one-idea-per-viewport
+   Institutional pacing: each top-level section owns the screen. Applied
+   by adding `.section-mono` to a top-level section wrapper.
+   ══════════════════════════════════════════════════════════════════════ */
+.section-mono {
+  min-height: 92vh;
+  display: grid;
+  place-content: center;
+  padding-block: 96px;
+}
+.section-mono > .container {
+  max-width: 72ch;
+}
+@media (max-width: 720px) {
+  .section-mono {
+    min-height: auto;
+    padding-block: 72px;
+  }
+}
+
+/*  Numbered section eyebrow — "+ 01  What it does" style.
+    Pairs the <PlusMark size="sm"/> with a tabular numeral and label. */
+.section-numeral {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  font-variant-numeric: tabular-nums;
+}
+.section-numeral .n {
+  color: var(--gold);
+  font-weight: 500;
+}
+
+/*  Centered plus-mark divider — replaces bare hairline between sections
+    when we want a signature accent between one-idea-per-viewport panels. */
+.section-divider-plus {
+  display: flex;
+  justify-content: center;
+  padding-block: 32px;
+  border-top: 1px solid var(--rule);
+}
+
 /*  Cut-corner card — single top-right cut. Emphasis surface for callouts
     and stat panels. Radius asymmetry is the signature.
     Interactive variant lifts 2px on hover per Linear §5 (hairline-lift-only,
@@ -455,6 +503,9 @@ code, kbd {
   letter-spacing: 0.14em;
   color: var(--gold);
   line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
 }
 .arch-cell-name {
   font-family: var(--font-serif);
@@ -542,6 +593,9 @@ code, kbd {
   letter-spacing: 0.14em;
   color: var(--gold);
   padding-top: 4px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 .arch-detail-name {
   font-family: var(--font-serif);
