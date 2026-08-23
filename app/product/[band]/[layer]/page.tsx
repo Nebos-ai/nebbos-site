@@ -6,6 +6,7 @@ import { bandPath, layerPath } from "@/lib/nav";
 import { SCENES, type SceneId, type VariantId } from "@/content/stills";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
+import { SceneOverlay } from "@/components/ui/SceneOverlay";
 import { Button } from "@/components/ui/Button";
 
 /**
@@ -73,17 +74,32 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
 
   return (
     <>
-      {/* Breadcrumb + hero header */}
+      {/* Full-bleed hero — image + breadcrumb + h1 overlaid */}
       <section
         style={{
-          background: "var(--paper)",
+          position: "relative",
+          minHeight: "min(80vh, 820px)",
+          display: "flex",
+          alignItems: "flex-end",
+          overflow: "hidden",
           borderBottom: "1px solid var(--rule)",
-          paddingBlock: "clamp(96px, 12vh, 144px) clamp(48px, 6vh, 72px)",
         }}
       >
-        <div className="container">
-          {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" style={{ marginBottom: 32 }}>
+        <SceneStill scene={sceneId} variant={variant} shape="fullBleed" priority />
+        <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
+
+        {/* Breadcrumb overlaid top-left */}
+        <nav
+          aria-label="Breadcrumb"
+          style={{
+            position: "absolute",
+            top: "clamp(24px, 5vh, 56px)",
+            left: 0,
+            right: 0,
+            zIndex: 2,
+          }}
+        >
+          <div className="container">
             <ol
               style={{
                 listStyle: "none",
@@ -95,78 +111,69 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
                 fontSize: 11,
                 letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                color: "var(--ink-3)",
+                color: "rgba(244, 241, 234, 0.7)",
+                textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
               }}
             >
-              <li><Link href="/product" style={{ color: "var(--gold)", textDecoration: "none" }}>Product</Link></li>
+              <li><Link href="/product" style={{ color: "var(--accent-2)", textDecoration: "none" }}>Product</Link></li>
               <li aria-hidden>›</li>
-              <li><Link href={bandPath(band)} style={{ color: "var(--gold)", textDecoration: "none" }}>{band.name}</Link></li>
+              <li><Link href={bandPath(band)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>{band.name}</Link></li>
               <li aria-hidden>›</li>
-              <li style={{ color: "var(--ink-2)" }}>{layer.name}</li>
+              <li style={{ color: "rgba(244, 241, 234, 0.92)" }}>{layer.name}</li>
             </ol>
-          </nav>
+          </div>
+        </nav>
 
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
-              gap: "clamp(32px, 5vw, 72px)",
-              alignItems: "start",
-            }}
-            className="layer-header-grid"
-          >
-            <div>
-              <div
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 14,
-                  letterSpacing: "0.16em",
-                  color: "var(--gold)",
-                  fontWeight: 500,
-                  marginBottom: 24,
-                }}
-              >
-                Layer {String(layer.n).padStart(2, "0")} of 15
-              </div>
-              <h1
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "clamp(48px, 6vw, 88px)",
-                  lineHeight: 1.02,
-                  letterSpacing: "-0.026em",
-                  fontWeight: 400,
-                  color: "var(--ink)",
-                  margin: "0 0 20px 0",
-                  textWrap: "balance",
-                }}
-              >
-                {layer.name}
-              </h1>
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 15,
-                  letterSpacing: "0.04em",
-                  color: "var(--ink-3)",
-                  margin: 0,
-                  textTransform: "lowercase",
-                }}
-              >
-                {layer.caption}
-              </p>
-            </div>
-
+        {/* Layer title overlaid bottom-left */}
+        <div
+          className="container"
+          style={{
+            position: "relative",
+            zIndex: 2,
+            paddingBlock: "clamp(56px, 10vh, 112px)",
+          }}
+        >
+          <div style={{ maxWidth: "56ch", display: "flex", flexDirection: "column", gap: 20 }}>
             <div
               style={{
-                position: "relative",
-                aspectRatio: "16 / 9",
-                background: "var(--paper-2)",
-                border: "1px solid var(--rule)",
-                overflow: "hidden",
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                letterSpacing: "0.24em",
+                textTransform: "uppercase",
+                color: "rgba(244, 241, 234, 0.86)",
+                textShadow: "0 1px 2px rgba(20, 18, 15, 0.42)",
               }}
             >
-              <SceneStill scene={sceneId} variant={variant} shape="fullBleed" />
+              Layer {String(layer.n).padStart(2, "0")} of 15
             </div>
+            <h1
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontSize: "clamp(48px, 6.4vw, 92px)",
+                lineHeight: 1.02,
+                letterSpacing: "-0.026em",
+                fontWeight: 400,
+                color: "var(--paper)",
+                margin: 0,
+                textWrap: "balance",
+                textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
+              }}
+            >
+              {layer.name}
+            </h1>
+            <p
+              style={{
+                fontFamily: "var(--font-serif)",
+                fontStyle: "italic",
+                fontSize: "clamp(17px, 1.5vw, 20px)",
+                lineHeight: 1.5,
+                color: "rgba(244, 241, 234, 0.92)",
+                margin: 0,
+                textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
+              }}
+            >
+              {layer.caption}
+            </p>
           </div>
         </div>
       </section>
