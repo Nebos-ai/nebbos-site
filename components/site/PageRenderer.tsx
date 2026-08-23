@@ -148,7 +148,7 @@ function HeroPaper({ s }: { s: SectionBase }) {
     >
       <div className="container">
         <div style={{ maxWidth: "68ch" }}>
-          {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "00"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+          {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "00"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
           {s.h1 && (
             <h1
               style={{
@@ -198,7 +198,7 @@ function TextBlock({ s }: { s: SectionBase }) {
     <section style={{ background: "var(--paper)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container">
         <div style={{ maxWidth: "68ch" }}>
-          {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "00"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+          {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "00"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
           {s.h2 && (
             <h2
               style={{
@@ -241,7 +241,7 @@ function SplitColumns({ s }: { s: SectionBase }) {
       <div className="container">
         <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: "clamp(32px, 6vw, 88px)", alignItems: "start" }} className="split-grid">
           <div>
-            {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "01"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+            {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
             {s.h2 && (
               <h2
                 style={{
@@ -277,7 +277,7 @@ function ListNumbered({ s }: { s: SectionBase }) {
   return (
     <section style={{ background: "var(--paper)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "01"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
         {s.h2 && (
           <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />
         )}
@@ -313,7 +313,7 @@ function ListPlain({ s }: { s: SectionBase }) {
   return (
     <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "02"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "02"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
         {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
         {/* Special-case: about product-line list is sourced from FACTS.productLine */}
         {(s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build") ? (
@@ -339,7 +339,7 @@ function TableRows({ s }: { s: SectionBase }) {
   return (
     <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
       <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "01"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
         {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
         <dl style={{ display: "grid", gap: 0 }}>
           {rows.map(([label, value], i) => (
@@ -406,7 +406,7 @@ function InboxRouter({ s }: { s: SectionBase }) {
       <div className="container">
         {(s.eyebrow || s.h2) && (
           <div style={{ maxWidth: "68ch", marginBottom: 40 }}>
-            {s.eyebrow && <SectionNumeral n={s.eyebrow.split(" · ")[0] ?? "01"} label={s.eyebrow.split(" · ")[1] ?? s.eyebrow} />}
+            {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
             {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 0 0" }} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
             {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: "16px 0 0 0", maxWidth: "50ch" }} dangerouslySetInnerHTML={{ __html: s.deck }} />}
           </div>
