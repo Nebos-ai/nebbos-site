@@ -97,15 +97,18 @@ export function SceneOverlay({
 }
 
 function scrimBackground(shape: ScrimShape): string {
+  // Scrim strengths tuned so text over the image is legible in every crop.
+  // Founder critique 2026-08-23: "letters bleed into the colors of the image"
+  // — previous versions were too soft; boosted across the board.
   switch (shape) {
     case "even":
-      return "linear-gradient(180deg, rgba(20,18,15,0.14) 0%, rgba(20,18,15,0.14) 100%)";
+      return "linear-gradient(180deg, rgba(20,18,15,0.32) 0%, rgba(20,18,15,0.32) 100%)";
     case "bottom":
-      return "linear-gradient(180deg, transparent 0%, transparent 45%, rgba(20,18,15,0.20) 75%, rgba(20,18,15,0.48) 100%)";
+      return "linear-gradient(180deg, transparent 0%, rgba(20,18,15,0.06) 25%, rgba(20,18,15,0.38) 60%, rgba(20,18,15,0.72) 90%, rgba(20,18,15,0.82) 100%)";
     case "left":
-      return "linear-gradient(90deg, rgba(20,18,15,0.52) 0%, rgba(20,18,15,0.28) 42%, rgba(20,18,15,0.04) 78%, transparent 100%)";
+      return "linear-gradient(90deg, rgba(20,18,15,0.78) 0%, rgba(20,18,15,0.52) 38%, rgba(20,18,15,0.14) 72%, transparent 100%)";
     case "right":
-      return "linear-gradient(270deg, rgba(20,18,15,0.52) 0%, rgba(20,18,15,0.28) 42%, rgba(20,18,15,0.04) 78%, transparent 100%)";
+      return "linear-gradient(270deg, rgba(20,18,15,0.78) 0%, rgba(20,18,15,0.52) 38%, rgba(20,18,15,0.14) 72%, transparent 100%)";
     default:
       return "transparent";
   }

@@ -220,18 +220,6 @@ export function SiteHeader() {
                   >
                     <div
                       style={{
-                        fontFamily: "var(--font-mono)",
-                        fontSize: 10,
-                        letterSpacing: "0.24em",
-                        textTransform: "uppercase",
-                        color: "var(--gold)",
-                        marginBottom: 4,
-                      }}
-                    >
-                      Band {String(band.n).padStart(2, "0")}
-                    </div>
-                    <div
-                      style={{
                         fontFamily: "var(--font-serif)",
                         fontSize: 20,
                         fontWeight: 500,

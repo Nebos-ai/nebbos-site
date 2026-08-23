@@ -53,11 +53,28 @@ type PerspectiveProps = BaseProps & {
   pVariant?: PerspectiveVariantId;
   scene?: never;
   variant?: never;
+  v2Scene?: never;
+  v2Variant?: never;
 };
 
-type Props = SceneProps | PerspectiveProps;
+type V2Props = BaseProps & {
+  v2Scene: number;
+  v2Variant?: 1 | 2;
+  scene?: never;
+  variant?: never;
+  perspective?: never;
+  pVariant?: never;
+};
+
+type Props = SceneProps | PerspectiveProps | V2Props;
 
 function resolveSource(props: Props): { src: string; alt: string } {
+  if ("v2Scene" in props && props.v2Scene) {
+    return {
+      src: `/vision-board/v2-${props.v2Scene}-v${props.v2Variant ?? 1}.png`,
+      alt: props.caption || "",
+    };
+  }
   if ("perspective" in props && props.perspective) {
     const p = PERSPECTIVES[props.perspective];
     return {
@@ -72,7 +89,7 @@ function resolveSource(props: Props): { src: string; alt: string } {
       alt: props.caption || `${s.chapter} — ${s.strap}`,
     };
   }
-  throw new Error("SceneStill requires either scene or perspective");
+  throw new Error("SceneStill requires scene, perspective, or v2Scene");
 }
 
 export function SceneStill(props: Props) {

@@ -31,14 +31,15 @@ export function HomeHero() {
         borderBottom: "1px solid var(--rule)",
       }}
     >
-      {/* Full-bleed background */}
-      <SceneStill scene={HERO_SCENE.id} variant={1} shape="fullBleed" priority />
+      {/* Full-bleed background — v2-2 hero: NYC executive at arched window,
+          autumn Central Park view, cinematic depth */}
+      <SceneStill v2Scene={2} v2Variant={1} shape="fullBleed" priority />
 
-      {/* Editorial overlay: grain + vignette + bottom scrim */}
-      <SceneOverlay scrim="bottom" />
+      {/* Editorial overlay: grain + vignette + heavy bottom scrim so copy pops */}
+      <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
 
       {/* Editorial metadata plate · top-right */}
-      <SceneMetadataPlate chapter="I" label={HERO_SCENE.chapter} position="top-right" />
+      <SceneMetadataPlate chapter="I" label="Where it starts" position="top-right" />
 
       {/* Copy overlay · bottom-left */}
       <div
