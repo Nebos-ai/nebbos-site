@@ -33,7 +33,7 @@ const LAYER_SLUGS: Record<number, string> = {
   4: "ingest",       5: "api-mcp",       6: "integrations",
   7: "memory",       8: "reasoning",     9: "detectors",
   10: "pearl",      11: "approval",     12: "orchestrator",
-  13: "tenant-lifecycle", 14: "billing", 15: "attestation",
+  13: "onboarding", 14: "billing", 15: "attestation",
 };
 
 export function generateStaticParams(): Params[] {

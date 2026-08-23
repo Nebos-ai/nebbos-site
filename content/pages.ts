@@ -340,7 +340,7 @@ export const PAGES = {
         eyebrow: "Operations",
         h1: "The Pearl for handoffs, coverage, incident triage.",
         deck: "Nebbos Operations reads the signal your ops team already emits — decisions, handoffs, on-call rotations — and shows you what breaks next.",
-        imageV2: 4,
+        imageFamily: "solution-operations",
       },
       {
         id: "what-it-does",
@@ -383,7 +383,7 @@ export const PAGES = {
         eyebrow: "Finance",
         h1: "The Pearl for close, forecast, variance.",
         deck: "Nebbos Finance reads your ledger, your ERP, your bank feeds, and shows your CFO where variance will show up next quarter — before it does.",
-        imageV2: 12,
+        imageFamily: "solution-finance",
       },
       {
         id: "what-it-does",
@@ -426,7 +426,7 @@ export const PAGES = {
         eyebrow: "People",
         h1: "The Pearl for hiring, onboarding, retention.",
         deck: "Nebbos People reads every signal a growing team emits — hiring pipeline, onboarding sequences, retention risk — and hands your HR team back their time.",
-        imageV2: 8,
+        imageFamily: "solution-people-hr",
       },
       {
         id: "what-it-does",
@@ -462,7 +462,7 @@ export const PAGES = {
         eyebrow: "K-12 Education",
         h1: "The Pearl for district operations.",
         deck: "Nebbos Education runs the schedule, the coverage, the compliance filings, the hiring pipeline — so principals and superintendents get to think about kids.",
-        imageV2: 10,
+        imageFamily: "solution-people-hr",
       },
       {
         id: "what-it-does",
@@ -498,7 +498,7 @@ export const PAGES = {
         eyebrow: "Healthcare",
         h1: "The Pearl for care coordination.",
         deck: "Nebbos Care runs the operational layer of a well-designed healthcare organization — schedules, coverage, referrals, compliance — so care teams focus on care.",
-        imageV2: 8,
+        imageFamily: "solution-people-hr",
       },
       {
         id: "what-it-does",
@@ -534,7 +534,7 @@ export const PAGES = {
         eyebrow: "Financial services",
         h1: "The Pearl for trading ops, risk, audit.",
         deck: "Nebbos Financial Services runs the operational + governance layer of a modern trading floor — reconciliations, risk gates, audit attestation — and keeps every action attested.",
-        imageV2: 12,
+        imageFamily: "solution-finance",
       },
       {
         id: "what-it-does",
@@ -570,7 +570,7 @@ export const PAGES = {
         eyebrow: "Manufacturing",
         h1: "The Pearl for production, quality, supply.",
         deck: "Nebbos Manufacturing reads every signal a production line emits — orders, quality gates, supply, maintenance — and hands operations leadership back their hours.",
-        imageV2: 9,
+        imageFamily: "solution-manufacturing",
       },
       {
         id: "what-it-does",
@@ -606,7 +606,7 @@ export const PAGES = {
         eyebrow: "Public sector",
         h1: "The Pearl for case management, accountability.",
         deck: "Nebbos Civic runs the operational layer of a modern civic agency — case processing, citizen response, accountability filings — with an audit trail your inspector-general trusts.",
-        imageV2: 11,
+        imageFamily: "concept-audit-attestation",
       },
       {
         id: "what-it-does",

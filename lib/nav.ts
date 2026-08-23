@@ -51,7 +51,7 @@ const LAYER_SLUGS: Record<number, string> = {
   10: "pearl",
   11: "approval",
   12: "orchestrator",
-  13: "tenant-lifecycle",
+  13: "onboarding",
   14: "billing",
   15: "attestation",
 };

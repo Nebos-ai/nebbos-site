@@ -220,7 +220,7 @@ export const LAYERS: Layer[] = [
   {
     n: 13,
     band: 5,
-    name: "Tenant lifecycle",
+    name: "Onboarding",
     caption: "provisioning · SOW · offboarding",
     detail:
       "Sign, provision, onboard, expand, offboard — the full lifecycle. Tenant provisioning is automated after contract signature; scope-of-work and change-request flows are wired into the same substrate; offboarding preserves the audit trail per retention policy.",
