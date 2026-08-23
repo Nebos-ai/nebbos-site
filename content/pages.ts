@@ -141,7 +141,8 @@ export const PAGES = {
         eyebrow: "00 · The architecture",
         h1: "Fifteen layers. Five bands. One architecture.",
         deck: "The complete architecture underneath every Pearl. Data at the bottom. Boundaries the world crosses at. Reasoning across providers. Action and the humans who approve it. Commerce at the top.",
-      },
+        imageV2: 1,
+      } as SectionBase,
       // Band gallery rendered from lib/architecture BANDS + productTree
     ],
   },

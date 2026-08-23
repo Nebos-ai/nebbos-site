@@ -88,7 +88,10 @@ export function SiteHeader() {
         gap: 32,
         minHeight: 68,
       }}>
-        {/* Logo · brand mark only (the mark IS the identity; no wordmark) */}
+        {/* Logo · brand mark, context-aware:
+            - at top (over hero image, no scroll): white mark (dark scrim behind)
+            - after scroll (paper bg): dark mark
+            Both variants preloaded so swap is instant. */}
         <Link
           href="/"
           aria-label="Nebbos home"
@@ -97,14 +100,37 @@ export function SiteHeader() {
             alignItems: "center",
             color: "var(--ink)",
             textDecoration: "none",
+            position: "relative",
+            width: 36,
+            height: 37,
           }}
         >
           <Image
-            src="/nebbos-mark-dark.svg"
+            src="/nebbos-mark-white.svg"
             alt="Nebbos"
             width={36}
             height={37}
             priority
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: scrolled ? 0 : 1,
+              transition: "opacity var(--dur-med) var(--ease-out)",
+            }}
+          />
+          <Image
+            src="/nebbos-mark-dark.svg"
+            alt=""
+            aria-hidden="true"
+            width={36}
+            height={37}
+            priority
+            style={{
+              position: "absolute",
+              inset: 0,
+              opacity: scrolled ? 1 : 0,
+              transition: "opacity var(--dur-med) var(--ease-out)",
+            }}
           />
         </Link>
 
