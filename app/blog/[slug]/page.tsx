@@ -20,9 +20,10 @@ async function readPost(slug: string) {
       return {
         title: (data.title as string) ?? slug,
         description: (data.description as string) ?? "",
-        date: (data.date instanceof Date
-          ? data.date.toISOString().slice(0, 10)
-          : String(data.date ?? "")),
+        date:
+          data.date instanceof Date
+            ? data.date.toISOString().slice(0, 10)
+            : String(data.date ?? ""),
         author: (data.author as string) ?? "Nebbos",
         html: marked.parse(content, { async: false }) as string,
       };
@@ -31,6 +32,13 @@ async function readPost(slug: string) {
     }
   }
   return null;
+}
+
+function formatDate(iso: string): string {
+  if (!iso) return "";
+  const d = new Date(iso);
+  if (Number.isNaN(d.getTime())) return iso;
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 }
 
 export async function generateStaticParams(): Promise<Params[]> {
@@ -67,68 +75,23 @@ export default async function BlogPostPage({
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: "68ch", margin: "0 auto", padding: "6rem 2rem 8rem" }}>
-        <Link
-          href="/blog"
-          style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "#8a8a8f",
-            textDecoration: "none",
-            marginBottom: "2rem",
-            display: "inline-block",
-          }}
-        >
+      <main className="container-narrow editorial-post">
+        <Link href="/blog" className="editorial-post__backlink">
           ← Notes
         </Link>
-        <p
-          style={{
-            fontSize: "0.75rem",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "#8a8a8f",
-            marginBottom: "0.75rem",
-          }}
-        >
-          {post.date} · {post.author}
+        <p className="editorial-post__meta">
+          {formatDate(post.date)} · {post.author}
         </p>
-        <h1
-          style={{
-            fontFamily: "var(--font-serif)",
-            fontSize: "clamp(2.25rem, 3.5vw, 3.25rem)",
-            lineHeight: 1.1,
-            fontWeight: 500,
-            marginBottom: "1.5rem",
-          }}
-        >
-          {post.title}
-        </h1>
-        <p
-          style={{
-            fontSize: "1.25rem",
-            lineHeight: 1.55,
-            color: "#4a4a52",
-            marginBottom: "3.5rem",
-            fontStyle: "italic",
-          }}
-        >
-          {post.description}
-        </p>
-        <article
-          className="blog-prose"
-          style={{ fontSize: "1.0625rem", lineHeight: 1.7, color: "#1D1C22" }}
-          dangerouslySetInnerHTML={{ __html: post.html }}
-        />
-        <hr style={{ margin: "4rem 0 2rem", border: 0, borderTop: "1px solid #e6e6ea" }} />
-        <p style={{ fontSize: "0.95rem", color: "#4a4a52" }}>
-          Written by <strong>{post.author}</strong>.{" "}
-          <Link href="/blog" style={{ color: "#F6A03F" }}>
-            More notes
-          </Link>{" "}
-          · <Link href="/product" style={{ color: "#F6A03F" }}>see the architecture</Link>{" "}
-          · <Link href="/demo" style={{ color: "#F6A03F" }}>book a demo</Link>.
-        </p>
+        <h1 className="editorial-post__title">{post.title}</h1>
+        <p className="editorial-post__lede">{post.description}</p>
+        <article className="blog-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+        <footer className="editorial-post__footer">
+          <p>
+            <Link href="/blog">More notes</Link> ·{" "}
+            <Link href="/product">See the architecture</Link> ·{" "}
+            <Link href="/demo">Book a demo</Link>
+          </p>
+        </footer>
       </main>
       <SiteFooter />
     </>
