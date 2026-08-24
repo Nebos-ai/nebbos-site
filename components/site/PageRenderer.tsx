@@ -9,170 +9,129 @@ import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
 
 /**
- * PageRenderer · v2 · reads content/pages.ts and renders every section by kind.
+ * PageRenderer · v3 · reads content/pages.ts and renders every section by kind.
  *
- * Founder directive (text-as-top-layer): every satellite page is a stack of
- * typed sections in content/pages.ts. This component maps each section&rsquo;s
- * `kind` to a matching renderer so any new page is a 5-line file:
- *   export default () => <PageRenderer page={PAGES["slug"]} />
+ * Every renderer composes from CSS classes defined in app/globals.css — no
+ * inline styles, no hex literals, no magic numbers. Design tokens are the
+ * single source of truth; changing a token in globals moves every section on
+ * every page in lockstep.
  *
- * 13 section kinds supported. Special-case renderers (band-overview,
- * story-triptych) delegate to the existing HomeBands / HomeStory
- * components since those have unique data-source needs.
+ * Block-level sections (text-block, split-columns, list-numbered, list-plain,
+ * table-rows, cta-band, inbox-router) receive a computed `blockIndex` so
+ * paper / paper-2 backgrounds alternate per section — no more four-in-a-row
+ * paper walls on 14-section vertical pages.
+ *
+ * Hero sections (hero-full-bleed, hero-paper, cta-full-bleed) own their
+ * background and do not participate in alternation.
  */
 
+const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "cta-full-bleed"]);
+
 export function PageRenderer({ page }: { page: Page }) {
+  let blockIdx = 0;
   return (
     <>
-      {page.sections.map((section) => (
-        <SectionSlot key={section.id} section={section} />
-      ))}
+      {page.sections.map((section) => {
+        const isBlock = !HERO_KINDS.has(section.kind);
+        const idx = isBlock ? blockIdx : -1;
+        if (isBlock) blockIdx += 1;
+        return <SectionSlot key={section.id} section={section} blockIndex={idx} />;
+      })}
     </>
   );
 }
 
-function SectionSlot({ section }: { section: SectionBase }) {
+type SlotProps = { section: SectionBase; blockIndex: number };
+
+function SectionSlot({ section, blockIndex }: SlotProps) {
   switch (section.kind) {
-    case "hero-full-bleed":  return <HeroFullBleed s={section} />;
-    case "hero-paper":       return <HeroPaper s={section} />;
-    case "text-block":       return <TextBlock s={section} />;
-    case "split-columns":    return <SplitColumns s={section} />;
-    case "list-numbered":    return <ListNumbered s={section} />;
-    case "list-plain":       return <ListPlain s={section} />;
-    case "table-rows":       return <TableRows s={section} />;
-    case "cta-band":         return <CTABandInline s={section} />;
-    case "cta-full-bleed":   return <CTAFullBleed s={section} />;
-    case "inbox-router":     return <InboxRouter s={section} />;
-    case "empty-state":      return <EmptyState s={section} />;
-    case "band-overview":    return <BandOverviewSlot s={section} />;
-    case "story-triptych":   return <StoryTriptychSlot s={section} />;
-    default:                 return null;
+    case "hero-full-bleed": return <HeroFullBleed s={section} />;
+    case "hero-paper":      return <HeroPaper s={section} />;
+    case "text-block":      return <TextBlock s={section} blockIndex={blockIndex} />;
+    case "split-columns":   return <SplitColumns s={section} blockIndex={blockIndex} />;
+    case "list-numbered":   return <ListNumbered s={section} blockIndex={blockIndex} />;
+    case "list-plain":      return <ListPlain s={section} blockIndex={blockIndex} />;
+    case "table-rows":      return <TableRows s={section} blockIndex={blockIndex} />;
+    case "cta-band":        return <CTABandInline s={section} blockIndex={blockIndex} />;
+    case "cta-full-bleed":  return <CTAFullBleed s={section} />;
+    case "inbox-router":    return <InboxRouter s={section} blockIndex={blockIndex} />;
+    case "empty-state":     return <HeroPaper s={section} />;
+    case "band-overview":   return null;
+    case "story-triptych":  return null;
+    default:                return null;
   }
+}
+
+/* ── Helpers ──────────────────────────────────────────────────────────── */
+
+function bgClass(blockIndex: number): string {
+  return blockIndex % 2 === 0 ? "section--paper" : "section--paper-2";
+}
+
+function eyebrowParts(eyebrow?: string): { n: string; label: string } | null {
+  if (!eyebrow) return null;
+  const parts = eyebrow.split(" · ");
+  return { n: parts[0] ?? "00", label: parts.slice(1).join(" · ") || eyebrow };
+}
+
+function heroImage(s: SectionBase) {
+  if (s.imageFamily) {
+    return <SceneStill family={s.imageFamily} familyVariant={s.imageFamilyVariant ?? 1} shape="fullBleed" priority />;
+  }
+  if (s.imageV3) return <SceneStill v3Scene={s.imageV3} v3Variant={1} shape="fullBleed" priority />;
+  if (s.imageV2) return <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" priority />;
+  if (s.imageScene) return <SceneStill scene={s.imageScene} variant={1} shape="fullBleed" priority />;
+  if (s.imagePerspective) {
+    return <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" priority />;
+  }
+  return null;
+}
+
+function ctaImage(s: SectionBase) {
+  if (s.imageFamily) {
+    return <SceneStill family={s.imageFamily} familyVariant={s.imageFamilyVariant ?? 1} shape="fullBleed" />;
+  }
+  if (s.imageV2) return <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" />;
+  if (s.imageScene) return <SceneStill scene={s.imageScene} variant={4} shape="fullBleed" />;
+  if (s.imagePerspective) {
+    return <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" />;
+  }
+  return null;
 }
 
 /* ── Hero: full-bleed image + overlaid h1 ─────────────────────────── */
 function HeroFullBleed({ s }: { s: SectionBase }) {
+  const eb = eyebrowParts(s.eyebrow);
   return (
-    <section
-      style={{
-        position: "relative",
-        minHeight: "min(78vh, 820px)",
-        display: "flex",
-        alignItems: "flex-end",
-        overflow: "hidden",
-        borderBottom: "1px solid var(--rule)",
-      }}
-    >
-      {s.imageFamily ? (
-        <SceneStill family={s.imageFamily} familyVariant={s.imageFamilyVariant ?? 1} shape="fullBleed" priority />
-      ) : s.imageV3 ? (
-        <SceneStill v3Scene={s.imageV3} v3Variant={1} shape="fullBleed" priority />
-      ) : s.imageV2 ? (
-        <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" priority />
-      ) : s.imageScene ? (
-        <SceneStill scene={s.imageScene} variant={1} shape="fullBleed" priority />
-      ) : s.imagePerspective ? (
-        <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" priority />
-      ) : null}
+    <section className="hero-fullbleed">
+      {heroImage(s)}
       <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
-      {s.eyebrow && <SceneMetadataPlate chapter="I" label={s.eyebrow} position="top-right" />}
-      <div className="container" style={{ position: "relative", zIndex: 2, paddingBlock: "clamp(56px, 10vh, 128px)" }}>
-        <div style={{ maxWidth: "56ch", display: "flex", flexDirection: "column", gap: 24 }}>
-          {s.h1 && (
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(40px, 5.4vw, 76px)",
-                lineHeight: 1.04,
-                letterSpacing: "-0.024em",
-                fontWeight: 400,
-                color: "var(--paper)",
-                margin: 0,
-                textWrap: "balance",
-                textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.h1! }}
-            />
-          )}
-          {s.deck && (
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(17px, 1.6vw, 21px)",
-                lineHeight: 1.55,
-                color: "rgba(244, 241, 234, 0.92)",
-                maxWidth: "48ch",
-                margin: 0,
-                textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.deck! }}
-            />
-          )}
+      {eb && <SceneMetadataPlate chapter="I" label={s.eyebrow ?? eb.label} position="top-right" />}
+      <div className="container hero-fullbleed__inner">
+        <div className="hero-fullbleed__frame">
+          {s.h1 && <h1 className="hero-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h1 }} />}
+          {s.deck && <p className="hero-fullbleed__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
         </div>
       </div>
     </section>
   );
 }
 
-/* Concept-FAMILY pool for auto-cascade (v4 · lighting locked · corporate).
-   Same concept anywhere on the site → same family. Pool spans bands +
-   concept anchors so any un-mapped section gets a semantically-reasonable
-   family. */
-const HERO_FAMILY_POOL: string[] = [
-  "band-intelligence",
-  "band-action",
-  "band-substrate",
-  "band-boundary",
-  "band-commerce",
-  "concept-memory",
-  "concept-pearl",
-  "concept-approval",
-  "concept-audit-attestation",
-  "concept-tenant-onboarding",
-];
-function hashToFamily(seed: string): string {
-  let h = 0;
-  for (let i = 0; i < seed.length; i++) h = (h * 31 + seed.charCodeAt(i)) | 0;
-  return HERO_FAMILY_POOL[Math.abs(h) % HERO_FAMILY_POOL.length];
-}
-
-/* ── Hero: paper (text-only, no image) — for deep pages, legal, docs where
-       narrative density is the whole point. If ANY image field is set on the
-       section, this promotes to HeroFullBleed. Otherwise renders quiet paper
-       with the same editorial rhythm used across the site. ────────────── */
+/* ── Hero: paper (text-only, no image) ─────────────────────────────── */
 function HeroPaper({ s }: { s: SectionBase }) {
   if (s.imageFamily || s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) {
     return <HeroFullBleed s={s} />;
   }
+  const eb = eyebrowParts(s.eyebrow);
   return (
     <section className="hero-paper">
       <div className="container-narrow">
-        {s.eyebrow && (
-          <SectionNumeral
-            n={s.eyebrow.split(" · ")[0] ?? "00"}
-            label={s.eyebrow.split(" · ")[1] ?? s.eyebrow}
-          />
-        )}
-        {s.h1 && (
-          <h1
-            className="hero-paper__title"
-            dangerouslySetInnerHTML={{ __html: s.h1 }}
-          />
-        )}
-        {s.deck && (
-          <p
-            className="hero-paper__deck"
-            dangerouslySetInnerHTML={{ __html: s.deck }}
-          />
-        )}
+        {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+        {s.h1 && <h1 className="hero-paper__title" dangerouslySetInnerHTML={{ __html: s.h1 }} />}
+        {s.deck && <p className="hero-paper__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
         {s.ctaPrimary && (
           <div className="hero-paper__cta">
-            <Button
-              href={s.ctaPrimary.href}
-              variant={s.ctaPrimary.variant ?? "primary"}
-              size="lg"
-            >
+            <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">
               {s.ctaPrimary.label}
             </Button>
           </div>
@@ -183,41 +142,15 @@ function HeroPaper({ s }: { s: SectionBase }) {
 }
 
 /* ── Text block · numbered section-h2 + body ─────────────────────── */
-function TextBlock({ s }: { s: SectionBase }) {
+function TextBlock({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
   return (
-    <section style={{ background: "var(--paper)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
+    <section className={`section ${bgClass(blockIndex)}`}>
       <div className="container">
-        <div style={{ maxWidth: "68ch" }}>
-          {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "00"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-          {s.h2 && (
-            <h2
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(28px, 3.4vw, 44px)",
-                lineHeight: 1.1,
-                letterSpacing: "-0.02em",
-                fontWeight: 400,
-                color: "var(--ink)",
-                margin: "20px 0 20px 0",
-                maxWidth: "26ch",
-                textWrap: "balance",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.h2! }}
-            />
-          )}
-          {s.body && (
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: 19,
-                lineHeight: 1.6,
-                color: "var(--ink-2)",
-                margin: 0,
-                maxWidth: "62ch",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.body }}
-            />
-          )}
+        <div className="block-inner">
+          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          {s.body && <p className="block__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
         </div>
       </div>
     </section>
@@ -225,63 +158,47 @@ function TextBlock({ s }: { s: SectionBase }) {
 }
 
 /* ── Split · two-column with heading + items list ─────────────────── */
-function SplitColumns({ s }: { s: SectionBase }) {
+function SplitColumns({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
   return (
-    <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
+    <section className={`section ${bgClass(blockIndex)}`}>
       <div className="container">
-        <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)", gap: "clamp(32px, 6vw, 88px)", alignItems: "start" }} className="split-grid">
+        <div className="split">
           <div>
-            {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-            {s.h2 && (
-              <h2
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "clamp(28px, 3vw, 36px)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.018em",
-                  fontWeight: 400,
-                  color: "var(--ink)",
-                  margin: "20px 0 20px 0",
-                  maxWidth: "22ch",
-                  textWrap: "balance",
-                }}
-                dangerouslySetInnerHTML={{ __html: s.h2! }}
-              />
-            )}
-            {s.deck && (
-              <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: 0, maxWidth: "48ch" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />
-            )}
+            {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+            {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+            {s.deck && <p className="block__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
           </div>
           <div>
             <PlainList items={s.items ?? []} />
           </div>
         </div>
       </div>
-      <style>{`@media (max-width: 900px){.split-grid{grid-template-columns:minmax(0,1fr)!important}}`}</style>
     </section>
   );
 }
 
 /* ── List: numbered ──────────────────────────────────────────────── */
-function ListNumbered({ s }: { s: SectionBase }) {
+function ListNumbered({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
   return (
-    <section style={{ background: "var(--paper)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
-      <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-        {s.h2 && (
-          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.2vw, 40px)", lineHeight: 1.1, letterSpacing: "-0.02em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />
-        )}
-        <ol style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
-          {(s.items ?? []).map((item, i) => (
-            <li key={item.title} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 20, display: "grid", gridTemplateColumns: "48px minmax(0, 1fr)", gap: 24, alignItems: "baseline" }}>
-              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, letterSpacing: "0.14em", color: "var(--gold)" }}>{String(i + 1).padStart(2, "0")}</span>
-              <div>
-                <div style={{ fontFamily: "var(--font-serif)", fontSize: 20, color: "var(--ink)", lineHeight: 1.4 }} dangerouslySetInnerHTML={{ __html: item.title }} />
-                {item.body && <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.55, color: "var(--ink-2)", margin: "6px 0 0 0" }} dangerouslySetInnerHTML={{ __html: item.body }} />}
-              </div>
-            </li>
-          ))}
-        </ol>
+    <section className={`section ${bgClass(blockIndex)}`}>
+      <div className="container">
+        <div className="block-inner">
+          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          <ol className="list-numbered">
+            {(s.items ?? []).map((item, i) => (
+              <li key={item.title} className="list-numbered__item">
+                <span className="list-numbered__index">{String(i + 1).padStart(2, "0")}</span>
+                <div>
+                  <div className="list-numbered__title" dangerouslySetInnerHTML={{ __html: item.title }} />
+                  {item.body && <p className="list-numbered__body" dangerouslySetInnerHTML={{ __html: item.body }} />}
+                </div>
+              </li>
+            ))}
+          </ol>
+        </div>
       </div>
     </section>
   );
@@ -290,35 +207,36 @@ function ListNumbered({ s }: { s: SectionBase }) {
 function PlainList({ items }: { items: SectionBase["items"] }) {
   if (!items?.length) return null;
   return (
-    <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
-      {items.map((item, i) => (
-        <li key={item.title} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 18, fontFamily: "var(--font-serif)", fontSize: 18, color: "var(--ink)" }} dangerouslySetInnerHTML={{ __html: item.title }} />
+    <ul className="list-plain">
+      {items.map((item) => (
+        <li key={item.title} className="list-plain__item" dangerouslySetInnerHTML={{ __html: item.title }} />
       ))}
     </ul>
   );
 }
 
 /* ── List: plain (no numbers) ─────────────────────────────────────── */
-function ListPlain({ s }: { s: SectionBase }) {
+function ListPlain({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
+  const items = (s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build")
+    ? FACTS.productLine.map((title) => ({ title }))
+    : (s.items ?? []);
   return (
-    <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
-      <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "02"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
-        {/* Special-case: about product-line list is sourced from FACTS.productLine */}
-        {(s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build") ? (
-          <PlainList items={FACTS.productLine.map((title) => ({ title }))} />
-        ) : (
-          <PlainList items={s.items ?? []} />
-        )}
+    <section className={`section ${bgClass(blockIndex)}`}>
+      <div className="container">
+        <div className="block-inner">
+          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          <PlainList items={items} />
+        </div>
       </div>
     </section>
   );
 }
 
 /* ── Table rows · label + value pairs (facts, specs) ─────────────── */
-function TableRows({ s }: { s: SectionBase }) {
-  // Sourced from FACTS for the About page; can be extended for other pages later
+function TableRows({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
   const rows: Array<[string, string]> = [
     ["Founded", String(FACTS.foundingYear)],
     ["Category", FACTS.category],
@@ -327,32 +245,42 @@ function TableRows({ s }: { s: SectionBase }) {
     ["Team shape", FACTS.teamShape],
   ];
   return (
-    <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
-      <div className="container" style={{ maxWidth: 900 }}>
-        {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-        {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 32px 0" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
-        <dl style={{ display: "grid", gap: 0 }}>
-          {rows.map(([label, value], i) => (
-            <div key={label} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 18, display: "grid", gridTemplateColumns: "180px minmax(0, 1fr)", gap: 20, alignItems: "baseline" }}>
-              <dt className="eyebrow" style={{ color: "var(--ink-3)" }}>{label}</dt>
-              <dd style={{ margin: 0, fontFamily: "var(--font-serif)", fontSize: 18, color: "var(--ink)" }}>{value}</dd>
-            </div>
-          ))}
-        </dl>
+    <section className={`section ${bgClass(blockIndex)}`}>
+      <div className="container">
+        <div className="block-inner">
+          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          <dl className="rows-table">
+            {rows.map(([label, value]) => (
+              <div key={label} className="rows-table__row">
+                <dt className="rows-table__dt">{label}</dt>
+                <dd className="rows-table__dd">{value}</dd>
+              </div>
+            ))}
+          </dl>
+        </div>
       </div>
     </section>
   );
 }
 
 /* ── CTA band (inline, paper) ─────────────────────────────────────── */
-function CTABandInline({ s }: { s: SectionBase }) {
+function CTABandInline({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
   return (
-    <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(64px, 9vh, 128px)", borderBottom: "1px solid var(--rule)" }}>
-      <div className="container" style={{ textAlign: "center" }}>
-        {s.h2 && <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 3vw, 34px)", color: "var(--ink)", margin: "0 auto 28px", maxWidth: "34ch", textWrap: "balance" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
-        <div style={{ display: "inline-flex", flexWrap: "wrap", gap: 12, justifyContent: "center" }}>
-          {s.ctaPrimary && <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "primary"} size="lg">{s.ctaPrimary!.label}</Button>}
-          {s.ctaSecondary && <Button href={s.ctaSecondary!.href} variant={s.ctaSecondary!.variant ?? "ghost"} size="lg">{s.ctaSecondary!.label}</Button>}
+    <section className={`section section--cta ${bgClass(blockIndex)}`}>
+      <div className="container cta-band-inline">
+        {s.h2 && <p className="cta-band-inline__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+        <div className="cta-band-inline__actions">
+          {s.ctaPrimary && (
+            <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">
+              {s.ctaPrimary.label}
+            </Button>
+          )}
+          {s.ctaSecondary && (
+            <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost"} size="lg">
+              {s.ctaSecondary.label}
+            </Button>
+          )}
         </div>
       </div>
     </section>
@@ -362,17 +290,25 @@ function CTABandInline({ s }: { s: SectionBase }) {
 /* ── CTA full-bleed (over an image) ──────────────────────────────── */
 function CTAFullBleed({ s }: { s: SectionBase }) {
   return (
-    <section style={{ position: "relative", minHeight: "min(60vh, 640px)", display: "flex", alignItems: "center", overflow: "hidden", borderTop: "1px solid var(--rule)" }}>
-      {s.imageV2 ? <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" /> : s.imageScene ? <SceneStill scene={s.imageScene} variant={4} shape="fullBleed" /> : s.imagePerspective ? <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" /> : null}
+    <section className="cta-fullbleed">
+      {ctaImage(s)}
       <SceneOverlay scrim="left" vignetteStrength={0.5} />
       {s.eyebrow && <SceneMetadataPlate chapter="VII" label={s.eyebrow} position="top-right" />}
-      <div className="container" style={{ position: "relative", zIndex: 2, paddingBlock: "clamp(48px, 8vh, 96px)" }}>
-        <div style={{ maxWidth: "44ch", display: "flex", flexDirection: "column", gap: 24 }}>
-          {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 4.6vw, 60px)", lineHeight: 1.05, letterSpacing: "-0.022em", fontWeight: 400, color: "var(--paper)", margin: 0, textWrap: "balance", textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
-          {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: "clamp(16px, 1.4vw, 19px)", lineHeight: 1.55, color: "rgba(244, 241, 234, 0.9)", margin: 0, textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />}
-          <div style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 4 }}>
-            {s.ctaPrimary && <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "solid-light"} size="lg">{s.ctaPrimary!.label}</Button>}
-            {s.ctaSecondary && <Button href={s.ctaSecondary!.href} variant={s.ctaSecondary!.variant ?? "ghost-light"} size="lg" arrow={false}>{s.ctaSecondary!.label}</Button>}
+      <div className="container cta-fullbleed__inner">
+        <div className="cta-fullbleed__frame">
+          {s.h2 && <h2 className="cta-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          {s.deck && <p className="cta-fullbleed__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
+          <div className="cta-fullbleed__actions">
+            {s.ctaPrimary && (
+              <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "solid-light"} size="lg">
+                {s.ctaPrimary.label}
+              </Button>
+            )}
+            {s.ctaSecondary && (
+              <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost-light"} size="lg" arrow={false}>
+                {s.ctaSecondary.label}
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -381,7 +317,8 @@ function CTAFullBleed({ s }: { s: SectionBase }) {
 }
 
 /* ── Inbox router (contact / demo) ───────────────────────────────── */
-function InboxRouter({ s }: { s: SectionBase }) {
+function InboxRouter({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
   const inboxes = [
     { label: "General",     addr: CONTACT.general,    strap: "Sales, partnerships, misc." },
     { label: "Enterprise",  addr: CONTACT.enterprise, strap: "SOWs, MSAs, DPAs, procurement." },
@@ -392,49 +329,30 @@ function InboxRouter({ s }: { s: SectionBase }) {
     { label: "Press",       addr: CONTACT.press,      strap: "Journalist / analyst inquiries." },
   ];
   return (
-    <section style={{ background: "var(--paper-2)", paddingBlock: "var(--section-y-lg)", borderBottom: "1px solid var(--rule)" }}>
+    <section className={`section ${bgClass(blockIndex)}`}>
       <div className="container">
-        {(s.eyebrow || s.h2) && (
-          <div style={{ maxWidth: "68ch", marginBottom: 40 }}>
-            {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "01"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-            {s.h2 && <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3vw, 36px)", lineHeight: 1.1, letterSpacing: "-0.018em", fontWeight: 400, color: "var(--ink)", margin: "20px 0 0 0" }} dangerouslySetInnerHTML={{ __html: s.h2! }} />}
-            {s.deck && <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.55, color: "var(--ink-2)", margin: "16px 0 0 0", maxWidth: "50ch" }} dangerouslySetInnerHTML={{ __html: s.deck! }} />}
+        {(eb || s.h2) && (
+          <div className="block-inner block-inner--framed">
+            {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+            {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+            {s.deck && <p className="block__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
           </div>
         )}
-        <ul style={{ listStyle: "none", display: "grid", gap: 0 }}>
-          {inboxes.map((inbox, i) => (
+        <ul className="inbox-list">
+          {inboxes.map((inbox) => (
             <li key={inbox.addr}>
-              <Link href={mailto(inbox.addr)} style={{ display: "grid", gridTemplateColumns: "160px minmax(0, 1fr) auto", gap: 32, alignItems: "center", padding: "clamp(20px, 3vh, 32px) clamp(0px, 2vw, 24px)", borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", textDecoration: "none", color: "inherit", transition: "background var(--dur-fast) var(--ease-out)" }} className="inbox-row">
-                <div className="eyebrow" style={{ color: "var(--gold)" }}>{inbox.label}</div>
+              <Link href={mailto(inbox.addr)} className="inbox-list__row">
+                <div className="inbox-list__label">{inbox.label}</div>
                 <div>
-                  <div style={{ fontFamily: "var(--font-serif)", fontSize: 22, color: "var(--ink)", letterSpacing: "-0.012em" }}>{inbox.addr}</div>
-                  <div style={{ fontFamily: "var(--font-sans)", fontSize: 14, color: "var(--ink-3)", marginTop: 4 }}>{inbox.strap}</div>
+                  <div className="inbox-list__addr">{inbox.addr}</div>
+                  <div className="inbox-list__strap">{inbox.strap}</div>
                 </div>
-                <div aria-hidden style={{ fontFamily: "var(--font-serif)", fontSize: 24, color: "var(--ink-3)" }}>→</div>
+                <div aria-hidden className="inbox-list__caret">→</div>
               </Link>
             </li>
           ))}
         </ul>
       </div>
-      <style>{`.inbox-row:hover{background:var(--paper)!important}@media(max-width:700px){.inbox-row{grid-template-columns:minmax(0,1fr)!important;gap:8px!important}.inbox-row>div:last-child{display:none!important}}`}</style>
     </section>
   );
-}
-
-/* ── Empty state · coming-soon placeholder ────────────────────────── */
-function EmptyState({ s }: { s: SectionBase }) {
-  return <HeroPaper s={s} />;
-}
-
-/* ── Band overview slot · delegates to inline layout ─────────────── */
-function BandOverviewSlot({ s: _s }: { s: SectionBase }) {
-  // Delegates to the HomeBands renderer via dynamic import — but since
-  // HomeBands is server component, we just render inline reference for now.
-  // The home page still uses HomeBands directly; catch-all doesn't hit this
-  // path.
-  return null;
-}
-
-function StoryTriptychSlot({ s: _s }: { s: SectionBase }) {
-  return null;
 }

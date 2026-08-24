@@ -321,6 +321,346 @@ main {
   padding-block: var(--section-y-lg);
 }
 
+/* ── B14: on-image overlay tokens ─────────────────────────────────────
+   Every text-over-image surface reads from these tokens. One place to
+   tune the paper-on-image alpha and the text-shadow strength site-wide. */
+:root {
+  --paper-on-image:       rgba(244, 241, 234, 1);
+  --paper-on-image-soft:  rgba(244, 241, 234, 0.92);
+  --shadow-on-image:      0 2px 4px rgba(20, 18, 15, 0.42);
+  --shadow-on-image-soft: 0 1px 3px rgba(20, 18, 15, 0.42);
+}
+
+/* ============================================================================
+   Section-level primitives — every PageRenderer section-kind renders through
+   these classes. Every color, size, spacing binds to a token — no hex, no
+   magic px. Change a token in the block above, every section on the site
+   moves in lockstep.
+   ============================================================================ */
+
+/* ── Block wrapper (applies to every non-hero, non-fullbleed section) ── */
+.section {
+  padding-block: var(--section-y-lg);
+  border-block-end: 1px solid var(--rule);
+}
+.section--paper   { background: var(--paper); }
+.section--paper-2 { background: var(--paper-2); }
+.section--cta     { padding-block: var(--section-y); }
+
+/* Composable block-content typography — used across text-block, split-columns,
+   list-numbered, list-plain, table-rows, inbox-router. Every block-level
+   section-kind uses these primitives instead of re-declaring type inline. */
+.block__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h2);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  font-weight: 500;
+  font-variant: small-caps;
+  color: var(--ink);
+  margin-block: var(--space-5) var(--space-6);
+  max-width: 26ch;
+  text-wrap: balance;
+}
+.block__body {
+  font-family: var(--font-serif);
+  font-size: var(--size-lede);
+  line-height: 1.6;
+  color: var(--ink-2);
+  max-width: var(--measure-prose);
+}
+.block__deck {
+  font-family: var(--font-serif);
+  font-size: var(--size-body);
+  line-height: 1.55;
+  color: var(--ink-2);
+  max-width: 50ch;
+  margin-block-start: var(--space-4);
+}
+
+/* ── Hero: full-bleed image ─────────────────────────────────────────── */
+.hero-fullbleed {
+  position: relative;
+  min-block-size: min(78vh, 820px);
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  border-block-end: 1px solid var(--rule);
+}
+.hero-fullbleed__inner {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--section-y);
+}
+.hero-fullbleed__frame {
+  max-width: 56ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.hero-fullbleed__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h1);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  font-variant: normal;
+  color: var(--paper-on-image);
+  text-wrap: balance;
+  text-shadow: var(--shadow-on-image);
+  margin: 0;
+}
+.hero-fullbleed__deck {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--size-lede);
+  line-height: 1.55;
+  color: var(--paper-on-image-soft);
+  max-width: 48ch;
+  text-shadow: var(--shadow-on-image-soft);
+  margin: 0;
+}
+
+/* ── Split columns ──────────────────────────────────────────────────── */
+.split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(var(--space-8), 6vw, var(--space-20));
+  align-items: start;
+}
+@media (max-width: 900px) {
+  .split { grid-template-columns: minmax(0, 1fr); }
+}
+
+/* ── Numbered list ──────────────────────────────────────────────────── */
+.list-numbered {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.list-numbered__item {
+  border-block-end: 1px solid var(--rule);
+  padding-block: var(--space-5);
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: baseline;
+}
+.list-numbered__item:first-child {
+  border-block-start: 1px solid var(--rule);
+}
+.list-numbered__index {
+  font-family: var(--font-mono);
+  font-size: var(--size-eyebrow);
+  letter-spacing: 0.14em;
+  color: var(--gold);
+}
+.list-numbered__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h4);
+  line-height: 1.4;
+  color: var(--ink);
+}
+.list-numbered__body {
+  font-family: var(--font-sans);
+  font-size: var(--size-sm);
+  line-height: 1.6;
+  color: var(--ink-2);
+  margin-block-start: var(--space-2);
+  max-width: 60ch;
+}
+
+/* ── Plain list (used inside SplitColumns + ListPlain sections) ─────── */
+.list-plain {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  padding: 0;
+}
+.list-plain__item {
+  border-block-end: 1px solid var(--rule);
+  padding-block: var(--space-5);
+  font-family: var(--font-serif);
+  font-size: var(--size-lede);
+  line-height: 1.4;
+  color: var(--ink);
+}
+.list-plain__item:first-child {
+  border-block-start: 1px solid var(--rule);
+}
+
+/* ── Table rows (facts, specs) ──────────────────────────────────────── */
+.rows-table {
+  display: grid;
+  gap: 0;
+}
+.rows-table__row {
+  border-block-end: 1px solid var(--rule);
+  padding-block: var(--space-5);
+  display: grid;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: var(--space-5);
+  align-items: baseline;
+}
+.rows-table__row:first-child {
+  border-block-start: 1px solid var(--rule);
+}
+.rows-table__dt {
+  color: var(--ink-3);
+  font-family: var(--font-sans);
+  font-size: var(--size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  margin: 0;
+}
+.rows-table__dd {
+  margin: 0;
+  font-family: var(--font-serif);
+  font-size: var(--size-lede);
+  color: var(--ink);
+}
+
+/* ── CTA band (inline, no image) ────────────────────────────────────── */
+.cta-band-inline {
+  text-align: center;
+}
+.cta-band-inline__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h3);
+  line-height: 1.15;
+  color: var(--ink);
+  margin-inline: auto;
+  margin-block-end: var(--space-8);
+  max-width: 34ch;
+  text-wrap: balance;
+}
+.cta-band-inline__actions {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  justify-content: center;
+}
+
+/* ── CTA full-bleed (over image) ────────────────────────────────────── */
+.cta-fullbleed {
+  position: relative;
+  min-block-size: min(60vh, 640px);
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  border-block-start: 1px solid var(--rule);
+}
+.cta-fullbleed__inner {
+  position: relative;
+  z-index: 2;
+  padding-block: var(--section-y);
+}
+.cta-fullbleed__frame {
+  max-width: 44ch;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+.cta-fullbleed__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h1);
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  font-variant: normal;
+  color: var(--paper-on-image);
+  text-wrap: balance;
+  text-shadow: var(--shadow-on-image);
+  margin: 0;
+}
+.cta-fullbleed__deck {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--size-body);
+  line-height: 1.55;
+  color: var(--paper-on-image-soft);
+  text-shadow: var(--shadow-on-image-soft);
+  margin: 0;
+}
+.cta-fullbleed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block-start: var(--space-1);
+}
+
+/* ── Inbox router ───────────────────────────────────────────────────── */
+.inbox-list {
+  list-style: none;
+  display: grid;
+  gap: 0;
+  padding: 0;
+}
+.inbox-list__row {
+  display: grid;
+  grid-template-columns: 160px minmax(0, 1fr) auto;
+  gap: var(--space-8);
+  align-items: center;
+  padding: var(--space-6);
+  border-block-end: 1px solid var(--rule);
+  text-decoration: none;
+  color: inherit;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+.inbox-list__row:first-child {
+  border-block-start: 1px solid var(--rule);
+}
+.inbox-list__row:hover {
+  background: var(--paper);
+}
+.inbox-list__label {
+  font-family: var(--font-sans);
+  font-size: var(--size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.inbox-list__addr {
+  font-family: var(--font-serif);
+  font-size: var(--size-h4);
+  line-height: 1.2;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+}
+.inbox-list__strap {
+  font-family: var(--font-sans);
+  font-size: var(--size-sm);
+  line-height: 1.5;
+  color: var(--ink-3);
+  margin-block-start: var(--space-1);
+}
+.inbox-list__caret {
+  font-family: var(--font-serif);
+  font-size: var(--size-h3);
+  color: var(--ink-3);
+}
+@media (max-width: 700px) {
+  .inbox-list__row {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+  }
+  .inbox-list__caret { display: none; }
+}
+
+/* ── Inner containers for block sections (constrain to reading measure) */
+.block-inner {
+  max-width: var(--measure-prose);
+}
+.block-inner--wide {
+  max-width: none;
+}
+.block-inner--framed {
+  margin-block-end: var(--space-10);
+}
+
 /* ============================================================================
    HeroPaper — text-only hero for deep pages (legal, docs, changelog, blog)
    ============================================================================
