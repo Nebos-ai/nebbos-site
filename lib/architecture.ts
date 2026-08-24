@@ -43,6 +43,18 @@ export type Layer = {
   when?: string[];
   /** WHY this layer is worth caring about — the compounding value */
   why?: string;
+  /** Mental model / framework — how a buyer should think about this layer */
+  howToThink?: string;
+  /** Common pitfalls when a team tries to build this themselves */
+  pitfalls?: Array<{ title: string; body: string }>;
+  /** Concrete data points + benchmarks for this layer */
+  benchmarks?: Array<{ label: string; value: string; context: string }>;
+  /** Related layer numbers (upstream / downstream / adjacent) */
+  related?: number[];
+  /** Nebbos [Domain] Pearls that lean on this layer heavily */
+  pearls?: string[];
+  /** Related deep-read resources (blog posts, whitepapers) */
+  resources?: Array<{ title: string; href: string }>;
 };
 
 export type Band = {
@@ -173,6 +185,23 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re rate-limiting a runaway agent-driven workload",
     ],
     why: "One contract eliminates the divergence problem where the UI can do things the API can&rsquo;t (or vice versa). Every capability is exposed identically to humans and to Pearls, so there&rsquo;s no shadow API surface for the security team to worry about. The MCP layer means any modern AI model — yours, a provider&rsquo;s, or a future one — can call Nebbos tools without a bespoke wrapper. Uniform rate limits mean a misbehaving Pearl can&rsquo;t take down the humans who share its tenant.",
+    howToThink: "Think of API + MCP as the single choke point through which every capability of Nebbos is exposed — to humans (REST) and to machines (MCP) — against exactly the same authorization, the same audit line, and the same rate limits. It&rsquo;s the discipline that says: there is no shadow API surface. If your CISO can audit the human UI, they can audit every Pearl and every integration too, because it&rsquo;s the same contract. This is what separates a real operating system from a stack of features with an admin console.",
+    pitfalls: [
+      { title: "Building a Pearl-specific API alongside the human one", body: "Teams often ship a separate &lsquo;agent API&rsquo; with a different auth model. The moment those two diverge, your CISO loses the single audit trail and your compliance posture bifurcates. The right shape is one contract for both." },
+      { title: "Rate-limiting only for humans", body: "A misbehaving Pearl can call an endpoint 10,000 times a second. If your rate limits assume human tempo, one runaway workflow takes down the tenant. Uniform limits — enforced identically for humans + machines — prevent tenant-blast-radius incidents." },
+      { title: "MCP as an afterthought", body: "Teams retrofit MCP onto an existing REST API by writing a thin wrapper. That creates two surface areas to secure, two rate-limit engines, two audit lines. The right shape is one contract with two protocols speaking to it." },
+    ],
+    benchmarks: [
+      { label: "Endpoints unified", value: "1:1", context: "Every REST endpoint has an MCP counterpart" },
+      { label: "Auth model divergence", value: "0", context: "Same identity system for humans + Pearls" },
+      { label: "Rate-limit engines", value: "1", context: "Same limits enforce uniformly on both surfaces" },
+    ],
+    related: [2, 6, 12],
+    pearls: ["Nebbos Design", "Nebbos Development", "Nebbos Operations"],
+    resources: [
+      { title: "Why one contract beats two", href: "/blog" },
+      { title: "How MCP fits your existing API", href: "/docs" },
+    ],
   },
   {
     n: 6,
@@ -219,6 +248,31 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re computing per-Pearl memory cost vs new-model cost",
     ],
     why: "Memory-first hybrid retrieval means you&rsquo;re paying for a model call only when memory genuinely can&rsquo;t answer. Same team, month 24 vs month 1: roughly one-tenth the overage. This is the compounding-value layer — the moat that grows with use.",
+    howToThink: "Memory is the compounding-value layer — the one that turns time-on-Nebbos into competitive advantage. Every human decision your team makes gets captured as a preference pair. Every reasoning trace gets embedded and indexed. Every retrieved answer teaches the system which answers matter to your team. This is why your Pearl at month 24 is measurably better than the same Pearl at month 1: it has 23 months of your team&rsquo;s specific work in it. Memory is also portable — if you ever leave the Nebbos platform, the memory comes with you. This is the layer that makes AI-native enterprise a moat, not a bill.",
+    pitfalls: [
+      { title: "Treating memory as a vector index", body: "Vector search alone gives you semantic similarity, not temporal reasoning. A month-old decision beats a year-old one because your team&rsquo;s current context has shifted. Memory needs to be time-aware — a proper knowledge graph, not a flat embedding store." },
+      { title: "Calling the model first, memory second", body: "The default is expensive. Memory-first hybrid retrieval means you consult memory before calling a frontier model — most questions are answered by what your team already decided, and only genuinely-new questions escalate to a model call. Same team, month 24 vs month 1: roughly one-tenth the overage." },
+      { title: "Not making memory portable", body: "If memory locks into the platform, the customer&rsquo;s moat is your moat, not theirs. Nebbos makes the tuned Pearl + its memory portable — the customer can take their intelligence with them if they leave. This is what enterprise buyers ACTUALLY want and what most vendors refuse to promise." },
+      { title: "Ignoring memory drift", body: "Memory that isn&rsquo;t curated grows stale. Old policies, retired workflows, previous org structures accumulate as noise. Memory needs a retention + review discipline — automated by the substrate, not a full-time job for your team." },
+    ],
+    benchmarks: [
+      { label: "Memory hit rate improvement", value: "~10x", context: "Same team, month 24 vs month 1 (memory-first retrieval)" },
+      { label: "AI overage reduction", value: "~90%", context: "vs calling frontier models for every question" },
+      { label: "Portability commitment", value: "100%", context: "Full memory export on offboarding, per contract" },
+      { label: "Time-to-value on new Pearl", value: "<1 day", context: "From tenant provisioning to first tuned response" },
+    ],
+    related: [1, 8, 10],
+    pearls: [
+      "Nebbos Design",
+      "Nebbos Finance",
+      "Nebbos Operations",
+      "Nebbos People",
+    ],
+    resources: [
+      { title: "The compounding value of enterprise memory", href: "/blog" },
+      { title: "Memory-first retrieval — why it matters", href: "/blog" },
+      { title: "How to think about your AI moat", href: "/blog" },
+    ],
   },
   {
     n: 8,
@@ -241,6 +295,29 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re evaluating a new frontier model provider",
     ],
     why: "Multi-provider routing means you&rsquo;re never locked to one vendor&rsquo;s roadmap or pricing. Real-time budget tracking means AI-usage overage never surprises the CFO. Overage bills in Nebbos tokens — a stable currency decoupled from provider price swings.",
+    howToThink: "Reasoning is the multi-provider router that keeps you decoupled from any one AI vendor&rsquo;s roadmap, pricing, or availability. Think of it as the electrical grid for your enterprise&rsquo;s AI spend — you buy from whichever provider is best for the current query class, budget tracks in real time, and when a provider degrades, the router falls back cleanly. This is why AI-native enterprises pick Nebbos over a single-vendor stack: you&rsquo;re never locked into what Anthropic or OpenAI or Google decides to do next quarter. Overage bills in Nebbos tokens — a stable currency decoupled from provider price swings.",
+    pitfalls: [
+      { title: "Picking one provider and hoping", body: "Every AI vendor has degradation days, price jumps, and roadmap surprises. If your enterprise depends on one vendor&rsquo;s uptime + pricing, you inherit their volatility. Multi-provider routing is not a &lsquo;nice to have&rsquo; — it&rsquo;s risk management." },
+      { title: "Routing without budget awareness", body: "Naive routing sends every call to the best-quality model. That&rsquo;s expensive. Real routing considers query class (simple lookup vs complex reasoning), budget remaining this month, and provider pricing right now — then picks accordingly." },
+      { title: "Letting overage bill in USD directly to provider prices", body: "When OpenAI raises prices 30%, your bill spikes 30%. When you overage in Nebbos tokens — a stable rate — your bill stays predictable and Nebbos absorbs the provider volatility. This is a shape you want, not a footnote." },
+    ],
+    benchmarks: [
+      { label: "Providers routed across", value: "4+", context: "OpenAI / Anthropic / Google / open-weights options" },
+      { label: "Fallback time on provider degradation", value: "<500ms", context: "Transparent to the calling Pearl" },
+      { label: "Overage currency", value: "Nebbos tokens", context: "Stable rate independent of provider pricing" },
+      { label: "Budget tracking latency", value: "<1s", context: "Real-time visibility for CFO" },
+    ],
+    related: [7, 9, 14],
+    pearls: [
+      "Nebbos Design",
+      "Nebbos Finance",
+      "Nebbos Operations",
+      "Nebbos Legal",
+    ],
+    resources: [
+      { title: "Multi-provider routing explained", href: "/blog" },
+      { title: "Nebbos tokens — the stable-currency model", href: "/blog" },
+    ],
   },
   {
     n: 9,
@@ -287,6 +364,32 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re offboarding — Pearl is portable to you with memory intact",
     ],
     why: "Pearl is the per-department brain — the visible thing your team interacts with. Shell is the container that gives it boundaries. Every Pearl starts as a Nebbos General (base version) and tunes to your team through use. At month 24 your Pearl is measurably better than at month 1 — and it&rsquo;s portable to you if you ever leave.",
+    howToThink: "A Pearl is a per-department brain. Not an assistant, not a copilot — a brain scoped to one team&rsquo;s domain, pre-educated on your organization&rsquo;s work, and tuned by everyday use. Every Pearl starts as a Nebbos General [Domain] — Nebbos General Design, Nebbos General Finance, Nebbos General Operations — the latest base version Nebbos ships. Deploy it, and within days it&rsquo;s learning the specific patterns of your team: how your operations team handles handoffs, how your finance team runs close-week, how your product team ships. Shell is the container that gives each Pearl its boundaries — its department scope, its approval graph, its identity model, its budget. Think of it as the org chart of your AI, not a plugin store.",
+    pitfalls: [
+      { title: "Deploying one Pearl for the whole company", body: "A generalist Pearl serves nobody well. The magic is department-specific tuning — Nebbos Finance learns the specific rhythms of YOUR close, not a generic accounting workflow. One Pearl per department is the deployment model that compounds." },
+      { title: "Skipping the human in the loop", body: "Teams try to run Pearls fully-autonomously to save review time. It backfires — one bad automated action costs more trust than a hundred approvals saved time. Every consequential Pearl action goes through Approval (Layer 11) with an accountable human sign-off." },
+      { title: "Treating Nebbos General as final", body: "Nebbos General is the starting point, not the destination. Your tuned Pearl at month 24 is measurably better than the shipped version — because it&rsquo;s been trained on YOUR team&rsquo;s decisions. Buyers who don&rsquo;t use their Pearls day-to-day get generic value; buyers who use them daily get compounding value." },
+      { title: "Ignoring the portability guarantee", body: "If you ever leave Nebbos, the tuned Pearl + its memory come with you. This should be in your MSA. Buyers who don&rsquo;t insist on the portability clause are giving up their moat back to the platform." },
+    ],
+    benchmarks: [
+      { label: "Pearls per typical enterprise tenant", value: "6-12", context: "One per department that would benefit from a brain" },
+      { label: "Time-to-first-value on a new Pearl", value: "<7 days", context: "From deployment to first team-tuned response" },
+      { label: "Retention on tuned Pearl vs untuned", value: "3-5x", context: "Measured on preference-pair capture rate" },
+      { label: "Portable at offboarding", value: "100%", context: "Contractual guarantee — memory, tuning, decisions all export" },
+    ],
+    related: [3, 7, 11],
+    pearls: [
+      "Nebbos Design",
+      "Nebbos Development",
+      "Nebbos Finance",
+      "Nebbos Operations",
+      "Nebbos People",
+    ],
+    resources: [
+      { title: "How to pick which department gets a Pearl first", href: "/blog" },
+      { title: "Nebbos General → your tuned Pearl", href: "/blog" },
+      { title: "The portability clause every enterprise buyer needs", href: "/blog" },
+    ],
   },
   {
     n: 11,
@@ -399,6 +502,29 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re preparing an EU AI Act Article 11 Annex IV pack",
     ],
     why: "Attestation is what makes Nebbos defensible. Every Pearl action, every human approval, every model call, every billing event lands in an append-only stream that maps to a hash chain your regulator can verify. This is what turns &lsquo;we run an AI operating system&rsquo; into &lsquo;we run an audited AI operating system.&rsquo;",
+    howToThink: "Attestation is the receipt layer — the thing that lets your CISO, your general counsel, your regulator, and your auditor prove after the fact that a specific action was authorized, executed, and accounted for. It&rsquo;s not a compliance feature bolted on; it&rsquo;s the substrate that makes every other layer defensible. Think of it as your enterprise&rsquo;s hash-chained memory of decisions — every human approval, every Pearl action, every model call, every billing event lands in an append-only stream that a regulator can verify. This is what separates &lsquo;we run an AI operating system&rsquo; from &lsquo;we run an audited AI operating system&rsquo;, and the difference matters when the EU AI Act Article 11 Annex IV pack comes due August 2027.",
+    pitfalls: [
+      { title: "Logging instead of attesting", body: "Logs can be edited. Logs can be lost. Logs can&rsquo;t answer &lsquo;did the CFO actually approve this transfer&rsquo; with a cryptographically verifiable trail. Attestation is signed, hash-chained, tamper-evident — a legally defensible answer, not a log line." },
+      { title: "Treating audit as a report, not a substrate", body: "Most enterprises run audit as a quarterly report generated on demand. That&rsquo;s too late for real accountability. Attestation should be real-time — every decision produces an attested record at the moment the decision is made." },
+      { title: "Not planning for the regulator you don&rsquo;t know yet", body: "The EU AI Act is here. State AI acts are coming. Sector-specific rules are coming. If your attestation model is bespoke to today&rsquo;s regulators, you&rsquo;ll rebuild for every new one. A well-designed attestation substrate handles regulators you don&rsquo;t know exist yet." },
+    ],
+    benchmarks: [
+      { label: "Attestation coverage", value: "100%", context: "Every human approval + every Pearl action + every model call" },
+      { label: "Chain verification time", value: "<1s per event", context: "Regulator or auditor can verify any single event trail" },
+      { label: "EU AI Act Article 11 Annex IV readiness", value: "Pack available under NDA", context: "Ahead of 2027-08-02 deadline" },
+      { label: "Retention", value: "Configurable per tenant", context: "SOX / HIPAA / GDPR / sector-specific retention supported" },
+    ],
+    related: [2, 11, 14],
+    pearls: [
+      "Nebbos Governance",
+      "Nebbos Finance",
+      "Nebbos Security",
+    ],
+    resources: [
+      { title: "EU AI Act Article 11 explained", href: "/blog" },
+      { title: "Attestation vs logging — why the difference matters", href: "/blog" },
+      { title: "Preparing for the AI regulator you don&rsquo;t know yet", href: "/blog" },
+    ],
   },
 ];
 

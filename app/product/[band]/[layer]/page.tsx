@@ -328,6 +328,138 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
         </section>
       )}
 
+      {/* 07 · HOW TO THINK ABOUT IT · framework paragraph */}
+      {layer.howToThink && (
+        <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container">
+            <div style={{ maxWidth: "68ch" }}>
+              <SectionNumeral n="07" label="How to think about it" />
+              <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 20px 0", maxWidth: "28ch", textWrap: "balance" }}>
+                A framework for {layer.name}.
+              </h2>
+              <p style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(19px, 1.8vw, 24px)", lineHeight: 1.6, color: "var(--ink)", margin: 0, maxWidth: "64ch" }}>
+                {layer.howToThink}
+              </p>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 08 · PITFALLS · what teams get wrong */}
+      {layer.pitfalls && layer.pitfalls.length > 0 && (
+        <section style={{ background: "var(--paper)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 960 }}>
+            <SectionNumeral n="08" label="Common pitfalls" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "32ch", textWrap: "balance" }}>
+              What teams get wrong when they try to build {layer.name} themselves.
+            </h2>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
+              {layer.pitfalls.map((p, i) => (
+                <li key={p.title} style={{ borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", paddingBlock: 24, display: "grid", gridTemplateColumns: "48px minmax(0, 1fr)", gap: 24, alignItems: "baseline" }}>
+                  <span className="eyebrow" style={{ color: "var(--gold)" }}>{String(i + 1).padStart(2, "0")}</span>
+                  <div>
+                    <div style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 500, color: "var(--ink)", marginBottom: 8 }}>{p.title}</div>
+                    <p style={{ fontFamily: "var(--font-serif)", fontSize: 17, lineHeight: 1.6, color: "var(--ink-2)", margin: 0, maxWidth: "58ch" }}>{p.body}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* 09 · BENCHMARKS · data points + numbers */}
+      {layer.benchmarks && layer.benchmarks.length > 0 && (
+        <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 1000 }}>
+            <SectionNumeral n="09" label="Benchmark numbers" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch", textWrap: "balance" }}>
+              What good looks like for {layer.name}.
+            </h2>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))", gap: 0, borderTop: "1px solid var(--rule)", borderLeft: "1px solid var(--rule)" }}>
+              {layer.benchmarks.map((b) => (
+                <div key={b.label} style={{ padding: "24px 28px", borderRight: "1px solid var(--rule)", borderBottom: "1px solid var(--rule)", background: "var(--paper)" }}>
+                  <div className="eyebrow" style={{ color: "var(--ink-3)", marginBottom: 12 }}>{b.label}</div>
+                  <div style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(32px, 3.4vw, 44px)", fontWeight: 500, color: "var(--gold)", lineHeight: 1, marginBottom: 12, letterSpacing: "-0.014em" }}>{b.value}</div>
+                  <p style={{ fontFamily: "var(--font-sans)", fontSize: 14, lineHeight: 1.5, color: "var(--ink-2)", margin: 0 }}>{b.context}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 10 · RELATED LAYERS · cross-links */}
+      {layer.related && layer.related.length > 0 && (
+        <section style={{ background: "var(--paper)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 900 }}>
+            <SectionNumeral n="10" label="Related layers" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "26ch" }}>
+              {layer.name} sits alongside these layers.
+            </h2>
+            <ul style={{ listStyle: "none", display: "grid", gap: 0 }}>
+              {layer.related.map((relN, i) => {
+                const rel = LAYERS.find((l) => l.n === relN);
+                if (!rel) return null;
+                return (
+                  <li key={relN}>
+                    <Link href={layerPath(rel)} style={{ display: "grid", gridTemplateColumns: "56px minmax(0, 1fr) auto", gap: 24, alignItems: "baseline", padding: "20px 0", borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", textDecoration: "none", color: "inherit" }}>
+                      <span style={{ fontFamily: "var(--font-mono)", fontSize: 24, color: "var(--gold)" }}>{String(rel.n).padStart(2, "0")}</span>
+                      <div>
+                        <div style={{ fontFamily: "var(--font-serif)", fontSize: 22, fontWeight: 500, color: "var(--ink)" }}>{rel.name}</div>
+                        <div style={{ fontFamily: "var(--font-mono)", fontSize: 12, color: "var(--ink-3)", letterSpacing: "0.04em", marginTop: 4 }}>{rel.caption}</div>
+                      </div>
+                      <span aria-hidden style={{ fontFamily: "var(--font-serif)", fontSize: 20, color: "var(--ink-3)" }}>→</span>
+                    </Link>
+                  </li>
+                );
+              })}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* 11 · PEARLS THAT LEAN ON THIS LAYER */}
+      {layer.pearls && layer.pearls.length > 0 && (
+        <section style={{ background: "var(--paper-2)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 900 }}>
+            <SectionNumeral n="11" label="Pearls that lean on this" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "32ch" }}>
+              Which per-department Pearls use {layer.name} the most.
+            </h2>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 12 }}>
+              {layer.pearls.map((p) => (
+                <span key={p} style={{ padding: "12px 20px", background: "var(--paper)", border: "1px solid var(--rule)", fontFamily: "var(--font-serif)", fontSize: 18, color: "var(--ink)" }}>
+                  {p}
+                </span>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 12 · RESOURCES · deeper reading */}
+      {layer.resources && layer.resources.length > 0 && (
+        <section style={{ background: "var(--paper)", paddingBlock: "clamp(56px, 8vh, 104px)", borderBottom: "1px solid var(--rule)" }}>
+          <div className="container" style={{ maxWidth: 900 }}>
+            <SectionNumeral n="12" label="Deep dive" />
+            <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(24px, 2.6vw, 34px)", lineHeight: 1.15, letterSpacing: "-0.014em", fontWeight: 500, color: "var(--ink)", margin: "20px 0 32px 0", maxWidth: "28ch" }}>
+              Longer reading on {layer.name}.
+            </h2>
+            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column" }}>
+              {layer.resources.map((r, i) => (
+                <li key={r.title}>
+                  <Link href={r.href} style={{ display: "flex", alignItems: "baseline", gap: 16, padding: "20px 0", borderTop: i === 0 ? "1px solid var(--rule)" : undefined, borderBottom: "1px solid var(--rule)", textDecoration: "none", color: "inherit" }}>
+                    <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic", fontSize: 20, color: "var(--ink)", flex: 1 }}>{r.title}</span>
+                    <span aria-hidden style={{ fontFamily: "var(--font-serif)", fontSize: 20, color: "var(--gold)" }}>→</span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
       {/* Scene context — this layer sits in Scene X of the story */}
       <section
         style={{
@@ -338,7 +470,7 @@ export default async function LayerPage({ params }: { params: Promise<Params> })
       >
         <div className="container">
           <div style={{ maxWidth: "68ch" }}>
-            <SectionNumeral n="07" label="In the story" />
+            <SectionNumeral n="13" label="In the story" />
             <p
               style={{
                 fontFamily: "var(--font-serif)",
