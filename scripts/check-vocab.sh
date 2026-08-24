@@ -48,6 +48,11 @@ FORBIDDEN_PATTERNS=(
   '\bAI agents\b'
   '\bchatbot\b'
   '\bchatbots\b'
+  '\btenant\b'
+  '\btenants\b'
+  '\bmulti-tenant\b'
+  '\bper-tenant\b'
+  '\bcross-tenant\b'
 )
 
 # Forbidden pricing exposure on marketing site
@@ -57,6 +62,10 @@ PRICING_PATTERNS=(
   '\$150 per'
   '150 per seat'
   '150/seat'
+  'one hundred fifty dollars'
+  'flat per-seat price'
+  'flat per-seat rate'
+  'one flat rate per seat'
   '/pricing"'
   'href="/pricing'
 )
@@ -79,8 +88,10 @@ for pat in "${FORBIDDEN_PATTERNS[@]}"; do
     for wl in "${WHITELIST[@]}"; do
       FILTERED=$(echo "$FILTERED" | grep -v "$wl" || true)
     done
-    # Skip lines that document the rule (JSDoc / block-comment context)
-    FILTERED=$(echo "$FILTERED" | grep -vE ':\s*\* +(Never|NEVER|Use:|Canonical|Vocabulary rule|Rule|canonical vocabulary)|// +NEVER|nebbos-agent-gateway|nebbos-agent-|AI-agent governance' || true)
+    # Skip lines that document the rule (JSDoc / block-comment context) OR
+    # reference internal technical identifiers (concept-family keys, code
+    # column names) that never appear as customer-visible strings.
+    FILTERED=$(echo "$FILTERED" | grep -vE ':\s*\* +(Never|NEVER|Use:|Canonical|Vocabulary rule|Rule|canonical vocabulary)|// +NEVER|nebbos-agent-gateway|nebbos-agent-|AI-agent governance|concept-tenant-onboarding|family-concept-tenant-onboarding|tenant_id' || true)
 
     if [ -n "$FILTERED" ]; then
       echo ""

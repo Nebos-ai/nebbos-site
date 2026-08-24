@@ -1,6 +1,6 @@
 ---
 title: The fifteen layers in fifteen minutes
-description: A guided tour of the Nebbos substrate — five bands, three layers each, one flat rate per seat. What each layer does and why it matters.
+description: A guided tour of the Nebbos substrate — five bands, three layers each, fifteen layers underneath every Pearl. What each layer does and why it matters.
 date: 2026-07-18
 author: Nebbos
 ---
@@ -13,11 +13,11 @@ require the substrate to be rebuilt. This is the fifteen-minute tour.
 
 The three layers that make everything else possible.
 
-**Layer 01 · Data.** Postgres, per-tenant row-level isolation, encryption
-at rest, per-tenant data-encryption keys wrapped by a KMS-hosted master
+**Layer 01 · Data.** Postgres, per-client row-level isolation, encryption
+at rest, per-client data-encryption keys wrapped by a KMS-hosted master
 key. The isolation is a database primitive, not a policy. An application-
 layer bug that forgets a filter fails closed — the database refuses the
-read. Every tenant guarantee downstream depends on this.
+read. Every client guarantee downstream depends on this.
 
 **Layer 02 · Identity.** SSO for humans, service accounts for workflows,
 workload identity for services, break-glass paths for on-call responders.
@@ -50,21 +50,21 @@ integrations from silently breaking when a vendor changes their API.
 
 **Layer 06 · Egress.** Named egresses to your downstream systems — the
 places a Pearl action actually lands in your world. Retry, idempotency,
-attestation on every write. Every egress is a per-tenant-scoped channel;
-one tenant's writes cannot escape into another tenant's downstream.
+attestation on every write. Every egress is a per-client-scoped channel;
+one client's writes cannot escape into another client's downstream.
 
 ## Band 3 · Intelligence
 
 The three layers that turn signal into thought.
 
-**Layer 07 · Memory.** Per-tenant knowledge graph on Postgres + pgvector.
+**Layer 07 · Memory.** Per-client knowledge graph on Postgres + pgvector.
 Preference pairs, embeddings, retrieval indices, tuned Pearl weights.
 Every decision your team makes accumulates here. Every Pearl action
 reads from here. The compounding-value layer — the reason your Pearl
 gets sharper over twenty-four months.
 
 **Layer 08 · Reasoning.** Multi-provider router. Anthropic, OpenAI,
-Google, self-hosted, bring-your-own-model. Every call carries tenant
+Google, self-hosted, bring-your-own-model. Every call carries client
 context, retrieved memory, and tool-call authorization. Provider
 switching is a config change; the layer above does not care which
 provider served the underlying inference.
@@ -100,7 +100,7 @@ land in the world.
 
 The three layers that make Nebbos an institution, not just software.
 
-**Layer 13 · Onboarding.** The tenant lifecycle. Signup, provisioning,
+**Layer 13 · Onboarding.** The client lifecycle. Signup, provisioning,
 configuration, offboarding. Onboarding is a first-class flow — a Pearl
 deploys in three weeks, not three months. Offboarding is also a first-
 class flow — the export routine runs on every deploy so we know it
@@ -108,7 +108,7 @@ works when you need it. Portability is not a promise, it is a routine.
 
 **Layer 14 · Observability.** Metrics, traces, logs, anomaly detection.
 Real-time visibility on Pearl action rates, approval latencies, model-
-provider costs, tenant-boundary anomalies. The layer that lets you
+provider costs, client-boundary anomalies. The layer that lets you
 answer "is my Pearl working?" without guessing.
 
 **Layer 15 · Attestation.** The append-only, hash-chained audit trail.
@@ -126,11 +126,12 @@ problem that would otherwise break the layer above. Cutting layers means
 building the same functionality later, less coherently, with more
 seams — which is the pattern most enterprise AI stacks are already on.
 
-## Why one flat rate
+## Why one flat commitment
 
-One flat rate per seat — one hundred fifty dollars per user per month —
-because pricing complexity is another form of vendor lock-in.
-Enterprises should be able to reason about the cost of Nebbos the same
-way they reason about the cost of a Slack seat: seats times price. The
-substrate underneath is fifteen layers deep. The pricing above is one
-number. That is deliberate.
+One flat per-seat commitment for the substrate plus every layer plus
+every Pearl your enterprise deploys — because pricing complexity is
+another form of vendor lock-in. Enterprises should be able to reason
+about the cost of Nebbos the same way they reason about the cost of a
+core-workflow platform. Deploy one Pearl or twelve; the substrate is
+the same commitment. The specific numbers are an enterprise
+conversation, not a marketing surface.

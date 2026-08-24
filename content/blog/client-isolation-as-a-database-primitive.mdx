@@ -1,26 +1,26 @@
 ---
-title: Tenant isolation as a database primitive
-description: The typical multi-tenant AI stack enforces isolation at the application layer. That means an application-layer bug can leak your data. Nebbos enforces it at the database.
+title: Client isolation as a database primitive
+description: The typical multi-client AI stack enforces isolation at the application layer. That means an application-layer bug can leak your data. Nebbos enforces it at the database.
 date: 2026-07-04
 author: Nebbos
 ---
 
-The typical multi-tenant enterprise AI stack enforces tenant isolation at
+The typical multi-client enterprise AI stack enforces client isolation at
 the application layer. Every query is filtered by a `tenant_id` in the
 application code. The code is reviewed, the tests cover the common
 paths, the pattern is documented in the internal wiki. And every once in
-a while, a code path is added that forgets the filter, and one tenant's
-data leaks to another tenant, and there is a post-mortem, and the code
+a while, a code path is added that forgets the filter, and one client's
+data leaks to another client, and there is a post-mortem, and the code
 path is fixed, and the pattern is re-documented, and the cycle continues.
 
-Nebbos enforces tenant isolation at the database, not at the application
+Nebbos enforces client isolation at the database, not at the application
 layer. That is a small architectural distinction that has very large
 consequences.
 
 ## The application-layer pattern, and its failure mode
 
 The application-layer pattern is straightforward. Every table with
-tenant scope has a `tenant_id` column. Every query includes a `WHERE
+client scope has a `tenant_id` column. Every query includes a `WHERE
 tenant_id = $current_tenant` clause. Every ORM query builder is
 configured to insert that clause automatically. Every code review looks
 for the clause. Every unit test checks common paths.
@@ -31,8 +31,8 @@ tuning, because they're calling a stored procedure, because they added
 a background job that runs against the raw connection. The `tenant_id`
 filter is missing. The code passes review because the reviewer did not
 notice. The test suite passes because no test hit that specific path
-with cross-tenant data. Six months later, a bug report reveals that one
-tenant has been seeing another tenant's data all along.
+with cross-client data. Six months later, a bug report reveals that one
+client has been seeing another client's data all along.
 
 Every enterprise SaaS vendor has had this outage at least once. Most
 have had it several times. The pattern is not that these vendors are
@@ -44,7 +44,7 @@ engineer who ever touches the codebase.
 
 Postgres row-level security policies attach isolation directly to the
 table. Every request runs inside a session with a context variable
-identifying the tenant. The RLS policy compares that variable against
+identifying the client. The RLS policy compares that variable against
 the row's `tenant_id` column. The database itself refuses to return
 rows that do not match.
 
@@ -88,7 +88,7 @@ inherits the policy from the parent.
 The cost is manageable with careful policy design and appropriate
 indexing. In our production data, RLS overhead sits below three percent
 of query time on average and below eight percent at the tail. That is
-the price of turning tenant isolation from a discipline the engineers
+the price of turning client isolation from a discipline the engineers
 have to maintain into a property the database enforces. It is a very
 good trade.
 

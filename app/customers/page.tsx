@@ -2,8 +2,6 @@ import Link from "next/link";
 import { promises as fs } from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
 import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { Button } from "@/components/ui/Button";
 import type { Metadata } from "next";
@@ -59,8 +57,6 @@ export default async function CustomersIndexPage() {
   const customers = await getAllCustomers();
   return (
     <>
-      <SiteHeader />
-      <main>
         <FullBleedScene
           className="hero-fullbleed"
           scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
@@ -123,7 +119,7 @@ export default async function CustomersIndexPage() {
             <div className="cta-fullbleed__frame">
               <h2 className="cta-fullbleed__title">See a Pearl on your hardest department.</h2>
               <p className="cta-fullbleed__deck">
-                A live tenant walkthrough with the Pearl scoped to a
+                A live product walkthrough with the Pearl scoped to a
                 department you care about. Thirty minutes.
               </p>
               <div className="cta-fullbleed__actions">
@@ -137,8 +133,6 @@ export default async function CustomersIndexPage() {
             </div>
           </div>
         </FullBleedScene>
-      </main>
-      <SiteFooter />
     </>
   );
 }

@@ -3,30 +3,26 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
-import {
-  primaryNav,
-  secondaryNav,
-  productTree,
-} from "@/lib/nav";
+import { primaryNav, secondaryNav, productTree } from "@/lib/nav";
 
 /**
- * SiteHeader · v2 rebuild 2026-08-23
+ * SiteHeader · v3 · 2026-08-24 (dark-chrome rebuild)
  *
- * Sticky top bar. Left: Nebbos logo. Center: 5-item primary nav with
- * mega-menu on Product (5-band × 3-layer grid = 15 layer links). Right:
- * secondary nav (Log in, Book a demo). Mobile: hamburger opens full drawer.
+ * Founder direction 2026-08-24: header is always DARK. Nebbos mark +
+ * wordmark are always the WHITE variants (never orange, never dark on
+ * dark). No scroll-elevation crossfade — the chrome is a constant.
  *
- * Accessibility:
- *   - Semantic <header><nav> with aria-label
- *   - Mega-menu triggered by button with aria-expanded / aria-controls
- *   - Escape closes mega-menu and mobile drawer
- *   - Focus trap on mobile drawer when open
- *   - Skip-link (in layout.tsx) targets #main
+ * Left: mark + wordmark (both white). Center: primary nav (white text).
+ * Right: secondary nav (paper CTA button on the ink background). Mobile:
+ * hamburger opens full-screen dark drawer. Mega-menu drops down onto
+ * paper for contrast against the ink chrome.
+ *
+ * All styling reads from design tokens via class rules in
+ * app/globals.css — no inline color literals, no clamp() magic numbers.
  */
 export function SiteHeader() {
   const [openMega, setOpenMega] = useState<"product" | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
 
   // Close mega-menu on click outside / Escape
@@ -50,135 +46,45 @@ export function SiteHeader() {
     };
   }, []);
 
-  // Simple scroll-elevation: transparent at top, solid after 8px scroll
-  useEffect(() => {
-    function onScroll() {
-      setScrolled(window.scrollY > 8);
-    }
-    onScroll();
-    window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
-  }, []);
-
   // Lock body scroll while mobile drawer is open
   useEffect(() => {
     document.body.style.overflow = mobileOpen ? "hidden" : "";
-    return () => { document.body.style.overflow = ""; };
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, [mobileOpen]);
 
   const isProductOpen = openMega === "product";
 
   return (
-    <header
-      ref={containerRef}
-      style={{
-        position: "sticky",
-        top: 0,
-        zIndex: 50,
-        background: scrolled ? "rgba(244, 241, 234, 0.92)" : "transparent",
-        borderBottom: scrolled ? "1px solid var(--rule)" : "1px solid transparent",
-        backdropFilter: scrolled ? "saturate(160%) blur(12px)" : "none",
-        transition: "background var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out), backdrop-filter var(--dur-med) var(--ease-out)",
-      }}
-    >
-      <div className="container" style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        gap: 32,
-        minHeight: 68,
-      }}>
-        {/* Logo · brand mark + Nebbos wordmark SVG. Both cross-fade
-            between orange (over hero) and dark (on scroll). Wordmark
-            uses founder-supplied SVG (custom letterforms echo the mark's
-            diagonal geometry — not a random font). */}
-        <Link
-          href="/"
-          aria-label="Nebbos home"
-          style={{
-            display: "inline-flex",
-            alignItems: "center",
-            gap: 14,
-            color: "var(--ink)",
-            textDecoration: "none",
-          }}
-        >
-          {/* Mark · orange over hero, dark on scroll */}
-          <div style={{ position: "relative", width: 44, height: 45 }}>
-            <Image
-              src="/nebbos-mark-orange.svg"
-              alt="Nebbos"
-              width={44}
-              height={45}
-              priority
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: scrolled ? 0 : 1,
-                transition: "opacity var(--dur-med) var(--ease-out)",
-                filter: "drop-shadow(0 1px 3px rgba(20, 18, 15, 0.32))",
-              }}
-            />
-            <Image
-              src="/nebbos-mark-dark.svg"
-              alt=""
-              aria-hidden="true"
-              width={44}
-              height={45}
-              priority
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: scrolled ? 1 : 0,
-                transition: "opacity var(--dur-med) var(--ease-out)",
-              }}
-            />
-          </div>
-          {/* Wordmark · SVG (custom letterforms), same cross-fade */}
-          <div style={{ position: "relative", width: 148, height: 28 }}>
-            <Image
-              src="/nebbos-wordmark-orange.svg"
-              alt=""
-              aria-hidden="true"
-              width={148}
-              height={28}
-              priority
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: scrolled ? 0 : 1,
-                transition: "opacity var(--dur-med) var(--ease-out)",
-                filter: "drop-shadow(0 1px 3px rgba(20, 18, 15, 0.32))",
-              }}
-            />
-            <Image
-              src="/nebbos-wordmark-dark.svg"
-              alt=""
-              aria-hidden="true"
-              width={148}
-              height={28}
-              priority
-              style={{
-                position: "absolute",
-                inset: 0,
-                opacity: scrolled ? 1 : 0,
-                transition: "opacity var(--dur-med) var(--ease-out)",
-              }}
-            />
-          </div>
+    <header ref={containerRef} className="site-header">
+      <div className="container site-header__inner">
+        <Link href="/" aria-label="Nebbos home" className="site-header__brand">
+          <Image
+            src="/nebbos-mark-white.svg"
+            alt="Nebbos"
+            width={40}
+            height={41}
+            priority
+            className="site-header__mark"
+          />
+          <Image
+            src="/nebbos-wordmark-white.svg"
+            alt=""
+            aria-hidden="true"
+            width={132}
+            height={25}
+            priority
+            className="site-header__wordmark"
+          />
         </Link>
 
-        {/* Primary nav — desktop */}
-        <nav aria-label="Primary" style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 4,
-        }} className="hide-mobile">
+        <nav aria-label="Primary" className="site-header__nav site-header__hide-mobile">
           {primaryNav.map((item) => {
             const isMega = !!item.megaMenu;
             const isOpen = openMega === item.megaMenu;
             return (
-              <div key={item.href} style={{ position: "relative" }}>
+              <div key={item.href} className="site-header__nav-item">
                 {isMega ? (
                   <button
                     type="button"
@@ -186,15 +92,15 @@ export function SiteHeader() {
                     aria-controls={`mega-${item.megaMenu}`}
                     onClick={() => setOpenMega(isOpen ? null : (item.megaMenu as "product"))}
                     onMouseEnter={() => setOpenMega(item.megaMenu as "product")}
-                    style={navLinkStyle}
+                    className="site-header__link site-header__link--button"
                   >
                     {item.label}
-                    <span aria-hidden style={{ marginLeft: 6, fontSize: 10, opacity: 0.7 }}>▾</span>
+                    <span aria-hidden className="site-header__caret">▾</span>
                   </button>
                 ) : (
                   <Link
                     href={item.href}
-                    style={navLinkStyle}
+                    className="site-header__link"
                     onMouseEnter={() => setOpenMega(null)}
                   >
                     {item.label}
@@ -205,8 +111,7 @@ export function SiteHeader() {
           })}
         </nav>
 
-        {/* Secondary nav — desktop */}
-        <div className="hide-mobile" style={{ display: "flex", alignItems: "center", gap: 12 }}>
+        <div className="site-header__actions site-header__hide-mobile">
           {secondaryNav.map((link, i) => {
             const isCTA = i === secondaryNav.length - 1;
             return (
@@ -215,129 +120,59 @@ export function SiteHeader() {
                 href={link.href}
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
-                style={isCTA ? ctaButtonStyle : linkQuietStyle}
+                className={isCTA ? "site-header__cta" : "site-header__link site-header__link--quiet"}
               >
                 {link.label}
-                {isCTA && <span aria-hidden style={{ fontFamily: "var(--font-serif)" }}>→</span>}
+                {isCTA && <span aria-hidden className="site-header__cta-arrow">→</span>}
               </Link>
             );
           })}
         </div>
 
-        {/* Hamburger — mobile */}
         <button
           type="button"
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
           aria-controls="mobile-drawer"
           onClick={() => setMobileOpen(!mobileOpen)}
-          className="show-mobile"
-          style={{
-            display: "none",
-            alignItems: "center",
-            justifyContent: "center",
-            width: 44,
-            height: 44,
-            cursor: "pointer",
-          }}
+          className="site-header__mobile-toggle site-header__show-mobile"
         >
-          <span aria-hidden style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.14em" }}>
-            {mobileOpen ? "CLOSE" : "MENU"}
-          </span>
+          <span aria-hidden>{mobileOpen ? "CLOSE" : "MENU"}</span>
         </button>
       </div>
 
-      {/* Mega-menu · Product */}
       {isProductOpen && (
         <div
           id="mega-product"
           role="region"
           aria-label="Product menu"
           onMouseLeave={() => setOpenMega(null)}
-          style={{
-            position: "absolute",
-            top: "100%",
-            left: 0,
-            right: 0,
-            background: "var(--paper)",
-            borderBlock: "1px solid var(--rule)",
-            paddingBlock: "clamp(32px, 5vh, 56px)",
-            boxShadow: "0 8px 24px -12px rgba(20, 18, 15, 0.12)",
-          }}
+          className="site-mega"
         >
           <div className="container-wide">
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(5, minmax(0, 1fr))",
-                gap: 32,
-              }}
-            >
+            <div className="site-mega__grid">
               {productTree.map(({ band, href, layers }) => (
-                <div key={band.n}>
+                <div key={band.n} className="site-mega__band">
                   <Link
                     href={href}
                     onClick={() => setOpenMega(null)}
-                    style={{
-                      display: "block",
-                      textDecoration: "none",
-                      marginBottom: 16,
-                    }}
+                    className="site-mega__band-link"
                   >
-                    <div
-                      style={{
-                        fontFamily: "var(--font-serif)",
-                        fontSize: 20,
-                        fontWeight: 500,
-                        color: "var(--ink)",
-                        marginBottom: 6,
-                        letterSpacing: "-0.012em",
-                      }}
-                    >
-                      {band.name}
-                    </div>
-                    <div
-                      style={{
-                        fontFamily: "var(--font-sans)",
-                        fontSize: 13,
-                        color: "var(--ink-3)",
-                        lineHeight: 1.4,
-                      }}
-                    >
-                      {band.strap}
-                    </div>
+                    <div className="site-mega__band-name">{band.name}</div>
+                    <div className="site-mega__band-strap">{band.strap}</div>
                   </Link>
-                  <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 2 }}>
+                  <ul className="site-mega__layers">
                     {layers.map(({ layer, href: lHref }) => (
                       <li key={layer.n}>
                         <Link
                           href={lHref}
                           onClick={() => setOpenMega(null)}
-                          style={{
-                            display: "flex",
-                            alignItems: "baseline",
-                            gap: 10,
-                            padding: "8px 10px",
-                            marginInline: -10,
-                            fontFamily: "var(--font-sans)",
-                            fontSize: 14,
-                            color: "var(--ink-2)",
-                            textDecoration: "none",
-                            borderRadius: 2,
-                            transition: "background var(--dur-fast) var(--ease-out)",
-                          }}
+                          className="site-mega__layer-link"
                         >
-                          <span
-                            style={{
-                              fontFamily: "var(--font-mono)",
-                              fontSize: 10,
-                              color: "var(--ink-3)",
-                              minWidth: 20,
-                            }}
-                          >
+                          <span className="site-mega__layer-num">
                             {String(layer.n).padStart(2, "0")}
                           </span>
-                          <span style={{ fontWeight: 500 }}>{layer.name}</span>
+                          <span className="site-mega__layer-name">{layer.name}</span>
                         </Link>
                       </li>
                     ))}
@@ -349,39 +184,22 @@ export function SiteHeader() {
         </div>
       )}
 
-      {/* Mobile drawer */}
       {mobileOpen && (
         <div
           id="mobile-drawer"
           role="dialog"
           aria-modal="true"
           aria-label="Site menu"
-          style={{
-            position: "fixed",
-            inset: 0,
-            top: 68,
-            background: "var(--paper)",
-            overflowY: "auto",
-            zIndex: 40,
-            padding: "24px",
-          }}
+          className="site-drawer"
         >
           <nav aria-label="Mobile primary">
-            <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: 4 }}>
+            <ul className="site-drawer__nav">
               {primaryNav.map((item) => (
-                <li key={item.href} style={{ borderBottom: "1px solid var(--rule)" }}>
+                <li key={item.href} className="site-drawer__nav-item">
                   <Link
                     href={item.href}
                     onClick={() => setMobileOpen(false)}
-                    style={{
-                      display: "block",
-                      padding: "20px 4px",
-                      fontFamily: "var(--font-serif)",
-                      fontSize: 24,
-                      color: "var(--ink)",
-                      textDecoration: "none",
-                      letterSpacing: "-0.014em",
-                    }}
+                    className="site-drawer__nav-link"
                   >
                     {item.label}
                   </Link>
@@ -389,7 +207,7 @@ export function SiteHeader() {
               ))}
             </ul>
           </nav>
-          <div style={{ marginTop: 32, display: "flex", flexDirection: "column", gap: 12 }}>
+          <div className="site-drawer__actions">
             {secondaryNav.map((link) => (
               <Link
                 key={link.href}
@@ -397,16 +215,7 @@ export function SiteHeader() {
                 target={link.external ? "_blank" : undefined}
                 rel={link.external ? "noopener noreferrer" : undefined}
                 onClick={() => setMobileOpen(false)}
-                style={{
-                  display: "block",
-                  padding: "14px 20px",
-                  border: "1px solid var(--ink)",
-                  fontFamily: "var(--font-sans)",
-                  fontSize: 15,
-                  color: "var(--ink)",
-                  textDecoration: "none",
-                  textAlign: "center",
-                }}
+                className="site-drawer__action"
               >
                 {link.label}
               </Link>
@@ -414,52 +223,6 @@ export function SiteHeader() {
           </div>
         </div>
       )}
-
-      <style>{`
-        .hide-mobile { display: flex; }
-        .show-mobile { display: none; }
-        @media (max-width: 900px) {
-          .hide-mobile { display: none !important; }
-          .show-mobile { display: inline-flex !important; }
-        }
-      `}</style>
     </header>
   );
 }
-
-const navLinkStyle: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  padding: "10px 14px",
-  fontFamily: "var(--font-sans)",
-  fontSize: 14,
-  fontWeight: 500,
-  color: "var(--ink)",
-  textDecoration: "none",
-  cursor: "pointer",
-  letterSpacing: "-0.005em",
-};
-
-const linkQuietStyle: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  padding: "10px 12px",
-  fontFamily: "var(--font-sans)",
-  fontSize: 14,
-  color: "var(--ink-2)",
-  textDecoration: "none",
-};
-
-const ctaButtonStyle: React.CSSProperties = {
-  display: "inline-flex",
-  alignItems: "center",
-  gap: 8,
-  padding: "10px 18px",
-  background: "var(--ink)",
-  color: "var(--paper)",
-  fontFamily: "var(--font-sans)",
-  fontSize: 14,
-  fontWeight: 500,
-  textDecoration: "none",
-  transition: "transform var(--dur-fast) var(--ease-out)",
-};

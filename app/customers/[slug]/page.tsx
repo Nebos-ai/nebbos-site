@@ -4,8 +4,6 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
 import type { Metadata } from "next";
 
 type Params = { slug: string };
@@ -76,25 +74,21 @@ export default async function CustomerCaseStudyPage({
   const metaParts = [item.industry, item.company, formatDate(item.date)].filter(Boolean);
 
   return (
-    <>
-      <SiteHeader />
-      <main className="container-narrow editorial-post">
-        <Link href="/customers" className="editorial-post__backlink">
-          ← Customers
-        </Link>
-        <p className="editorial-post__meta">{metaParts.join(" · ")}</p>
-        <h1 className="editorial-post__title">{item.title}</h1>
-        <p className="editorial-post__lede">{item.description}</p>
-        <article className="blog-prose" dangerouslySetInnerHTML={{ __html: item.html }} />
-        <footer className="editorial-post__footer">
-          <p>
-            <Link href="/customers">More case studies</Link> ·{" "}
-            <Link href="/solutions">See the solutions</Link> ·{" "}
-            <Link href="/demo">Book a demo</Link>
-          </p>
-        </footer>
-      </main>
-      <SiteFooter />
-    </>
+    <div className="container-narrow editorial-post">
+      <Link href="/customers" className="editorial-post__backlink">
+        ← Customers
+      </Link>
+      <p className="editorial-post__meta">{metaParts.join(" · ")}</p>
+      <h1 className="editorial-post__title">{item.title}</h1>
+      <p className="editorial-post__lede">{item.description}</p>
+      <article className="blog-prose" dangerouslySetInnerHTML={{ __html: item.html }} />
+      <footer className="editorial-post__footer">
+        <p>
+          <Link href="/customers">More case studies</Link> ·{" "}
+          <Link href="/solutions">See the solutions</Link> ·{" "}
+          <Link href="/demo">Book a demo</Link>
+        </p>
+      </footer>
+    </div>
   );
 }

@@ -2,8 +2,6 @@ import Link from "next/link";
 import { promises as fs } from "fs";
 import path from "path";
 import matter from "gray-matter";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -54,32 +52,28 @@ function formatDate(iso: string): string {
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
   return (
-    <>
-      <SiteHeader />
-      <main className="container-narrow editorial-page">
-        <header className="editorial-page__lede">
-          <p className="editorial-page__eyebrow">Notes · from Nebbos</p>
-          <h1 className="editorial-page__title">Notes from Nebbos.</h1>
-          <p className="editorial-page__deck">
-            Longer writing on architecture, governance, and what an operating
-            system for the AI-native enterprise actually looks like.
-          </p>
-        </header>
-        <ol className="editorial-list">
-          {posts.map((post) => (
-            <li key={post.slug} className="editorial-list__item">
-              <Link href={`/blog/${post.slug}`} aria-label={post.title}>
-                <article>
-                  <p className="editorial-list__date">{formatDate(post.date)}</p>
-                  <h2 className="editorial-list__title">{post.title}</h2>
-                  <p className="editorial-list__desc">{post.description}</p>
-                </article>
-              </Link>
-            </li>
-          ))}
-        </ol>
-      </main>
-      <SiteFooter />
-    </>
+    <div className="container-narrow editorial-page">
+      <header className="editorial-page__lede">
+        <p className="editorial-page__eyebrow">Notes · from Nebbos</p>
+        <h1 className="editorial-page__title">Notes from Nebbos.</h1>
+        <p className="editorial-page__deck">
+          Longer writing on architecture, governance, and what an operating
+          system for the AI-native enterprise actually looks like.
+        </p>
+      </header>
+      <ol className="editorial-list">
+        {posts.map((post) => (
+          <li key={post.slug} className="editorial-list__item">
+            <Link href={`/blog/${post.slug}`} aria-label={post.title}>
+              <article>
+                <p className="editorial-list__date">{formatDate(post.date)}</p>
+                <h2 className="editorial-list__title">{post.title}</h2>
+                <p className="editorial-list__desc">{post.description}</p>
+              </article>
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

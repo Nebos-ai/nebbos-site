@@ -18,18 +18,18 @@ structurally impossible, not contractually forbidden.
 
 ## The difference in practice
 
-Take tenant isolation. The typical vendor's DPA contains a paragraph
+Take client isolation. The typical vendor's DPA contains a paragraph
 committing to "logical separation of customer data." Interpreted charitably,
 that means a `tenant_id` column and application code that promises to filter
 by it. Interpreted realistically, that means an application-layer bug can
-leak your data to another tenant, and the vendor's promise is that the bug
+leak your data to another client, and the vendor's promise is that the bug
 won't happen. The contract does not prevent the bug. The contract describes
 what the vendor commits to fix after the bug happens.
 
 Row-level isolation at the substrate is different. It is a Postgres RLS
-policy attached to every table that carries tenant scope. Every request runs
-inside a session with a tenant-identity context variable. The policy compares
-that variable against the row's tenant column. An application-layer bug that
+policy attached to every table that carries client scope. Every request runs
+inside a session with a client-identity context variable. The policy compares
+that variable against the row's client column. An application-layer bug that
 forgets the filter fails closed — the database refuses the read. The contract
 now describes what the code has already made impossible.
 

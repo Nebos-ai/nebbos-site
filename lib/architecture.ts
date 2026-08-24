@@ -79,10 +79,10 @@ export const LAYERS: Layer[] = [
     name: "Data",
     caption: "schema · store · mapping",
     detail:
-      "Every fact your company knows lives here as a typed row. A hardened relational store with vector search, row-level tenant isolation enforced by policy, and versioned migrations. The single source of what is true.",
+      "Every fact your company knows lives here as a typed row. A hardened relational store with vector search, row-level client isolation enforced by policy, and versioned migrations. The single source of what is true.",
     proof: [
       "Typed schema across every entity",
-      "Row-level isolation by tenant",
+      "Row-level isolation by client",
       "Versioned migrations from day one",
     ],
     who: "Every Pearl your enterprise runs. Every human who queries the source of truth. Your CISO when they audit which rows any given call touched.",
@@ -91,17 +91,17 @@ export const LAYERS: Layer[] = [
       "Any new capability starts here — schema first",
       "Any audit — the row-level trail comes from here",
       "Any migration — versioned schema means safe rollout",
-      "Any tenant isolation question — policy enforced at this layer",
+      "Any client isolation question — policy enforced at this layer",
     ],
-    why: "One typed source of truth means every downstream layer trusts the data it reads. Row-level tenant isolation at the substrate means no application-layer bug can leak across tenants. Versioned migrations from day one mean schema changes ship without downtime.",
-    howToThink: "Think of Data as the ground truth substrate every Pearl reasons against. It is not a database in the SaaS sense — a collection of app-scoped tables tied to one product. It is the typed, tenant-isolated source of what your enterprise knows, versioned like source code and audited like a bank ledger. Every Pearl reads from it. Every human decision writes to it. Every audit line resolves against a specific row here. The discipline is: nothing lives above this layer that isn&rsquo;t reflected in it.",
+    why: "One typed source of truth means every downstream layer trusts the data it reads. Row-level client isolation at the substrate means no application-layer bug can leak across clients. Versioned migrations from day one mean schema changes ship without downtime.",
+    howToThink: "Think of Data as the ground truth substrate every Pearl reasons against. It is not a database in the SaaS sense — a collection of app-scoped tables tied to one product. It is the typed, client-isolated source of what your enterprise knows, versioned like source code and audited like a bank ledger. Every Pearl reads from it. Every human decision writes to it. Every audit line resolves against a specific row here. The discipline is: nothing lives above this layer that isn&rsquo;t reflected in it.",
     pitfalls: [
-      { title: "Bolting Nebbos onto a shared app database", body: "Sharing a database between your product application and your governance substrate breaks tenant isolation at the policy layer. The right shape is: Nebbos&rsquo;s substrate is separate, mirroring only what governance needs, connected via Ingest not shared reads." },
+      { title: "Bolting Nebbos onto a shared app database", body: "Sharing a database between your product application and your governance substrate breaks client isolation at the policy layer. The right shape is: Nebbos&rsquo;s substrate is separate, mirroring only what governance needs, connected via Ingest not shared reads." },
       { title: "Skipping the versioned-migration discipline", body: "Teams ship ad-hoc schema changes and hope. That works until an audit asks &lsquo;what was the schema on March 3rd&rsquo; and there&rsquo;s no answer. Versioned migrations from day one mean the historical schema is queryable — and rollout is safe under load." },
-      { title: "Trusting application-layer isolation", body: "If your app decides which tenant sees which row, one bug leaks across tenants. Row-level isolation at the substrate — enforced by database policy, not application code — means the bug can&rsquo;t exist." },
+      { title: "Trusting application-layer isolation", body: "If your app decides which client sees which row, one bug leaks across clients. Row-level isolation at the substrate — enforced by database policy, not application code — means the bug can&rsquo;t exist." },
     ],
     benchmarks: [
-      { label: "Tenant isolation enforced at", value: "Substrate", context: "Row-level policy, not application-layer checks" },
+      { label: "Client isolation enforced at", value: "Substrate", context: "Row-level policy, not application-layer checks" },
       { label: "Schema version history", value: "100%", context: "Every migration is a first-class object" },
       { label: "Vector search parity", value: "Yes", context: "Semantic + typed queries on the same store" },
     ],
@@ -118,7 +118,7 @@ export const LAYERS: Layer[] = [
     name: "Identity",
     caption: "auth · service tokens · trust",
     detail:
-      "Who is who, and what they can do. Enterprise SSO for humans, service tokens for machines, workload identity for every Pearl running on the tenant. Every request carries an identity that cascades through the isolation gate at the substrate.",
+      "Who is who, and what they can do. Enterprise SSO for humans, service tokens for machines, workload identity for every Pearl running on the client. Every request carries an identity that cascades through the isolation gate at the substrate.",
     proof: [
       "Enterprise SSO with SCIM provisioning",
       "Service · workload · device credentials",
@@ -237,7 +237,7 @@ export const LAYERS: Layer[] = [
       "Same authorization on both surfaces",
       "Rate limits enforced uniformly",
     ],
-    who: "Every Pearl running inside your tenant, every integration your team wires in, every external system that needs to read from or write to Nebbos. Your engineers when they build against Nebbos. Your CISO when they audit which calls hit which endpoints.",
+    who: "Every Pearl running inside your client, every integration your team wires in, every external system that needs to read from or write to Nebbos. Your engineers when they build against Nebbos. Your CISO when they audit which calls hit which endpoints.",
     where: "Sits at the boundary — between the substrate below (Data · Identity · Departments) and the world above (Ingest · Integrations). Every call from a Pearl to any Nebbos capability crosses this layer. Every third-party integration crosses this layer. The single choke point for authorization + rate limits + audit.",
     when: [
       "You&rsquo;re building an integration that reads Nebbos data",
@@ -246,11 +246,11 @@ export const LAYERS: Layer[] = [
       "You need one audit trail across UI + programmatic access",
       "You&rsquo;re rate-limiting a runaway Pearl or automated workload",
     ],
-    why: "One contract eliminates the divergence problem where the UI can do things the API can&rsquo;t (or vice versa). Every capability is exposed identically to humans and to Pearls, so there&rsquo;s no shadow API surface for the security team to worry about. The MCP layer means any modern AI model — yours, a provider&rsquo;s, or a future one — can call Nebbos tools without a bespoke wrapper. Uniform rate limits mean a misbehaving Pearl can&rsquo;t take down the humans who share its tenant.",
+    why: "One contract eliminates the divergence problem where the UI can do things the API can&rsquo;t (or vice versa). Every capability is exposed identically to humans and to Pearls, so there&rsquo;s no shadow API surface for the security team to worry about. The MCP layer means any modern AI model — yours, a provider&rsquo;s, or a future one — can call Nebbos tools without a bespoke wrapper. Uniform rate limits mean a misbehaving Pearl can&rsquo;t take down the humans who share its client.",
     howToThink: "Think of API + MCP as the single choke point through which every capability of Nebbos is exposed — to humans (REST) and to machines (MCP) — against exactly the same authorization, the same audit line, and the same rate limits. It&rsquo;s the discipline that says: there is no shadow API surface. If your CISO can audit the human UI, they can audit every Pearl and every integration too, because it&rsquo;s the same contract. This is what separates a real operating system from a stack of features with an admin console.",
     pitfalls: [
       { title: "Building a Pearl-specific API alongside the human one", body: "Teams often ship a separate Pearl-only API with a different auth model. The moment those two diverge, your CISO loses the single audit trail and your compliance posture bifurcates. The right shape is one contract for both." },
-      { title: "Rate-limiting only for humans", body: "A misbehaving Pearl can call an endpoint 10,000 times a second. If your rate limits assume human tempo, one runaway workflow takes down the tenant. Uniform limits — enforced identically for humans + machines — prevent tenant-blast-radius incidents." },
+      { title: "Rate-limiting only for humans", body: "A misbehaving Pearl can call an endpoint 10,000 times a second. If your rate limits assume human tempo, one runaway workflow takes down the client. Uniform limits — enforced identically for humans + machines — prevent client-blast-radius incidents." },
       { title: "MCP as an afterthought", body: "Teams retrofit MCP onto an existing REST API by writing a thin wrapper. That creates two surface areas to secure, two rate-limit engines, two audit lines. The right shape is one contract with two protocols speaking to it." },
     ],
     benchmarks: [
@@ -271,22 +271,22 @@ export const LAYERS: Layer[] = [
     name: "Integrations",
     caption: "connector catalog · onboarding",
     detail:
-      "How a customer plugs Nebbos into their existing stack. Named connectors for the tools that matter, OAuth adapters for the rest, and an onboarding wizard that walks a tenant from zero to first Pearl running in under a day.",
+      "How a customer plugs Nebbos into their existing stack. Named connectors for the tools that matter, OAuth adapters for the rest, and an onboarding wizard that walks a client from zero to first Pearl running in under a day.",
     proof: [
       "Named connector catalog",
       "OAuth adapters for long-tail sources",
-      "Wizard-driven tenant onboarding",
+      "Wizard-driven client onboarding",
     ],
     who: "Your engineering team when they wire Nebbos to your existing stack. Your solutions engineer during the onboarding sprint. Every Pearl that acts on external systems.",
     where: "Sits at the boundary — the connective tissue between Nebbos and everything else your enterprise runs. Feeds Ingest upstream and gets called by Pearls downstream.",
     when: [
-      "You&rsquo;re onboarding a new tenant — the wizard runs here",
+      "You&rsquo;re onboarding a new client — the wizard runs here",
       "You&rsquo;re expanding a Pearl to a new source system",
       "You&rsquo;re rotating credentials on a connector",
       "You&rsquo;re evaluating whether Nebbos fits your stack",
     ],
-    why: "Named connectors for the tools that matter mean you&rsquo;re wired in without custom glue. OAuth adapters for the long tail mean nothing is unreachable. A wizard-driven onboarding means a tenant goes from zero to first Pearl running in under a day.",
-    howToThink: "Integrations is the connective tissue between Nebbos and everything else your enterprise runs. Think of it as a curated connector catalog for the systems that matter (Slack, GitHub, Google Workspace, Salesforce, Workday, NetSuite, ServiceNow) plus OAuth adapters for the long-tail systems plus a wizard that walks a new tenant from zero to first Pearl running in under a day. The discipline is: nothing is unreachable, everything is reversible, and the credentials live in the substrate, not in a Pearl.",
+    why: "Named connectors for the tools that matter mean you&rsquo;re wired in without custom glue. OAuth adapters for the long tail mean nothing is unreachable. A wizard-driven onboarding means a client goes from zero to first Pearl running in under a day.",
+    howToThink: "Integrations is the connective tissue between Nebbos and everything else your enterprise runs. Think of it as a curated connector catalog for the systems that matter (Slack, GitHub, Google Workspace, Salesforce, Workday, NetSuite, ServiceNow) plus OAuth adapters for the long-tail systems plus a wizard that walks a new client from zero to first Pearl running in under a day. The discipline is: nothing is unreachable, everything is reversible, and the credentials live in the substrate, not in a Pearl.",
     pitfalls: [
       { title: "Credentials embedded in Pearls", body: "If a Pearl holds the credentials for a source system directly, rotating those credentials means redeploying the Pearl. Credentials belong in the substrate, brokered on demand — rotation is a substrate operation." },
       { title: "One-way integrations", body: "A source system that Nebbos reads but doesn&rsquo;t write to is a partial integration. When a Pearl wants to act (send a Slack message, update a ticket, create a calendar event), the write path has to work with the same credentials + audit line." },
@@ -341,7 +341,7 @@ export const LAYERS: Layer[] = [
       { label: "Memory hit rate improvement", value: "~10x", context: "Same team, month 24 vs month 1 (memory-first retrieval)" },
       { label: "AI overage reduction", value: "~90%", context: "vs calling frontier models for every question" },
       { label: "Portability commitment", value: "100%", context: "Full memory export on offboarding, per contract" },
-      { label: "Time-to-value on new Pearl", value: "<1 day", context: "From tenant provisioning to first tuned response" },
+      { label: "Time-to-value on new Pearl", value: "<1 day", context: "From client provisioning to first tuned response" },
     ],
     related: [1, 8, 10],
     pearls: [
@@ -368,7 +368,7 @@ export const LAYERS: Layer[] = [
       "Real-time budget tracking",
       "Graceful fallback on provider degradation",
     ],
-    who: "Every Pearl doing analytical work. Your ML platform team when they set per-tenant model routing policy. Your CFO when they audit provider-mix and budget-vs-actual.",
+    who: "Every Pearl doing analytical work. Your ML platform team when they set per-client model routing policy. Your CFO when they audit provider-mix and budget-vs-actual.",
     where: "Sits at the intelligence band. Consumes Memory + Data. Feeds Detectors + Pearl. Every model call passes through this router.",
     when: [
       "A Pearl needs a model call for something Memory can&rsquo;t answer",
@@ -474,7 +474,7 @@ export const LAYERS: Layer[] = [
       { title: "Ignoring the portability guarantee", body: "If you ever leave Nebbos, the tuned Pearl + its memory come with you. This should be in your MSA. Buyers who don&rsquo;t insist on the portability clause are giving up their moat back to the platform." },
     ],
     benchmarks: [
-      { label: "Pearls per typical enterprise tenant", value: "6-12", context: "One per department that would benefit from a brain" },
+      { label: "Pearls per typical enterprise client", value: "6-12", context: "One per department that would benefit from a brain" },
       { label: "Time-to-first-value on a new Pearl", value: "<7 days", context: "From deployment to first team-tuned response" },
       { label: "Retention on tuned Pearl vs untuned", value: "3-5x", context: "Measured on preference-pair capture rate" },
       { label: "Portable at offboarding", value: "100%", context: "Contractual guarantee — memory, tuning, decisions all export" },
@@ -561,11 +561,11 @@ export const LAYERS: Layer[] = [
     pitfalls: [
       { title: "Blind retries", body: "Retrying a failed action three times without understanding why it failed can make things worse (duplicate charges, duplicate messages, duplicate tickets). Idempotency plus retry-with-context is the correct shape." },
       { title: "No dead-letter escalation", body: "When retries exhaust, someone has to know. A failed action that sits silently in a queue is worse than an immediate error — humans lose situational awareness." },
-      { title: "Coupled to one Pearl", body: "An orchestrator built for one Pearl at a time doesn&rsquo;t scale to the multi-Pearl deployment that mature tenants run. Orchestrator has to coordinate cross-Pearl actions natively." },
+      { title: "Coupled to one Pearl", body: "An orchestrator built for one Pearl at a time doesn&rsquo;t scale to the multi-Pearl deployment that mature clients run. Orchestrator has to coordinate cross-Pearl actions natively." },
     ],
     benchmarks: [
       { label: "Retry policies configurable", value: "Per action-type", context: "Idempotency + backoff" },
-      { label: "Cross-Pearl coordination", value: "Native", context: "One orchestrator serves all Pearls on a tenant" },
+      { label: "Cross-Pearl coordination", value: "Native", context: "One orchestrator serves all Pearls on a client" },
       { label: "Every action attested", value: "100%", context: "Schedule + execute + outcome" },
     ],
     related: [10, 11, 15],
@@ -585,31 +585,31 @@ export const LAYERS: Layer[] = [
     name: "Onboarding",
     caption: "provisioning · SOW · offboarding",
     detail:
-      "Sign, provision, onboard, expand, offboard — the full lifecycle. Tenant provisioning is automated after contract signature; scope-of-work and change-request flows are wired into the same substrate; offboarding preserves the audit trail per retention policy.",
+      "Sign, provision, onboard, expand, offboard — the full lifecycle. Client provisioning is automated after contract signature; scope-of-work and change-request flows are wired into the same substrate; offboarding preserves the audit trail per retention policy.",
     proof: [
-      "Automated tenant provisioning",
+      "Automated client provisioning",
       "Scope-of-work · change-requests · expansions",
       "Retention-preserving offboarding",
     ],
-    who: "New Nebbos tenants coming online. Your solutions engineer during the initial sprint. Your legal team signing the DPA and MSA. Existing tenants when they add a new department Pearl.",
-    where: "Sits at the commerce band. The customer&rsquo;s entry into Nebbos. Feeds all substrate + intelligence + action layers with the identity and structure the tenant will run on.",
+    who: "New Nebbos clients coming online. Your solutions engineer during the initial sprint. Your legal team signing the DPA and MSA. Existing clients when they add a new department Pearl.",
+    where: "Sits at the commerce band. The customer&rsquo;s entry into Nebbos. Feeds all substrate + intelligence + action layers with the identity and structure the client will run on.",
     when: [
-      "You&rsquo;re signing an MSA and DPA to become a Nebbos tenant",
-      "You&rsquo;re expanding an existing tenant to a new department",
+      "You&rsquo;re signing an MSA and DPA to become a Nebbos client",
+      "You&rsquo;re expanding an existing client to a new department",
       "You&rsquo;re renewing or restructuring an engagement",
       "You&rsquo;re offboarding — this layer preserves the audit trail per your retention policy",
     ],
     why: "Onboarding-through-offboarding is one continuous accountable flow, not a series of disjoint handoffs. Every state your tenancy is in is a first-class object with an owner and an audit line. When you leave someday, your data, your memory, your Pearls all come with you.",
-    howToThink: "Onboarding is the layer that owns the customer&rsquo;s lifecycle with Nebbos — sign, provision, tune, expand, offboard. Think of it as the connective tissue between commercial contract and operational reality: when the MSA is signed, the tenant provisions automatically. When a new department wants a Pearl, expansion is a substrate operation, not a re-sale. When a customer eventually leaves, offboarding preserves the audit trail and hands them their memory. The discipline is: every state your relationship is in is a first-class object with an owner and an audit line.",
+    howToThink: "Onboarding is the layer that owns the customer&rsquo;s lifecycle with Nebbos — sign, provision, tune, expand, offboard. Think of it as the connective tissue between commercial contract and operational reality: when the MSA is signed, the client provisions automatically. When a new department wants a Pearl, expansion is a substrate operation, not a re-sale. When a customer eventually leaves, offboarding preserves the audit trail and hands them their memory. The discipline is: every state your relationship is in is a first-class object with an owner and an audit line.",
     pitfalls: [
-      { title: "Manual provisioning after contract signature", body: "If a human has to run a checklist to stand up a new tenant, provisioning takes days and the checklist has drift. Automated post-signature provisioning means the tenant is running in hours, not days." },
-      { title: "Expansion as a re-sale", body: "Adding a new department Pearl to an existing tenant should be a self-service substrate operation. If it requires renegotiating pricing or re-scoping the MSA, expansion friction kills value." },
-      { title: "Retention policies as an afterthought", body: "Different tenants have different retention needs (SOX vs HIPAA vs GDPR). Onboarding is where those get set — and where offboarding checks them before it destroys anything." },
+      { title: "Manual provisioning after contract signature", body: "If a human has to run a checklist to stand up a new client, provisioning takes days and the checklist has drift. Automated post-signature provisioning means the client is running in hours, not days." },
+      { title: "Expansion as a re-sale", body: "Adding a new department Pearl to an existing client should be a self-service substrate operation. If it requires renegotiating pricing or re-scoping the MSA, expansion friction kills value." },
+      { title: "Retention policies as an afterthought", body: "Different clients have different retention needs (SOX vs HIPAA vs GDPR). Onboarding is where those get set — and where offboarding checks them before it destroys anything." },
     ],
     benchmarks: [
       { label: "Time from signature to first Pearl", value: "<1 day", context: "Automated post-signature provisioning" },
       { label: "Expansion friction", value: "Self-service", context: "New department Pearls without re-sale" },
-      { label: "Offboarding preserves audit", value: "Per retention policy", context: "Tenant-configurable" },
+      { label: "Offboarding preserves audit", value: "Per retention policy", context: "Client-configurable" },
     ],
     related: [2, 3, 14],
     pearls: [
@@ -627,7 +627,7 @@ export const LAYERS: Layer[] = [
     name: "Billing",
     caption: "per-seat · Nebbos tokens · storage",
     detail:
-      "One flat per-seat subscription covers the substrate + every layer + every Pearl. AI-usage overage bills in Nebbos tokens — a stable currency Nebbos absorbs provider volatility into. Storage on a separate line. Every billed event traces back to a specific Pearl action on a specific tenant.",
+      "One flat per-seat subscription covers the substrate + every layer + every Pearl. AI-usage overage bills in Nebbos tokens — a stable currency Nebbos absorbs provider volatility into. Storage on a separate line. Every billed event traces back to a specific Pearl action on a specific client.",
     proof: [
       "Flat per-seat · every layer, every Pearl included",
       "Overage in Nebbos tokens · provider-agnostic",
@@ -641,12 +641,12 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re forecasting next quarter&rsquo;s per-department AI spend",
       "You&rsquo;re comparing Nebbos cost against ROI on saved head-count",
     ],
-    why: "One flat per-seat subscription for the substrate + governance layers means budget predictability. AI overage in stable Nebbos tokens means provider price swings do not move your line item. Every dollar spent is traceable back to a specific Pearl action on a specific tenant — the whole spend is legible.",
+    why: "One flat per-seat subscription for the substrate + governance layers means budget predictability. AI overage in stable Nebbos tokens means provider price swings do not move your line item. Every dollar spent is traceable back to a specific Pearl action on a specific client — the whole spend is legible.",
     howToThink: "Billing is the substrate that turns Nebbos-generated value into a predictable line item on your enterprise&rsquo;s books. Two disciplines make it work. First: one flat per-seat subscription covers the substrate plus all fifteen layers plus every Pearl your enterprise deploys — no per-Pearl surcharge, no per-department upsell. Second: AI-usage overage bills in Nebbos tokens — a stable currency Nebbos absorbs provider volatility into. When Anthropic or OpenAI moves prices, your invoice does not move with them. Pricing itself is an enterprise conversation, handled by the sales motion — not a marketing surface.",
     pitfalls: [
       { title: "Per-Pearl or per-feature pricing", body: "Enterprises reject metered pricing that scales with success — the more you use the platform, the more the bill grows unpredictably. Flat per-seat with capped-usage bundles is what CFOs actually want." },
       { title: "Overage priced in provider USD", body: "If overage passes through provider prices directly, one vendor pricing decision moves your bill. Overage in Nebbos tokens shields you from that." },
-      { title: "Billing separate from attestation", body: "Every billed event should be traceable to a specific Pearl action on a specific tenant. If billing lives in a different system than attestation, reconciliation is a manual monthly project." },
+      { title: "Billing separate from attestation", body: "Every billed event should be traceable to a specific Pearl action on a specific client. If billing lives in a different system than attestation, reconciliation is a manual monthly project." },
     ],
     benchmarks: [
       { label: "Overage currency", value: "Nebbos tokens", context: "Stable, provider-agnostic" },
@@ -694,7 +694,7 @@ export const LAYERS: Layer[] = [
       { label: "Attestation coverage", value: "100%", context: "Every human approval + every Pearl action + every model call" },
       { label: "Chain verification time", value: "<1s per event", context: "Regulator or auditor can verify any single event trail" },
       { label: "EU AI Act Article 11 Annex IV readiness", value: "Pack available under NDA", context: "Ahead of 2027-08-02 deadline" },
-      { label: "Retention", value: "Configurable per tenant", context: "SOX / HIPAA / GDPR / sector-specific retention supported" },
+      { label: "Retention", value: "Configurable per client", context: "SOX / HIPAA / GDPR / sector-specific retention supported" },
     ],
     related: [2, 11, 14],
     pearls: [
@@ -774,8 +774,8 @@ export const EDGES: Edge[] = [
   { from: 11, to: 2,  kind: "depends" }, // Approval → Identity
   { from: 12, to: 10, kind: "depends" }, // Orchestrator → Pearl
   { from: 12, to: 11, kind: "depends" }, // Orchestrator → Approval
-  { from: 13, to: 2,  kind: "depends" }, // Tenant lifecycle → Identity
-  { from: 13, to: 3,  kind: "depends" }, // Tenant lifecycle → Departments
+  { from: 13, to: 2,  kind: "depends" }, // Client lifecycle → Identity
+  { from: 13, to: 3,  kind: "depends" }, // Client lifecycle → Departments
   { from: 14, to: 12, kind: "depends" }, // Billing → Orchestrator
   { from: 14, to: 5,  kind: "depends" }, // Billing → API+MCP
   { from: 15, to: 11, kind: "depends" }, // Attestation → Approval

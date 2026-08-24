@@ -4,8 +4,6 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { SiteHeader } from "@/components/site/SiteHeader";
-import { SiteFooter } from "@/components/site/SiteFooter";
 import type { Metadata } from "next";
 
 type Params = { slug: string };
@@ -73,27 +71,23 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <>
-      <SiteHeader />
-      <main className="container-narrow editorial-post">
-        <Link href="/blog" className="editorial-post__backlink">
-          ← Notes
-        </Link>
-        <p className="editorial-post__meta">
-          {formatDate(post.date)} · {post.author}
+    <div className="container-narrow editorial-post">
+      <Link href="/blog" className="editorial-post__backlink">
+        ← Notes
+      </Link>
+      <p className="editorial-post__meta">
+        {formatDate(post.date)} · {post.author}
+      </p>
+      <h1 className="editorial-post__title">{post.title}</h1>
+      <p className="editorial-post__lede">{post.description}</p>
+      <article className="blog-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+      <footer className="editorial-post__footer">
+        <p>
+          <Link href="/blog">More notes</Link> ·{" "}
+          <Link href="/product">See the architecture</Link> ·{" "}
+          <Link href="/demo">Book a demo</Link>
         </p>
-        <h1 className="editorial-post__title">{post.title}</h1>
-        <p className="editorial-post__lede">{post.description}</p>
-        <article className="blog-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
-        <footer className="editorial-post__footer">
-          <p>
-            <Link href="/blog">More notes</Link> ·{" "}
-            <Link href="/product">See the architecture</Link> ·{" "}
-            <Link href="/demo">Book a demo</Link>
-          </p>
-        </footer>
-      </main>
-      <SiteFooter />
-    </>
+      </footer>
+    </div>
   );
 }
