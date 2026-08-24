@@ -1,26 +1,34 @@
 /**
- * SectionNumeral · v3 · 2026-08-24 (Izanami reference)
+ * SectionNumeral · v2 primitive
  *
- * Was: mono-gold "01 · Where it starts" (numeric prefix + dot + label,
- * uppercase, tracked).
- * Now: lowercase single-word-style label ("philosophy", "projects").
- * The numeric prefix `n` is preserved in the API for backward compatibility
- * but not rendered — content sources may keep passing it, we just drop it
- * at render time.
- *
- * Consumers that want to display the numeral can pass a specific label
- * like "01 · philosophy" — the whole string renders as-is.
+ * The mono-gold "01 · Where it starts" label above every section title.
+ * Used on home sections, product pages, and enterprise pages so the
+ * numbered-chapter register is consistent site-wide.
  *
  * Usage:
  *   <SectionNumeral n="01" label="Where it starts" />
- *   → renders: "where it starts" (lowercase, tracked-mono, muted color)
+ *   <SectionNumeral n={2} label="The story" />
  */
 type Props = {
-  n?: string | number;
+  n: string | number;
   label: string;
   as?: keyof React.JSX.IntrinsicElements;
 };
 
-export function SectionNumeral({ label, as: Tag = "div" }: Props) {
-  return <Tag className="eyebrow">{label}</Tag>;
+export function SectionNumeral({ n, label, as: Tag = "div" }: Props) {
+  const num = typeof n === "number" ? String(n).padStart(2, "0") : n;
+  return (
+    <Tag
+      className="eyebrow"
+      style={{
+        display: "inline-flex",
+        alignItems: "baseline",
+        gap: 10,
+      }}
+    >
+      <span style={{ fontWeight: 600 }}>{num}</span>
+      <span aria-hidden style={{ color: "var(--ink-3)", opacity: 0.6 }}>·</span>
+      <span>{label}</span>
+    </Tag>
+  );
 }

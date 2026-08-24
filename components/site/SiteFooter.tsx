@@ -41,14 +41,14 @@ export function SiteFooter() {
               style={{ display: "inline-flex", alignItems: "center", gap: 16, color: "var(--ink)", marginBottom: 20, textDecoration: "none" }}
             >
               <Image
-                src="/nebbos-mark-white.svg"
+                src="/nebbos-mark-dark.svg"
                 alt=""
                 aria-hidden="true"
                 width={48}
                 height={49}
               />
               <Image
-                src="/nebbos-wordmark-white.svg"
+                src="/nebbos-wordmark-dark.svg"
                 alt="Nebbos"
                 width={172}
                 height={33}

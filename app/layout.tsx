@@ -2,24 +2,26 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { SiteLoader } from "@/components/site/SiteLoader";
 import { BRAND } from "@/content/brand";
 
 import "./globals.css";
 
 /**
- * Root layout · Nebbos site v4.1 · 2026-08-24
+ * Root layout · Nebbos site v3 · font stack 2026-08-24 revision
  *
- * Font stack: Space Grotesk (restored — founder confirmed this is the
- * desired font, not Helvetica Neue). Loaded via next/font/google for
- * both display and body. Fira Code for mono eyebrows and numerals.
+ * Founder direction 2026-08-24: replace Fraunces (rounded humanist serif) +
+ * Manrope (humanist grotesk) with an executive geometric grotesque. "Clean
+ * straight lines, not as rounded, not as animated."
  *
- * The token layer (--font-serif and --font-sans in app/globals.css)
- * points to Space Grotesk with system-font fallbacks including Hiragino
- * Kaku Gothic ProN for Japanese CJK support.
+ * Space Grotesk — designed by Florian Karsten, based on Space Mono. Squared
+ * terminals, geometric construction, tech-institutional character. Loaded
+ * for display + body. Both --font-serif and --font-sans point to it so the
+ * design-token layer stays stable while the underlying font changes.
  *
- * SiteLoader: full-screen bone-on-warm-black loader that shows "Remember
- * who you are." on first paint, fades once the main content settles.
+ * Fira Code — mono for eyebrows, numerals, code (unchanged).
+ *
+ * Self-hosted via next/font so no external CSS fetch on first paint
+ * (CLS-safe). Variable weight — one load for the whole 300-700 range.
  */
 
 const display = Space_Grotesk({
@@ -98,7 +100,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
-        <SiteLoader />
         <a href="#main" className="skip-link">Skip to content</a>
         <SiteHeader />
         <main id="main">{children}</main>

@@ -1,30 +1,27 @@
-import { FullBleedVideo } from "@/components/site/FullBleedVideo";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 
 /**
- * HomeHero · v7 (video take 2) · 2026-08-24
+ * HomeHero · v6 (temp static during video re-shoot) · 2026-08-24
  *
- * Second video cut per founder feedback: Scene A is a wide crowd of many
- * visible faces (camera pushes through); Scene B is a large modern
- * architectural bridge with a big crowd — only a few break forward and
- * cross. 16s silent loop, MP4 + WebM.
- *
- * Manifesto h1 stays single-line via .hero-fullbleed__title--manifesto.
+ * Fell back to static family-band-intelligence still while the hero video
+ * regenerates. Founder feedback on the first cut: Scene A should be a
+ * crowd of thousands of visible faces (not 4 close-ups); Scene B should
+ * be a much bigger modern bridge with a large crowd, only a few break
+ * forward and cross (not people walking opposite directions).
+ * Will swap back to FullBleedVideo when new shots land.
  */
 
 export function HomeHero() {
   return (
-    <FullBleedVideo
+    <FullBleedScene
       className="hero-fullbleed"
-      sources={[
-        { src: "/vision-board/hero.webm", type: "video/webm" },
-        { src: "/vision-board/hero.mp4", type: "video/mp4" },
-      ]}
-      posterSrc="/vision-board/hero-poster.jpg"
+      scene={{ imageFamily: "band-intelligence", imageFamilyVariant: 1 }}
       scrim="bottom"
       vignetteStrength={0.5}
       chapter="I"
       chapterLabel="Where it starts"
       ariaLabelledby="hero-heading"
+      priority
     >
       <div className="container hero-fullbleed__inner">
         <div className="hero-fullbleed__frame">
@@ -33,6 +30,6 @@ export function HomeHero() {
           </h1>
         </div>
       </div>
-    </FullBleedVideo>
+    </FullBleedScene>
   );
 }
