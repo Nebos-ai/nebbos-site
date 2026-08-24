@@ -9,6 +9,7 @@
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "check:vocab": "bash scripts/check-vocab.sh",
+    "build:pdf": "node scripts/build-presentation-pdf.mjs",
     "test:a11y": "playwright test",
     "test:lh": "lhci autorun --config=.lighthouserc.json"
   },
