@@ -75,15 +75,17 @@ a:hover {
    *   #d9d7d4 — Nebbos warm-bone (text · brand marks-on-dark)
    *   #F6A03F — Nebbos orange (accent · brand · unchanged)
    */
-  --paper:      #0a0801;  /* Nebbos warm-black · body surface */
-  --paper-2:    #14110a;  /* one step lighter for section alternation */
-  --ink:        #d9d7d4;  /* Nebbos warm-bone · body text */
-  --ink-2:      #a8a6a2;  /* secondary text · dimmer bone */
-  --ink-3:      #7c7a75;  /* tertiary text · muted bone */
-  --muted:      #55534e;  /* disabled · hint on dark */
-  --rule:       #26221a;  /* hairline border · sits on dark */
-  --rule-2:     #1c1912;  /* softer hairline · sub-dividers */
-  --gold:       #caa100;  /* deep gold · secondary accent (Izanami tone) */
+  /* Sharp true-black + true-white palette per founder direction 2026-08-24
+   * ("faded" tones out, "sharp" in). Pixel-perfect contrast. */
+  --paper:      #000000;  /* true black · body surface */
+  --paper-2:    #0a0a0a;  /* micro-lift for section alternation */
+  --ink:        #FFFFFF;  /* true white · body text */
+  --ink-2:      #b8b8b8;  /* secondary text · medium grey */
+  --ink-3:      #8a8a8a;  /* tertiary text · muted grey */
+  --muted:      #4a4a4a;  /* disabled · hint */
+  --rule:       #2a2a2a;  /* hairline border · sits on black */
+  --rule-2:     #1a1a1a;  /* softer hairline · sub-dividers */
+  --gold:       #caa100;  /* deep gold · secondary accent */
   --accent-2:   #F6A03F;  /* Nebbos orange · brand · unchanged */
   --gold-2:     #FDDA88;  /* light gold · reserved */
 
@@ -92,12 +94,11 @@ a:hover {
   --scene-2:    #A8874F;
   --scene-3:    #8FA5B0;
 
-  /* Typography · Helvetica Neue system stack (Izanami-style institutional
-   * international register) + Japanese Hiragino fallback for CJK. Zero
-   * network font load; native rendering at every size. Fira Code stays
-   * for mono. */
-  --font-serif: "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
-  --font-sans:  "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
+  /* Typography · Space Grotesk (per founder direction 2026-08-24 —
+   * confirmed as the desired display + body font). Japanese Hiragino
+   * fallback added for CJK. Fira Code for mono. */
+  --font-serif: var(--font-serif), "Space Grotesk", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
+  --font-sans:  var(--font-sans), "Space Grotesk", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
   --font-mono:  var(--font-mono), "Fira Code", ui-monospace, SFMono-Regular, monospace;
 
   /* Type scale (fluid, clamp-based) — v3 · 2026-08-24

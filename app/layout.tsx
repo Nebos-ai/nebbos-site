@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fira_Code } from "next/font/google";
+import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { SiteLoader } from "@/components/site/SiteLoader";
@@ -8,20 +8,33 @@ import { BRAND } from "@/content/brand";
 import "./globals.css";
 
 /**
- * Root layout · Nebbos site v4 · 2026-08-24
+ * Root layout · Nebbos site v4.1 · 2026-08-24
  *
- * Font stack: Helvetica Neue system stack with Japanese Hiragino CJK
- * fallback (Izanami-style international-executive register). No network
- * load for display + body fonts — Helvetica is native on macOS/iOS,
- * fallbacks handle Windows/Android. Fira Code still loaded for mono
- * eyebrows and numerals.
+ * Font stack: Space Grotesk (restored — founder confirmed this is the
+ * desired font, not Helvetica Neue). Loaded via next/font/google for
+ * both display and body. Fira Code for mono eyebrows and numerals.
  *
- * The full font stack lives in app/globals.css (--font-serif and
- * --font-sans tokens) so the design system stays token-driven.
+ * The token layer (--font-serif and --font-sans in app/globals.css)
+ * points to Space Grotesk with system-font fallbacks including Hiragino
+ * Kaku Gothic ProN for Japanese CJK support.
  *
  * SiteLoader: full-screen bone-on-warm-black loader that shows "Remember
  * who you are." on first paint, fades once the main content settles.
  */
+
+const display = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-serif",
+});
+
+const body = Space_Grotesk({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+  variable: "--font-sans",
+});
 
 const mono = Fira_Code({
   subsets: ["latin"],
@@ -83,7 +96,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={mono.variable}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <SiteLoader />
         <a href="#main" className="skip-link">Skip to content</a>
