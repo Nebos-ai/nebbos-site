@@ -73,6 +73,15 @@ export const LAYERS: Layer[] = [
       "Row-level isolation by tenant",
       "Versioned migrations from day one",
     ],
+    who: "Every Pearl your enterprise runs. Every human who queries the source of truth. Your CISO when they audit which rows any given call touched.",
+    where: "Bottom of the stack — the deepest foundation. Every layer above (Identity, Departments, Ingest, Memory, all fifteen) depends on this substrate being sound.",
+    when: [
+      "Any new capability starts here — schema first",
+      "Any audit — the row-level trail comes from here",
+      "Any migration — versioned schema means safe rollout",
+      "Any tenant isolation question — policy enforced at this layer",
+    ],
+    why: "One typed source of truth means every downstream layer trusts the data it reads. Row-level tenant isolation at the substrate means no application-layer bug can leak across tenants. Versioned migrations from day one mean schema changes ship without downtime.",
   },
   {
     n: 2,
@@ -86,6 +95,15 @@ export const LAYERS: Layer[] = [
       "Service · workload · device credentials",
       "Break-glass with full audit trail",
     ],
+    who: "Every human logging in via enterprise SSO. Every Pearl operating under a workload identity. Every machine caller with a service token. Your CISO when they answer &lsquo;who did this&rsquo;.",
+    where: "Sits at the substrate. Every request — human or Pearl — carries an identity that cascades into row-level isolation at Layer 1. The origin point of every audit line.",
+    when: [
+      "Onboarding a new department — SCIM auto-provisions",
+      "Rotating credentials — break-glass with full audit",
+      "Answering an incident — every action traces to an identity",
+      "Passing a SOC 2 audit",
+    ],
+    why: "Identity is what makes the audit trail meaningful. Without it, every action is anonymous. With it, every action has an accountable actor — human, Pearl, or machine — and every access is checked against the same policy.",
   },
   {
     n: 3,
@@ -99,6 +117,15 @@ export const LAYERS: Layer[] = [
       "Coverage · schedules · presence",
       "Department-scoped orchestration",
     ],
+    who: "Your CFO, VP Ops, Head of People — the human departments a Pearl runs for. Also the Pearl itself, which is scoped to one department at a time.",
+    where: "Sits at the substrate. Everything above (Ingest, Memory, Pearl, Approval) is scoped BY department. Nebbos is department-first, not user-first.",
+    when: [
+      "You&rsquo;re deploying a new Pearl — it inherits department scope",
+      "You&rsquo;re setting on-call rotation — Departments carries it",
+      "You&rsquo;re structuring approval — approvers are per-department roles",
+      "You&rsquo;re computing per-department cost — attribution lives here",
+    ],
+    why: "Real work happens in departments, not in individual users&rsquo; silos. Modeling departments as first-class means a Pearl fits the way your enterprise is actually structured, and coverage / handoffs / approvals work the way your teams already work.",
   },
 
   // ─── Band 2 · Boundary ─────────────────────────────────────────────
@@ -114,6 +141,15 @@ export const LAYERS: Layer[] = [
       "Unified HR · CRM · ticketing · accounting",
       "Append-only inbound event log",
     ],
+    who: "Every source system that emits a signal — Slack, Google Calendar, GitHub, HR, CRM, ticketing, accounting. The Pearls that consume those signals downstream.",
+    where: "Sits at the boundary. Everything above (API + MCP, Integrations, Memory, Reasoning) reads from what Ingest lands. Every raw event first lands here before any interpretation touches it.",
+    when: [
+      "You&rsquo;re connecting a new source system to a Pearl",
+      "You&rsquo;re debugging why a Pearl missed an event",
+      "You&rsquo;re computing signal-to-noise on incoming feeds",
+      "You&rsquo;re proving to an auditor that no event was silently dropped",
+    ],
+    why: "Append-only means every event survived. Land-before-touch means no interpretation happens without an original record. Together they make the ingest layer the immutable ground truth every downstream layer can trust.",
   },
   {
     n: 5,
@@ -150,6 +186,15 @@ export const LAYERS: Layer[] = [
       "OAuth adapters for long-tail sources",
       "Wizard-driven tenant onboarding",
     ],
+    who: "Your engineering team when they wire Nebbos to your existing stack. Your solutions engineer during the onboarding sprint. Every Pearl that acts on external systems.",
+    where: "Sits at the boundary — the connective tissue between Nebbos and everything else your enterprise runs. Feeds Ingest upstream and gets called by Pearls downstream.",
+    when: [
+      "You&rsquo;re onboarding a new tenant — the wizard runs here",
+      "You&rsquo;re expanding a Pearl to a new source system",
+      "You&rsquo;re rotating credentials on a connector",
+      "You&rsquo;re evaluating whether Nebbos fits your stack",
+    ],
+    why: "Named connectors for the tools that matter mean you&rsquo;re wired in without custom glue. OAuth adapters for the long tail mean nothing is unreachable. A wizard-driven onboarding means a tenant goes from zero to first Pearl running in under a day.",
   },
 
   // ─── Band 3 · Intelligence ─────────────────────────────────────────
@@ -165,6 +210,15 @@ export const LAYERS: Layer[] = [
       "Semantic embeddings, high-dimensional",
       "Memory-first hybrid retrieval",
     ],
+    who: "Every Pearl reasoning across your enterprise&rsquo;s accumulated work. Your team when they query institutional knowledge. Your CFO when they compute the compounding return on Nebbos&rsquo;s AI investment.",
+    where: "Sits at the intelligence band. Reads from the Data substrate. Serves the Reasoning + Detectors layers. Feeds every Pearl&rsquo;s context. Compounds every quarter.",
+    when: [
+      "A Pearl needs to answer from context — Memory answers first",
+      "A team member searches institutional knowledge",
+      "You&rsquo;re measuring inference-of-revenue KPI trend",
+      "You&rsquo;re computing per-Pearl memory cost vs new-model cost",
+    ],
+    why: "Memory-first hybrid retrieval means you&rsquo;re paying for a model call only when memory genuinely can&rsquo;t answer. Same team, month 24 vs month 1: roughly one-tenth the overage. This is the compounding-value layer — the moat that grows with use.",
   },
   {
     n: 8,
@@ -178,6 +232,15 @@ export const LAYERS: Layer[] = [
       "Real-time budget tracking",
       "Graceful fallback on provider degradation",
     ],
+    who: "Every Pearl doing analytical work. Your ML platform team when they set per-tenant model routing policy. Your CFO when they audit provider-mix and budget-vs-actual.",
+    where: "Sits at the intelligence band. Consumes Memory + Data. Feeds Detectors + Pearl. Every model call passes through this router.",
+    when: [
+      "A Pearl needs a model call for something Memory can&rsquo;t answer",
+      "A provider degrades — router falls back cleanly",
+      "Budget approaches ceiling — router downshifts to cheaper models",
+      "You&rsquo;re evaluating a new frontier model provider",
+    ],
+    why: "Multi-provider routing means you&rsquo;re never locked to one vendor&rsquo;s roadmap or pricing. Real-time budget tracking means AI-usage overage never surprises the CFO. Overage bills in Nebbos tokens — a stable currency decoupled from provider price swings.",
   },
   {
     n: 9,
@@ -191,6 +254,15 @@ export const LAYERS: Layer[] = [
       "Continuous watching, deterministic",
       "Reasoning fires only when a pattern trips",
     ],
+    who: "Your operations team when a Pearl flags something worth attention. Your CISO for security-relevant detections. Every Pearl monitoring its own department&rsquo;s signal.",
+    where: "Sits at the top of the intelligence band. Consumes Ingest + Memory + Reasoning. Signals into Pearl (which decides whether to act) and Approval (which decides whether to green-light).",
+    when: [
+      "Something is about to break in your operation",
+      "A pattern that&rsquo;s usually benign becomes concerning",
+      "A signal crosses a threshold your team defined",
+      "A compliance-relevant event needs escalation",
+    ],
+    why: "Every enterprise is drowning in event streams. Detectors turn that noise into a few concrete &lsquo;about to break&rsquo; items a human actually cares about. Fewer false positives, no missed real ones. The layer that turns your data into decisions.",
   },
 
   // ─── Band 4 · Agent + Governance ───────────────────────────────────
@@ -206,6 +278,15 @@ export const LAYERS: Layer[] = [
       "Shell = department-scoped container",
       "Pre-educated · learns independently",
     ],
+    who: "The department the Pearl serves — Nebbos Design serves your product team, Nebbos Finance serves your finance team. Your CTO when they authorize a new Pearl. The Pearl itself as it learns your team&rsquo;s specific work.",
+    where: "Sits at the agent band — the visible product surface for the customer. Consumes everything below (Memory · Reasoning · Detectors). Gates every action through Approval before hitting Orchestrator.",
+    when: [
+      "You&rsquo;re deploying a new department Pearl — this is what runs",
+      "The Pearl learns your team&rsquo;s specific patterns",
+      "You&rsquo;re measuring per-Pearl value and accuracy",
+      "You&rsquo;re offboarding — Pearl is portable to you with memory intact",
+    ],
+    why: "Pearl is the per-department brain — the visible thing your team interacts with. Shell is the container that gives it boundaries. Every Pearl starts as a Nebbos General (base version) and tunes to your team through use. At month 24 your Pearl is measurably better than at month 1 — and it&rsquo;s portable to you if you ever leave.",
   },
   {
     n: 11,
@@ -219,6 +300,15 @@ export const LAYERS: Layer[] = [
       "Human-only zones enforced",
       "Confidence-graded autonomy · reversible",
     ],
+    who: "The human in the loop — department heads, compliance officers, whoever holds the sign-off authority. Your CISO when they audit which humans approved which actions.",
+    where: "Sits at the agent band. Every consequential Pearl action passes through this gate. If not approved, doesn&rsquo;t hit Orchestrator (the layer that actually executes).",
+    when: [
+      "A Pearl proposes an action with non-trivial consequences",
+      "A compliance-relevant workflow needs human sign-off",
+      "An emergency escalation needs immediate human attention",
+      "An audit asks &lsquo;who approved this action&rsquo;",
+    ],
+    why: "Approval is what makes autonomous action safe. Not every Pearl action needs human sign-off, but the ones that do are held here and attested — you always have a receipt showing which human said yes. This is the difference between an AI system and an accountable operating system.",
   },
   {
     n: 12,
@@ -232,6 +322,15 @@ export const LAYERS: Layer[] = [
       "Cross-department coordination",
       "Every state transition recorded",
     ],
+    who: "Every approved Pearl action gets scheduled through here. Your on-call operations lead when they need to see the execution queue. The Pearl itself as it dispatches work.",
+    where: "Sits at the top of the agent band. Consumes from Approval (the queue of approved actions). Dispatches into external systems via Integrations.",
+    when: [
+      "An approved action needs to be scheduled and tracked",
+      "Multiple Pearls need coordinated execution",
+      "An action fails — retry and fallback logic runs here",
+      "You&rsquo;re computing throughput and latency per Pearl",
+    ],
+    why: "One place where every executed action gets tracked from schedule to outcome. Failures don&rsquo;t disappear silently — they&rsquo;re retried, escalated, and attested. This is where the audit trail becomes an operational tool, not just a compliance artifact.",
   },
 
   // ─── Band 5 · Commerce ─────────────────────────────────────────────
@@ -247,6 +346,15 @@ export const LAYERS: Layer[] = [
       "Scope-of-work · change-requests · expansions",
       "Retention-preserving offboarding",
     ],
+    who: "New Nebbos tenants coming online. Your solutions engineer during the initial sprint. Your legal team signing the DPA and MSA. Existing tenants when they add a new department Pearl.",
+    where: "Sits at the commerce band. The customer&rsquo;s entry into Nebbos. Feeds all substrate + intelligence + agent layers with the identity and structure the tenant will run on.",
+    when: [
+      "You&rsquo;re signing an MSA and DPA to become a Nebbos tenant",
+      "You&rsquo;re expanding an existing tenant to a new department",
+      "You&rsquo;re renewing or restructuring an engagement",
+      "You&rsquo;re offboarding — this layer preserves the audit trail per your retention policy",
+    ],
+    why: "Onboarding-through-offboarding is one continuous accountable flow, not a series of disjoint handoffs. Every state your tenancy is in is a first-class object with an owner and an audit line. When you leave someday, your data, your memory, your Pearls all come with you.",
   },
   {
     n: 14,
@@ -260,6 +368,15 @@ export const LAYERS: Layer[] = [
       "Subscription · AI-usage metering",
       "Nebbos-token overage · storage on separate line",
     ],
+    who: "Your CFO or Head of Finance. The Nebbos accounting team. Any Pearl that needs to compute per-department cost attribution.",
+    where: "Sits at the commerce band. Consumes usage from every layer that spends AI budget (primarily Reasoning). Reports to your CFO via monthly invoice and real-time dashboard.",
+    when: [
+      "Monthly close — invoice generates from usage",
+      "AI overage — bills in stable Nebbos tokens",
+      "You&rsquo;re forecasting next quarter&rsquo;s per-department AI spend",
+      "You&rsquo;re comparing Nebbos cost against ROI on saved head-count",
+    ],
+    why: "One flat per-seat price for the substrate + governance layers means budget predictability. AI overage in stable Nebbos tokens means provider price swings don&rsquo;t move your line item. Every dollar spent is traceable back to a specific Pearl action on a specific tenant — the whole spend is legible.",
   },
   {
     n: 15,
@@ -273,6 +390,15 @@ export const LAYERS: Layer[] = [
       "Tideline · four scrutiny tiers · red lines",
       "GDPR · EU AI Act · retention CI-enforced",
     ],
+    who: "Your CISO. Your general counsel. Your auditor. Your regulator. Any human who needs to prove after the fact that a specific action was authorized, executed, and accounted for.",
+    where: "Sits at the very top of the commerce band. Consumes signals from every layer below — every approval, every action, every billing event lands in the attestation stream.",
+    when: [
+      "An auditor asks for evidence of a specific action&rsquo;s authorization",
+      "A regulator asks for the audit trail of a compliance-relevant workflow",
+      "A dispute arises over what happened when",
+      "You&rsquo;re preparing an EU AI Act Article 11 Annex IV pack",
+    ],
+    why: "Attestation is what makes Nebbos defensible. Every Pearl action, every human approval, every model call, every billing event lands in an append-only stream that maps to a hash chain your regulator can verify. This is what turns &lsquo;we run an AI operating system&rsquo; into &lsquo;we run an audited AI operating system.&rsquo;",
   },
 ];
 
