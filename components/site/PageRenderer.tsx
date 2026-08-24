@@ -2,6 +2,7 @@ import Link from "next/link";
 import type { Page, SectionBase } from "@/content/pages";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { SceneStill } from "@/components/ui/SceneStill";
 import { Button } from "@/components/ui/Button";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
@@ -141,14 +142,31 @@ function HeroPaper({ s }: { s: SectionBase }) {
 /* ── Text block · numbered section-h2 + body ─────────────────────── */
 function TextBlock({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
   const eb = eyebrowParts(s.eyebrow);
+  const hasImage = !!s.imageFamily;
+  const content = (
+    <div className="block-inner">
+      {eb && <SectionNumeral n={eb.n} label={eb.label} />}
+      {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+      {s.body && <p className="block__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
+    </div>
+  );
   return (
     <section className={`section ${bgClass(blockIndex)}`}>
       <div className="container">
-        <div className="block-inner">
-          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          {s.body && <p className="block__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
-        </div>
+        {hasImage ? (
+          <div className={`split-frame ${blockIndex % 2 === 1 ? "split-frame--reverse" : ""}`}>
+            <div className="split-frame__image">
+              <SceneStill
+                family={s.imageFamily!}
+                familyVariant={s.imageFamilyVariant ?? 1}
+                shape="fullBleed"
+              />
+            </div>
+            <div className="split-frame__content">{content}</div>
+          </div>
+        ) : (
+          content
+        )}
       </div>
     </section>
   );

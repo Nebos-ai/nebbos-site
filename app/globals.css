@@ -941,6 +941,53 @@ main {
   margin-block-end: var(--space-10);
 }
 
+/* ── Split-frame · image + content, alternating side per block-index ──
+   Used inside .section wrappers when a block-level section-kind
+   (text-block, list-numbered, list-plain) sets imageFamily. Image sits
+   on one side; content on the other. Alternating side per section index
+   produces a woven visual rhythm down the page. Stacks on mobile. */
+.split-frame {
+  display: grid;
+  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  gap: clamp(var(--space-8), 5vw, var(--space-16));
+  align-items: center;
+  max-width: 1200px;
+  margin-inline: auto;
+}
+.split-frame--reverse {
+  grid-template-columns: minmax(0, 6fr) minmax(0, 5fr);
+}
+.split-frame--reverse .split-frame__content {
+  order: -1;
+}
+.split-frame__image {
+  aspect-ratio: 4 / 3;
+  position: relative;
+  overflow: hidden;
+  border: 1px solid var(--rule);
+  background: var(--paper-2);
+}
+.split-frame__image img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media (max-width: 900px) {
+  .split-frame,
+  .split-frame--reverse {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+  .split-frame--reverse .split-frame__content {
+    order: 0;
+  }
+  .split-frame__image {
+    aspect-ratio: 16 / 9;
+  }
+}
+
 /* ── Case study · aside + quoted-italic narrative ────────────────────
    Distinct visual so case studies don't read as generic text-blocks.
    Gold rule at the top of the aside, small-caps subject line, italic
