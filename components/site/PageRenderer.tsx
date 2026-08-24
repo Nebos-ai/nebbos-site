@@ -1,8 +1,7 @@
 import Link from "next/link";
 import type { Page, SectionBase } from "@/content/pages";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
-import { SceneStill } from "@/components/ui/SceneStill";
-import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { Button } from "@/components/ui/Button";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
@@ -75,46 +74,43 @@ function eyebrowParts(eyebrow?: string): { n: string; label: string } | null {
   return { n: parts[0] ?? "00", label: parts.slice(1).join(" · ") || eyebrow };
 }
 
-function heroImage(s: SectionBase) {
-  if (s.imageFamily) {
-    return <SceneStill family={s.imageFamily} familyVariant={s.imageFamilyVariant ?? 1} shape="fullBleed" priority />;
-  }
-  if (s.imageV3) return <SceneStill v3Scene={s.imageV3} v3Variant={1} shape="fullBleed" priority />;
-  if (s.imageV2) return <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" priority />;
-  if (s.imageScene) return <SceneStill scene={s.imageScene} variant={1} shape="fullBleed" priority />;
-  if (s.imagePerspective) {
-    return <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" priority />;
-  }
-  return null;
+function sectionSceneSource(s: SectionBase) {
+  if (s.imageFamily) return { imageFamily: s.imageFamily, imageFamilyVariant: s.imageFamilyVariant };
+  if (s.imageV3) return { imageV3: s.imageV3 };
+  if (s.imageV2) return { imageV2: s.imageV2 };
+  if (s.imageScene) return { imageScene: s.imageScene, sceneVariant: 1 as const };
+  if (s.imagePerspective) return { imagePerspective: s.imagePerspective };
+  return undefined;
 }
 
-function ctaImage(s: SectionBase) {
-  if (s.imageFamily) {
-    return <SceneStill family={s.imageFamily} familyVariant={s.imageFamilyVariant ?? 1} shape="fullBleed" />;
-  }
-  if (s.imageV2) return <SceneStill v2Scene={s.imageV2} v2Variant={1} shape="fullBleed" />;
-  if (s.imageScene) return <SceneStill scene={s.imageScene} variant={4} shape="fullBleed" />;
-  if (s.imagePerspective) {
-    return <SceneStill perspective={s.imagePerspective as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9} pVariant={1} shape="fullBleed" />;
-  }
-  return null;
+function ctaSceneSource(s: SectionBase) {
+  if (s.imageFamily) return { imageFamily: s.imageFamily, imageFamilyVariant: s.imageFamilyVariant };
+  if (s.imageV2) return { imageV2: s.imageV2 };
+  if (s.imageScene) return { imageScene: s.imageScene, sceneVariant: 4 as const };
+  if (s.imagePerspective) return { imagePerspective: s.imagePerspective };
+  return undefined;
 }
 
 /* ── Hero: full-bleed image + overlaid h1 ─────────────────────────── */
 function HeroFullBleed({ s }: { s: SectionBase }) {
-  const eb = eyebrowParts(s.eyebrow);
   return (
-    <section className="hero-fullbleed">
-      {heroImage(s)}
-      <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
-      {eb && <SceneMetadataPlate chapter="I" label={s.eyebrow ?? eb.label} position="top-right" />}
+    <FullBleedScene
+      className="hero-fullbleed"
+      scene={sectionSceneSource(s)}
+      scrim="bottom"
+      vignetteStrength={0.5}
+      chapter="I"
+      chapterLabel={s.eyebrow}
+      chapterPosition="top-right"
+      priority
+    >
       <div className="container hero-fullbleed__inner">
         <div className="hero-fullbleed__frame">
           {s.h1 && <h1 className="hero-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h1 }} />}
           {s.deck && <p className="hero-fullbleed__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
 
@@ -311,10 +307,15 @@ function CTABandInline({ s, blockIndex }: { s: SectionBase; blockIndex: number }
 /* ── CTA full-bleed (over an image) ──────────────────────────────── */
 function CTAFullBleed({ s }: { s: SectionBase }) {
   return (
-    <section className="cta-fullbleed">
-      {ctaImage(s)}
-      <SceneOverlay scrim="left" vignetteStrength={0.5} />
-      {s.eyebrow && <SceneMetadataPlate chapter="VII" label={s.eyebrow} position="top-right" />}
+    <FullBleedScene
+      className="cta-fullbleed"
+      scene={ctaSceneSource(s)}
+      scrim="left"
+      vignetteStrength={0.5}
+      chapter="VII"
+      chapterLabel={s.eyebrow}
+      chapterPosition="top-right"
+    >
       <div className="container cta-fullbleed__inner">
         <div className="cta-fullbleed__frame">
           {s.h2 && <h2 className="cta-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
@@ -333,7 +334,7 @@ function CTAFullBleed({ s }: { s: SectionBase }) {
           </div>
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
 

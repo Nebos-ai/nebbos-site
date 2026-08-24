@@ -4,8 +4,7 @@ import path from "path";
 import matter from "gray-matter";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { SceneStill } from "@/components/ui/SceneStill";
-import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { Button } from "@/components/ui/Button";
 import type { Metadata } from "next";
 
@@ -62,10 +61,15 @@ export default async function CustomersIndexPage() {
     <>
       <SiteHeader />
       <main>
-        <section className="hero-fullbleed">
-          <SceneStill family="concept-tenant-onboarding" familyVariant={1} shape="fullBleed" priority />
-          <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
-          <SceneMetadataPlate chapter="I" label="00 · Customers" position="top-right" />
+        <FullBleedScene
+          className="hero-fullbleed"
+          scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
+          scrim="bottom"
+          vignetteStrength={0.5}
+          chapter="I"
+          chapterLabel="00 · Customers"
+          priority
+        >
           <div className="container hero-fullbleed__inner">
             <div className="hero-fullbleed__frame">
               <h1 className="hero-fullbleed__title">The company brain, in production.</h1>
@@ -77,7 +81,7 @@ export default async function CustomersIndexPage() {
               </p>
             </div>
           </div>
-        </section>
+        </FullBleedScene>
 
         <section className="section section--paper">
           <div className="container-narrow">
@@ -107,10 +111,14 @@ export default async function CustomersIndexPage() {
           </div>
         </section>
 
-        <section className="cta-fullbleed">
-          <SceneStill family="concept-tenant-onboarding" familyVariant={2} shape="fullBleed" />
-          <SceneOverlay scrim="left" vignetteStrength={0.5} />
-          <SceneMetadataPlate chapter="VII" label="Ready" position="top-right" />
+        <FullBleedScene
+          className="cta-fullbleed"
+          scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 2 }}
+          scrim="left"
+          vignetteStrength={0.5}
+          chapter="VII"
+          chapterLabel="Ready"
+        >
           <div className="container cta-fullbleed__inner">
             <div className="cta-fullbleed__frame">
               <h2 className="cta-fullbleed__title">See a Pearl on your hardest department.</h2>
@@ -128,7 +136,7 @@ export default async function CustomersIndexPage() {
               </div>
             </div>
           </div>
-        </section>
+        </FullBleedScene>
       </main>
       <SiteFooter />
     </>

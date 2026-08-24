@@ -420,6 +420,19 @@ main {
   text-shadow: var(--shadow-on-image-soft);
   margin: 0;
 }
+.hero-fullbleed__brand {
+  font-family: var(--font-mono);
+  font-size: var(--size-eyebrow);
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--paper-on-image-soft);
+}
+.hero-fullbleed__accent,
+.cta-fullbleed__accent {
+  font-style: italic;
+  color: var(--accent-2);
+  font-weight: inherit;
+}
 
 /* ── Split columns ──────────────────────────────────────────────────── */
 .split {

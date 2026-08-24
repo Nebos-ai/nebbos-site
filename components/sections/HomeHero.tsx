@@ -1,97 +1,41 @@
-import { SceneStill } from "@/components/ui/SceneStill";
-import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { BRAND } from "@/content/brand";
 
 /**
- * HomeHero · v2 rebuild 2026-08-23
+ * HomeHero · v3 · 2026-08-24 (C15 refactor)
  *
  * The first three seconds of nebbos.ai. Full-bleed family-band-intelligence
- * scene. The overlaid serif h1 names Nebbos as "the company brain your team
- * never had time to build" — the flagship positioning the whole site rhymes
- * with. Chapter I metadata plate top-right. Copy overlay bottom-left.
- * The story continues in HomeStory below.
+ * scene, overlaid with the flagship headline: "The company brain your team
+ * never had time to build." Chapter I metadata plate top-right. Composes
+ * FullBleedScene primitive so image + overlay + chapter plate + section
+ * chrome share the same discipline as every other scene surface on the site.
  */
 
 export function HomeHero() {
   return (
-    <section
-      aria-labelledby="hero-heading"
-      style={{
-        position: "relative",
-        minHeight: "min(90vh, 900px)",
-        display: "flex",
-        alignItems: "flex-end",
-        overflow: "hidden",
-        borderBottom: "1px solid var(--rule)",
-      }}
+    <FullBleedScene
+      className="hero-fullbleed"
+      scene={{ imageFamily: "band-intelligence", imageFamilyVariant: 1 }}
+      scrim="bottom"
+      vignetteStrength={0.5}
+      chapter="I"
+      chapterLabel="Where it starts"
+      ariaLabelledby="hero-heading"
+      priority
     >
-      {/* Full-bleed background — family-band-intelligence (Memory-forward,
-          the differentiator). Same visual family used wherever Intelligence
-          appears site-wide. */}
-      <SceneStill family="band-intelligence" familyVariant={1} shape="fullBleed" priority />
-
-      {/* Editorial overlay: grain + vignette + heavy bottom scrim so copy pops */}
-      <SceneOverlay scrim="bottom" vignetteStrength={0.5} />
-
-      {/* Editorial metadata plate · top-right */}
-      <SceneMetadataPlate chapter="I" label="Where it starts" position="top-right" />
-
-      {/* Copy overlay · bottom-left */}
-      <div
-        className="container"
-        style={{
-          position: "relative",
-          zIndex: 2,
-          paddingBlock: "clamp(56px, 10vh, 128px)",
-        }}
-      >
-        <div style={{ maxWidth: "68ch", display: "flex", flexDirection: "column", gap: 28 }}>
-          <span
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: "rgba(244, 241, 234, 0.86)",
-            }}
-          >
-            {BRAND.name}
-          </span>
-          <h1
-            id="hero-heading"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(40px, 6vw, 84px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.024em",
-              fontWeight: 400,
-              color: "var(--paper)",
-              margin: 0,
-              textWrap: "balance",
-              textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
-            }}
-          >
+      <div className="container hero-fullbleed__inner">
+        <div className="hero-fullbleed__frame">
+          <span className="hero-fullbleed__brand">{BRAND.name}</span>
+          <h1 id="hero-heading" className="hero-fullbleed__title">
             The company brain your team{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
-              never had time to build.
-            </em>
+            <em className="hero-fullbleed__accent">never had time to build.</em>
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontStyle: "italic",
-              fontSize: "clamp(17px, 1.6vw, 21px)",
-              lineHeight: 1.55,
-              color: "rgba(244, 241, 234, 0.92)",
-              maxWidth: "56ch",
-              margin: 0,
-              textShadow: "0 1px 3px rgba(20, 18, 15, 0.42)",
-            }}
-          >
-            One Pearl per department. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.
+          <p className="hero-fullbleed__deck">
+            One Pearl per department. Every human decision your team makes trains
+            your model, not someone else&rsquo;s. Portable to you if you ever leave.
           </p>
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
