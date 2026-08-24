@@ -136,3 +136,7 @@ const variantStyle: Record<Variant, CSSProperties> = {
     borderColor: "rgba(244, 241, 234, 0.5)",
   },
 };
+
+/** Alias export for compatibility with restored /platform pages
+ *  that were authored to import { ButtonLink } from an earlier API. */
+export { Button as ButtonLink };
