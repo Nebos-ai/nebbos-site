@@ -34,7 +34,7 @@ export function HomeCTA() {
           </p>
           <div className="cta-fullbleed__actions">
             <Button href="/demo" variant="solid-light" size="lg">
-              Book a demo
+              Remember who you are
             </Button>
             <Button href="/product" variant="ghost-light" size="lg" arrow={false}>
               See the system

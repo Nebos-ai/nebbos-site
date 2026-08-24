@@ -124,7 +124,7 @@ export default async function CustomersIndexPage() {
               </p>
               <div className="cta-fullbleed__actions">
                 <Button href="/demo" variant="solid-light" size="lg">
-                  Book a demo
+                  Remember who you are
                 </Button>
                 <Button href="mailto:enterprise@nebbos.ai" variant="ghost-light" size="lg" arrow={false}>
                   Email enterprise
