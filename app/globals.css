@@ -650,16 +650,22 @@ main {
 /* ── Hero: full-bleed image ─────────────────────────────────────────── */
 .hero-fullbleed {
   position: relative;
-  min-block-size: min(78vh, 820px);
+  min-block-size: min(92vh, 960px);
   display: flex;
   align-items: flex-end;
   overflow: hidden;
   border-block-end: 1px solid var(--rule);
 }
+/* Positioned in the LOWER THIRD (not at the bottom edge) and LEFT-aligned —
+   izanami-official.com editorial cadence: manifesto rests above the fold-bottom,
+   not glued to it as a caption. Left-aligned inside the container's own gutter. */
 .hero-fullbleed__inner {
   position: relative;
   z-index: 2;
-  padding-block: var(--section-y);
+  padding-block-start: var(--section-y);
+  padding-block-end: clamp(var(--space-16), 22vh, 240px);
+  display: flex;
+  justify-content: flex-start;
 }
 .hero-fullbleed__frame {
   max-width: 56ch;
@@ -683,15 +689,15 @@ main {
   margin: 0;
 }
 
-/* Manifesto variant — home hero only. Single-line, massive, no wrap. Sized
-   so "Remember who you are." fits the container at every viewport width;
-   nowrap forces one line so it reads as one statement, never two.
-   max-width:none frees the title from the frame's 56ch cap so nowrap has
-   the container's full width to work with. */
+/* Manifesto variant — home hero only. ELEGANT scale per izanami-official.com
+   reference (2026-08-24 founder direction): quiet, editorial, not a shout.
+   Roughly half the prior clamp — reads as a considered manifesto line, not a
+   billboard. Kept nowrap so it stays one statement, but the smaller scale lets
+   it breathe against the video without dominating the composition. */
 .hero-fullbleed__title--manifesto {
-  font-size: clamp(28px, 7vw, 112px);
-  line-height: 0.98;
-  letter-spacing: -0.025em;
+  font-size: clamp(22px, 3.4vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.015em;
   white-space: nowrap;
   text-wrap: nowrap;
   max-width: none;
