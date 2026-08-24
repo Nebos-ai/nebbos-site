@@ -171,9 +171,10 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-/* v3 · 2026-08-24 — small-caps decoration removed (was a Fraunces flourish;
-   Space Grotesk doesn't need it — geometric sans reads executive at natural
-   case without a small-caps overlay). Weight + tracking do the work now. */
+/* v3.1 · 2026-08-24 — small-caps restored as the site-wide h2/h3/h4
+   pattern. First letter of each word renders at natural cap-height, the
+   rest render at small-cap height (~70% of cap-height). Source text stays
+   mixed-case; the browser handles the conversion via font-variant. */
 h1 {
   font-size: var(--size-h1);
   line-height: 1.02;
@@ -181,9 +182,30 @@ h1 {
   font-weight: 600;
   font-optical-sizing: auto;
 }
-h2 { font-size: var(--size-h2); line-height: 1.08; letter-spacing: -0.02em; font-weight: 600; }
-h3 { font-size: var(--size-h3); line-height: 1.15; letter-spacing: -0.014em; font-weight: 600; }
-h4 { font-size: var(--size-h4); line-height: 1.25; letter-spacing: -0.008em; font-weight: 500; }
+h2 {
+  font-size: var(--size-h2);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+}
+h3 {
+  font-size: var(--size-h3);
+  line-height: 1.15;
+  letter-spacing: -0.014em;
+  font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+}
+h4 {
+  font-size: var(--size-h4);
+  line-height: 1.25;
+  letter-spacing: -0.008em;
+  font-weight: 500;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+}
 
 em {
   font-style: italic;
@@ -591,6 +613,8 @@ main {
   line-height: 1.08;
   letter-spacing: -0.02em;
   font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   color: var(--ink);
   margin-block: var(--space-5) var(--space-6);
   max-width: 26ch;
@@ -636,9 +660,12 @@ main {
   font-family: var(--font-serif);
   font-size: var(--size-hero-massive);
   line-height: 0.94;
-  letter-spacing: -0.03em;
+  letter-spacing: -0.02em;
   font-weight: 600;
-  text-transform: uppercase;
+  /* First letter of each word big-cap, rest small-cap — source text stays
+     mixed-case, browser converts lowercase to small-caps glyphs. */
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   color: var(--paper-on-image);
   text-wrap: balance;
   text-shadow: var(--shadow-on-image);
@@ -1071,6 +1098,8 @@ main {
   font-size: var(--size-h3);
   line-height: 1.2;
   font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   color: var(--ink);
   margin-block-start: var(--space-2);
@@ -1215,6 +1244,8 @@ main {
   font-size: var(--size-h3);
   line-height: 1.15;
   font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   margin-block-end: var(--space-2);
   transition: color var(--dur-med) var(--ease-out);
@@ -1306,6 +1337,8 @@ main {
   font-size: var(--size-h3);
   line-height: 1.2;
   font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   color: var(--ink);
   margin-block: var(--space-16) var(--space-6);
@@ -1315,6 +1348,8 @@ main {
   font-size: var(--size-h4);
   line-height: 1.25;
   font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
   color: var(--ink);
   margin-block: var(--space-12) var(--space-4);
 }
