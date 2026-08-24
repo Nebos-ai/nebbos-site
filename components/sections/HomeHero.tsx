@@ -1,4 +1,3 @@
-import { SCENES } from "@/content/stills";
 import { SceneStill } from "@/components/ui/SceneStill";
 import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
 import { BRAND } from "@/content/brand";
@@ -6,17 +5,12 @@ import { BRAND } from "@/content/brand";
 /**
  * HomeHero · v2 rebuild 2026-08-23
  *
- * The first three seconds of nebbos.ai. Full-bleed Scene 1 (Where it starts) —
- * a young woman by the coffee-shop window while workers plant a sapling
- * outside. The image tells "morning · beginning · nature." The overlaid
- * serif h1 names Nebbos as "the company brain your team never had time to build."
- *
- * The scene bigger than the character. The character at a golden-ratio
- * intersection. The chapter chip in the top-right announces we're in
- * chapter 01 · Where it starts. The story continues in HomeStory below.
+ * The first three seconds of nebbos.ai. Full-bleed family-band-intelligence
+ * scene. The overlaid serif h1 names Nebbos as "the company brain your team
+ * never had time to build" — the flagship positioning the whole site rhymes
+ * with. Chapter I metadata plate top-right. Copy overlay bottom-left.
+ * The story continues in HomeStory below.
  */
-
-const HERO_SCENE = SCENES[1];
 
 export function HomeHero() {
   return (
@@ -77,9 +71,9 @@ export function HomeHero() {
               textShadow: "0 2px 4px rgba(20, 18, 15, 0.42)",
             }}
           >
-            Their AI doesn&rsquo;t train on your data.{" "}
+            The company brain your team{" "}
             <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
-              Nebbos does.
+              never had time to build.
             </em>
           </h1>
           <p

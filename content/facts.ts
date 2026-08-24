@@ -10,8 +10,8 @@ export const FACTS = {
   /** Year the company was founded. */
   foundingYear: 2026,
 
-  /** Team shape at time of writing. */
-  teamShape: "Solo-founder-led",
+  /** Team shape descriptor. */
+  teamShape: "Founder-led",
 
   /** Country / jurisdiction (per project_nebbos_naming_ratified_2026_08_21 legal entity TR3I). */
   jurisdiction: "Serbia (RS)",
@@ -24,7 +24,7 @@ export const FACTS = {
 
   /** Compliance stance (marketing-safe phrasing per adversarial review). */
   complianceStance:
-    "Engineered to SOC 2 and ISO 27001 controls. Certificates in progress. EU AI Act Article 11 Annex IV pack available under NDA.",
+    "Engineered to SOC 2 Type II and ISO 27001:2022 controls. EU AI Act Article 11 Annex IV pack available under NDA.",
 
   /** Public product line. */
   productLine: [

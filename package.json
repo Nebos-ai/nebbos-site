@@ -4,9 +4,11 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "prebuild": "bash scripts/check-vocab.sh",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
+    "check:vocab": "bash scripts/check-vocab.sh",
     "test:a11y": "playwright test",
     "test:lh": "lhci autorun --config=.lighthouserc.json"
   },

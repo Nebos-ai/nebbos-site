@@ -137,64 +137,46 @@ function hashToFamily(seed: string): string {
   return HERO_FAMILY_POOL[Math.abs(h) % HERO_FAMILY_POOL.length];
 }
 
-/* ── Hero: paper (no image) — for deep pages · auto-switches to full-bleed
-       when any image field is set on the section, OR falls back to a
-       page-signature-based v3 pick so every hero has an image ──── */
+/* ── Hero: paper (text-only, no image) — for deep pages, legal, docs where
+       narrative density is the whole point. If ANY image field is set on the
+       section, this promotes to HeroFullBleed. Otherwise renders quiet paper
+       with the same editorial rhythm used across the site. ────────────── */
 function HeroPaper({ s }: { s: SectionBase }) {
-  if (s.imageFamily || s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) return <HeroFullBleed s={s} />;
-  // Auto-cascade: pick a concept-family based on section signature (families
-  // guarantee visual consistency when the same concept appears elsewhere).
-  const auto = hashToFamily((s.eyebrow ?? "") + (s.h1 ?? "") + s.id);
-  return <HeroFullBleed s={{ ...s, imageFamily: auto }} />;
+  if (s.imageFamily || s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) {
+    return <HeroFullBleed s={s} />;
+  }
   return (
-    <section
-      style={{
-        background: "var(--paper)",
-        borderBottom: "1px solid var(--rule)",
-        paddingBlock: "clamp(96px, 14vh, 176px) clamp(56px, 8vh, 88px)",
-      }}
-    >
-      <div className="container">
-        <div style={{ maxWidth: "68ch" }}>
-          {s.eyebrow && <SectionNumeral n={s.eyebrow!.split(" · ")[0] ?? "00"} label={s.eyebrow!.split(" · ")[1] ?? s.eyebrow} />}
-          {s.h1 && (
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(40px, 5.4vw, 80px)",
-                lineHeight: 1.04,
-                letterSpacing: "-0.024em",
-                fontWeight: 400,
-                color: "var(--ink)",
-                margin: "20px 0 0 0",
-                maxWidth: "22ch",
-                textWrap: "balance",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.h1! }}
-            />
-          )}
-          {s.deck && (
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(19px, 1.7vw, 24px)",
-                lineHeight: 1.5,
-                color: "var(--ink-2)",
-                marginTop: 24,
-                maxWidth: "56ch",
-              }}
-              dangerouslySetInnerHTML={{ __html: s.deck! }}
-            />
-          )}
-          {s.ctaPrimary && (
-            <div style={{ marginTop: 32 }}>
-              <Button href={s.ctaPrimary!.href} variant={s.ctaPrimary!.variant ?? "primary"} size="lg">
-                {s.ctaPrimary!.label}
-              </Button>
-            </div>
-          )}
-        </div>
+    <section className="hero-paper">
+      <div className="container-narrow">
+        {s.eyebrow && (
+          <SectionNumeral
+            n={s.eyebrow.split(" · ")[0] ?? "00"}
+            label={s.eyebrow.split(" · ")[1] ?? s.eyebrow}
+          />
+        )}
+        {s.h1 && (
+          <h1
+            className="hero-paper__title"
+            dangerouslySetInnerHTML={{ __html: s.h1 }}
+          />
+        )}
+        {s.deck && (
+          <p
+            className="hero-paper__deck"
+            dangerouslySetInnerHTML={{ __html: s.deck }}
+          />
+        )}
+        {s.ctaPrimary && (
+          <div className="hero-paper__cta">
+            <Button
+              href={s.ctaPrimary.href}
+              variant={s.ctaPrimary.variant ?? "primary"}
+              size="lg"
+            >
+              {s.ctaPrimary.label}
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -27,7 +27,7 @@ const SLUG_MAP: Record<string, PageSlug> = Object.fromEntries(
 export function generateStaticParams(): Params[] {
   return (Object.keys(PAGES) as PageSlug[]).flatMap((key) => {
     // Skip pages that have their own static route file (avoid conflict)
-    if (["home", "product", "pricing", "about", "demo", "contact"].includes(key)) return [];
+    if (["home", "product", "about", "demo", "contact"].includes(key)) return [];
     const parts = key.split("/");
     return [{ slug: parts }];
   });

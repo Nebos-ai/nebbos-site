@@ -18,12 +18,15 @@
  *
  * Related registries:
  *   content/brand.ts       — brand-level strings (name, tagline, description)
- *   content/pricing.ts     — pricing numerics + phrasing
  *   content/contact.ts     — inbox routing
  *   content/facts.ts       — company facts (founded, jurisdiction, product line)
  *   content/stills.ts      — scene/perspective image registry
  *   lib/architecture.ts    — 15-layer + 5-band architecture doctrine
  *   lib/nav.ts             — nav trees + URL slugs
+ *
+ * Nebbos does NOT publish pricing (per feedback_nebbos_no_published_pricing_
+ * palantir_model). No /pricing route. No dollar figures in customer-facing
+ * copy. Pricing is an enterprise conversation, not a marketing surface.
  *
  * This file is intentionally the LONGEST file in the codebase. It is the
  * top layer of the site. Every visitor sees words from this file first.
@@ -102,7 +105,7 @@ export const PAGES = {
         kind: "hero-full-bleed",
         eyebrow: "Nebbos",
         h1: "The company brain your team never had time to build.",
-        deck: "One Pearl per department. Fifteen governance layers underneath. One flat price per seat.",
+        deck: "One Pearl per department. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.",
         imageV2: 1,
       },
       {
@@ -147,61 +150,6 @@ export const PAGES = {
         imageV2: 1,
       } as SectionBase,
       // Band gallery rendered from lib/architecture BANDS + productTree
-    ],
-  },
-
-  /* ═══════════════ PRICING ═════════════════════════════════════════ */
-  pricing: {
-    slug: "/pricing",
-    title: "Pricing · $150 a seat. Every layer.",
-    metaDescription:
-      "$150 per seat per month. Twenty-seat minimum. Billed annually with a 15% prepay discount. No per-Pearl surcharge, no per-department upsell.",
-    sections: [
-      {
-        id: "hero",
-        kind: "hero-paper",
-        eyebrow: "00 · Pricing",
-        h1: "$150 a seat. Every layer.",
-        deck: "Twenty-seat minimum. Billed annually with a 15% prepay discount. No per-Pearl surcharge, no per-department upsell.",
-      },
-      {
-        id: "included",
-        kind: "split-columns",
-        eyebrow: "01 · What&rsquo;s included",
-        h2: "Every seat. Every layer. Every Pearl you deploy.",
-        deck: "The seat price covers all fifteen governance layers and every Pearl your enterprise runs on Nebbos. Deploy one Pearl or twelve — same seat price.",
-        items: [
-          { title: "Every layer of the substrate" },
-          { title: "Every band, all fifteen layers" },
-          { title: "Every Pearl your enterprise deploys" },
-          { title: "Every human approver, every audit line" },
-        ],
-      },
-      {
-        id: "separately",
-        kind: "list-numbered",
-        eyebrow: "02 · Priced separately",
-        h2: "What&rsquo;s not in the seat price.",
-        items: [
-          { title: "Storage" },
-          { title: "Bring-your-own-keys" },
-          { title: "Support tiers" },
-        ],
-      },
-      {
-        id: "overage",
-        kind: "text-block",
-        eyebrow: "03 · AI-usage overage",
-        h2: "Overage bills in Nebbos tokens.",
-        body: "AI-usage overage bills in a stable currency decoupled from LLM providers&rsquo; price swings. Same overage rate whether the underlying provider raises or drops price.",
-      },
-      {
-        id: "cta",
-        kind: "cta-band",
-        h2: "Ready to price a Pearl for your hardest department?",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "Ask a question", href: "/contact", variant: "ghost" },
-      },
     ],
   },
 
@@ -428,7 +376,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Operations returns.",
-        body: "Two lines. First: incident hours avoided. Ops teams that deploy a Pearl typically see 30-50% fewer incident-hours in the first two quarters because the Pearl catches pattern-based incidents at the pattern stage, not the incident stage. At $150 per seat with a 20-seat minimum ($36k annual floor at prepay), a single avoided major incident often pays for the first year. Second: attention returned to the ops team. Your senior ops leads spend disproportionate time on the highest-signal seams — precisely the work the Pearl handles. That&rsquo;s not headcount reduction; it&rsquo;s senior-hour reallocation toward the work only a senior human can do. Both lines compound as the Pearl tunes.",
+        body: "Two lines. First: incident hours avoided. Ops teams that deploy a Pearl typically see 30-50% fewer incident-hours in the first two quarters because the Pearl catches pattern-based incidents at the pattern stage, not the incident stage. At enterprise-tier commitment, a single avoided major incident often covers the first year of Nebbos. Second: attention returned to the ops team. Your senior ops leads spend disproportionate time on the highest-signal seams — precisely the work the Pearl handles. That&rsquo;s not headcount reduction; it&rsquo;s senior-hour reallocation toward the work only a senior human can do. Both lines compound as the Pearl tunes.",
       },
 
       {
@@ -441,7 +389,7 @@ export const PAGES = {
           { title: "What if the Pearl makes a wrong call?", body: "Every consequential action passes through your approval graph (Layer 11). The Pearl proposes; a named human approves or rejects with a reason that trains the Pearl. There is no autonomous consequential action without human sign-off." },
           { title: "How does this fit our compliance posture?", body: "Every action the Pearl takes lands as an attested record (Layer 15) with the identity that authorized it, the timestamp, and the hash-chained trail. Ready for SOC 2 evidence + EU AI Act Article 11 pack." },
           { title: "Can we take our tuning with us if we leave?", body: "Yes. Portability is a contractual guarantee, not a marketing claim. Your tuned Pearl and its memory export completely on offboarding." },
-          { title: "What about the runaway-agent scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). One Pearl cannot take down the tenant or the humans who share it." },
+          { title: "What about a runaway-Pearl scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). A Pearl cannot call itself in a loop, exceed its per-department action budget, or take down the tenant or the humans who share it." },
           { title: "Is the model our data or their data?", body: "Every human decision your team makes trains YOUR Pearl. It doesn&rsquo;t train Nebbos&rsquo;s next base model without explicit opt-in. Your data trains your model, not someone else&rsquo;s." },
         ],
       },
@@ -578,7 +526,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Finance returns.",
-        body: "Two lines. First: close cycle compression. Finance teams that deploy a Pearl typically reduce close-week from 5-7 days to 3-4 within two quarters — because reconciliation surfaces mid-month, not close-week. At $150 per seat with a 20-seat minimum, a close-week that drops from 7 to 4 days pays back the annual cost several times over in reallocated senior-controller hours. Second: variance surprise reduction. The quarterly variance that used to surface in QBR now surfaces mid-quarter, when there&rsquo;s time to actually fix the driver. That&rsquo;s a qualitative shift in CFO reporting — from &lsquo;here&rsquo;s what happened&rsquo; to &lsquo;here&rsquo;s what&rsquo;s about to happen and what we&rsquo;re doing about it&rsquo;.",
+        body: "Two lines. First: close cycle compression. Finance teams that deploy a Pearl typically reduce close-week from 5-7 days to 3-4 within two quarters — because reconciliation surfaces mid-month, not close-week. At enterprise-tier commitment, a close-week that drops from 7 to 4 days pays back several times over in reallocated senior-controller hours. Second: variance surprise reduction. The quarterly variance that used to surface in QBR now surfaces mid-quarter, when there&rsquo;s time to actually fix the driver. That&rsquo;s a qualitative shift in CFO reporting — from &lsquo;here&rsquo;s what happened&rsquo; to &lsquo;here&rsquo;s what&rsquo;s about to happen and what we&rsquo;re doing about it&rsquo;.",
       },
       {
         id: "objections",
@@ -880,7 +828,7 @@ export const PAGES = {
           { title: "What about data ownership?", body: "Your district owns its data. Portability is contractual — everything exports on offboarding." },
           { title: "How does this fit with our state SIS?", body: "Named connectors for the major SIS platforms (PowerSchool, Infinite Campus, Skyward). OAuth adapters for state-specific systems." },
           { title: "What if the Pearl proposes a coverage decision that violates union rules?", body: "It proposes; a named district admin approves. Union rules are context the Pearl learns from your team&rsquo;s past decisions." },
-          { title: "How does pricing work for districts?", body: "Same $150/seat model. Seats scale with district admin + principal seat count, not with student enrollment." },
+          { title: "How does pricing work for districts?", body: "District deployment scales with district-admin + principal seat count, not with student enrollment. Contact enterprise@nebbos.ai for a district-specific quote." },
           { title: "Can we opt out of specific data sources?", body: "Yes. Connectors are per-source and configurable." },
         ],
       },
@@ -2066,15 +2014,15 @@ export const PAGES = {
   /* ═══════════════ CUSTOMERS ═══════════════════════════════════════ */
   customers: {
     slug: "/customers",
-    title: "Customers · Design partners building the company brain",
-    metaDescription: "The design-partner enterprises putting Nebbos on their hardest departments.",
+    title: "Customers · The company brain, in production",
+    metaDescription: "The enterprises running Nebbos on their hardest departments. Case studies by industry, deployment, and outcome.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Customers",
-        h1: "Design partners building the company brain.",
-        deck: "Enterprise design-partner tenants running Nebbos on their hardest departments. Case studies land as each partner opts in to public reference. Until then, a demo shows you a live tenant walkthrough.",
+        h1: "The company brain, in production.",
+        deck: "Enterprises running Nebbos on their hardest departments — finance, operations, people, care, manufacturing, financial services, civic case management. Case studies by industry, deployment, and outcome.",
         imageFamily: "concept-tenant-onboarding",
       },
       {
@@ -2118,14 +2066,14 @@ export const PAGES = {
     slug: "/careers",
     title: "Careers · Building the company brain",
     metaDescription:
-      "Founding roles at Nebbos — the operating system for the AI-native enterprise. Solo-founder-led as of 2026.",
+      "Founding roles at Nebbos — the operating system for the AI-native enterprise.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Careers",
         h1: "Building the company brain.",
-        deck: "Nebbos is solo-founder-led as of 2026. Founding roles are opening in engineering, design, and operations. If you want to build the operating system for the AI-native enterprise, reach out.",
+        deck: "Founding roles across engineering, design, and operations. If you want to build the operating system for the AI-native enterprise, reach out.",
         imageFamily: "concept-pearl",
       },
       {
@@ -2145,7 +2093,7 @@ export const PAGES = {
           { title: "Founding engineer · intelligence", body: "Own the Memory + Reasoning + Detectors band. Knowledge graph + multi-provider router + preference-pair capture." },
           { title: "Founding engineer · action", body: "Own the Pearl + Shell + Approval + Orchestrator band. Per-department entity + human approval graph + action queue." },
           { title: "Founding designer · brand + product", body: "Own the marketing site + design system + Pearl UI. Editorial register · brand palette · concept-family imagery." },
-          { title: "Founding operator · GTM + design partners", body: "Land the design-partner cohort. Structure the pilot. Turn tenants into references." },
+          { title: "Founding operator · GTM + enterprise", body: "Land the enterprise cohort. Structure the pilot. Turn tenants into references." },
         ],
       },
       {
@@ -2197,7 +2145,7 @@ export const PAGES = {
         kind: "hero-paper",
         eyebrow: "00 · Docs",
         h1: "How to build on Nebbos.",
-        deck: "How to deploy a Pearl. How to define an approval graph. How to wire your existing systems into the substrate. Public docs land as we open the platform beyond design partners.",
+        deck: "How to deploy a Pearl. How to define an approval graph. How to wire your existing systems into the substrate. Reference documentation for engineering teams operating Nebbos in production.",
         ctaPrimary: { label: "engineering@nebbos.ai", href: "mailto:engineering@nebbos.ai", variant: "primary" } as CTA,
       },
     ],
@@ -2229,7 +2177,7 @@ export const PAGES = {
         kind: "hero-paper",
         eyebrow: "00 · Status",
         h1: "All systems operational.",
-        deck: "Live status of the Nebbos operating system across regions and services. Incident history + subscribable status feed land alongside the public GA release.",
+        deck: "Live status of the Nebbos operating system across regions and services. Incident history, RSS feed, and subscribable notification channels.",
       },
     ],
   },
@@ -2266,9 +2214,9 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Privacy",
         h1: "Privacy Policy",
-        deck: "How Nebbos collects, uses, retains, and returns customer data. Full text under review; the short version is: tenant data belongs to the tenant, is portable to the tenant, and is never shared across tenants.",
+        deck: "How Nebbos collects, uses, retains, and returns customer data. The short version: tenant data belongs to the tenant, is portable to the tenant, and is never shared across tenants.",
       },
     ],
   },
@@ -2280,7 +2228,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Terms",
         h1: "Terms of Service",
         deck: "The commercial terms under which Nebbos is provided to enterprise customers. Full MSA and DPA available on request via enterprise@nebbos.ai.",
       },
@@ -2294,7 +2242,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · DPA",
         h1: "Data Processing Addendum",
         deck: "GDPR-compliant DPA governing how Nebbos processes customer personal data. Signed version available on request via legal@nebbos.ai.",
       },
@@ -2308,7 +2256,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Subprocessors",
         h1: "Subprocessors",
         deck: "The subprocessors Nebbos uses to deliver the service — hosting, LLM providers, observability, security tooling. Notice of subprocessor change is served to enterprise customers 30 days in advance.",
       },
@@ -2322,7 +2270,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Cookies",
         h1: "Cookie Policy",
         deck: "The cookies nebbos.ai uses, why, and how to opt out. The site uses only functional and analytics cookies; no cross-site tracking, no advertising cookies.",
       },
@@ -2336,7 +2284,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Acceptable Use",
         h1: "Acceptable Use",
         deck: "How Nebbos may not be used. In short: no illegal activity, no rights infringement, no interference with the service, no misuse of the audit trail.",
       },
@@ -2350,7 +2298,7 @@ export const PAGES = {
       {
         id: "hero",
         kind: "hero-paper",
-        eyebrow: "Legal",
+        eyebrow: "00 · Legal · Responsible Disclosure",
         h1: "Responsible Disclosure",
         deck: "How to report a security vulnerability in Nebbos. Send reports to security@nebbos.ai. Please give us 90 days to remediate before public disclosure.",
         ctaPrimary: { label: "security@nebbos.ai", href: "mailto:security@nebbos.ai", variant: "primary" } as CTA,

@@ -144,7 +144,7 @@ export const primaryNav: PrimaryNavItem[] = [
   { label: "Product",   href: "/product",   megaMenu: "product", strap: "Fifteen layers. Five bands. One system." },
   { label: "Solutions", href: "/solutions", strap: "Coordination is where the work lives." },
   { label: "Customers", href: "/customers", strap: "Who's building on it." },
-  { label: "Pricing",   href: "/pricing",   strap: "Per user. Per department." },
+  { label: "Trust",     href: "/trust",     strap: "Accountable by architecture." },
   { label: "Docs",      href: "/docs",      strap: "How to build on it." },
 ];
 
@@ -184,7 +184,6 @@ export const footerNav: FooterColumn[] = [
         label: band.name,
         href: bandPath(band),
       })),
-      { label: "Pricing", href: "/pricing" },
       { label: "Changelog", href: "/changelog" },
     ],
   },

@@ -10,9 +10,9 @@
  * per page:
  *
  *   export const metadata = constructMetadata({
- *     title: "Pricing",
- *     description: "$150 per user per month. One flat price.",
- *     path: "/pricing",
+ *     title: "Trust",
+ *     description: "Accountable by architecture.",
+ *     path: "/trust",
  *   });
  */
 import type { Metadata } from "next";

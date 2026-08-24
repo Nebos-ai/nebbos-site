@@ -322,6 +322,46 @@ main {
 }
 
 /* ============================================================================
+   HeroPaper — text-only hero for deep pages (legal, docs, changelog, blog)
+   ============================================================================
+   Renders on paper (no image) with the same editorial rhythm the rest of the
+   site uses. Every dimension comes from tokens. If a section carries an image
+   field, HeroPaper defers to HeroFullBleed (handled in the renderer). */
+
+.hero-paper {
+  background: var(--paper);
+  border-block-end: 1px solid var(--rule);
+  padding-block: var(--section-y-lg) var(--section-y);
+}
+
+.hero-paper__title {
+  font-family: var(--font-serif);
+  font-size: var(--size-h1);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+  font-weight: 500;
+  font-variant: normal;
+  color: var(--ink);
+  margin-block-start: var(--space-5);
+  max-width: var(--measure-title);
+  text-wrap: balance;
+}
+
+.hero-paper__deck {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--size-lede);
+  line-height: 1.5;
+  color: var(--ink-2);
+  margin-block-start: var(--space-6);
+  max-width: var(--measure-prose);
+}
+
+.hero-paper__cta {
+  margin-block-start: var(--space-8);
+}
+
+/* ============================================================================
    Editorial pages · /blog and /customers (long-form narrow-column reading)
    ============================================================================
    Composition, top to bottom, of any editorial page:

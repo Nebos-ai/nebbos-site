@@ -14,14 +14,15 @@ import AxeBuilder from "@axe-core/playwright";
 
 const ROUTES = [
   "/",
-  "/pricing",
-  "/platform",
-  "/security",
+  "/product",
+  "/solutions",
+  "/customers",
   "/trust",
-  "/governance",
+  "/security",
+  "/compliance",
+  "/blog",
   "/press",
   "/status",
-  "/design",
   "/not-found-triggering-route", // triggers the 404 page
 ];
 
