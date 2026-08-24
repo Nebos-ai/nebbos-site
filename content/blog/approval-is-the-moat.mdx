@@ -1,0 +1,94 @@
+---
+title: Approval is the moat
+description: The AI-vendor race is a race to remove humans from the loop. The Nebbos bet is that the human in the loop is the moat — and that the substrate to make that human's approval scale is what enterprises actually need.
+date: 2026-08-01
+author: Nebbos
+---
+
+Most of the AI-vendor conversation right now is a race to remove humans from
+the loop. Autonomous agents. Zero-touch automation. Set-and-forget workflows.
+The pitch is that the value is in the removal — every human touchpoint is a
+cost, and the vendor's job is to reduce that cost to zero.
+
+Nebbos is built on the opposite bet: the human in the loop is the moat.
+
+## Why the removal is fake
+
+The removal is fake in two ways.
+
+First — inside any consequential enterprise decision, there is a named human
+who owns the outcome. The controller who signed off on the journal. The head
+of people who approved the offer. The compliance officer who attested to
+the filing. That accountability does not go away because a vendor's marketing
+copy says "autonomous." It goes underground. When the decision blows up, the
+CFO is still asked who signed off, and if the honest answer is "the AI did
+it without a human sign-off," the audit finding writes itself.
+
+Second — the removal is fake for training. Every preference pair your team
+generates — every human accept, every edit, every reject with a reason — is
+the highest-signal training data your organization will ever produce. A
+vendor pitching "zero-touch" is pitching zero training signal. The
+autonomous version of your workflow is the version that stops learning.
+
+## Approval as substrate
+
+The Nebbos design is to make the human sign-off scale, not to remove it.
+
+That means an approval graph as a first-class substrate primitive. Every
+action a Pearl proposes routes through the graph — configurable per
+department, per action class, per risk tier, with delegation chains for when
+the primary approver is unavailable. A close-week reconciliation goes to the
+controller. A journal above threshold goes to the controller plus the CFO. A
+public-communication draft goes to the department head plus legal. The
+graph is versioned, auditable, and inspectable — the auditor can see who
+should have approved what, whether they did, and how long it took.
+
+The graph does more than route. It compresses the sign-off. Instead of a
+controller reviewing every reconciliation from scratch, the Pearl surfaces
+the reconciliations that differ from baseline plus the specific mechanical
+details. Instead of a compliance officer chasing evidence across systems,
+the Pearl assembles the evidence packet and the officer's job becomes the
+last-mile judgment call. The human's attention is spent on the
+consequential decision, not on the workflow that surrounds it.
+
+## Why this is the moat
+
+Two reasons.
+
+First — every approval is training data your team owns. Over twenty-four
+months of running, that accumulates into a preference-pair corpus that
+captures your organization's specific judgment on your specific work. A
+competitor cannot buy that. A vendor cannot bundle that into a release. It
+belongs to you, and it moves with you if you ever leave the platform. That
+is the twenty-three-percent inference-of-revenue moat the AI-native
+benchmark actually rewards.
+
+Second — every approval is regulatory-adequate evidence. The EU AI Act
+Article 14 requires human oversight of high-risk AI systems. SOX requires
+attested human sign-off on material controls. HIPAA requires accountable
+persons on privacy-relevant actions. Every regulator that will matter over
+the next decade is converging on the same answer: the human in the loop is
+the accountability. A vendor stack that removed the human has to reinstate
+one under duress. A vendor stack that made the human the substrate is
+already ready.
+
+## The counter-argument, honestly
+
+The counter-argument is speed. The vendor pitching autonomous will say — and
+they are not entirely wrong — that the human in the loop is friction, and
+friction slows the enterprise down. The Nebbos answer is not to deny the
+friction. It is to compress it. A well-designed approval graph reduces the
+human's time on a routine action from minutes to seconds, without removing
+the human. That is a very different problem from removing the human, and it
+is the problem Nebbos was built around from Layer 11 up.
+
+## The claim, made plainly
+
+Autonomous AI systems will exist. Some of them will be quietly useful for
+low-stakes decisions. None of them will run the consequential operations of
+serious enterprises for very long, because the accountability model does not
+survive contact with the first regulator investigation, the first blown
+audit, the first material variance nobody can name a signer on.
+
+The company brain that persists is the one built around the human in the
+loop, not the one designed to remove them. Approval is the moat.

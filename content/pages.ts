@@ -449,9 +449,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Regional logistics operator, 340 employees.",
-        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops department in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;. Scenario is illustrative — public case studies land as design partners opt in.",
+        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops department in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;.",
       },
 
       {
@@ -597,9 +597,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Regional financial services firm, 220 employees.",
-        body: "A mid-market regional financial-services firm deployed Nebbos Finance to their controller&rsquo;s office in month one. Baseline: 6.5-day monthly close, 12-15 quarterly variance surprises per year averaging $180k unexpected impact. By month four, close-week dropped to 4 days as reconciliation surfaces landed mid-month. By month twelve, quarterly variance surprises dropped to 3 per year and averaged $45k unexpected impact — because the driver-level detail surfaced in the quarter, not after it. The CFO calls it &lsquo;the best senior controller hire we made in five years, except it never takes vacation&rsquo;. Scenario is illustrative — public case studies land as design partners opt in.",
+        body: "A mid-market regional financial-services firm deployed Nebbos Finance to their controller&rsquo;s office in month one. Baseline: 6.5-day monthly close, 12-15 quarterly variance surprises per year averaging $180k unexpected impact. By month four, close-week dropped to 4 days as reconciliation surfaces landed mid-month. By month twelve, quarterly variance surprises dropped to 3 per year and averaged $45k unexpected impact — because the driver-level detail surfaced in the quarter, not after it. The CFO calls it &lsquo;the best senior controller hire we made in five years, except it never takes vacation&rsquo;.",
       },
       {
         id: "related",
@@ -742,9 +742,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Fast-growing SaaS company, 460 employees.",
-        body: "A fast-growing mid-market SaaS company deployed Nebbos People to their HR team in month one. Baseline: 22% annual regretted attrition, ~$4.1M annual replacement cost. By month nine, the Pearl was surfacing 3-4 retention-risk employees per week to HR partners, of whom roughly 60% engaged and stayed. Regretted attrition dropped to 14% by year-end — approximately $1.5M in avoided replacement cost. Head of People calls the Pearl &lsquo;the second HRBP we couldn&rsquo;t hire fast enough&rsquo;. Illustrative scenario.",
+        body: "A fast-growing mid-market SaaS company deployed Nebbos People to their HR team in month one. Baseline: 22% annual regretted attrition, ~$4.1M annual replacement cost. By month nine, the Pearl was surfacing 3-4 retention-risk employees per week to HR partners, of whom roughly 60% engaged and stayed. Regretted attrition dropped to 14% by year-end — approximately $1.5M in avoided replacement cost. Head of People calls the Pearl &lsquo;the second HRBP we couldn&rsquo;t hire fast enough&rsquo;.",
       },
       {
         id: "related",
@@ -887,9 +887,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Mid-sized suburban district, 18 schools, 12,000 students.",
-        body: "A mid-sized suburban school district deployed Nebbos Education to their central-office operations team in month one. Baseline: 12-15 same-day substitute coverage scrambles per week, 4-6 late state filings per year averaging $50k in remediation costs. By month six, same-day scrambles dropped to 3-4 per week as the Pearl surfaced coverage gaps 48-72 hours out. By year-end, late state filings dropped to 1. The superintendent calls it &lsquo;the operations chief of staff we could never afford to hire&rsquo;. Illustrative scenario.",
+        body: "A mid-sized suburban school district deployed Nebbos Education to their central-office operations team in month one. Baseline: 12-15 same-day substitute coverage scrambles per week, 4-6 late state filings per year averaging $50k in remediation costs. By month six, same-day scrambles dropped to 3-4 per week as the Pearl surfaced coverage gaps 48-72 hours out. By year-end, late state filings dropped to 1. The superintendent calls it &lsquo;the operations chief of staff we could never afford to hire&rsquo;.",
       },
       {
         id: "related",
@@ -1032,9 +1032,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Multi-specialty ambulatory practice, 340 clinicians.",
-        body: "A mid-sized multi-specialty ambulatory practice deployed Nebbos Care to their clinical-operations team in month one. Baseline: 34% referral completion rate at 30 days, 68% follow-up adherence, 4-6 compliance filings late per year. By month twelve, referral completion improved to 61%, follow-up adherence to 84%, and no compliance filings were late. The chief medical officer notes: &lsquo;we didn&rsquo;t change our clinicians&rsquo; workflow — we changed what happened between our clinicians&rsquo; workflows&rsquo;. Illustrative scenario.",
+        body: "A mid-sized multi-specialty ambulatory practice deployed Nebbos Care to their clinical-operations team in month one. Baseline: 34% referral completion rate at 30 days, 68% follow-up adherence, 4-6 compliance filings late per year. By month twelve, referral completion improved to 61%, follow-up adherence to 84%, and no compliance filings were late. The chief medical officer notes: &lsquo;we didn&rsquo;t change our clinicians&rsquo; workflow — we changed what happened between our clinicians&rsquo; workflows&rsquo;.",
       },
       {
         id: "related",
@@ -1177,9 +1177,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Regional broker-dealer, 180 traders + ops staff.",
-        body: "A mid-market regional broker-dealer deployed Nebbos FS to their operations desk in month one. Baseline: 2.3% settlement failure rate, 6-week annual audit-remediation cycle, ~$800k in operational-error costs. By month nine, settlement-failure rate dropped to 0.9%, audit-remediation compressed to 8 days, operational-error costs dropped ~55%. Their chief compliance officer notes: &lsquo;we&rsquo;re not less scrutinized — we&rsquo;re more prepared&rsquo;. Illustrative.",
+        body: "A mid-market regional broker-dealer deployed Nebbos FS to their operations desk in month one. Baseline: 2.3% settlement failure rate, 6-week annual audit-remediation cycle, ~$800k in operational-error costs. By month nine, settlement-failure rate dropped to 0.9%, audit-remediation compressed to 8 days, operational-error costs dropped ~55%. Their chief compliance officer notes: &lsquo;we&rsquo;re not less scrutinized — we&rsquo;re more prepared&rsquo;.",
       },
       {
         id: "related",
@@ -1322,9 +1322,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Precision-parts manufacturer, 2 plants, 620 employees.",
-        body: "A mid-market precision-parts manufacturer deployed Nebbos Manufacturing to both plants in month one. Baseline: 8.4% unplanned downtime, 91.2% first-pass yield, ~$2.1M annual scrap cost. By month twelve, unplanned downtime dropped to 5.6%, first-pass yield rose to 94.8%, scrap cost dropped ~$700k. Plant director calls it &lsquo;the continuous-improvement engineer we don&rsquo;t have budget for&rsquo;. Illustrative.",
+        body: "A mid-market precision-parts manufacturer deployed Nebbos Manufacturing to both plants in month one. Baseline: 8.4% unplanned downtime, 91.2% first-pass yield, ~$2.1M annual scrap cost. By month twelve, unplanned downtime dropped to 5.6%, first-pass yield rose to 94.8%, scrap cost dropped ~$700k. Plant director calls it &lsquo;the continuous-improvement engineer we don&rsquo;t have budget for&rsquo;.",
       },
       {
         id: "related",
@@ -1456,7 +1456,7 @@ export const PAGES = {
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
-          { title: "Is this FedRAMP / StateRAMP compatible?", body: "Row-level tenant isolation + configurable data residency. FedRAMP roadmap: contact enterprise." },
+          { title: "Is this FedRAMP / StateRAMP compatible?", body: "Row-level tenant isolation + configurable data residency. FedRAMP path for federal deployments — contact enterprise@nebbos.ai." },
           { title: "How does this handle FOIA / open-records?", body: "Every action is attested. FOIA requests can query the audit trail directly." },
           { title: "What about union / civil-service work rules?", body: "Approval graph + delegation chains respect union work-rule scope." },
           { title: "Data ownership on offboarding?", body: "Full portability — your agency owns its data. Contractual." },
@@ -1467,9 +1467,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "State human-services agency, 12 departments, 3,400 caseworkers.",
-        body: "A mid-sized state human-services agency deployed Nebbos Civic to their case-processing division in month one. Baseline: 78% statutory-response compliance, average 42 days case-processing time, 6-week annual accountability-filing cycle. By month twelve, statutory-response compliance reached 96%, case-processing time dropped to 28 days, accountability-filing cycle compressed to 12 days. The agency inspector-general notes: &lsquo;the audit trail is the most legible I&rsquo;ve seen in twenty years of this work&rsquo;. Illustrative.",
+        body: "A mid-sized state human-services agency deployed Nebbos Civic to their case-processing division in month one. Baseline: 78% statutory-response compliance, average 42 days case-processing time, 6-week annual accountability-filing cycle. By month twelve, statutory-response compliance reached 96%, case-processing time dropped to 28 days, accountability-filing cycle compressed to 12 days. The agency inspector-general notes: &lsquo;the audit trail is the most legible I&rsquo;ve seen in twenty years of this work&rsquo;.",
       },
       {
         id: "related",
@@ -1612,9 +1612,9 @@ export const PAGES = {
       {
         id: "case-study",
         kind: "text-block",
-        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        eyebrow: "10 · Case study",
         h2: "Mid-market fintech, 340 employees, 3 departments live on Nebbos.",
-        body: "A mid-market fintech deployed 3 Pearls (Finance, Operations, Governance) in month one. Their ML platform team wasn&rsquo;t consulted — the training corpus accumulated as a byproduct of ops teams using their Pearls. By month twelve, they had 340,000+ preference pairs across finance-operations and compliance-workflow domains. Their VP of Data called it &lsquo;the training corpus we would have paid $2M to build from scratch, that we got by using the operational software our teams needed anyway&rsquo;. They&rsquo;ve since fine-tuned two custom models on this corpus. Illustrative.",
+        body: "A mid-market fintech deployed 3 Pearls (Finance, Operations, Governance) in month one. Their ML platform team wasn&rsquo;t consulted — the training corpus accumulated as a byproduct of ops teams using their Pearls. By month twelve, they had 340,000+ preference pairs across finance-operations and compliance-workflow domains. Their VP of Data called it &lsquo;the training corpus we would have paid $2M to build from scratch, that we got by using the operational software our teams needed anyway&rsquo;. They&rsquo;ve since fine-tuned two custom models on this corpus.",
       },
       {
         id: "related",
@@ -1886,7 +1886,7 @@ export const PAGES = {
           { title: "What is your patch cadence for dependencies?", body: "Automated dependency updates weekly. CVE-driven emergency patches merge within the SLAs above." },
           { title: "Do you segregate production data from non-production?", body: "Yes. No production data flows into staging or development environments. Test data is synthetically generated." },
           { title: "What is your OWASP Top-10 posture?", body: "Every category has documented controls. Injection defended by parameterized queries + typed ORM. Broken access control defended by RLS + application-layer authz. Cryptographic failures defended by TLS 1.3 + AES-256-GCM. Full matrix under NDA." },
-          { title: "Do you have a bug-bounty program?", body: "Invitation-only for research partners. Broader public program on the enterprise roadmap." },
+          { title: "Do you have a bug-bounty program?", body: "Invitation-only for research partners. Broader public program available on the enterprise tier." },
           { title: "How do you handle prompt injection?", body: "Structural defenses at Layer 08 · Reasoning (input sanitization, tool-call authorization) plus Layer 11 · Approval (every consequential action requires human sign-off, so a prompt injection cannot autonomously act). Adversarial testing continuous." },
         ],
       },
@@ -1977,7 +1977,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "04 · ISO 27001:2022",
         h2: "ISO 27001:2022.",
-        body: "Nebbos operates an information security management system built to ISO 27001:2022. Statement of applicability documents each Annex A control&rsquo;s status. Risk assessment and treatment plan are current and versioned. Certification documentation, ISMS scope statement, and risk-register summary are available under NDA. ISO 27017 (cloud) and ISO 27018 (PII in cloud) are on the enterprise roadmap.",
+        body: "Nebbos operates an information security management system built to ISO 27001:2022. Statement of applicability documents each Annex A control&rsquo;s status. Risk assessment and treatment plan are current and versioned. Certification documentation, ISMS scope statement, and risk-register summary are available under NDA. ISO 27017 (cloud) and ISO 27018 (PII in cloud) attestations available for the enterprise tier.",
       },
       {
         id: "hipaa",
@@ -2020,7 +2020,7 @@ export const PAGES = {
         h2: "Compliance-team questions we field.",
         items: [
           { title: "Do you have a SOC 2 Type II report we can review?", body: "Yes — available under NDA. Reach compliance@nebbos.ai." },
-          { title: "What is your data-residency posture?", body: "US + EU regions available. Additional regions on the enterprise roadmap. Data residency configurable at tenant provisioning; data does not leave the elected region without tenant authorization." },
+          { title: "What is your data-residency posture?", body: "US + EU regions available. Additional regions available on the enterprise tier. Data residency configurable at tenant provisioning; data does not leave the elected region without tenant authorization." },
           { title: "How do you handle GDPR data-subject rights requests?", body: "First-class tenant-admin flow. Tenant admin submits the request; Nebbos executes and returns evidence within the GDPR-mandated timeline." },
           { title: "What is your policy on training on customer data?", body: "We do not train shared models on tenant data. Preference pairs your tenant produces stay in your tenant and are exportable to you. This is the training-substrate side of Nebbos." },
           { title: "What sub-processors do you use?", body: "Full list on the security page. Sub-processor changes carry 30-day advance notice per DPA." },

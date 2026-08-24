@@ -1,0 +1,109 @@
+---
+title: Tenant isolation as a database primitive
+description: The typical multi-tenant AI stack enforces isolation at the application layer. That means an application-layer bug can leak your data. Nebbos enforces it at the database.
+date: 2026-07-04
+author: Nebbos
+---
+
+The typical multi-tenant enterprise AI stack enforces tenant isolation at
+the application layer. Every query is filtered by a `tenant_id` in the
+application code. The code is reviewed, the tests cover the common
+paths, the pattern is documented in the internal wiki. And every once in
+a while, a code path is added that forgets the filter, and one tenant's
+data leaks to another tenant, and there is a post-mortem, and the code
+path is fixed, and the pattern is re-documented, and the cycle continues.
+
+Nebbos enforces tenant isolation at the database, not at the application
+layer. That is a small architectural distinction that has very large
+consequences.
+
+## The application-layer pattern, and its failure mode
+
+The application-layer pattern is straightforward. Every table with
+tenant scope has a `tenant_id` column. Every query includes a `WHERE
+tenant_id = $current_tenant` clause. Every ORM query builder is
+configured to insert that clause automatically. Every code review looks
+for the clause. Every unit test checks common paths.
+
+The failure mode is also straightforward. Someone writes a code path
+that bypasses the ORM query builder — because they need a specific SQL
+tuning, because they're calling a stored procedure, because they added
+a background job that runs against the raw connection. The `tenant_id`
+filter is missing. The code passes review because the reviewer did not
+notice. The test suite passes because no test hit that specific path
+with cross-tenant data. Six months later, a bug report reveals that one
+tenant has been seeing another tenant's data all along.
+
+Every enterprise SaaS vendor has had this outage at least once. Most
+have had it several times. The pattern is not that these vendors are
+sloppy. The pattern is that application-layer isolation depends on
+every code path getting the filter right, forever, across every
+engineer who ever touches the codebase.
+
+## The database-layer pattern
+
+Postgres row-level security policies attach isolation directly to the
+table. Every request runs inside a session with a context variable
+identifying the tenant. The RLS policy compares that variable against
+the row's `tenant_id` column. The database itself refuses to return
+rows that do not match.
+
+An application-layer bug that forgets the filter still fails — but it
+fails closed, at the database boundary, before any data crosses. The
+query returns zero rows. The bug becomes a support ticket ("why do I
+not see my data?"), not a security incident ("why did I see someone
+else's data?"). The failure mode has flipped from a leak to an
+inconvenience.
+
+This is what "structural, not policy" means. Isolation is now a
+property the code cannot violate, not a discipline the code has to
+maintain.
+
+## What this changes for the auditor
+
+An auditor evaluating application-layer isolation is evaluating a
+process — the code-review discipline, the test coverage, the incident-
+response history. They can gather evidence, but the underlying claim is
+that the vendor has done a good job so far and will continue to do so.
+
+An auditor evaluating database-layer isolation is evaluating a schema.
+The RLS policies are queryable. The context variable is inspectable.
+The failure mode is testable — the auditor can literally write a query
+without the correct context and confirm that the database refuses it.
+The claim is not "we've been careful." The claim is "the database
+will not allow the leak."
+
+Every SOC 2 auditor, every ISO 27001 assessor, every HIPAA risk
+assessment we have walked through comes back with the same reaction:
+this is faster to review, cleaner to sign off on, and easier to trust.
+
+## The cost, and why it's worth it
+
+Row-level isolation at the database is not free. Postgres RLS has a
+performance cost — a small one, when policies are simple and indexed
+correctly, but non-zero. Every query does a bit more work. Every
+context switch requires setting the session variable. Every subquery
+inherits the policy from the parent.
+
+The cost is manageable with careful policy design and appropriate
+indexing. In our production data, RLS overhead sits below three percent
+of query time on average and below eight percent at the tail. That is
+the price of turning tenant isolation from a discipline the engineers
+have to maintain into a property the database enforces. It is a very
+good trade.
+
+## The design principle, made general
+
+The pattern generalizes. Trust properties should be enforced at the
+lowest layer capable of enforcing them. Isolation belongs at the
+database. Approval belongs at a substrate graph. Attestation belongs at
+the storage engine. Portability belongs in a routine that runs on every
+deploy.
+
+The reason is not aesthetic. It is that every layer above the
+enforcement layer is a layer where discipline can slip. The lower the
+enforcement, the fewer the layers where a bug can undermine the
+guarantee. Nebbos's substrate is fifteen layers deep specifically to
+put every trust-relevant property as close to the ground as possible —
+and to make the code above it structurally unable to violate what the
+substrate has already made true.

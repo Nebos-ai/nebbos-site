@@ -1,0 +1,136 @@
+---
+title: The fifteen layers in fifteen minutes
+description: A guided tour of the Nebbos substrate — five bands, three layers each, one flat rate per seat. What each layer does and why it matters.
+date: 2026-07-18
+author: Nebbos
+---
+
+Nebbos is fifteen architecture layers, organized into five bands of three
+layers each. Every layer is load-bearing. Removing any of them would
+require the substrate to be rebuilt. This is the fifteen-minute tour.
+
+## Band 1 · Substrate
+
+The three layers that make everything else possible.
+
+**Layer 01 · Data.** Postgres, per-tenant row-level isolation, encryption
+at rest, per-tenant data-encryption keys wrapped by a KMS-hosted master
+key. The isolation is a database primitive, not a policy. An application-
+layer bug that forgets a filter fails closed — the database refuses the
+read. Every tenant guarantee downstream depends on this.
+
+**Layer 02 · Identity.** SSO for humans, service accounts for workflows,
+workload identity for services, break-glass paths for on-call responders.
+Every request carries a verifiable identity claim through the entire
+stack. Row-level policies at Layer 01 read from the identity context at
+Layer 02. Approval graphs at Layer 11 route by identity from Layer 02.
+Without Layer 02, nothing above it means anything.
+
+**Layer 03 · Departments.** The organizational scaffolding — departments,
+teams, roles, delegation chains. First-class entities, not JSONB blobs.
+Every Pearl above is scoped to a department. Every approval routes
+through a delegation graph. Every audit query filters by organizational
+structure. The design principle: the organization is not metadata, it is
+the primary axis of everything above.
+
+## Band 2 · Boundary
+
+The three layers that connect Nebbos to your existing world.
+
+**Layer 04 · Ingest.** Named connectors to your ERP, CRM, ATS, EMR, MES,
+ticketing, calendar, messaging, and email. Streams land append-only in
+`raw_inbound` first, then get normalized. Reconciliation between what was
+sent and what landed runs continuously. The design principle: never lose
+a signal because a connector misbehaved.
+
+**Layer 05 · Contracts.** Typed contracts for every source and every
+destination. Schemas versioned. Producers pinned to specific contract
+versions. Consumers migrate on their own schedule. The layer that keeps
+integrations from silently breaking when a vendor changes their API.
+
+**Layer 06 · Egress.** Named egresses to your downstream systems — the
+places a Pearl action actually lands in your world. Retry, idempotency,
+attestation on every write. Every egress is a per-tenant-scoped channel;
+one tenant's writes cannot escape into another tenant's downstream.
+
+## Band 3 · Intelligence
+
+The three layers that turn signal into thought.
+
+**Layer 07 · Memory.** Per-tenant knowledge graph on Postgres + pgvector.
+Preference pairs, embeddings, retrieval indices, tuned Pearl weights.
+Every decision your team makes accumulates here. Every Pearl action
+reads from here. The compounding-value layer — the reason your Pearl
+gets sharper over twenty-four months.
+
+**Layer 08 · Reasoning.** Multi-provider router. Anthropic, OpenAI,
+Google, self-hosted, bring-your-own-model. Every call carries tenant
+context, retrieved memory, and tool-call authorization. Provider
+switching is a config change; the layer above does not care which
+provider served the underlying inference.
+
+**Layer 09 · Detectors.** Deterministic pattern detection that runs
+continuously and costs nothing to watch. Deadline risk, capacity crunch,
+velocity drop, handoff stall, absence signal, cascade risk. Only when a
+detector fires does Layer 08 spend a model call on the reasoning. Cheap
+to watch, sharp when it counts.
+
+## Band 4 · Action
+
+The three layers that turn thought into consequential action.
+
+**Layer 10 · Pearl · Shell.** The per-department entity that carries the
+work. A Pearl is scoped, named, and identity-bearing. Nebbos Finance,
+Nebbos Operations, Nebbos People — each is a Pearl. Every action a
+Pearl proposes carries the Pearl's identity, the department context,
+and the specific human authorization that permits it.
+
+**Layer 11 · Approval.** The human-in-the-loop substrate. Approval graph
+per department, per action class, per risk tier. Delegation chains for
+availability. Escalation on deadlock. Every consequential action passes
+through here. This is the moat — the layer that makes the human
+sign-off scale without removing it.
+
+**Layer 12 · Orchestrator.** The queue that turns approved actions into
+scheduled writes. Retry, backoff, idempotency. Signal fan-out to
+downstream systems. The layer that makes an approved action actually
+land in the world.
+
+## Band 5 · Commerce
+
+The three layers that make Nebbos an institution, not just software.
+
+**Layer 13 · Onboarding.** The tenant lifecycle. Signup, provisioning,
+configuration, offboarding. Onboarding is a first-class flow — a Pearl
+deploys in three weeks, not three months. Offboarding is also a first-
+class flow — the export routine runs on every deploy so we know it
+works when you need it. Portability is not a promise, it is a routine.
+
+**Layer 14 · Observability.** Metrics, traces, logs, anomaly detection.
+Real-time visibility on Pearl action rates, approval latencies, model-
+provider costs, tenant-boundary anomalies. The layer that lets you
+answer "is my Pearl working?" without guessing.
+
+**Layer 15 · Attestation.** The append-only, hash-chained audit trail.
+Every read, every action, every approval lands here. The record your
+regulator reads. The record your inspector-general verifies with an
+independent tool. The load-bearing layer for every trust claim in every
+band above.
+
+## Why fifteen, not five
+
+The obvious question is why fifteen layers. The obvious answer is that
+this is what an operating system for the AI-native enterprise turns out
+to require when you build it seriously. Each layer solves a real
+problem that would otherwise break the layer above. Cutting layers means
+building the same functionality later, less coherently, with more
+seams — which is the pattern most enterprise AI stacks are already on.
+
+## Why one flat rate
+
+One flat rate per seat — one hundred fifty dollars per user per month —
+because pricing complexity is another form of vendor lock-in.
+Enterprises should be able to reason about the cost of Nebbos the same
+way they reason about the cost of a Slack seat: seats times price. The
+substrate underneath is fifteen layers deep. The pricing above is one
+number. That is deliberate.

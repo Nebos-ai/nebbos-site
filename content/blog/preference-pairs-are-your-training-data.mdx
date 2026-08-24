@@ -1,0 +1,110 @@
+---
+title: Preference pairs are your training data
+description: Every human decision your team makes about a Pearl-proposed action is a preference pair. Most vendors capture that signal and use it to train their next model. Nebbos hands it back to you.
+date: 2026-07-25
+author: Nebbos
+---
+
+Every time someone on your team accepts a Pearl-proposed action, edits it,
+or rejects it with a reason, that decision is a preference pair. The
+proposed action, the human's response, the context they saw, the outcome
+that followed — a structured record of your organization's judgment on your
+organization's specific work.
+
+Preference pairs are the highest-signal training data on earth for
+enterprise AI. And in the standard vendor model, they belong to the vendor.
+
+## Where the value goes
+
+The standard model is straightforward. The vendor deploys a model into your
+workflow. Every human interaction generates a preference pair. The pairs
+flow back to the vendor's central data plane. The vendor uses them to
+train the next version of their model. That next version becomes the
+vendor's competitive advantage, which they sell back to you as the next
+subscription tier.
+
+Read that paragraph twice. Every dollar of enterprise AI spend is, in the
+standard model, subsidizing the vendor's next moat — a moat built out of
+your specific operational judgment. Your data trains their model. Their
+model becomes their pricing power. Their pricing power becomes your
+renewal.
+
+This is not an accusation. It is the incentive structure. Any vendor
+whose economics depend on centralizing training signal will centralize
+training signal. The problem is not motives; the problem is architecture.
+
+## The inversion
+
+Nebbos is architected on the inversion. Every preference pair your team
+generates stays in your tenant. The pairs accumulate in your tenant's
+memory (Layer 07). They are queryable by you, exportable by you, and — at
+any time you choose — trainable on any model you own or license.
+
+At month one, you have a modest dataset. At month twelve, you have
+tens of thousands of preference pairs. At month twenty-four, you have
+hundreds of thousands of structured records that capture how YOUR
+finance team resolves reconciliations, how YOUR HR partners handle
+retention risks, how YOUR compliance officer files under specific state
+regimes. That corpus is portable — you can hand it to your ML platform
+team, to a fine-tuning provider, to an open-weight model you're running
+in your own infrastructure. Your data trains your model. Not someone
+else's.
+
+## What the corpus actually contains
+
+The interesting question is what accumulates over time. A well-formed
+preference pair carries:
+
+- The proposed action, in the exact form the Pearl generated it
+- The human's decision — accept, edit, reject
+- The edit, if there was one, in its exact final form
+- The rejection reason, if there was one, in the human's own words
+- The context the human saw when they made the decision
+- The outcome that followed (where observable), and how long after
+- The department, the role of the approver, the specific action class
+
+Multiply that shape by a year of daily operation across a mid-sized
+department, and you get a training corpus that has a very specific
+property: it is dense in the parts of your operational judgment that
+matter, and sparse in the parts that don't. That density is what makes
+fine-tuning work. Preference pairs are what turn generic capability into
+your team's competence.
+
+## The twenty-three-percent benchmark
+
+Bessemer, Avante, and SFAI Labs's 2026 AI-native benchmark study measures
+what they call inference-of-revenue — the fraction of AI-native
+companies' spend that goes to model inference at providers, versus
+building owned capability. The healthiest tier of AI-native companies is
+running at roughly twenty-three percent. OpenAI is running at fifty-six
+percent. The delta is roughly the difference between spending on your own
+moat and spending on someone else's.
+
+The training substrate is what closes that gap. Every Pearl your
+enterprise runs contributes preference pairs to your corpus. Every
+fine-tune you run on that corpus becomes model performance you own. Every
+subsequent inference against your tuned model is inference against your
+moat, not against a provider's.
+
+## The portability guarantee, in plain terms
+
+If you leave Nebbos, you take the corpus with you. That is contractual,
+non-negotiable, and exercised on every deploy so we know the routine
+works before you ever ask. The corpus ships in a documented format that
+common fine-tuning tooling reads directly. The tuned Pearls, if you have
+run any, ship with their weights. The audit trail ships with an
+independent verifier. Nothing you built inside your tenant is trapped
+inside your tenant.
+
+That is the design principle. The corpus is yours. It always was. The
+platform is scaffolding for producing it, tuning against it, and running
+Pearls that get sharper because of it. If a better platform comes along
+in three years — the corpus moves.
+
+## The claim
+
+The enterprises that treat preference pairs as their training data will
+compound. The ones that let their vendors keep them will spend the next
+decade renting back their own operational judgment at a markup. That is
+the shape of the AI-native economy, and the training substrate is the
+part that decides which side of it you sit on.
