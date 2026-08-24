@@ -1,42 +1,27 @@
 import type { Metadata, Viewport } from "next";
-import { Space_Grotesk, Fira_Code } from "next/font/google";
+import { Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { SiteLoader } from "@/components/site/SiteLoader";
 import { BRAND } from "@/content/brand";
 
 import "./globals.css";
 
 /**
- * Root layout · Nebbos site v3 · font stack 2026-08-24 revision
+ * Root layout · Nebbos site v4 · 2026-08-24
  *
- * Founder direction 2026-08-24: replace Fraunces (rounded humanist serif) +
- * Manrope (humanist grotesk) with an executive geometric grotesque. "Clean
- * straight lines, not as rounded, not as animated."
+ * Font stack: Helvetica Neue system stack with Japanese Hiragino CJK
+ * fallback (Izanami-style international-executive register). No network
+ * load for display + body fonts — Helvetica is native on macOS/iOS,
+ * fallbacks handle Windows/Android. Fira Code still loaded for mono
+ * eyebrows and numerals.
  *
- * Space Grotesk — designed by Florian Karsten, based on Space Mono. Squared
- * terminals, geometric construction, tech-institutional character. Loaded
- * for display + body. Both --font-serif and --font-sans point to it so the
- * design-token layer stays stable while the underlying font changes.
+ * The full font stack lives in app/globals.css (--font-serif and
+ * --font-sans tokens) so the design system stays token-driven.
  *
- * Fira Code — mono for eyebrows, numerals, code (unchanged).
- *
- * Self-hosted via next/font so no external CSS fetch on first paint
- * (CLS-safe). Variable weight — one load for the whole 300-700 range.
+ * SiteLoader: full-screen bone-on-warm-black loader that shows "Remember
+ * who you are." on first paint, fades once the main content settles.
  */
-
-const display = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-serif",
-});
-
-const body = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-sans",
-});
 
 const mono = Fira_Code({
   subsets: ["latin"],
@@ -98,8 +83,9 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html lang="en" className={mono.variable}>
       <body>
+        <SiteLoader />
         <a href="#main" className="skip-link">Skip to content</a>
         <SiteHeader />
         <main id="main">{children}</main>

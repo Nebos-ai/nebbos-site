@@ -64,33 +64,40 @@ a:hover {
 /* ── 2. DESIGN TOKENS ─────────────────────────────────────────────────── */
 
 :root {
-  /* Color · Nebbos brand palette 2026-08-23 (per founder-supplied SVG marks)
-   * Locked brand colors:
-   *   #F6A03F — Nebbos orange (accent, italic emphasis, mark)
-   *   #1D1C22 — Nebbos dark (ink, mark on light)
-   *   #FFFFFF — Nebbos white (paper, mark on dark)
-   * All other tokens derive as neutral steps between these anchors.
+  /* Color · Nebbos brand palette v4 · 2026-08-24 — dark warm register per
+   * founder direction (Izanami reference). Warm near-black surface, warm
+   * bone text, brand orange accent preserved. Semantic naming stays stable
+   * (--paper = the surface, --ink = the text) so downstream rules don't
+   * flip; only the token VALUES change.
+   *
+   * Anchors:
+   *   #0a0801 — Nebbos warm-black (surface · body bg)
+   *   #d9d7d4 — Nebbos warm-bone (text · brand marks-on-dark)
+   *   #F6A03F — Nebbos orange (accent · brand · unchanged)
    */
-  --paper:      #FFFFFF;  /* Nebbos white · brand */
-  --paper-2:    #F7F5F1;  /* barely-off-white for hairline elevation */
-  --ink:        #1D1C22;  /* Nebbos dark · brand */
-  --ink-2:      #4A4952;  /* secondary text */
-  --ink-3:      #7C7B84;  /* tertiary text · muted */
-  --muted:      #A0A0A8;  /* disabled · hint */
-  --rule:       #E8E6E2;  /* hairline border · sits on white */
-  --rule-2:     #F0EEE9;  /* softer hairline · sub-dividers */
-  --gold:       #A36630;  /* deep · reserved secondary accent */
-  --accent-2:   #F6A03F;  /* Nebbos orange · brand · primary accent */
-  --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
+  --paper:      #0a0801;  /* Nebbos warm-black · body surface */
+  --paper-2:    #14110a;  /* one step lighter for section alternation */
+  --ink:        #d9d7d4;  /* Nebbos warm-bone · body text */
+  --ink-2:      #a8a6a2;  /* secondary text · dimmer bone */
+  --ink-3:      #7c7a75;  /* tertiary text · muted bone */
+  --muted:      #55534e;  /* disabled · hint on dark */
+  --rule:       #26221a;  /* hairline border · sits on dark */
+  --rule-2:     #1c1912;  /* softer hairline · sub-dividers */
+  --gold:       #caa100;  /* deep gold · secondary accent (Izanami tone) */
+  --accent-2:   #F6A03F;  /* Nebbos orange · brand · unchanged */
+  --gold-2:     #FDDA88;  /* light gold · reserved */
 
   /* Scene palette (Hand-of-God register) — used in scene-adjacent surfaces */
-  --scene-1:    #C9B896;  /* coffee shop warmth */
-  --scene-2:    #A8874F;  /* Central Park autumn */
-  --scene-3:    #8FA5B0;  /* Mediterranean coast */
+  --scene-1:    #C9B896;
+  --scene-2:    #A8874F;
+  --scene-3:    #8FA5B0;
 
-  /* Typography · Fraunces (serif · display) + Manrope (sans · UI) + Fira Code (mono) */
-  --font-serif: var(--font-serif), "Fraunces", Georgia, serif;
-  --font-sans:  var(--font-sans), "Manrope", -apple-system, system-ui, sans-serif;
+  /* Typography · Helvetica Neue system stack (Izanami-style institutional
+   * international register) + Japanese Hiragino fallback for CJK. Zero
+   * network font load; native rendering at every size. Fira Code stays
+   * for mono. */
+  --font-serif: "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
+  --font-sans:  "Helvetica Neue", "Helvetica", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Meiryo", Arial, sans-serif;
   --font-mono:  var(--font-mono), "Fira Code", ui-monospace, SFMono-Regular, monospace;
 
   /* Type scale (fluid, clamp-based) — v3 · 2026-08-24
@@ -304,13 +311,16 @@ main {
 
 /* ── 6. UTILITIES ─────────────────────────────────────────────────────── */
 
+/* v4 · 2026-08-24 — eyebrows shifted to lowercase-tracked-tiny per Izanami
+   reference (labels like "philosophy", "projects", "company" — restrained,
+   quiet). Small caps effect achieved via lowercase source + wide tracking. */
 .eyebrow {
   font-family: var(--font-mono);
   font-size: var(--size-eyebrow);
   letter-spacing: 0.24em;
-  text-transform: uppercase;
-  color: var(--gold);
-  font-weight: 500;
+  text-transform: lowercase;
+  color: var(--ink-3);
+  font-weight: 400;
 }
 
 .mono {
@@ -347,18 +357,71 @@ main {
 }
 
 /* ============================================================================
-   SiteHeader — dark chrome + white brand marks
+   SiteLoader — full-screen manifesto loader on first paint (Izanami-style)
+   ============================================================================ */
+
+.site-loader {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--paper);
+  color: var(--ink);
+  display: grid;
+  place-items: center;
+  transition: opacity 500ms ease-out;
+  opacity: 1;
+}
+
+.site-loader--fade {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.site-loader__inner {
+  display: grid;
+  place-items: center;
+  gap: var(--space-16);
+  padding: var(--container-pad);
+  text-align: center;
+}
+
+.site-loader__title {
+  font-family: var(--font-serif);
+  font-size: clamp(28px, 7vw, 112px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
+  color: var(--ink);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.site-loader__progress {
+  font-family: var(--font-mono);
+  font-size: var(--size-eyebrow);
+  letter-spacing: 0.24em;
+  color: var(--ink-3);
+}
+
+.site-loader__number {
+  font-variant-numeric: tabular-nums;
+}
+
+/* ============================================================================
+   SiteHeader — transparent chrome, white brand marks over dark surface
    ============================================================================
-   Founder direction 2026-08-24: header is always DARK (var(--ink)). Nebbos
-   mark + wordmark are always the WHITE variants. No scroll-elevation
-   crossfade. Mega-menu opens onto paper for contrast against the ink chrome. */
+   In the dark-warm palette flip 2026-08-24, header background matches body
+   surface so chrome reads as an overlay rather than a bar. Mega-menu still
+   gets its own slightly-elevated surface via --paper-2 for contrast. */
 
 .site-header {
   position: sticky;
   inset-block-start: 0;
   z-index: 50;
-  background: var(--ink);
-  border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  background: var(--paper);
+  border-block-end: 1px solid var(--rule);
 }
 .site-header__inner {
   display: flex;
@@ -372,7 +435,7 @@ main {
   align-items: center;
   gap: var(--space-3);
   text-decoration: none;
-  color: var(--paper);
+  color: var(--ink);
 }
 .site-header__mark {
   width: 40px;
@@ -394,7 +457,7 @@ main {
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
-  color: var(--paper-on-image-soft);
+  color: var(--ink-2);
   text-decoration: none;
   cursor: pointer;
   background: none;
@@ -404,7 +467,7 @@ main {
 }
 .site-header__link:hover,
 .site-header__link:focus-visible {
-  color: var(--paper);
+  color: var(--ink);
 }
 .site-header__link--quiet {
   color: var(--ink-3);
@@ -427,8 +490,8 @@ main {
   align-items: center;
   gap: var(--space-2);
   padding: 10px 18px;
-  background: var(--paper);
-  color: var(--ink);
+  background: var(--ink);
+  color: var(--paper);
   font-family: var(--font-sans);
   font-size: 14px;
   font-weight: 500;
@@ -449,23 +512,24 @@ main {
   height: 44px;
   background: none;
   border: none;
-  color: var(--paper);
+  color: var(--ink);
   cursor: pointer;
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.14em;
 }
 
-/* Mega-menu · drops down onto paper for contrast against the dark chrome */
+/* Mega-menu · drops down with slight elevation from body surface via
+   --paper-2 for subtle differentiation from the header/body surface. */
 .site-mega {
   position: absolute;
   inset-inline: 0;
   inset-block-start: 100%;
-  background: var(--paper);
+  background: var(--paper-2);
   border-block-start: 1px solid var(--rule);
   border-block-end: 1px solid var(--rule);
   padding-block: clamp(var(--space-8), 5vh, var(--space-16));
-  box-shadow: 0 8px 24px -12px rgba(20, 18, 15, 0.16);
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
 }
 .site-mega__grid {
   display: grid;
@@ -484,6 +548,8 @@ main {
   color: var(--ink);
   margin-block-end: var(--space-2);
   letter-spacing: -0.012em;
+  font-variant: small-caps;
+  font-feature-settings: "smcp", "c2sc";
 }
 .site-mega__band-strap {
   font-family: var(--font-sans);
@@ -512,7 +578,7 @@ main {
   transition: background var(--dur-fast) var(--ease-out);
 }
 .site-mega__layer-link:hover {
-  background: var(--paper-2);
+  background: var(--rule-2);
 }
 .site-mega__layer-num {
   font-family: var(--font-mono);
@@ -524,13 +590,13 @@ main {
   font-weight: 500;
 }
 
-/* Mobile drawer · dark, matches header */
+/* Mobile drawer · full-screen dark surface, bone text (Izanami nav pattern) */
 .site-drawer {
   position: fixed;
   inset: 0;
   inset-block-start: 68px;
-  background: var(--ink);
-  color: var(--paper);
+  background: var(--paper);
+  color: var(--ink);
   overflow-y: auto;
   z-index: 40;
   padding: var(--space-6);
@@ -543,14 +609,14 @@ main {
   padding: 0;
 }
 .site-drawer__nav-item {
-  border-block-end: 1px solid rgba(255, 255, 255, 0.08);
+  border-block-end: 1px solid var(--rule);
 }
 .site-drawer__nav-link {
   display: block;
   padding: var(--space-5) var(--space-1);
   font-family: var(--font-serif);
   font-size: 24px;
-  color: var(--paper);
+  color: var(--ink);
   text-decoration: none;
   letter-spacing: -0.014em;
 }
@@ -563,10 +629,10 @@ main {
 .site-drawer__action {
   display: block;
   padding: 14px 20px;
-  border: 1px solid var(--paper);
+  border: 1px solid var(--ink);
   font-family: var(--font-sans);
   font-size: 15px;
-  color: var(--paper);
+  color: var(--ink);
   text-decoration: none;
   text-align: center;
 }
