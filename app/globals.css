@@ -427,6 +427,41 @@ main {
   text-transform: uppercase;
   color: var(--paper-on-image-soft);
 }
+
+/* Breadcrumb overlay — top-left on layer heroes */
+.hero-breadcrumb {
+  position: absolute;
+  top: var(--space-10);
+  inset-inline: 0;
+  z-index: 2;
+}
+.hero-breadcrumb__list {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--size-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--paper-on-image-soft);
+  text-shadow: var(--shadow-on-image-soft);
+}
+.hero-breadcrumb__link {
+  color: var(--accent-2);
+  text-decoration: none;
+}
+.hero-breadcrumb__link:hover {
+  text-decoration: underline;
+}
+.hero-breadcrumb__current {
+  color: var(--paper-on-image);
+}
+.hero-breadcrumb__sep {
+  opacity: 0.6;
+}
 .hero-fullbleed__accent,
 .cta-fullbleed__accent {
   font-style: italic;

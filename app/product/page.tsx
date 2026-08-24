@@ -37,52 +37,18 @@ export default function ProductPage() {
   return (
     <>
       {/* Hero — paper, no image, editorial */}
-      <section
-        style={{
-          background: "var(--paper)",
-          borderBottom: "1px solid var(--rule)",
-          paddingBlock: "clamp(96px, 14vh, 176px) clamp(64px, 8vh, 96px)",
-        }}
-      >
-        <div className="container">
-          <div style={{ maxWidth: "68ch" }}>
-            <SectionNumeral n="00" label="The architecture" />
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(40px, 5.4vw, 80px)",
-                lineHeight: 1.04,
-                letterSpacing: "-0.024em",
-                fontWeight: 400,
-                color: "var(--ink)",
-                margin: "20px 0 0 0",
-                maxWidth: "20ch",
-                textWrap: "balance",
-              }}
-            >
-              Fifteen layers.{" "}
-              <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                Five bands.
-              </em>{" "}
-              One architecture.
-            </h1>
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(18px, 1.6vw, 22px)",
-                lineHeight: 1.55,
-                color: "var(--ink-2)",
-                maxWidth: "56ch",
-                marginTop: 24,
-              }}
-            >
-              The complete architecture underneath every Pearl. Data at the
-              bottom. Boundaries the world crosses at. Reasoning across
-              providers. Action and the humans who approve it. Commerce at
-              the top.
-            </p>
-          </div>
+      <section className="hero-paper">
+        <div className="container-narrow">
+          <SectionNumeral n="00" label="The architecture" />
+          <h1 className="hero-paper__title">
+            Fifteen layers. <em>Five bands.</em> One architecture.
+          </h1>
+          <p className="hero-paper__deck">
+            The complete architecture underneath every Pearl. Data at the
+            bottom. Boundaries the world crosses at. Reasoning across
+            providers. Action and the humans who approve it. Commerce at
+            the top.
+          </p>
         </div>
       </section>
 

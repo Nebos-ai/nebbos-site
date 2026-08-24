@@ -5,7 +5,7 @@ import { BANDS, LAYERS } from "@/lib/architecture";
 import { bandPath, layerPath } from "@/lib/nav";
 import { SCENES, type SceneId } from "@/content/stills";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
-import { SceneStill } from "@/components/ui/SceneStill";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 
 /**
  * PAGE · /product/[band] · One of five band pages.
@@ -55,95 +55,25 @@ export default async function BandPage({ params }: { params: Promise<Params> }) 
   return (
     <>
       {/* Hero */}
-      <section
-        style={{
-          position: "relative",
-          minHeight: "min(68vh, 640px)",
-          display: "flex",
-          alignItems: "flex-end",
-          overflow: "hidden",
-          borderBottom: "1px solid var(--rule)",
-        }}
+      <FullBleedScene
+        className="hero-fullbleed"
+        scene={{ imageFamily: bandFamily(band.n), imageFamilyVariant: 1 }}
+        scrim="bottom"
+        vignetteStrength={0.5}
+        chapter={scene.chapter}
+        chapterLabel={`Band ${String(band.n).padStart(2, "0")} of 05`}
+        priority
       >
-        <SceneStill family={bandFamily(band.n)} familyVariant={1} shape="fullBleed" priority />
-        <div
-          aria-hidden="true"
-          style={{
-            position: "absolute",
-            inset: 0,
-            zIndex: 1,
-            background:
-              "linear-gradient(180deg, rgba(20,18,15,0.10) 0%, transparent 30%, transparent 55%, rgba(20,18,15,0.28) 82%, rgba(20,18,15,0.56) 100%)",
-          }}
-        />
-        <div
-          style={{
-            position: "absolute",
-            top: "clamp(24px, 5vh, 56px)",
-            right: "clamp(24px, 4vw, 48px)",
-            zIndex: 2,
-            fontFamily: "var(--font-mono)",
-            fontSize: 11,
-            letterSpacing: "0.24em",
-            textTransform: "uppercase",
-            color: "rgba(244, 241, 234, 0.9)",
-            padding: "8px 14px",
-            border: "1px solid rgba(244, 241, 234, 0.32)",
-            backdropFilter: "blur(6px)",
-          }}
-        >
-          {scene.chapter}
-        </div>
-        <div
-          className="container"
-          style={{
-            position: "relative",
-            zIndex: 2,
-            paddingBlock: "clamp(48px, 8vh, 96px)",
-          }}
-        >
-          <div style={{ display: "flex", flexDirection: "column", gap: 24, maxWidth: "48ch" }}>
-            <span
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 11,
-                letterSpacing: "0.24em",
-                textTransform: "uppercase",
-                color: "rgba(244, 241, 234, 0.86)",
-              }}
-            >
+        <div className="container hero-fullbleed__inner">
+          <div className="hero-fullbleed__frame">
+            <span className="hero-fullbleed__brand">
               Band {String(band.n).padStart(2, "0")} of 05
             </span>
-            <h1
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontSize: "clamp(48px, 6.6vw, 96px)",
-                lineHeight: 1.02,
-                letterSpacing: "-0.024em",
-                fontWeight: 400,
-                color: "var(--paper)",
-                margin: 0,
-                textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
-              }}
-            >
-              {band.name}
-            </h1>
-            <p
-              style={{
-                fontFamily: "var(--font-serif)",
-                fontStyle: "italic",
-                fontSize: "clamp(20px, 2vw, 26px)",
-                lineHeight: 1.4,
-                color: "rgba(244, 241, 234, 0.9)",
-                margin: 0,
-                textShadow: "0 1px 2px rgba(20, 18, 15, 0.28)",
-              }}
-            >
-              {band.strap}
-            </p>
+            <h1 className="hero-fullbleed__title">{band.name}</h1>
+            <p className="hero-fullbleed__deck">{band.strap}</p>
           </div>
         </div>
-      </section>
+      </FullBleedScene>
 
       {/* Layers detail */}
       <section
