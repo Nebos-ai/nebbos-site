@@ -52,6 +52,7 @@ function SectionSlot({ section, blockIndex }: SlotProps) {
     case "list-numbered":   return <ListNumbered s={section} blockIndex={blockIndex} />;
     case "list-plain":      return <ListPlain s={section} blockIndex={blockIndex} />;
     case "table-rows":      return <TableRows s={section} blockIndex={blockIndex} />;
+    case "case-study":      return <CaseStudy s={section} blockIndex={blockIndex} />;
     case "cta-band":        return <CTABandInline s={section} blockIndex={blockIndex} />;
     case "cta-full-bleed":  return <CTAFullBleed s={section} />;
     case "inbox-router":    return <InboxRouter s={section} blockIndex={blockIndex} />;
@@ -258,6 +259,26 @@ function TableRows({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
               </div>
             ))}
           </dl>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/* ── Case study · aside + quoted-italic narrative ─────────────────── */
+function CaseStudy({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
+  const eb = eyebrowParts(s.eyebrow);
+  return (
+    <section className={`section ${bgClass(blockIndex)}`}>
+      <div className="container">
+        <div className="case-study-layout">
+          <aside className="case-study__aside">
+            <div className="case-study__eyebrow">
+              {eb ? `${eb.n} · ${eb.label}` : "Case study"}
+            </div>
+            {s.h2 && <h3 className="case-study__subject" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          </aside>
+          {s.body && <div className="case-study__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
         </div>
       </div>
     </section>

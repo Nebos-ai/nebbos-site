@@ -661,6 +661,85 @@ main {
   margin-block-end: var(--space-10);
 }
 
+/* ── Case study · aside + quoted-italic narrative ────────────────────
+   Distinct visual so case studies don't read as generic text-blocks.
+   Gold rule at the top of the aside, small-caps subject line, italic
+   serif body opened by a gold curly quote. Uses .section wrapper for
+   background alternation. */
+.case-study-layout {
+  display: grid;
+  grid-template-columns: 220px minmax(0, 1fr);
+  gap: var(--space-12);
+  align-items: start;
+  max-width: 1000px;
+  margin-inline: auto;
+}
+.case-study__aside {
+  border-block-start: 2px solid var(--gold);
+  padding-block-start: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.case-study__eyebrow {
+  font-family: var(--font-sans);
+  font-size: var(--size-eyebrow);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.case-study__chip {
+  align-self: flex-start;
+  font-family: var(--font-mono);
+  font-size: var(--size-micro);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  padding: 2px var(--space-3);
+}
+.case-study__subject {
+  font-family: var(--font-serif);
+  font-size: var(--size-h3);
+  line-height: 1.2;
+  font-weight: 500;
+  font-variant: small-caps;
+  letter-spacing: -0.014em;
+  color: var(--ink);
+  margin-block-start: var(--space-2);
+  text-wrap: balance;
+}
+.case-study__body {
+  font-family: var(--font-serif);
+  font-size: var(--size-lede);
+  line-height: 1.7;
+  color: var(--ink);
+  font-style: italic;
+  max-width: 60ch;
+}
+.case-study__body::first-letter {
+  font-family: var(--font-serif);
+  font-size: 3.2em;
+  line-height: 0.85;
+  float: inline-start;
+  margin-inline-end: var(--space-3);
+  margin-block-start: var(--space-1);
+  color: var(--gold);
+  font-style: normal;
+  font-weight: 500;
+}
+@media (max-width: 900px) {
+  .case-study-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-6);
+  }
+  .case-study__body {
+    max-width: none;
+  }
+}
+
 /* ============================================================================
    HeroPaper — text-only hero for deep pages (legal, docs, changelog, blog)
    ============================================================================

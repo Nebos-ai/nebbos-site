@@ -48,6 +48,7 @@ export type SectionKind =
   | "list-numbered"       // Numbered list of items (features, steps)
   | "list-plain"          // Unnumbered list (values, ideas)
   | "table-rows"          // Rows of label/value (facts, specs)
+  | "case-study"          // Distinct visual: gold rule + subject aside + quoted-italic body
   | "cta-band"            // Closing CTA with primary + optional secondary
   | "cta-full-bleed"      // CTA over a scene image (home closing)
   | "inbox-router"        // Contact-style routing (label → email)
@@ -396,7 +397,7 @@ export const PAGES = {
 
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Regional logistics operator, 340 employees.",
         body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops department in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;.",
@@ -427,12 +428,13 @@ export const PAGES = {
         ],
       },
 
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Operations on your ops team.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-operations",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -544,7 +546,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Regional financial services firm, 220 employees.",
         body: "A mid-market regional financial-services firm deployed Nebbos Finance to their controller&rsquo;s office in month one. Baseline: 6.5-day monthly close, 12-15 quarterly variance surprises per year averaging $180k unexpected impact. By month four, close-week dropped to 4 days as reconciliation surfaces landed mid-month. By month twelve, quarterly variance surprises dropped to 3 per year and averaged $45k unexpected impact — because the driver-level detail surfaced in the quarter, not after it. The CFO calls it &lsquo;the best senior controller hire we made in five years, except it never takes vacation&rsquo;.",
@@ -572,12 +574,13 @@ export const PAGES = {
           { title: "Week 3 · First close in-loop", body: "The Pearl runs alongside your team through a close cycle. Every accept/reject/edit trains the Pearl. By close end, the initial tuning is in motion." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Finance on your close.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-finance",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -689,7 +692,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Fast-growing SaaS company, 460 employees.",
         body: "A fast-growing mid-market SaaS company deployed Nebbos People to their HR team in month one. Baseline: 22% annual regretted attrition, ~$4.1M annual replacement cost. By month nine, the Pearl was surfacing 3-4 retention-risk employees per week to HR partners, of whom roughly 60% engaged and stayed. Regretted attrition dropped to 14% by year-end — approximately $1.5M in avoided replacement cost. Head of People calls the Pearl &lsquo;the second HRBP we couldn&rsquo;t hire fast enough&rsquo;.",
@@ -717,12 +720,13 @@ export const PAGES = {
           { title: "Week 3 · First actions in-loop", body: "The Pearl runs alongside your team for a week. Every accept/reject/edit trains the Pearl." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos People on your growing team.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-people-hr",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -834,7 +838,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Mid-sized suburban district, 18 schools, 12,000 students.",
         body: "A mid-sized suburban school district deployed Nebbos Education to their central-office operations team in month one. Baseline: 12-15 same-day substitute coverage scrambles per week, 4-6 late state filings per year averaging $50k in remediation costs. By month six, same-day scrambles dropped to 3-4 per week as the Pearl surfaced coverage gaps 48-72 hours out. By year-end, late state filings dropped to 1. The superintendent calls it &lsquo;the operations chief of staff we could never afford to hire&rsquo;.",
@@ -862,12 +866,13 @@ export const PAGES = {
           { title: "Week 3 · First district-week in-loop", body: "The Pearl runs alongside your central office for a week. Every accept/reject trains it." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Education on your district operations.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-people-hr",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -979,7 +984,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Multi-specialty ambulatory practice, 340 clinicians.",
         body: "A mid-sized multi-specialty ambulatory practice deployed Nebbos Care to their clinical-operations team in month one. Baseline: 34% referral completion rate at 30 days, 68% follow-up adherence, 4-6 compliance filings late per year. By month twelve, referral completion improved to 61%, follow-up adherence to 84%, and no compliance filings were late. The chief medical officer notes: &lsquo;we didn&rsquo;t change our clinicians&rsquo; workflow — we changed what happened between our clinicians&rsquo; workflows&rsquo;.",
@@ -1007,12 +1012,13 @@ export const PAGES = {
           { title: "Week 3 · First care-week in-loop", body: "The Pearl runs alongside your team. Every accept/reject trains it." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Care on your clinical operations.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-people-hr",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -1124,7 +1130,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Regional broker-dealer, 180 traders + ops staff.",
         body: "A mid-market regional broker-dealer deployed Nebbos FS to their operations desk in month one. Baseline: 2.3% settlement failure rate, 6-week annual audit-remediation cycle, ~$800k in operational-error costs. By month nine, settlement-failure rate dropped to 0.9%, audit-remediation compressed to 8 days, operational-error costs dropped ~55%. Their chief compliance officer notes: &lsquo;we&rsquo;re not less scrutinized — we&rsquo;re more prepared&rsquo;.",
@@ -1152,12 +1158,13 @@ export const PAGES = {
           { title: "Week 3 · First trading-week in-loop", body: "The Pearl runs alongside your desk. Every approval trains it." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos FS on your trading operations.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-finance",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -1269,7 +1276,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Precision-parts manufacturer, 2 plants, 620 employees.",
         body: "A mid-market precision-parts manufacturer deployed Nebbos Manufacturing to both plants in month one. Baseline: 8.4% unplanned downtime, 91.2% first-pass yield, ~$2.1M annual scrap cost. By month twelve, unplanned downtime dropped to 5.6%, first-pass yield rose to 94.8%, scrap cost dropped ~$700k. Plant director calls it &lsquo;the continuous-improvement engineer we don&rsquo;t have budget for&rsquo;.",
@@ -1297,12 +1304,13 @@ export const PAGES = {
           { title: "Week 3 · First production-week in-loop", body: "The Pearl runs alongside plant leadership." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Manufacturing on your line.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "solution-manufacturing",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -1414,7 +1422,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "State human-services agency, 12 departments, 3,400 caseworkers.",
         body: "A mid-sized state human-services agency deployed Nebbos Civic to their case-processing division in month one. Baseline: 78% statutory-response compliance, average 42 days case-processing time, 6-week annual accountability-filing cycle. By month twelve, statutory-response compliance reached 96%, case-processing time dropped to 28 days, accountability-filing cycle compressed to 12 days. The agency inspector-general notes: &lsquo;the audit trail is the most legible I&rsquo;ve seen in twenty years of this work&rsquo;.",
@@ -1442,12 +1450,13 @@ export const PAGES = {
           { title: "Week 3 · First case-week in-loop", body: "The Pearl runs alongside your team." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put Nebbos Civic on your agency operations.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "concept-audit-attestation",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -1559,7 +1568,7 @@ export const PAGES = {
       },
       {
         id: "case-study",
-        kind: "text-block",
+        kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Mid-market fintech, 340 employees, 3 departments live on Nebbos.",
         body: "A mid-market fintech deployed 3 Pearls (Finance, Operations, Governance) in month one. Their ML platform team wasn&rsquo;t consulted — the training corpus accumulated as a byproduct of ops teams using their Pearls. By month twelve, they had 340,000+ preference pairs across finance-operations and compliance-workflow domains. Their VP of Data called it &lsquo;the training corpus we would have paid $2M to build from scratch, that we got by using the operational software our teams needed anyway&rsquo;. They&rsquo;ve since fine-tuned two custom models on this corpus.",
@@ -1585,12 +1594,13 @@ export const PAGES = {
           { title: "Week 12 · First tune", body: "Your first fine-tune run on the accumulated corpus. Bring-your-own-model integration begins." },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Put your operation into your own training corpus.",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
+        imageFamily: "band-intelligence",
+        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
       },
     ],
   },
@@ -1731,12 +1741,13 @@ export const PAGES = {
           { title: "Architecture — the 15 layers" },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Read the deeper posture.",
-        ctaPrimary: { label: "See security", href: "/security", variant: "primary" },
-        ctaSecondary: { label: "See compliance", href: "/compliance", variant: "ghost" },
+        imageFamily: "concept-audit-attestation",
+        ctaPrimary: { label: "See security", href: "/security", variant: "solid-light" },
+        ctaSecondary: { label: "See compliance", href: "/compliance", variant: "ghost-light" },
       },
     ],
   },
@@ -1867,12 +1878,13 @@ export const PAGES = {
         h2: "Reach the security team.",
         body: "security@nebbos.ai for security-relevant questions, disclosure reports, and attestation requests. Responsible-disclosure process detailed at /legal/responsible-disclosure. Response SLAs published above.",
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Question we have not addressed?",
-        ctaPrimary: { label: "security@nebbos.ai", href: "mailto:security@nebbos.ai", variant: "primary" },
-        ctaSecondary: { label: "See compliance", href: "/compliance", variant: "ghost" },
+        imageFamily: "concept-audit-attestation",
+        ctaPrimary: { label: "security@nebbos.ai", href: "mailto:security@nebbos.ai", variant: "solid-light" },
+        ctaSecondary: { label: "See compliance", href: "/compliance", variant: "ghost-light" },
       },
     ],
   },
@@ -2001,66 +2013,20 @@ export const PAGES = {
           { title: "Architecture — the 15 layers compliance rests on" },
         ],
       },
-      {
+            {
         id: "cta",
-        kind: "cta-band",
+        kind: "cta-full-bleed",
         h2: "Request an attestation or DPA.",
-        ctaPrimary: { label: "compliance@nebbos.ai", href: "mailto:compliance@nebbos.ai", variant: "primary" },
-        ctaSecondary: { label: "See security", href: "/security", variant: "ghost" },
+        imageFamily: "concept-audit-attestation",
+        ctaPrimary: { label: "compliance@nebbos.ai", href: "mailto:compliance@nebbos.ai", variant: "solid-light" },
+        ctaSecondary: { label: "See security", href: "/security", variant: "ghost-light" },
       },
     ],
   },
 
-  /* ═══════════════ CUSTOMERS ═══════════════════════════════════════ */
-  customers: {
-    slug: "/customers",
-    title: "Customers · The company brain, in production",
-    metaDescription: "The enterprises running Nebbos on their hardest departments. Case studies by industry, deployment, and outcome.",
-    sections: [
-      {
-        id: "hero",
-        kind: "hero-full-bleed",
-        eyebrow: "00 · Customers",
-        h1: "The company brain, in production.",
-        deck: "Enterprises running Nebbos on their hardest departments — finance, operations, people, care, manufacturing, financial services, civic case management. Case studies by industry, deployment, and outcome.",
-        imageFamily: "concept-tenant-onboarding",
-      },
-      {
-        id: "criteria",
-        kind: "list-numbered",
-        eyebrow: "01 · Who we work with",
-        h2: "Design-partner criteria.",
-        items: [
-          { title: "Enterprise scale · 200+ headcount OR governance-critical mid-market" },
-          { title: "One hard department that would benefit from a Pearl within 60 days" },
-          { title: "A technical owner (VP Eng, CTO, Chief-of-Staff) who wants the audit trail" },
-          { title: "A legal owner (CISO, GC) who wants the compliance substrate" },
-          { title: "Willingness to be reference-called once your Pearl has run for two quarters" },
-        ],
-      },
-      {
-        id: "verticals",
-        kind: "list-plain",
-        eyebrow: "02 · Where our design partners come from",
-        h2: "Verticals in the current cohort.",
-        items: [
-          { title: "Financial services — risk operations, close-week automation" },
-          { title: "Healthcare — care coordination, compliance filings" },
-          { title: "Public sector — case management, accountability filings" },
-          { title: "Logistics — dispatch operations, shift handoff" },
-          { title: "Manufacturing — production scheduling, quality gate" },
-          { title: "Professional services — engagement operations, billable-hours reconciliation" },
-        ],
-      },
-      {
-        id: "cta",
-        kind: "cta-band",
-        h2: "Want to see a design partner&rsquo;s live tenant?",
-        ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
-        ctaSecondary: { label: "Email enterprise", href: "mailto:enterprise@nebbos.ai", variant: "ghost" },
-      },
-    ],
-  },
+  /* /customers · rendered by app/customers/page.tsx (file-based route);
+     content sourced from content/customers/*.mdx. See app/customers/[slug]
+     for individual case-study renderer. This entry retired. */
 
   careers: {
     slug: "/careers",
@@ -2118,21 +2084,9 @@ export const PAGES = {
     ],
   },
 
-  blog: {
-    slug: "/blog",
-    title: "Notes from Nebbos",
-    metaDescription: "Longer writing on architecture, governance, and the company brain.",
-    sections: [
-      {
-        id: "hero",
-        kind: "hero-paper",
-        eyebrow: "00 · Notes",
-        h1: "Notes from Nebbos.",
-        deck: "Longer writing on architecture, governance, and what an operating system for the AI-native enterprise actually looks like.",
-      },
-      // Post list rendered from content/blog/*.mdx
-    ],
-  },
+  /* /blog · rendered by app/blog/page.tsx (file-based route);
+     content sourced from content/blog/*.mdx. See app/blog/[slug] for
+     individual post renderer. This entry retired. */
 
   docs: {
     slug: "/docs",
