@@ -38,6 +38,9 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       { source: "/brief/financial", destination: "/nebbos-delta-brief.html" },
+      // Public presentation — Dashboard / Presentation / Standout / Trends tabs
+      // are built into the HTML's view-switcher (self-contained interactive doc).
+      { source: "/presentation", destination: "/nebbos-delta-brief.html" },
     ];
   },
   // Cache headers · rapid-iteration marketing site.

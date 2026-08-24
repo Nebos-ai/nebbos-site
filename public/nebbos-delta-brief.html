@@ -363,6 +363,15 @@
   }
   .view-switcher button:hover { color: var(--ink); background: var(--paper-2); }
   .view-switcher button.active { background: var(--gold); color: white; }
+  .view-switcher-download {
+    display: inline-flex; align-items: center; gap: 4px;
+    padding: 8px 14px; margin-inline-start: 8px;
+    font-size: 10.5px; font-weight: 700; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--paper); background: var(--ink);
+    border-radius: 5px; text-decoration: none; font-family: inherit;
+    transition: all 0.15s ease;
+  }
+  .view-switcher-download:hover { background: var(--gold); color: white; }
 
   body.mode-document .view-dashboard,
   body.mode-document .view-presentation,
@@ -970,6 +979,13 @@
   <button data-view="presentation" aria-label="Presentation view">Presentation</button>
   <button data-view="standout" aria-label="Standout view - why Nebbos, one page">Standout</button>
   <button data-view="trends" aria-label="Trends view - the AI economy in 2026">Trends</button>
+  <a
+    class="view-switcher-download"
+    href="/nebbos-delta-brief.html"
+    download="nebbos-presentation.html"
+    aria-label="Download the presentation"
+    title="Download the presentation"
+  >Download ↓</a>
 </div>
 
 
