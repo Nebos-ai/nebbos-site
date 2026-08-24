@@ -94,6 +94,23 @@ export const LAYERS: Layer[] = [
       "Any tenant isolation question — policy enforced at this layer",
     ],
     why: "One typed source of truth means every downstream layer trusts the data it reads. Row-level tenant isolation at the substrate means no application-layer bug can leak across tenants. Versioned migrations from day one mean schema changes ship without downtime.",
+    howToThink: "Think of Data as the ground truth substrate every Pearl reasons against. It is not a database in the SaaS sense — a collection of app-scoped tables tied to one product. It is the typed, tenant-isolated source of what your enterprise knows, versioned like source code and audited like a bank ledger. Every Pearl reads from it. Every human decision writes to it. Every audit line resolves against a specific row here. The discipline is: nothing lives above this layer that isn&rsquo;t reflected in it.",
+    pitfalls: [
+      { title: "Bolting Nebbos onto a shared app database", body: "Sharing a database between your product application and your governance substrate breaks tenant isolation at the policy layer. The right shape is: Nebbos&rsquo;s substrate is separate, mirroring only what governance needs, connected via Ingest not shared reads." },
+      { title: "Skipping the versioned-migration discipline", body: "Teams ship ad-hoc schema changes and hope. That works until an audit asks &lsquo;what was the schema on March 3rd&rsquo; and there&rsquo;s no answer. Versioned migrations from day one mean the historical schema is queryable — and rollout is safe under load." },
+      { title: "Trusting application-layer isolation", body: "If your app decides which tenant sees which row, one bug leaks across tenants. Row-level isolation at the substrate — enforced by database policy, not application code — means the bug can&rsquo;t exist." },
+    ],
+    benchmarks: [
+      { label: "Tenant isolation enforced at", value: "Substrate", context: "Row-level policy, not application-layer checks" },
+      { label: "Schema version history", value: "100%", context: "Every migration is a first-class object" },
+      { label: "Vector search parity", value: "Yes", context: "Semantic + typed queries on the same store" },
+    ],
+    related: [2, 7, 15],
+    pearls: ["Nebbos Design", "Nebbos Finance", "Nebbos Operations", "Nebbos Governance"],
+    resources: [
+      { title: "Why substrate isolation matters more than app-layer", href: "/blog" },
+      { title: "Versioned migrations for enterprise AI", href: "/blog" },
+    ],
   },
   {
     n: 2,
@@ -116,6 +133,23 @@ export const LAYERS: Layer[] = [
       "Passing a SOC 2 audit",
     ],
     why: "Identity is what makes the audit trail meaningful. Without it, every action is anonymous. With it, every action has an accountable actor — human, Pearl, or machine — and every access is checked against the same policy.",
+    howToThink: "Identity is the layer that gives every action an accountable actor. It answers the auditor&rsquo;s single most important question — &lsquo;who did this&rsquo; — and it answers it whether the actor is a human logging in via SSO, a Pearl running under a workload identity, or a machine caller with a service token. The discipline is: every request carries an identity, and every identity resolves to a policy that decides what it can touch. Without this layer, autonomous action is unauthorized action.",
+    pitfalls: [
+      { title: "Human SSO but Pearl bearer tokens", body: "Teams often federate humans through SSO and then hand Pearls a long-lived bearer token. That token becomes the audit black hole — you know a call was made, but not which Pearl instance or under what policy. Workload identity for every Pearl closes the hole." },
+      { title: "Break-glass without audit", body: "Emergency access is real. But if the break-glass path skips the audit trail, you&rsquo;ve built a legitimate bypass that will be abused. Break-glass MUST leave a heavier audit signature, not a lighter one." },
+      { title: "Rotating credentials as a manual process", body: "Credential rotation that requires a human to run a checklist gets skipped. It has to be a substrate operation — automated, verifiable, and part of the same audit stream." },
+    ],
+    benchmarks: [
+      { label: "Identity types supported", value: "3", context: "Human · Pearl · machine (service token)" },
+      { label: "SCIM provisioning", value: "Enterprise SSO", context: "Auto-provision + de-provision on lifecycle events" },
+      { label: "Break-glass events attested", value: "100%", context: "Heavier audit signature than routine access" },
+    ],
+    related: [1, 11, 15],
+    pearls: ["Nebbos Security", "Nebbos Governance", "Nebbos People"],
+    resources: [
+      { title: "Workload identity for AI systems", href: "/blog" },
+      { title: "How to design break-glass without breaking audit", href: "/blog" },
+    ],
   },
   {
     n: 3,
@@ -138,6 +172,20 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re computing per-department cost — attribution lives here",
     ],
     why: "Real work happens in departments, not in individual users&rsquo; silos. Modeling departments as first-class means a Pearl fits the way your enterprise is actually structured, and coverage / handoffs / approvals work the way your teams already work.",
+    howToThink: "Departments is the load-bearing decision that Nebbos is a department-first operating system, not a user-first tool. Every Pearl is scoped to one department. Every approval graph is per-department. Every audit answers &lsquo;which team did this&rsquo; before it answers &lsquo;which person&rsquo;. This maps to how enterprises actually organize themselves — the atomic unit is the finance team, not the individual finance analyst. Design your Pearl deployments around this: pick the department first, then the Pearl that serves it.",
+    pitfalls: [
+      { title: "Deploying a Pearl at the org level, not the department level", body: "A single company-wide Pearl serves no one well because every department has different context. Deploy per department, scope the Shell to that department, let each Pearl learn its team&rsquo;s specific work." },
+      { title: "Ignoring coverage and schedules", body: "A Pearl that doesn&rsquo;t know when your team is on-call or off-shift makes bad handoff decisions. Coverage + schedule + presence are first-class in Departments precisely because Pearl decisions depend on them." },
+      { title: "Flat org chart", body: "Modeling departments as a flat list breaks matrix organizations, dotted-line reporting, and cross-functional projects. Departments supports hierarchy — because your enterprise has one." },
+    ],
+    benchmarks: [
+      { label: "Departments as first-class", value: "Yes", context: "Not a tag on users — a substrate object" },
+      { label: "Coverage tracking", value: "Native", context: "On-call, schedules, presence in the substrate" },
+      { label: "Matrix org support", value: "Yes", context: "Hierarchy + dotted-line + cross-functional teams" },
+    ],
+    related: [10, 11, 14],
+    pearls: ["Nebbos People", "Nebbos Operations", "Nebbos Finance"],
+    resources: [{ title: "Why AI needs to be department-first", href: "/blog" }],
   },
 
   // ─── Band 2 · Boundary ─────────────────────────────────────────────
@@ -162,6 +210,20 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re proving to an auditor that no event was silently dropped",
     ],
     why: "Append-only means every event survived. Land-before-touch means no interpretation happens without an original record. Together they make the ingest layer the immutable ground truth every downstream layer can trust.",
+    howToThink: "Ingest is the layer where the outside world lands, unfiltered, before any interpretation touches it. Think of it as your enterprise&rsquo;s always-on recording — every message, every calendar event, every ticket, every commit lands here first, in an append-only log, and stays there. Interpretation, reasoning, action all happen ABOVE this layer, from records that already exist and can never be edited retroactively. The discipline is: raw first, always.",
+    pitfalls: [
+      { title: "Interpretation at ingest time", body: "Teams often normalize / cleanse / filter events as they land. That means the &lsquo;raw&rsquo; record is already opinionated — and an auditor can&rsquo;t reconstruct what actually came in. Land raw, interpret later, keep both." },
+      { title: "Missing dead-letter handling", body: "Every source system will occasionally send malformed events. If those get dropped silently, your downstream analytics have unaccounted gaps. Dead-letter handling is a first-class part of ingest, not an ops afterthought." },
+      { title: "Pull-based when push is available", body: "Polling APIs on a schedule adds latency AND misses events between polls. Where source systems support webhooks or event streams, use them. Push wins when it&rsquo;s available." },
+    ],
+    benchmarks: [
+      { label: "Event durability", value: "Append-only", context: "No retroactive edits, ever" },
+      { label: "Time to first event visible", value: "<5 seconds", context: "From source system push to substrate landing" },
+      { label: "Sources unified", value: "20+", context: "Messaging · calendar · source-control · HR · CRM · ticketing · accounting" },
+    ],
+    related: [1, 6, 9],
+    pearls: ["Nebbos Operations", "Nebbos People", "Nebbos Development"],
+    resources: [{ title: "Why raw-first ingest is a compliance requirement", href: "/blog" }],
   },
   {
     n: 5,
@@ -224,6 +286,26 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re evaluating whether Nebbos fits your stack",
     ],
     why: "Named connectors for the tools that matter mean you&rsquo;re wired in without custom glue. OAuth adapters for the long tail mean nothing is unreachable. A wizard-driven onboarding means a tenant goes from zero to first Pearl running in under a day.",
+    howToThink: "Integrations is the connective tissue between Nebbos and everything else your enterprise runs. Think of it as a curated connector catalog for the systems that matter (Slack, GitHub, Google Workspace, Salesforce, Workday, NetSuite, ServiceNow) plus OAuth adapters for the long-tail systems plus a wizard that walks a new tenant from zero to first Pearl running in under a day. The discipline is: nothing is unreachable, everything is reversible, and the credentials live in the substrate, not in a Pearl.",
+    pitfalls: [
+      { title: "Credentials embedded in Pearls", body: "If a Pearl holds the credentials for a source system directly, rotating those credentials means redeploying the Pearl. Credentials belong in the substrate, brokered on demand — rotation is a substrate operation." },
+      { title: "One-way integrations", body: "A source system that Nebbos reads but doesn&rsquo;t write to is a partial integration. When a Pearl wants to act (send a Slack message, update a ticket, create a calendar event), the write path has to work with the same credentials + audit line." },
+      { title: "Ignoring the deprecation cycle", body: "APIs deprecate. If your integrations don&rsquo;t track upstream API versions, one vendor&rsquo;s roadmap change breaks a Pearl silently. Integrations layer tracks + notifies + schedules migration." },
+    ],
+    benchmarks: [
+      { label: "Named connectors", value: "20+", context: "The systems that matter, first-party" },
+      { label: "OAuth adapters", value: "Universal", context: "Long-tail source systems supported" },
+      { label: "Time to first Pearl from zero", value: "<1 day", context: "Wizard-driven onboarding" },
+    ],
+    related: [4, 5, 13],
+    pearls: [
+      "Nebbos Operations",
+      "Nebbos Development",
+      "Nebbos People",
+    ],
+    resources: [
+      { title: "The connector catalog philosophy", href: "/blog" },
+    ],
   },
 
   // ─── Band 3 · Intelligence ─────────────────────────────────────────
@@ -340,6 +422,26 @@ export const LAYERS: Layer[] = [
       "A compliance-relevant event needs escalation",
     ],
     why: "Every enterprise is drowning in event streams. Detectors turn that noise into a few concrete &lsquo;about to break&rsquo; items a human actually cares about. Fewer false positives, no missed real ones. The layer that turns your data into decisions.",
+    howToThink: "Detectors is the layer that turns raw signal into actionable attention. Every enterprise is drowning in event streams — Slack pings, calendar conflicts, ticket updates, code commits, invoice discrepancies. Detectors is where those streams cross thresholds, patterns emerge, and a Pearl or a human gets alerted. The discipline is: high precision, high recall, low noise. A detector that fires too often becomes a filter people ignore. A detector that misses the real thing loses trust.",
+    pitfalls: [
+      { title: "Alert fatigue", body: "Detectors that fire on every anomaly train your team to ignore alerts. Precision matters more than recall in the alert queue — better one true alarm than ten false ones." },
+      { title: "Static thresholds", body: "A threshold that made sense at 20 employees fires 100 times a day at 2000. Detectors need to learn baselines per department, per season, per shift." },
+      { title: "No feedback loop", body: "When a human dismisses an alert as &lsquo;not actually concerning&rsquo;, that dismissal has to teach the detector. Otherwise the same false-positive fires again next week." },
+    ],
+    benchmarks: [
+      { label: "False-positive rate target", value: "<5%", context: "Alerts a human dismisses" },
+      { label: "Baseline learning window", value: "30-90 days", context: "Per department, per shift pattern" },
+      { label: "Feedback loop latency", value: "Immediate", context: "Human dismissal teaches the detector" },
+    ],
+    related: [4, 7, 11],
+    pearls: [
+      "Nebbos Operations",
+      "Nebbos Security",
+      "Nebbos Finance",
+    ],
+    resources: [
+      { title: "Precision vs recall for enterprise AI alerts", href: "/blog" },
+    ],
   },
 
   // ─── Band 4 · Agent + Governance ───────────────────────────────────
@@ -412,6 +514,27 @@ export const LAYERS: Layer[] = [
       "An audit asks &lsquo;who approved this action&rsquo;",
     ],
     why: "Approval is what makes autonomous action safe. Not every Pearl action needs human sign-off, but the ones that do are held here and attested — you always have a receipt showing which human said yes. This is the difference between an AI system and an accountable operating system.",
+    howToThink: "Approval is the layer that makes autonomous action safe. Not every Pearl action needs human sign-off — the ones that clearly don&rsquo;t shouldn&rsquo;t be gated. But the ones that do — the transfers, the outbound messages, the policy changes, the compliance filings — pass through Approval and get attested with a named human&rsquo;s yes. The discipline is: the approval graph is per-department and per-action-type, and every approval leaves a receipt your CISO can verify.",
+    pitfalls: [
+      { title: "Everything requires approval", body: "Making every Pearl action require sign-off destroys the velocity that made you deploy the Pearl. Design the approval graph so routine actions run automatically, escalation only on the consequential ones." },
+      { title: "Approval as a checkbox, not a decision", body: "If the approver doesn&rsquo;t have enough context to make a real decision, they&rsquo;ll rubber-stamp. Approval UI has to surface WHY the Pearl proposed this action, what the alternatives were, and what happens if the human says no." },
+      { title: "No delegation model", body: "Approvers go on vacation. If the graph has a single-point approver, everything queues. Approval needs delegation chains — role-based, time-bounded." },
+    ],
+    benchmarks: [
+      { label: "Approval-to-action latency", value: "<30 seconds", context: "When human is available" },
+      { label: "Delegation supported", value: "Yes", context: "Role-based, time-bounded" },
+      { label: "Every approval attested", value: "100%", context: "Named human, timestamp, hash-chained" },
+    ],
+    related: [2, 10, 15],
+    pearls: [
+      "Nebbos Governance",
+      "Nebbos Finance",
+      "Nebbos Legal",
+      "Nebbos Security",
+    ],
+    resources: [
+      { title: "Designing an approval graph that scales", href: "/blog" },
+    ],
   },
   {
     n: 12,
@@ -434,6 +557,25 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re computing throughput and latency per Pearl",
     ],
     why: "One place where every executed action gets tracked from schedule to outcome. Failures don&rsquo;t disappear silently — they&rsquo;re retried, escalated, and attested. This is where the audit trail becomes an operational tool, not just a compliance artifact.",
+    howToThink: "Orchestrator is where approved Pearl actions actually execute — the scheduler plus retry engine plus observability layer for the operational side of Nebbos. Think of it as the layer that turns a promise (this action will happen) into an outcome (here&rsquo;s the trace, the timing, the result). Every failure is retried under policy. Every escalation walks a path. Every executed action becomes an attested record. The discipline is: no action is fire-and-forget, every action is tracked to completion or explicit failure.",
+    pitfalls: [
+      { title: "Blind retries", body: "Retrying a failed action three times without understanding why it failed can make things worse (duplicate charges, duplicate messages, duplicate tickets). Idempotency plus retry-with-context is the correct shape." },
+      { title: "No dead-letter escalation", body: "When retries exhaust, someone has to know. A failed action that sits silently in a queue is worse than an immediate error — humans lose situational awareness." },
+      { title: "Coupled to one Pearl", body: "An orchestrator built for one Pearl at a time doesn&rsquo;t scale to the multi-Pearl deployment that mature tenants run. Orchestrator has to coordinate cross-Pearl actions natively." },
+    ],
+    benchmarks: [
+      { label: "Retry policies configurable", value: "Per action-type", context: "Idempotency + backoff" },
+      { label: "Cross-Pearl coordination", value: "Native", context: "One orchestrator serves all Pearls on a tenant" },
+      { label: "Every action attested", value: "100%", context: "Schedule + execute + outcome" },
+    ],
+    related: [10, 11, 15],
+    pearls: [
+      "Nebbos Operations",
+      "Nebbos Development",
+    ],
+    resources: [
+      { title: "Idempotent retries for AI action systems", href: "/blog" },
+    ],
   },
 
   // ─── Band 5 · Commerce ─────────────────────────────────────────────
@@ -458,6 +600,26 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re offboarding — this layer preserves the audit trail per your retention policy",
     ],
     why: "Onboarding-through-offboarding is one continuous accountable flow, not a series of disjoint handoffs. Every state your tenancy is in is a first-class object with an owner and an audit line. When you leave someday, your data, your memory, your Pearls all come with you.",
+    howToThink: "Onboarding is the layer that owns the customer&rsquo;s lifecycle with Nebbos — sign, provision, tune, expand, offboard. Think of it as the connective tissue between commercial contract and operational reality: when the MSA is signed, the tenant provisions automatically. When a new department wants a Pearl, expansion is a substrate operation, not a re-sale. When a customer eventually leaves, offboarding preserves the audit trail and hands them their memory. The discipline is: every state your relationship is in is a first-class object with an owner and an audit line.",
+    pitfalls: [
+      { title: "Manual provisioning after contract signature", body: "If a human has to run a checklist to stand up a new tenant, provisioning takes days and the checklist has drift. Automated post-signature provisioning means the tenant is running in hours, not days." },
+      { title: "Expansion as a re-sale", body: "Adding a new department Pearl to an existing tenant should be a self-service substrate operation. If it requires renegotiating pricing or re-scoping the MSA, expansion friction kills value." },
+      { title: "Retention policies as an afterthought", body: "Different tenants have different retention needs (SOX vs HIPAA vs GDPR). Onboarding is where those get set — and where offboarding checks them before it destroys anything." },
+    ],
+    benchmarks: [
+      { label: "Time from signature to first Pearl", value: "<1 day", context: "Automated post-signature provisioning" },
+      { label: "Expansion friction", value: "Self-service", context: "New department Pearls without re-sale" },
+      { label: "Offboarding preserves audit", value: "Per retention policy", context: "Tenant-configurable" },
+    ],
+    related: [2, 3, 14],
+    pearls: [
+      "Nebbos People",
+      "Nebbos Legal",
+      "Nebbos Operations",
+    ],
+    resources: [
+      { title: "Onboarding-through-offboarding as one substrate", href: "/blog" },
+    ],
   },
   {
     n: 14,
@@ -480,6 +642,26 @@ export const LAYERS: Layer[] = [
       "You&rsquo;re comparing Nebbos cost against ROI on saved head-count",
     ],
     why: "One flat per-seat price for the substrate + governance layers means budget predictability. AI overage in stable Nebbos tokens means provider price swings don&rsquo;t move your line item. Every dollar spent is traceable back to a specific Pearl action on a specific tenant — the whole spend is legible.",
+    howToThink: "Billing is the substrate that turns Nebbos-generated value into a predictable line item on your enterprise&rsquo;s books. Two disciplines make it work. First: one flat per-seat price — $150/user/month, 20-user minimum, 15% annual prepay discount — covers the substrate plus all 15 layers plus every Pearl your enterprise deploys. No per-Pearl surcharge, no per-department upsell. Second: AI-usage overage bills in Nebbos tokens — a stable currency Nebbos absorbs the volatility of. When Anthropic or OpenAI raises prices 30%, your invoice doesn&rsquo;t change 30%.",
+    pitfalls: [
+      { title: "Per-Pearl or per-feature pricing", body: "Enterprises hate metered pricing that scales with success — the more you use the platform, the more the bill grows unpredictably. Flat per-seat with capped-usage bundles is what CFOs actually want." },
+      { title: "Overage priced in provider USD", body: "If overage passes through provider prices directly, one vendor pricing decision moves your bill. Overage in Nebbos tokens shields you from that." },
+      { title: "Billing separate from attestation", body: "Every billed event should be traceable to a specific Pearl action on a specific tenant. If billing lives in a different system than attestation, reconciliation is a manual monthly project." },
+    ],
+    benchmarks: [
+      { label: "Per-seat price", value: "$150/month", context: "Every layer + every Pearl" },
+      { label: "Minimum seats", value: "20", context: "$36k annual floor" },
+      { label: "Annual prepay discount", value: "15%", context: "Applied to base seats" },
+      { label: "Overage currency", value: "Nebbos tokens", context: "Stable, provider-agnostic" },
+    ],
+    related: [8, 13, 15],
+    pearls: [
+      "Nebbos Finance",
+      "Nebbos Legal",
+    ],
+    resources: [
+      { title: "Why Nebbos tokens over per-provider billing", href: "/blog" },
+    ],
   },
   {
     n: 15,
