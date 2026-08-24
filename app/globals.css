@@ -93,8 +93,12 @@ a:hover {
   --font-sans:  var(--font-sans), "Manrope", -apple-system, system-ui, sans-serif;
   --font-mono:  var(--font-mono), "Fira Code", ui-monospace, SFMono-Regular, monospace;
 
-  /* Type scale (fluid, clamp-based) */
-  --size-hero:      clamp(48px, 6vw, 96px);
+  /* Type scale (fluid, clamp-based) — v3 · 2026-08-24
+   * Executive geometric register. Hero massively scaled for manifesto
+   * display; other sizes tightened as Space Grotesk reads slightly larger
+   * per pixel than Fraunces did. */
+  --size-hero-massive: clamp(56px, 13vw, 220px);  /* home hero manifesto */
+  --size-hero:      clamp(48px, 7vw, 112px);
   --size-h1:        clamp(40px, 5.5vw, 72px);
   --size-h2:        clamp(28px, 3.2vw, 42px);
   --size-h3:        clamp(22px, 2.6vw, 32px);
@@ -167,20 +171,19 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-/* Small-caps on h2/h3/h4 (works well at those sizes). Hero h1 stays
-   natural case with a heavier weight — small-caps at 60-100px reads
-   awkward (small caps of "Nebbos" still 60px, uneven proportions). */
+/* v3 · 2026-08-24 — small-caps decoration removed (was a Fraunces flourish;
+   Space Grotesk doesn't need it — geometric sans reads executive at natural
+   case without a small-caps overlay). Weight + tracking do the work now. */
 h1 {
   font-size: var(--size-h1);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
-  font-weight: 500;
-  font-variant: normal;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  font-weight: 600;
   font-optical-sizing: auto;
 }
-h2 { font-size: var(--size-h2); line-height: 1.08; letter-spacing: -0.02em; font-variant: small-caps; }
-h3 { font-size: var(--size-h3); line-height: 1.15; letter-spacing: -0.014em; font-variant: small-caps; }
-h4 { font-size: var(--size-h4); line-height: 1.25; font-variant: small-caps; }
+h2 { font-size: var(--size-h2); line-height: 1.08; letter-spacing: -0.02em; font-weight: 600; }
+h3 { font-size: var(--size-h3); line-height: 1.15; letter-spacing: -0.014em; font-weight: 600; }
+h4 { font-size: var(--size-h4); line-height: 1.25; letter-spacing: -0.008em; font-weight: 500; }
 
 em {
   font-style: italic;
@@ -585,10 +588,9 @@ main {
 .block__title {
   font-family: var(--font-serif);
   font-size: var(--size-h2);
-  line-height: 1.1;
+  line-height: 1.08;
   letter-spacing: -0.02em;
-  font-weight: 500;
-  font-variant: small-caps;
+  font-weight: 600;
   color: var(--ink);
   margin-block: var(--space-5) var(--space-6);
   max-width: 26ch;
@@ -632,11 +634,11 @@ main {
 }
 .hero-fullbleed__title {
   font-family: var(--font-serif);
-  font-size: var(--size-h1);
-  line-height: 1.04;
-  letter-spacing: -0.022em;
-  font-weight: 500;
-  font-variant: normal;
+  font-size: var(--size-hero-massive);
+  line-height: 0.94;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  text-transform: uppercase;
   color: var(--paper-on-image);
   text-wrap: balance;
   text-shadow: var(--shadow-on-image);
@@ -1068,8 +1070,7 @@ main {
   font-family: var(--font-serif);
   font-size: var(--size-h3);
   line-height: 1.2;
-  font-weight: 500;
-  font-variant: small-caps;
+  font-weight: 600;
   letter-spacing: -0.014em;
   color: var(--ink);
   margin-block-start: var(--space-2);
@@ -1213,8 +1214,7 @@ main {
   font-family: var(--font-serif);
   font-size: var(--size-h3);
   line-height: 1.15;
-  font-weight: 500;
-  font-variant: small-caps;
+  font-weight: 600;
   letter-spacing: -0.014em;
   margin-block-end: var(--space-2);
   transition: color var(--dur-med) var(--ease-out);
@@ -1305,8 +1305,7 @@ main {
   font-family: var(--font-serif);
   font-size: var(--size-h3);
   line-height: 1.2;
-  font-weight: 500;
-  font-variant: small-caps;
+  font-weight: 600;
   letter-spacing: -0.014em;
   color: var(--ink);
   margin-block: var(--space-16) var(--space-6);
@@ -1315,8 +1314,7 @@ main {
   font-family: var(--font-serif);
   font-size: var(--size-h4);
   line-height: 1.25;
-  font-weight: 500;
-  font-variant: small-caps;
+  font-weight: 600;
   color: var(--ink);
   margin-block: var(--space-12) var(--space-4);
 }

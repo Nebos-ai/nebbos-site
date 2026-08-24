@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import { Fraunces, Manrope, Fira_Code } from "next/font/google";
+import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { BRAND } from "@/content/brand";
@@ -7,35 +7,31 @@ import { BRAND } from "@/content/brand";
 import "./globals.css";
 
 /**
- * Root layout · Nebbos site v2 · font stack 2026-08-23 revision
+ * Root layout · Nebbos site v3 · font stack 2026-08-24 revision
  *
- * The IA is organized around the 15-layer architecture (5 bands × 3 layers)
- * plus standard enterprise satellite pages. The 12+18 vision-board stills
- * carry the site's visual spine.
+ * Founder direction 2026-08-24: replace Fraunces (rounded humanist serif) +
+ * Manrope (humanist grotesk) with an executive geometric grotesque. "Clean
+ * straight lines, not as rounded, not as animated."
  *
- * Font stack (post founder critique · lifestyle-exclusivity register):
- *   Fraunces  — variable serif for display (H1/H2/H3). Real italic. Warm
- *               editorial feel — Loro Piana / Kinfolk register. Optical
- *               sizing on; softness at 50 for gentle warmth; no wonkiness.
- *   Manrope   — clean neo-grotesque for UI + body copy. Quiet, restrained.
- *   Fira Code — mono for eyebrows, numerals, code.
+ * Space Grotesk — designed by Florian Karsten, based on Space Mono. Squared
+ * terminals, geometric construction, tech-institutional character. Loaded
+ * for display + body. Both --font-serif and --font-sans point to it so the
+ * design-token layer stays stable while the underlying font changes.
  *
- * All three self-hosted via next/font so no external CSS fetch on first
- * paint (CLS-safe). Variable axes exposed so italic + weight variation
- * don't trigger a second download.
+ * Fira Code — mono for eyebrows, numerals, code (unchanged).
+ *
+ * Self-hosted via next/font so no external CSS fetch on first paint
+ * (CLS-safe). Variable weight — one load for the whole 300-700 range.
  */
 
-const serif = Fraunces({
+const display = Space_Grotesk({
   subsets: ["latin"],
-  // Variable font — loads all weights compactly and unlocks SOFT/opsz axes.
-  // next/font requires weight to be omitted or "variable" when axes is set.
-  style: ["normal", "italic"],
-  axes: ["SOFT", "opsz"],
+  weight: ["300", "400", "500", "600", "700"],
   display: "swap",
   variable: "--font-serif",
 });
 
-const sans = Manrope({
+const body = Space_Grotesk({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
@@ -102,7 +98,7 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${serif.variable} ${sans.variable} ${mono.variable}`}>
+    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
       <body>
         <a href="#main" className="skip-link">Skip to content</a>
         <SiteHeader />
