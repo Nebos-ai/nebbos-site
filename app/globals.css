@@ -701,6 +701,43 @@ main {
   font-weight: inherit;
 }
 
+/* Hero action block (primary CTA button under the deck) */
+.hero-fullbleed__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-block-start: var(--space-4);
+}
+
+/* Hero secondary — italic serif accent line below the primary CTA. Reads as
+   a standfirst / positioning statement rather than a button. Clickable but
+   editorial in weight. */
+.hero-fullbleed__aside {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--size-body);
+  line-height: 1.5;
+  color: var(--paper-on-image-soft);
+  text-shadow: var(--shadow-on-image-soft);
+  margin: 0;
+  max-width: 44ch;
+}
+.hero-fullbleed__aside a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--accent-2);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 4px;
+  transition: text-decoration-thickness var(--dur-med) var(--ease-out);
+}
+.hero-fullbleed__aside a:hover {
+  text-decoration-thickness: 2px;
+}
+.hero-fullbleed__aside em {
+  font-style: italic;
+  color: inherit;
+}
+
 /* ── Split columns ──────────────────────────────────────────────────── */
 .split {
   display: grid;

@@ -1,4 +1,6 @@
+import Link from "next/link";
 import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { Button } from "@/components/ui/Button";
 import { BRAND } from "@/content/brand";
 
 /**
@@ -33,6 +35,16 @@ export function HomeHero() {
           <p className="hero-fullbleed__deck">
             One Pearl per department. Every human decision your team makes trains
             your model, not someone else&rsquo;s. Portable to you if you ever leave.
+          </p>
+          <div className="hero-fullbleed__actions">
+            <Button href="/demo" variant="solid-light" size="lg">
+              Remember who you are
+            </Button>
+          </div>
+          <p className="hero-fullbleed__aside">
+            <Link href="/trust">
+              <em>AI doesn&rsquo;t track your data. Nebbos does.</em>
+            </Link>
           </p>
         </div>
       </div>
