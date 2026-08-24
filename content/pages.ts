@@ -327,45 +327,164 @@ export const PAGES = {
     ],
   },
 
-  /* ═══════════════ SOLUTIONS · OPERATIONS ══════════════════════════ */
+  /* ═══════════════ SOLUTIONS · OPERATIONS ══════════════════════════
+   * Reference implementation for Phase 2c · full 14-section vertical.
+   * Replicated across other verticals in follow-up commits.
+   * ────────────────────────────────────────────────────────────── */
   "solutions/operations": {
     slug: "/solutions/operations",
     title: "Nebbos Operations · The Pearl for handoffs, coverage, incident triage",
     metaDescription:
-      "Nebbos Operations reads the signal your operation emits, predicts what breaks next, and gates every action through your approval graph.",
+      "Nebbos Operations reads the signal your ops team already emits — handoffs, coverage, on-call, escalations — and shows you what breaks next. One flat per-seat price, fifteen governance layers underneath, portable to you.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "Operations",
         h1: "The Pearl for handoffs, coverage, incident triage.",
-        deck: "Nebbos Operations reads the signal your ops team already emits — decisions, handoffs, on-call rotations — and shows you what breaks next.",
+        deck: "Nebbos Operations reads the signal your ops team already emits — decisions, handoffs, on-call rotations, cross-system escalations — and shows you what breaks next before it does.",
         imageFamily: "solution-operations",
       },
+
+      {
+        id: "problem",
+        kind: "text-block",
+        eyebrow: "01 · The problem",
+        h2: "Every ops team is drowning in signal, starving for attention.",
+        body: "Your operations team runs the seams of the business — the handoffs between shifts, the cross-time-zone escalations, the vendor commitments that everyone assumed were tracked somewhere. And yet the signal that would prevent tomorrow&rsquo;s incident is already in your systems today. It&rsquo;s in the Slack thread that quieted at 2am your time. It&rsquo;s in the calendar conflict nobody surfaced because your ops lead was in a customer call. It&rsquo;s in the ticket that closed with the wrong root-cause tag because the analyst was tired at end-of-shift. The signal exists. What&rsquo;s missing is the attention layer — the persistent, tireless, cross-system reader that watches the seams and surfaces the pattern before it becomes an incident. That&rsquo;s what a Pearl scoped to operations does.",
+      },
+
       {
         id: "what-it-does",
+        kind: "text-block",
+        eyebrow: "02 · What Nebbos Operations does",
+        h2: "One Pearl that runs alongside your ops team.",
+        body: "Nebbos Operations is a per-department Pearl deployed to your operations Shell. It reads from every system your ops team already emits signal into — messaging, calendaring, on-call scheduling, ticketing, source-control, HR — and reasons across all of them at once. When a pattern emerges that historically precedes an incident, it surfaces the pattern with the specific evidence, the affected owners, and a proposed action. Your ops lead approves the action (or edits it, or rejects it with a reason that trains the Pearl). Every action taken lands in an attested audit trail your CISO and your compliance officer can verify. The Pearl gets better every week — at month twenty-four your Nebbos Operations is measurably better than at month one, because it has twenty-three months of your team&rsquo;s specific decisions in its memory.",
+      },
+
+      {
+        id: "how-it-fits",
+        kind: "text-block",
+        eyebrow: "03 · How it fits your workflow",
+        h2: "Deploys without disrupting.",
+        body: "Nebbos Operations sits behind your existing systems, not in front of them. Your team continues using Slack, PagerDuty, Jira, Linear, Google Calendar, Workday — nothing changes about how they work today. The Pearl reads events from those systems (via named connectors for the tools that matter and OAuth adapters for the long-tail), reasons across them in its memory graph, and surfaces attention through a per-department dashboard plus the messaging channel your team already uses. Approval requests land in Slack, not a new UI. Handoff summaries post to the on-call channel, not a portal nobody checks. The rule is: your team&rsquo;s workflow stays. Only the noise-to-signal ratio changes.",
+      },
+
+      {
+        id: "compounding-value",
+        kind: "text-block",
+        eyebrow: "04 · The compounding value",
+        h2: "Month 24 vs month 1.",
+        body: "Every operations decision your team makes trains your Pearl. The first month, your Nebbos Operations is running on Nebbos General Operations — the latest base model Nebbos ships. It&rsquo;s useful from day one, but generic. By month six, it has learned your team&rsquo;s specific handoff rhythm, which vendors always miss SLA, which incident categories your team triages fastest, which approval routes actually get responded to and which get delegated. By month twenty-four, your Nebbos Operations knows your ops surface better than any single team member does, because no team member has been reading every channel every shift for two years. That accumulated intelligence is portable — the tuned Pearl and its memory move with you if you ever leave the platform. This is why memory (Layer 7 of the Nebbos architecture) is the compounding-value layer.",
+      },
+
+      {
+        id: "signals",
         kind: "list-numbered",
-        eyebrow: "01 · What it watches",
-        h2: "Every operation emits a signal. Nebbos Operations reads it.",
+        eyebrow: "05 · Signals it watches",
+        h2: "What Nebbos Operations reads from your existing systems.",
         items: [
-          { title: "Handoffs across shifts and time zones" },
-          { title: "Coverage gaps before they become incidents" },
-          { title: "Escalation paths and their history" },
-          { title: "Root-cause across systems, not just tickets" },
+          { title: "Handoffs across shifts and time zones", body: "The end-of-shift summary that used to be a Slack thread nobody read gets structured, cross-referenced against open tickets, and delivered to the incoming shift lead with the two or three items that actually need attention." },
+          { title: "Coverage gaps before they become incidents", body: "The on-call rotation shows Tuesday 3am unstaffed for a Pearl-serviced customer segment; Nebbos Operations flags it Sunday, not Tuesday at 3:15am." },
+          { title: "Escalation paths and their history", body: "When an issue escalates, the Pearl knows who owned the last three similar issues and what their resolution timing was — so the escalation reaches the person most likely to act fastest." },
+          { title: "Root-cause across systems, not just tickets", body: "An incident recorded in the ticket as a &lsquo;database issue&rsquo; often has its actual root cause in a source-control commit or a Slack ops-change thread. Nebbos Operations correlates across systems and surfaces the real root cause, not the intake tag." },
+          { title: "Vendor commitments and SLA drift", body: "Contract SLAs slip when nobody&rsquo;s watching them mid-quarter. The Pearl tracks vendor commitments against actual delivery cadence and surfaces drift before quarterly review." },
+          { title: "Cross-team dependencies quietly breaking", body: "Engineering ships something that affects operations. Nebbos Operations correlates the change with downstream impact and surfaces the connection before an incident makes it obvious." },
+          { title: "Silent success signals", body: "Not every signal is a warning. Nebbos Operations also surfaces what&rsquo;s quietly working — the shift lead whose handoffs never generate follow-up questions, the escalation route that consistently resolves fastest. These become playbook material for the team." },
         ],
       },
+
       {
-        id: "value",
-        kind: "text-block",
-        eyebrow: "02 · The compounding value",
-        h2: "The longer your Pearl runs, the better it gets.",
-        body: "Every operations decision your team makes trains your Pearl. Month one, it&rsquo;s the general Nebbos Operations model. Month twenty-four, it&rsquo;s tuned to your specific handoff cadence, your specific incident types, your specific approval graph. Portable to you if you ever leave the platform.",
+        id: "triggers",
+        kind: "list-numbered",
+        eyebrow: "06 · What triggers Nebbos Operations to act",
+        h2: "The pattern that becomes an action.",
+        items: [
+          { title: "Threshold crossed with historical significance", body: "A metric moves past a value that has previously preceded incidents. Not just any threshold — one that memory associates with past ops-relevant events." },
+          { title: "Silent failure pattern detected", body: "A system that normally emits signal has gone quiet for longer than baseline. The Pearl surfaces this before someone notices during triage." },
+          { title: "Approval-graph deadlock", body: "An approval request has sat too long without response and the delegation chain has an available approver. The Pearl escalates through the graph automatically." },
+          { title: "Cross-system contradiction", body: "Two systems that should agree are reporting different states. The Pearl surfaces the contradiction with evidence from both sides." },
+          { title: "Vendor SLA drift crossing tolerance", body: "The Pearl surfaces the drift with the specific commitment, the actual cadence, and the contract clause." },
+          { title: "Handoff missed critical context", body: "The outgoing shift closed with an open item the incoming shift wasn&rsquo;t told about. The Pearl surfaces the item to the incoming lead within the first hour." },
+        ],
       },
+
+      {
+        id: "layers-that-matter",
+        kind: "list-numbered",
+        eyebrow: "07 · Which architecture layers matter most",
+        h2: "The Nebbos layers your operations Pearl leans on hardest.",
+        items: [
+          { title: "Layer 04 · Ingest", body: "The event stream from Slack, PagerDuty, Jira, Calendar — everything lands here first, append-only, before the Pearl interprets it." },
+          { title: "Layer 07 · Memory", body: "The compounding-value layer. Every handoff decision, every incident triage, every approval routes into memory and becomes context for the next decision." },
+          { title: "Layer 09 · Detectors", body: "Turns raw signal streams into the actionable attention items your ops lead actually sees." },
+          { title: "Layer 11 · Approval", body: "Every consequential action (a shift-swap, an escalation, a policy change) passes through here with an attested human sign-off." },
+          { title: "Layer 15 · Attestation", body: "Every action the Pearl takes lands as an attested record — your CISO can verify what happened, why, and who approved it." },
+        ],
+      },
+
+      {
+        id: "roi",
+        kind: "text-block",
+        eyebrow: "08 · The ROI framework",
+        h2: "What Nebbos Operations returns.",
+        body: "Two lines. First: incident hours avoided. Ops teams that deploy a Pearl typically see 30-50% fewer incident-hours in the first two quarters because the Pearl catches pattern-based incidents at the pattern stage, not the incident stage. At $150 per seat with a 20-seat minimum ($36k annual floor at prepay), a single avoided major incident often pays for the first year. Second: attention returned to the ops team. Your senior ops leads spend disproportionate time on the highest-signal seams — precisely the work the Pearl handles. That&rsquo;s not headcount reduction; it&rsquo;s senior-hour reallocation toward the work only a senior human can do. Both lines compound as the Pearl tunes.",
+      },
+
+      {
+        id: "objections",
+        kind: "list-numbered",
+        eyebrow: "09 · Common objections",
+        h2: "What ops leaders ask first.",
+        items: [
+          { title: "How is this different from an AI-powered PagerDuty add-on?", body: "PagerDuty read your alerts. Nebbos Operations reads your operations — every system, every channel, every handoff. And the Pearl learns your team specifically, not a generic ops model." },
+          { title: "What if the Pearl makes a wrong call?", body: "Every consequential action passes through your approval graph (Layer 11). The Pearl proposes; a named human approves or rejects with a reason that trains the Pearl. There is no autonomous consequential action without human sign-off." },
+          { title: "How does this fit our compliance posture?", body: "Every action the Pearl takes lands as an attested record (Layer 15) with the identity that authorized it, the timestamp, and the hash-chained trail. Ready for SOC 2 evidence + EU AI Act Article 11 pack." },
+          { title: "Can we take our tuning with us if we leave?", body: "Yes. Portability is a contractual guarantee, not a marketing claim. Your tuned Pearl and its memory export completely on offboarding." },
+          { title: "What about the runaway-agent scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). One Pearl cannot take down the tenant or the humans who share it." },
+          { title: "Is the model our data or their data?", body: "Every human decision your team makes trains YOUR Pearl. It doesn&rsquo;t train Nebbos&rsquo;s next base model without explicit opt-in. Your data trains your model, not someone else&rsquo;s." },
+        ],
+      },
+
+      {
+        id: "case-study",
+        kind: "text-block",
+        eyebrow: "10 · Case study — illustrative design-partner scenario",
+        h2: "Regional logistics operator, 340 employees.",
+        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops department in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;. Scenario is illustrative — public case studies land as design partners opt in.",
+      },
+
+      {
+        id: "related",
+        kind: "list-plain",
+        eyebrow: "11 · Related solutions",
+        h2: "Deploys alongside.",
+        items: [
+          { title: "Nebbos People — for on-call rotation + coverage planning" },
+          { title: "Nebbos Finance — when incident-hour cost attribution matters to the CFO" },
+          { title: "Nebbos Manufacturing — for operations departments running production floors" },
+          { title: "Nebbos Governance — when approval graphs need to cover multiple departments" },
+        ],
+      },
+
+      {
+        id: "getting-started",
+        kind: "list-numbered",
+        eyebrow: "12 · Getting started",
+        h2: "Three weeks from signature to live.",
+        items: [
+          { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, tenant provisions automatically, your engineering team wires the connectors for the systems the ops Pearl needs to read from (Slack, PagerDuty, calendar, ticketing). Solutions engineer available for pairing." },
+          { title: "Week 2 · Pearl deployment + department scoping", body: "Nebbos General Operations deploys into your operations Shell. Your approval graph gets configured. Your ops lead reviews the first-pass detection thresholds and adjusts." },
+          { title: "Week 3 · First surfaces + tuning kickoff", body: "The Pearl starts surfacing detections to your ops lead. Every accept/reject/edit trains the Pearl. By end of week three, the initial tuning is in motion and your team is running with the Pearl in-loop." },
+        ],
+      },
+
       {
         id: "cta",
         kind: "cta-band",
         h2: "Put Nebbos Operations on your ops team.",
         ctaPrimary: { label: "Book a demo", href: "/demo", variant: "primary" },
+        ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost" },
       },
     ],
   },
