@@ -669,8 +669,8 @@ main {
 }
 .hero-fullbleed__title {
   font-family: var(--font-serif);
-  font-size: var(--size-hero-massive);
-  line-height: 0.94;
+  font-size: var(--size-h1);
+  line-height: 1.02;
   letter-spacing: -0.02em;
   font-weight: 600;
   /* First letter of each word big-cap, rest small-cap — source text stays
@@ -681,6 +681,21 @@ main {
   text-wrap: balance;
   text-shadow: var(--shadow-on-image);
   margin: 0;
+}
+
+/* Manifesto variant — home hero only. Single-line, massive, no wrap. Sized
+   so "Remember who you are." fits the container at every viewport width;
+   nowrap forces one line so it reads as one statement, never two.
+   max-width:none frees the title from the frame's 56ch cap so nowrap has
+   the container's full width to work with. */
+.hero-fullbleed__title--manifesto {
+  font-size: clamp(28px, 7vw, 112px);
+  line-height: 0.98;
+  letter-spacing: -0.025em;
+  white-space: nowrap;
+  text-wrap: nowrap;
+  max-width: none;
+  width: max-content;
 }
 .hero-fullbleed__deck {
   font-family: var(--font-serif);

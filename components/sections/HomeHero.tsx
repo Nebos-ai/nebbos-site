@@ -25,7 +25,7 @@ export function HomeHero() {
     >
       <div className="container hero-fullbleed__inner">
         <div className="hero-fullbleed__frame">
-          <h1 id="hero-heading" className="hero-fullbleed__title">
+          <h1 id="hero-heading" className="hero-fullbleed__title hero-fullbleed__title--manifesto">
             Remember who you are.
           </h1>
         </div>
