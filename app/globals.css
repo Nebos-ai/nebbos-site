@@ -636,6 +636,17 @@ main {
   margin-block-start: var(--space-4);
 }
 
+/* Video-backed hero — same positioning as SceneStill fill (which is
+   next/image absolute-fill). Consumed by FullBleedVideo primitive. */
+.fullbleed-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
+}
+
 /* ── Hero: full-bleed image ─────────────────────────────────────────── */
 .hero-fullbleed {
   position: relative;

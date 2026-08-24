@@ -1,27 +1,36 @@
-import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { FullBleedVideo } from "@/components/site/FullBleedVideo";
 
 /**
- * HomeHero · v4 · 2026-08-24
+ * HomeHero · v5 · 2026-08-24
  *
- * Founder direction 2026-08-24: the hero is one line. No brand chip, no
- * deck, no CTA button, no aside. Just the manifesto. Palantir-tier
- * restraint — the image + the line + nothing else.
+ * Video hero. Two scenes: 4 close-ups of faces showing quiet confusion +
+ * distrust (2s each), then a wide golden-hour shot of a group at a bridge —
+ * three cross, three stay behind. Story of "Remember who you are.": the
+ * state you're in, then the choice.
  *
- * Full-bleed family-band-intelligence scene. Chapter I metadata plate
- * top-right. The h1 is the whole hero, and it is the whole invitation.
+ * Silent auto-loop. Poster (hero-poster.jpg) shows during load and as
+ * fallback. The h1 is the whole hero copy — no deck, no CTA button,
+ * no aside. Palantir/Loro-tier restraint.
+ *
+ * Video generated via Google Veo 3.1 (2026-08-24), stitched with ffmpeg
+ * from 5 shots at 1280×720. See scratchpad/generate-hero-video.py +
+ * stitch-hero.sh for the production pipeline.
  */
 
 export function HomeHero() {
   return (
-    <FullBleedScene
+    <FullBleedVideo
       className="hero-fullbleed"
-      scene={{ imageFamily: "band-intelligence", imageFamilyVariant: 1 }}
+      sources={[
+        { src: "/vision-board/hero.webm", type: "video/webm" },
+        { src: "/vision-board/hero.mp4", type: "video/mp4" },
+      ]}
+      posterSrc="/vision-board/hero-poster.jpg"
       scrim="bottom"
       vignetteStrength={0.5}
       chapter="I"
       chapterLabel="Where it starts"
       ariaLabelledby="hero-heading"
-      priority
     >
       <div className="container hero-fullbleed__inner">
         <div className="hero-fullbleed__frame">
@@ -30,6 +39,6 @@ export function HomeHero() {
           </h1>
         </div>
       </div>
-    </FullBleedScene>
+    </FullBleedVideo>
   );
 }
