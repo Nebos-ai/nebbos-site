@@ -16,6 +16,14 @@ permissions:
 jobs:
   floor:
     uses: Nebos-ai/.github/.github/workflows/repo-governance-floor.yml@v1
+    # `secrets: inherit` flows org-level (and repo-level) secrets into the
+    # reusable workflow. The reusable workflow v1 accepts an OPTIONAL
+    # GOVERNANCE_READ_TOKEN — when present (org or repo secret), the full
+    # nebos-governance check suite runs; when absent, the workflow degrades
+    # to warn-first (bundled AGENTS.md + signer checks still run) per the
+    # 2026-08-25 amendment to repo-governance-floor.yml. Confirmed on
+    # Nebos-ai/.github PR #1 (merge sha 2c4769b, v1 tag force-moved).
+    secrets: inherit
     with:
       sub_category: surface
       # matrix_triple: intentionally omitted — populated only for repos in Article XV
