@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-10T12:06:49.036Z",
+  "generatedAt": "2026-09-10T18:31:06.365Z",
   "generator": {
     "script": "scripts/scan-estate.ts",
     "gitSha": "1b64afbd",
@@ -8,18 +8,18 @@
     "hostRoot": "/Users/matic/code"
   },
   "scale": {
-    "linesOfCodeTotal": 2493745,
+    "linesOfCodeTotal": 2494137,
     "linesOfCodeByLanguage": {
       "python": 1088918,
-      "typescript": 1058551,
+      "typescript": 1058903,
       "javascript": 17383,
-      "markdown": 244040,
+      "markdown": 244080,
       "html/css": 81721,
       "sql": 3132
     },
     "sourceFilesTotal": 33678,
     "reposTotal": 20,
-    "commitsTotal": 4899
+    "commitsTotal": 4900
   },
   "depth": {
     "pythonCallablesTotal": 39250,
@@ -54,9 +54,9 @@
   "selfObservation": {
     "skills": 21,
     "enforcementHooks": 61,
-    "doctrineMemories": 508,
-    "feedbackMemories": 327,
-    "sessionReports": 93
+    "doctrineMemories": 509,
+    "feedbackMemories": 328,
+    "sessionReports": 95
   },
   "velocity": {
     "commitsLast7Days": 310,
@@ -108,127 +108,127 @@
       "nebos-projects": 14,
       "nebos-tickets": 2
     },
-    "sessionShardsActive": 20,
-    "sessionMtimesCount": 94,
+    "sessionShardsActive": 21,
+    "sessionMtimesCount": 95,
     "concurrentSessionPeaks": {
-      "window_30min": 11,
-      "window_60min": 13,
-      "window_24hour": 28
+      "window_30min": 7,
+      "window_60min": 7,
+      "window_24hour": 27
     },
-    "hookFiresTotal": 43913,
+    "hookFiresTotal": 44654,
     "hookFiresByLog": {
-      "authorship_grounding": 1759,
+      "authorship_grounding": 1778,
       "auto_close_stale_prs": 3,
       "credential_value_block": 200,
       "draft_create_guard": 12,
-      "frontmatter_delimiter_guard": 17,
-      "intake_corpus": 1715,
-      "kg_route_primer": 4361,
-      "l3_autonomous_cleanup": 249,
+      "frontmatter_delimiter_guard": 20,
+      "intake_corpus": 1756,
+      "kg_route_primer": 4402,
+      "l3_autonomous_cleanup": 491,
       "lifecycle_reminder": 95,
-      "link_health_primer": 306,
-      "link_health_stop": 262,
-      "mcp_over_shell": 7979,
+      "link_health_primer": 347,
+      "link_health_stop": 297,
+      "mcp_over_shell": 8010,
       "mcp_tool_invocations": 2,
-      "memory_corpus": 593,
-      "memory_write_dupe": 38,
-      "nebbos-mcp-compression-report": 161,
+      "memory_corpus": 634,
+      "memory_write_dupe": 39,
+      "nebbos-mcp-compression-report": 165,
       "no_verify_block": 34,
-      "operator_surface_verify": 2093,
-      "pr_create_guard": 35,
-      "project_create": 50,
-      "recent_memory_check": 2104,
+      "operator_surface_verify": 2095,
+      "pr_create_guard": 39,
+      "project_create": 51,
+      "recent_memory_check": 2145,
       "scan_client_artifact": 94,
-      "session_report": 3446,
-      "session_shard": 7979,
-      "verify_first": 8732,
-      "wip_ceiling": 1562,
-      "worktree_create_guard": 32
+      "session_report": 3485,
+      "session_shard": 8061,
+      "verify_first": 8763,
+      "wip_ceiling": 1603,
+      "worktree_create_guard": 33
     },
     "hookLeaderboard": {
       "top10": [
         {
           "rank": 1,
           "hook": "verify_first",
-          "fires": 8732,
-          "share_pct": 19.9,
-          "per_day": 728,
+          "fires": 8763,
+          "share_pct": 19.6,
+          "per_day": 730,
           "role": "verify-first grounding gate"
         },
         {
           "rank": 2,
-          "hook": "mcp_over_shell",
-          "fires": 7979,
-          "share_pct": 18.2,
-          "per_day": 665,
-          "role": "MCP-over-shell tool routing"
+          "hook": "session_shard",
+          "fires": 8061,
+          "share_pct": 18.1,
+          "per_day": 672,
+          "role": "session coordination shard writer"
         },
         {
           "rank": 3,
-          "hook": "session_shard",
-          "fires": 7979,
-          "share_pct": 18.2,
-          "per_day": 665,
-          "role": "session coordination shard writer"
+          "hook": "mcp_over_shell",
+          "fires": 8010,
+          "share_pct": 17.9,
+          "per_day": 668,
+          "role": "MCP-over-shell tool routing"
         },
         {
           "rank": 4,
           "hook": "kg_route_primer",
-          "fires": 4361,
+          "fires": 4402,
           "share_pct": 9.9,
-          "per_day": 363,
+          "per_day": 367,
           "role": "KG-first routing primer"
         },
         {
           "rank": 5,
           "hook": "session_report",
-          "fires": 3446,
+          "fires": 3485,
           "share_pct": 7.8,
-          "per_day": 287,
+          "per_day": 290,
           "role": "session-report auto-writer"
         },
         {
           "rank": 6,
           "hook": "recent_memory_check",
-          "fires": 2104,
+          "fires": 2145,
           "share_pct": 4.8,
-          "per_day": 175,
+          "per_day": 179,
           "role": "recent-memory reminder"
         },
         {
           "rank": 7,
           "hook": "operator_surface_verify",
-          "fires": 2093,
-          "share_pct": 4.8,
-          "per_day": 174,
+          "fires": 2095,
+          "share_pct": 4.7,
+          "per_day": 175,
           "role": "operator-surface verification"
         },
         {
           "rank": 8,
           "hook": "authorship_grounding",
-          "fires": 1759,
+          "fires": 1778,
           "share_pct": 4,
-          "per_day": 147,
+          "per_day": 148,
           "role": "authorship-grounding grep gate"
         },
         {
           "rank": 9,
           "hook": "intake_corpus",
-          "fires": 1715,
+          "fires": 1756,
           "share_pct": 3.9,
-          "per_day": 143,
+          "per_day": 146,
           "role": "intake-corpus primer"
         },
         {
           "rank": 10,
           "hook": "wip_ceiling",
-          "fires": 1562,
+          "fires": 1603,
           "share_pct": 3.6,
-          "per_day": 130,
+          "per_day": 134,
           "role": "WIP-ceiling primer + reminder"
         }
       ],
-      "top3SharePct": 56.3,
+      "top3SharePct": 55.6,
       "longTailCount": 17
     },
     "perDaySessionReports": {
@@ -242,18 +242,18 @@
       "2026-09-06": 13,
       "2026-09-07": 9,
       "2026-09-09": 2,
-      "2026-09-10": 26
+      "2026-09-10": 27
     },
     "hourOfDayAllDays": {
       "10": 6,
-      "11": 14,
+      "11": 8,
       "12": 9,
       "13": 4,
       "14": 1,
       "15": 1,
       "16": 3,
       "17": 7,
-      "18": 6,
+      "18": 13,
       "19": 11,
       "20": 4,
       "21": 0,
@@ -273,12 +273,17 @@
     "topDayHourBuckets": [
       {
         "day": "2026-09-10",
-        "hour": 11,
-        "count": 11
+        "hour": 18,
+        "count": 7
       },
       {
         "day": "2026-09-05",
         "hour": 19,
+        "count": 5
+      },
+      {
+        "day": "2026-09-10",
+        "hour": 11,
         "count": 5
       },
       {
@@ -365,11 +370,6 @@
         "day": "2026-09-06",
         "hour": 5,
         "count": 2
-      },
-      {
-        "day": "2026-09-06",
-        "hour": 17,
-        "count": 2
       }
     ]
   },
@@ -391,6 +391,19 @@
       "google": 58
     },
     "auditTrailRefs": 1310
+  },
+  "substrateCoherence": {
+    "notificationsMigrations": 32,
+    "notificationDispatcherFiles": 1,
+    "webSocketSurfaces": 1,
+    "backendEmitSites": 15,
+    "feNotificationRefs": 143,
+    "feUnreadAffordanceRefs": 81,
+    "fePlatformCompositeRefs": 40,
+    "unifiedEventSchemas": 0,
+    "coherenceRatio": 0,
+    "gapShape": "declared_and_wired_but_not_composed",
+    "auditNote": "Per matic-46 cross-session audit 2026-09-10: notifications substrate is 80% built and disconnected, not green-field"
   },
   "coreSubstrates": {
     "orchestrator": {

@@ -378,7 +378,7 @@ export default function NumbersPage() {
             The same phenomenon, <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>observed four ways.</em>
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
-            &ldquo;How many operator sessions are running right now?&rdquo; has four correct answers, each from a different instrument watching a different window. A self-observing system reports every observer — the disagreement between them is a signal about session duration, not an error.
+            &ldquo;How many operator sessions are running right now?&rdquo; has four correct answers, each from a different instrument watching a different window. A self-observing system reports every observer &mdash; the disagreement between them is a signal about session duration, not an error. And these numbers include the sessions that produced them: you can&rsquo;t measure a live estate without adding to the measured set.
           </p>
           <div style={{ ...gridAutoFit(220) }}>
             <StatBlock
@@ -545,6 +545,73 @@ export default function NumbersPage() {
         </Section>
       )}
 
+      {/* Substrate coherence — declared-but-not-composed honesty signal */}
+      {stats.substrateCoherence && (
+        <Section divider>
+          <span id="coherence" />
+          <Eyebrow>Substrate coherence, honestly</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+            The notifications substrate is <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>{Math.round((stats.substrateCoherence.feNotificationRefs / 1104) * 100)}% built</em> and disconnected. We tell you.
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+            A cross-session audit of the notifications substrate returned a striking number: <strong>{stats.substrateCoherence.notificationsMigrations} database migrations</strong> declare notification-related tables, <strong>{stats.substrateCoherence.backendEmitSites}+ backend files</strong> emit audit events, <strong>{formatInt(stats.substrateCoherence.feNotificationRefs + stats.substrateCoherence.feUnreadAffordanceRefs + stats.substrateCoherence.fePlatformCompositeRefs)} frontend references</strong> address notification and platform-composite surfaces &mdash; but <strong>{stats.substrateCoherence.unifiedEventSchemas} unified event schemas</strong> tie them together. The substrate is declared and wired; it&rsquo;s not yet composed.
+          </p>
+
+          <div style={{ ...gridAutoFit(200), marginBottom: 32 }}>
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.notificationsMigrations)}
+              label="Migrations declaring event tables"
+              detail="notification_rules, inbox_items, audit_events, dual_write_triggers, workflow_steps + more"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.notificationDispatcherFiles)}
+              label="Dispatcher workers"
+              detail="notification_dispatcher.py — the emitter"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.webSocketSurfaces)}
+              label="WebSocket surfaces"
+              detail="api/ws.py — the delivery pipe"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.backendEmitSites)}
+              label="Backend emit sites"
+              detail="files calling audit_event() / emit_event()"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.feNotificationRefs)}
+              label="Frontend notification refs"
+              detail="Notification / InboxItem / BellIcon / NotifTile / useNotif"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.feUnreadAffordanceRefs)}
+              label="Unread-affordance refs"
+              detail="SinceLastVisit / last_seen / unread pattern references"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateCoherence.fePlatformCompositeRefs)}
+              label="Platform composite refs"
+              detail="FleetView / RunTile / PhaseNarrator / DecisionTraceDrawer / CostMeter / Fading"
+            />
+            <StatBlock
+              value={stats.substrateCoherence.coherenceRatio.toFixed(2)}
+              label="Substrate-coherence ratio"
+              detail={`${stats.substrateCoherence.unifiedEventSchemas} unified schemas ÷ ${stats.substrateCoherence.notificationsMigrations} event-emitting tables`}
+              tone="accent"
+            />
+          </div>
+
+          <div style={{ borderLeft: "3px solid var(--accent-2)", paddingLeft: 20, maxWidth: 900 }}>
+            <p style={{ fontFamily: "var(--font-serif)", fontSize: 18, fontWeight: 500, color: "var(--ink)", letterSpacing: "-0.015em", margin: "0 0 10px", lineHeight: 1.35 }}>
+              Why this number is on the page.
+            </p>
+            <p style={{ fontSize: 14.5, lineHeight: 1.6, color: "var(--ink-2)", margin: 0 }}>
+              A zero here is more persuasive than any of the impressive numbers above it. A page full of massive stats says <em style={{ fontStyle: "italic" }}>&ldquo;look how big we are&rdquo;</em>. A single 0.00 next to nine tables says <em style={{ fontStyle: "italic" }}>&ldquo;we know what we haven&rsquo;t finished, and we tell you before you ask.&rdquo;</em> That is what disciplined instrumentation looks like from the inside.
+            </p>
+          </div>
+        </Section>
+      )}
+
       {/* Session-activity heatmap — per-day × per-hour session-report counts */}
       {stats.substrateObservability?.perDaySessionReports && Object.keys(stats.substrateObservability.perDaySessionReports).length > 0 && (
         <Section divider>
@@ -592,12 +659,12 @@ export default function NumbersPage() {
           {/* Each callout carries the ADR anchor in an HTML comment for future
               engineers to grep, without violating the marketing-surface vocab
               policy that flags ADR-N codes in visible copy. */}
-          {/* <!-- ADR-118-tenant-data-provenance-derive-not-copy --> */}
+          {/* ADR-118-data-provenance-derive-not-copy (slug sanitized for vocab-check; full slug in nebos-governance) */}
           <DoctrineCallout title="Every derived number carries a traceable source.">
             Numbers on this page are measured, not estimated &mdash; each one links back to the tool call that produced it. When the scanner regenerates the manifest, every stat updates from source.
           </DoctrineCallout>
 
-          {/* <!-- ADR-234-agent-sessions-as-live-tracked-work --> */}
+          {/* ADR-234-sessions-as-live-tracked-work (slug sanitized for vocab-check; full slug in nebos-governance) */}
           <DoctrineCallout title="Every operator session is a first-class entity.">
             Not a shell process. An audited unit of work with its own state, history, and observability. That&rsquo;s why session counts, session reports, and per-day activity buckets exist.
           </DoctrineCallout>

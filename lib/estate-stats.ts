@@ -131,6 +131,19 @@ export type EstateStats = {
     llmProviders: Record<string, number>;
     auditTrailRefs: number;
   };
+  substrateCoherence?: {
+    notificationsMigrations: number;
+    notificationDispatcherFiles: number;
+    webSocketSurfaces: number;
+    backendEmitSites: number;
+    feNotificationRefs: number;
+    feUnreadAffordanceRefs: number;
+    fePlatformCompositeRefs: number;
+    unifiedEventSchemas: number;
+    coherenceRatio: number;
+    gapShape: string;
+    auditNote: string;
+  };
   coreSubstrates: {
     orchestrator: {
       linesOfCode: number;

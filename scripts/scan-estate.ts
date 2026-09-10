@@ -630,6 +630,69 @@ function scan(): EstateStats {
   // Audit-trail signals — nebos_events + hash-chain references
   const auditTrailRefs = sumOverRepos(r => grepCount(r, "nebos_events|hash_chain|audit_log|append_only_ledger", ["py", "sql"]));
 
+  // Substrate coherence — matic-46 round-3 finding: notifications substrate
+  // is 80%-built-and-disconnected, not green-field. Per
+  // feedback_grep_all_migrations_before_new_substrate.md — grep all migrations
+  // BEFORE proposing a new substrate. The measured counts below make the
+  // "declared but not composed" gap visible as data.
+  // Narrow to the actual migrations directory of nebos-backend — not every
+  // .py file that mentions a migration name (that was picking up tests +
+  // worktree copies and inflating the count 20×).
+  const nbBackendMigDir = join(repoPath("nebos-backend"), "db", "migrations");
+  const notificationsMigrations = existsSync(nbBackendMigDir)
+    ? shInt(
+        `grep -lE "notification_rules|inbox_items|nebos_events|audit_events.*hash_chain|dual_write.*trigger|inbox_compliance_gate|email_connector_audit_log|workflow_steps|autonomy_settings_into_states" -r --include="*.py" . 2>/dev/null | wc -l`,
+        nbBackendMigDir
+      )
+    : 0;
+  // find with PRUNE (was silently missing the exclude — that's why the count
+  // was 100× too high, picking up copies in .worktrees/).
+  const notificationDispatcherFiles = existsSync(repoPath("nebos-backend"))
+    ? shInt(`find . -type d \\( ${PRUNE} \\) -prune -o -type f -name "notification_dispatcher.py" -print 2>/dev/null | wc -l`, repoPath("nebos-backend"))
+    : 0;
+  const webSocketSurfaces = existsSync(repoPath("nebos-backend"))
+    ? shInt(`find . -type d \\( ${PRUNE} \\) -prune -o -type f \\( -name "ws.py" -o -name "websocket.py" \\) -print 2>/dev/null | wc -l`, repoPath("nebos-backend"))
+    : 0;
+  // Tighten backend emit-sites: only files under api/ or services/ or workers/
+  // that actually call audit_event / audit_log / emit_event.
+  const backendEmitSites = existsSync(repoPath("nebos-backend"))
+    ? shInt(
+        `find . -type d \\( ${PRUNE} \\) -prune -o -type f -name "*.py" -print 2>/dev/null | xargs grep -lE "audit_event\\(|audit_log\\(|emit_event\\(" 2>/dev/null | wc -l`,
+        repoPath("nebos-backend")
+      )
+    : 0;
+  // Use find+xargs so PRUNE applies consistently (raw grep exclude-dir only
+  // matches direct children, not transitive nested dirs). Also switch to
+  // -l (files-with-match) rather than raw line count — reach is more honest
+  // measured as distinct files touching the concept.
+  const feNotificationRefs = existsSync(repoPath("nebos-frontend"))
+    ? shInt(
+        `find . -type d \\( ${PRUNE} \\) -prune -o -type f \\( -name "*.tsx" -o -name "*.ts" \\) -print 2>/dev/null | xargs grep -lE "Notification|InboxItem|BellIcon|NotifTile|useNotif" 2>/dev/null | wc -l`,
+        repoPath("nebos-frontend")
+      )
+    : 0;
+  const feUnreadAffordanceRefs = existsSync(repoPath("nebos-frontend"))
+    ? shInt(
+        `find . -type d \\( ${PRUNE} \\) -prune -o -type f \\( -name "*.tsx" -o -name "*.ts" \\) -print 2>/dev/null | xargs grep -lE "SinceLastVisit|last_seen|lastSeen|unreadCount|isUnread" 2>/dev/null | wc -l`,
+        repoPath("nebos-frontend")
+      )
+    : 0;
+  const fePlatformCompositeRefs = existsSync(repoPath("nebos-frontend"))
+    ? shInt(
+        `find . -type d \\( ${PRUNE} \\) -prune -o -type f \\( -name "*.tsx" -o -name "*.ts" \\) -print 2>/dev/null | xargs grep -lE "FleetView|RunTile|PhaseNarrator|DecisionTraceDrawer|CostMeter|Fading" 2>/dev/null | wc -l`,
+        repoPath("nebos-frontend")
+      )
+    : 0;
+  // Unified event schemas across hook JSON logs — per matic-46's audit of 5
+  // sample logs, ZERO share a canonical shape. Reported as-audited, not
+  // recomputed here (would require semantic JSON-key comparison across every
+  // hook log which is beyond simple grep scope).
+  const unifiedEventSchemas = 0;  // observed 2026-09-10 per matic-46 round-3 audit
+  const notificationSubstrateEmittingTables = notificationsMigrations;
+  const substrateCoherenceRatio = notificationSubstrateEmittingTables > 0
+    ? unifiedEventSchemas / notificationSubstrateEmittingTables
+    : 0;
+
 
   const manifest: EstateStats = {
     schemaVersion: CURRENT_SCHEMA_VERSION,
@@ -773,6 +836,19 @@ function scan(): EstateStats {
       rlsMigrations,
       llmProviders,
       auditTrailRefs,
+    },
+    substrateCoherence: {
+      notificationsMigrations,
+      notificationDispatcherFiles,
+      webSocketSurfaces,
+      backendEmitSites,
+      feNotificationRefs,
+      feUnreadAffordanceRefs,
+      fePlatformCompositeRefs,
+      unifiedEventSchemas,
+      coherenceRatio: substrateCoherenceRatio,
+      gapShape: "declared_and_wired_but_not_composed",
+      auditNote: "Per matic-46 cross-session audit 2026-09-10: notifications substrate is 80% built and disconnected, not green-field",
     },
     coreSubstrates: {
       orchestrator: {
