@@ -1,0 +1,16 @@
+{
+  "computedAt": "2026-09-10T11:35:33.437Z",
+  "concurrentSessionsPeak": {
+    "count": 9,
+    "observedAt": "2026-09-10T11:33:33.852Z",
+    "windowMinutes": 30
+  },
+  "commitsInSingleDayPeak": {
+    "count": 215,
+    "date": "2026-06-09"
+  },
+  "worktreesActivePeak": {
+    "count": 252,
+    "approximatedFrom": "current snapshot of *-worktrees + repo/.worktrees dirs"
+  }
+}

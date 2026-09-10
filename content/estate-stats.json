@@ -1,0 +1,111 @@
+{
+  "schemaVersion": "1.0.0",
+  "generatedAt": "2026-09-10T11:14:24.738Z",
+  "generator": {
+    "script": "scripts/scan-estate.ts",
+    "gitSha": "1b64afbd",
+    "reposScanned": 20,
+    "hostRoot": "/Users/matic/code"
+  },
+  "scale": {
+    "linesOfCodeTotal": 2492436,
+    "linesOfCodeByLanguage": {
+      "python": 1088918,
+      "typescript": 1057242,
+      "javascript": 17383,
+      "markdown": 244040,
+      "html/css": 81721,
+      "sql": 3132
+    },
+    "sourceFilesTotal": 33670,
+    "reposTotal": 20,
+    "commitsTotal": 4895
+  },
+  "depth": {
+    "pythonCallablesTotal": 39250,
+    "pythonDefs": 25327,
+    "pythonAsyncDefs": 6988,
+    "pythonClasses": 6935,
+    "typescriptExportsTotal": 6494,
+    "typescriptExportFunctions": 6425,
+    "typescriptExportArrowConsts": 69,
+    "testCasesTotal": 37436,
+    "testCasesTs": 25311,
+    "testCasesPython": 12125,
+    "testFilesTotal": 3963,
+    "testFilesTs": 2214,
+    "testFilesPython": 1749,
+    "dbTables": 292,
+    "dbMigrationsTotal": 531,
+    "httpEndpointsTotal": 1685,
+    "httpEndpointsBackend": 1096,
+    "httpEndpointsNextHandlers": 189,
+    "httpEndpointsNextPages": 400
+  },
+  "rigor": {
+    "architectureSpecsRatified": 329,
+    "architectureSpecsDraft": 165,
+    "architectureSpecsProvisional": 102,
+    "architectureSpecsPipelineTotal": 532,
+    "constitutionalArticles": 88,
+    "governanceGraphNodes": 499,
+    "governanceGraphEdges": 2288
+  },
+  "selfObservation": {
+    "skills": 21,
+    "enforcementHooks": 61,
+    "doctrineMemories": 507,
+    "feedbackMemories": 326,
+    "sessionReports": 93
+  },
+  "velocity": {
+    "commitsLast7Days": 306,
+    "commitsLast30Days": 1022,
+    "activeWorktrees": 230
+  },
+  "productSurface": {
+    "reactComponentsTotal": 2017,
+    "reactComponentsFrontend": 1877,
+    "uiPackageModules": 28,
+    "uiComposites": 11,
+    "uiPrimitives": 17,
+    "designTokens": 42001
+  },
+  "infrastructure": {
+    "containerImages": 10,
+    "cloudServiceConfigs": 17,
+    "machineCallableTools": 52,
+    "secretReferences": 2519
+  },
+  "coreSubstrates": {
+    "orchestrator": {
+      "linesOfCode": 13511,
+      "files": 104,
+      "functions": 513,
+      "classes": 73,
+      "tests": 287,
+      "testFiles": 34,
+      "httpEndpoints": 0,
+      "state": "shipped",
+      "stateDetail": "Control loop, not a service. Live execution gated on ratification."
+    },
+    "unifiedGraph": {
+      "backendFileRefs": 754,
+      "migrations": 56,
+      "scopeTiers": [
+        "user",
+        "department",
+        "company",
+        "nebbos"
+      ],
+      "state": "landing",
+      "stateDetail": "Substrate tables shipped, feature-layer surface in build."
+    },
+    "memoryFabric": {
+      "pipelineSpecs": 12,
+      "specsFiledToday": 6,
+      "state": "landing",
+      "stateDetail": "Persistent tenant-scoped memory. Physical rows on the shared entity graph; frontend surface under active build."
+    }
+  }
+}
