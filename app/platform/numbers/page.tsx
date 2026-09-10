@@ -11,7 +11,10 @@ import statsJson from "@/content/estate-stats.json";
 import historyJson from "@/content/estate-history.index.json";
 import peaksJson from "@/content/estate-peaks.json";
 
-const stats = statsJson as EstateStats;
+// Cast via unknown: extended scanner fields (substrateObservability,
+// responsibleAiCoverage) may be absent from older manifests. Optional
+// chaining below handles fallback gracefully.
+const stats = statsJson as unknown as EstateStats;
 const history = historyJson as HistoryIndex;
 const peaks = peaksJson as Peaks;
 const hasHistory = history.snapshots.length > 0;
@@ -366,39 +369,206 @@ export default function NumbersPage() {
         </Section>
       )}
 
-      {/* All-time peaks */}
+      {/* Four independent observers + all-time peaks */}
       {(peaks.concurrentSessionsPeak.count > 0 || peaks.commitsInSingleDayPeak.count > 0 || peaks.worktreesActivePeak.count > 0) && (
         <Section divider>
           <span id="peaks" />
-          <Eyebrow>All-time peaks</Eyebrow>
+          <Eyebrow>Four observers, current instant</Eyebrow>
           <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
-            Not the average. <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>The maximum ever.</em>
+            The same phenomenon, <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>observed four ways.</em>
           </h2>
           <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
-            What the system can do at its busiest — the compounding evidence for how far the substrate can push. Concurrent session peak derived from session-report mtime clustering in a 30-minute window; commits-in-day peak from a full <code style={{ fontFamily: "var(--font-mono)", fontSize: 13 }}>git log</code> analysis across every repository.
+            &ldquo;How many operator sessions are running right now?&rdquo; has four correct answers, each from a different instrument watching a different window. A self-observing system reports every observer — the disagreement between them is a signal about session duration, not an error.
           </p>
-          <div style={{ ...gridAutoFit(240) }}>
+          <div style={{ ...gridAutoFit(220) }}>
             <StatBlock
-              value={formatInt(peaks.concurrentSessionsPeak.count)}
-              label="Peak concurrent operator sessions"
-              detail={peaks.concurrentSessionsPeak.observedAt ? `observed ${new Date(peaks.concurrentSessionsPeak.observedAt).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" })} · 30-minute window` : "30-minute window"}
+              value={formatInt(stats.substrateObservability?.sessionShardsActive ?? 0)}
+              label="Session shards"
+              detail="active JSON shards in the 1-hour TTL window · via UserPromptSubmit hook"
+            />
+            <StatBlock
+              value="16"
+              label="ListAgents (live)"
+              detail="interactive sessions live in Claude Code&rsquo;s peer registry · manual observation 2026-09-10"
+            />
+            <StatBlock
+              value="8"
+              label="Peer-sessions hook"
+              detail="recently-active subset visible to this session · via hook additionalContext"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateObservability?.concurrentSessionPeaks?.window_30min ?? peaks.concurrentSessionsPeak.count)}
+              label="30-min mtime cluster (all-time peak)"
+              detail="session-report mtimes, sliding 30-minute window · all-time historical peak"
+              tone="accent"
+            />
+          </div>
+
+          <div style={{ height: 32 }} />
+
+          <Eyebrow>All-time peaks &mdash; by window and by dimension</Eyebrow>
+          <p style={{ fontSize: 15, lineHeight: 1.55, color: "var(--ink-2)", maxWidth: 900, margin: "12px 0 24px" }}>
+            The delta between the 30-minute and 60-minute concurrent-session peaks is itself a signal about how long individual sessions run. The 24-hour peak shows the total unique-session footprint of the busiest day.
+          </p>
+          <div style={{ ...gridAutoFit(220) }}>
+            <StatBlock
+              value={formatInt(stats.substrateObservability?.concurrentSessionPeaks?.window_30min ?? peaks.concurrentSessionsPeak.count)}
+              label="Peak concurrent · 30-min window"
+              detail="the tightest overlap definition"
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateObservability?.concurrentSessionPeaks?.window_60min ?? 0)}
+              label="Peak concurrent · 60-min window"
+              detail="catches longer-duration overlap sessions"
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateObservability?.concurrentSessionPeaks?.window_24hour ?? 0)}
+              label="Peak concurrent · 24-hour window"
+              detail="total unique-session footprint on busiest day"
               tone="accent"
             />
             <StatBlock
               value={formatInt(peaks.commitsInSingleDayPeak.count)}
-              label="Peak commits · single day"
-              detail={peaks.commitsInSingleDayPeak.date ? `on ${peaks.commitsInSingleDayPeak.date}, across the whole estate` : "across the whole estate"}
+              label="Peak commits · single day (all-estate)"
+              detail={peaks.commitsInSingleDayPeak.date ? `on ${peaks.commitsInSingleDayPeak.date} · via full git log analysis` : "via full git log analysis"}
               tone="accent"
             />
             <StatBlock
-              value={formatInt(peaks.worktreesActivePeak.count)}
-              label="Peak concurrent worktrees"
-              detail="parallel development branches active — real concurrency at institutional scale"
+              value={formatInt(stats.substrateObservability?.worktreesAuthoritative ?? peaks.worktreesActivePeak.count)}
+              label="Worktrees active right now (authoritative)"
+              detail={`via \`git worktree list\` across every repo${stats.substrateObservability?.worktreesHookBlindspot ? ` · ${stats.substrateObservability.worktreesHookBlindspot} more than the WIP-ceiling hook sees` : ""}`}
               tone="accent"
             />
           </div>
         </Section>
       )}
+
+      {/* Substrate observability — matic-46 additions */}
+      {stats.substrateObservability && (
+        <Section divider>
+          <span id="observability" />
+          <Eyebrow>Substrate observability</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>Every</em> hook fire, every workflow, every skill &mdash; counted.
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+            The instrumentation-density surface — measured across every source, deduped, provenance-tracked. This section exists because a system that can&rsquo;t count its own moving parts can&rsquo;t claim to govern them.
+          </p>
+          <div style={{ ...gridAutoFit(220) }}>
+            <StatBlock
+              value={formatInt(stats.substrateObservability.skillsUniqueAcrossEstate)}
+              label="Skills, unique across estate"
+              detail={`${stats.substrateObservability.skillsGlobal} global · ${Object.keys(stats.substrateObservability.skillsPerRepo).length} repos contributing · ${stats.substrateObservability.skillsPluginMarketplace} plugin marketplace`}
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateObservability.ghaWorkflowsTotal)}
+              label="GitHub Actions workflows"
+              detail={`across ${Object.keys(stats.substrateObservability.ghaWorkflowsByRepo).length} repos · nebos-governance carries ${stats.substrateObservability.ghaWorkflowsByRepo["nebos-governance"] ?? 0} alone`}
+              tone="accent"
+            />
+            <StatBlock
+              value={formatCompact(stats.substrateObservability.hookFiresTotal)}
+              label="Hook fires (12-day window)"
+              detail={`across ${Object.keys(stats.substrateObservability.hookFiresByLog).length} distinct hook logs · ~${Math.round(stats.substrateObservability.hookFiresTotal / 12).toLocaleString()} per day`}
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.substrateObservability.sessionMtimesCount)}
+              label="Session reports auto-authored"
+              detail="one per session-turn · via Stop-hook auto-doc pipeline"
+              tone="accent"
+            />
+          </div>
+        </Section>
+      )}
+
+      {/* Responsible-AI coverage — measurable */}
+      {stats.responsibleAiCoverage && (
+        <Section divider>
+          <span id="coverage" />
+          <Eyebrow>Responsible-AI coverage, measurable</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+            Compliance is a substrate feature. <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>Here&rsquo;s the count.</em>
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+            Every claim in the earlier compliance-lens section has a measurable count behind it — number of design specifications that reference each regime, number of hooks that gate consequential actions, number of migrations that adopt the row-level isolation column, number of independent AI providers wired.
+          </p>
+          <div style={{ ...gridAutoFit(220) }}>
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.complianceCoverage?.eu_ai_act ?? 0)}
+              label="Docs referencing EU AI Act"
+              detail="Annex IV, Article 14, Article 11 — architectural spec references"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.complianceCoverage?.gdpr ?? 0)}
+              label="Docs referencing GDPR"
+              detail="Article 17 erasure, crypto-shredding technique"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.complianceCoverage?.soc2 ?? 0)}
+              label="Docs referencing SOC 2"
+              detail="CC6.1 access-control, CC7 monitoring"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.complianceCoverage?.ferpa ?? 0)}
+              label="Docs referencing FERPA"
+              detail="aggregate-only enforcement for education records"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.approvalSurfaces?.hooks_that_gate ?? 0)}
+              label="Approval gates in hook code"
+              detail="hooks that fire before consequential actions — enforcement is code"
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.rlsMigrations)}
+              label="Row-level-security migrations"
+              detail="schema changes that adopted the four-tier scope column"
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(Object.values(stats.responsibleAiCoverage.llmProviders ?? {}).filter(v => v > 0).length)}
+              label="AI providers wired"
+              detail={`${Object.entries(stats.responsibleAiCoverage.llmProviders ?? {}).filter(([, v]) => v > 0).map(([k]) => k).join(" · ")} — multi-provider substrate`}
+              tone="accent"
+            />
+            <StatBlock
+              value={formatInt(stats.responsibleAiCoverage.auditTrailRefs)}
+              label="Audit-trail code references"
+              detail="hash-chain, append-only ledger, event-log references across every backend"
+              tone="accent"
+            />
+          </div>
+        </Section>
+      )}
+
+      {/* What we don't yet measure — honest known-unknowns */}
+      <Section divider>
+        <span id="unknowns" />
+        <Eyebrow>What we don&rsquo;t yet measure, honestly</Eyebrow>
+        <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+          <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>The known gaps</em> in our own instrumentation.
+        </h2>
+        <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+          A responsible system names what it can&rsquo;t yet count. Below are the dimensions we know exist but haven&rsquo;t landed a canonical measurement for &mdash; each one is a follow-on counter, not a hole in the story.
+        </p>
+        <ul style={{ maxWidth: 900, margin: 0, paddingLeft: 20, fontSize: 15, lineHeight: 1.7, color: "var(--ink-2)" }}>
+          <li>Workflow-definition rows in the operational database (accessible only via the projects API, not a filesystem scan)</li>
+          <li>Peak within-session subagent dispatches — needs deep session-report analysis</li>
+          <li>Skill and workflow <em>invocation</em> counts (which are called vs. merely declared) — needs log mining</li>
+          <li>CI workflow success/failure rate per repo — needs GitHub API</li>
+          <li>Session-report substantiveness distribution (which sessions did substantive work)</li>
+          <li>Token spend / cost per session (not yet logged in a canonical place)</li>
+          <li>Repo-touch heatmap — files touched per session, grouped by repo</li>
+          <li>Full historical hour-of-day session activity (currently only rolling 12-day window)</li>
+        </ul>
+        <p style={{ fontSize: 12.5, color: "var(--ink-3)", margin: "24px 0 0", maxWidth: 900, lineHeight: 1.5, fontStyle: "italic" }}>
+          These are follow-on counters, each with a known technique. Publishing the list is itself the instrumentation discipline the page argues for &mdash; a self-observing system knows the limits of its own observations.
+        </p>
+      </Section>
 
       {/* Every measurement */}
       <Section divider>

@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-10T11:44:35.914Z",
+  "generatedAt": "2026-09-10T11:59:12.433Z",
   "generator": {
     "script": "scripts/scan-estate.ts",
     "gitSha": "1b64afbd",
@@ -8,10 +8,10 @@
     "hostRoot": "/Users/matic/code"
   },
   "scale": {
-    "linesOfCodeTotal": 2493278,
+    "linesOfCodeTotal": 2493485,
     "linesOfCodeByLanguage": {
       "python": 1088918,
-      "typescript": 1058084,
+      "typescript": 1058291,
       "javascript": 17383,
       "markdown": 244040,
       "html/css": 81721,
@@ -19,7 +19,7 @@
     },
     "sourceFilesTotal": 33678,
     "reposTotal": 20,
-    "commitsTotal": 4896
+    "commitsTotal": 4898
   },
   "depth": {
     "pythonCallablesTotal": 39250,
@@ -59,8 +59,8 @@
     "sessionReports": 93
   },
   "velocity": {
-    "commitsLast7Days": 307,
-    "commitsLast30Days": 1023,
+    "commitsLast7Days": 309,
+    "commitsLast30Days": 1025,
     "activeWorktrees": 231
   },
   "productSurface": {
@@ -76,6 +76,94 @@
     "cloudServiceConfigs": 17,
     "machineCallableTools": 52,
     "secretReferences": 2519
+  },
+  "substrateObservability": {
+    "worktreesAuthoritative": 256,
+    "worktreesWipHookVisible": 252,
+    "worktreesHookBlindspot": 4,
+    "skillsGlobal": 21,
+    "skillsPerRepo": {
+      "nebos-backend": 4,
+      "nebos-governance": 19,
+      "nebos-main": 7
+    },
+    "skillsPluginMarketplace": 31,
+    "skillsUniqueAcrossEstate": 68,
+    "ghaWorkflowsTotal": 192,
+    "ghaWorkflowsByRepo": {
+      "nebbos-brand": 1,
+      "nebbos-site": 3,
+      "nebos-agent-gateway": 2,
+      "nebos-backend": 25,
+      "nebos-billing": 15,
+      "nebos-core": 3,
+      "nebos-dev": 4,
+      "nebos-frontend": 16,
+      "nebos-governance": 87,
+      "nebos-home": 5,
+      "nebos-hr": 5,
+      "nebos-mail": 2,
+      "nebos-main": 5,
+      "nebos-orchestrator": 3,
+      "nebos-projects": 14,
+      "nebos-tickets": 2
+    },
+    "sessionShardsActive": 20,
+    "sessionMtimesCount": 93,
+    "concurrentSessionPeaks": {
+      "window_30min": 9,
+      "window_60min": 11,
+      "window_24hour": 27
+    },
+    "hookFiresTotal": 43809,
+    "hookFiresByLog": {
+      "authorship_grounding": 1759,
+      "auto_close_stale_prs": 1,
+      "credential_value_block": 200,
+      "draft_create_guard": 12,
+      "frontmatter_delimiter_guard": 17,
+      "intake_corpus": 1710,
+      "kg_route_primer": 4356,
+      "l3_autonomous_cleanup": 208,
+      "lifecycle_reminder": 95,
+      "link_health_primer": 301,
+      "link_health_stop": 257,
+      "mcp_over_shell": 7973,
+      "mcp_tool_invocations": 2,
+      "memory_corpus": 588,
+      "memory_write_dupe": 38,
+      "nebbos-mcp-compression-report": 161,
+      "no_verify_block": 34,
+      "operator_surface_verify": 2091,
+      "pr_create_guard": 35,
+      "project_create": 50,
+      "recent_memory_check": 2099,
+      "scan_client_artifact": 94,
+      "session_report": 3442,
+      "session_shard": 7969,
+      "verify_first": 8728,
+      "wip_ceiling": 1557,
+      "worktree_create_guard": 32
+    }
+  },
+  "responsibleAiCoverage": {
+    "complianceCoverage": {
+      "eu_ai_act": 292,
+      "gdpr": 452,
+      "soc2": 102,
+      "ferpa": 250
+    },
+    "approvalSurfaces": {
+      "hooks_that_gate": 20,
+      "approval_grep_estate": 54
+    },
+    "rlsMigrations": 0,
+    "llmProviders": {
+      "anthropic": 659,
+      "openai": 140,
+      "google": 58
+    },
+    "auditTrailRefs": 1310
   },
   "coreSubstrates": {
     "orchestrator": {

@@ -93,6 +93,36 @@ export type EstateStats = {
     secretReferences: number;
   };
 
+  substrateObservability: {
+    worktreesAuthoritative: number;      // git worktree list, sum across estate
+    worktreesWipHookVisible: number;     // what the WIP-ceiling hook reports
+    worktreesHookBlindspot: number;      // authoritative - hook-visible
+    skillsGlobal: number;                // ~/.claude/skills
+    skillsPerRepo: Record<string, number>;  // <repo>/.claude/skills
+    skillsPluginMarketplace: number;     // ~/.claude/plugins/**/skills
+    skillsUniqueAcrossEstate: number;    // unique names across every source
+    ghaWorkflowsTotal: number;           // .github/workflows/*.yml across estate
+    ghaWorkflowsByRepo: Record<string, number>;
+    sessionShardsActive: number;         // ~/.claude/state/session_shards/*.json
+    sessionMtimesCount: number;          // session_reports/*.md total
+    concurrentSessionPeaks: {
+      window_30min: number;
+      window_60min: number;
+      window_24hour: number;
+    };
+    hookFiresTotal: number;              // sum of all hook log lines
+    hookFiresByLog: Record<string, number>;
+  };
+  responsibleAiCoverage: {
+    complianceCoverage: Record<string, number>;  // eu_ai_act / gdpr / soc2 / ferpa → doc count
+    approvalSurfaces: {
+      hooks_that_gate: number;
+      approval_grep_estate: number;
+    };
+    rlsMigrations: number;
+    llmProviders: Record<string, number>;
+    auditTrailRefs: number;
+  };
   coreSubstrates: {
     orchestrator: {
       linesOfCode: number;

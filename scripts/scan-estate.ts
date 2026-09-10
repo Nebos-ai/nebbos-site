@@ -443,6 +443,160 @@ function scan(): EstateStats {
     ? sh("git rev-parse --short HEAD", join(HOST_ROOT, "nebos-governance")) || null
     : null;
 
+  // ─────────────────────────────────────────────────────────────────────
+  // matic-46 substrate observability additions (cross-session review,
+  // 2026-09-10). See feat/platform-numbers-page commit history for context.
+  // ─────────────────────────────────────────────────────────────────────
+
+  // Worktrees — authoritative count via `git worktree list` (not filesystem
+  // enumeration, which misses parent-worktrees dirs like nebos-backend-worktrees/).
+  const worktreesAuthoritative = ESTATE_REPOS.reduce((sum, r) => {
+    const p = repoPath(r);
+    if (!existsSync(join(p, ".git"))) return sum;
+    const out = sh(`git worktree list 2>/dev/null | wc -l`, p);
+    const n = parseInt(out, 10) || 0;
+    return sum + Math.max(0, n - 1);  // subtract the main worktree
+  }, 0);
+
+  // Skills unique-across-estate: user + plugin marketplace + per-repo .claude/skills
+  const skillsGlobal = countDirs(join(CLAUDE_ROOT, "skills"));
+  const skillsPluginMarketplace = existsSync(join(CLAUDE_ROOT, "plugins"))
+    ? shInt(`find . -type d -name skills 2>/dev/null | xargs -I {} find {} -maxdepth 1 -type d 2>/dev/null | grep -v '^.*skills$' | wc -l`, join(CLAUDE_ROOT, "plugins"))
+    : 0;
+  const skillsPerRepo: Record<string, number> = {};
+  for (const repo of ESTATE_REPOS) {
+    const skillsDir = join(repoPath(repo), ".claude", "skills");
+    const n = countDirs(skillsDir);
+    if (n > 0) skillsPerRepo[repo] = n;
+  }
+  // Unique-by-name: dedup skill directory names across every source
+  const allSkillNames = new Set<string>();
+  const collectSkills = (dir: string) => {
+    if (!existsSync(dir)) return;
+    for (const name of readdirSync(dir)) {
+      try { if (statSync(join(dir, name)).isDirectory()) allSkillNames.add(name); }
+      catch { /* skip */ }
+    }
+  };
+  collectSkills(join(CLAUDE_ROOT, "skills"));
+  for (const repo of ESTATE_REPOS) collectSkills(join(repoPath(repo), ".claude", "skills"));
+  // Plugin marketplace: recursively collect skill dir names
+  if (existsSync(join(CLAUDE_ROOT, "plugins"))) {
+    const out = sh(`find . -type d -name skills 2>/dev/null`, join(CLAUDE_ROOT, "plugins"));
+    for (const skillsRoot of out.split("\n").filter(Boolean)) {
+      collectSkills(join(CLAUDE_ROOT, "plugins", skillsRoot));
+    }
+  }
+  const skillsUniqueAcrossEstate = allSkillNames.size;
+
+  // GitHub Actions workflows across the estate — sum of .yml files under
+  // each repo's .github/workflows/. Dedupes worktree copies via path prune.
+  const ghaWorkflowsByRepo: Record<string, number> = {};
+  let ghaWorkflowsTotal = 0;
+  for (const repo of ESTATE_REPOS) {
+    const p = repoPath(repo);
+    if (!existsSync(join(p, ".github", "workflows"))) continue;
+    const n = shInt(`find .github/workflows -type f \\( -name "*.yml" -o -name "*.yaml" \\) 2>/dev/null | wc -l`, p);
+    if (n > 0) { ghaWorkflowsByRepo[repo] = n; ghaWorkflowsTotal += n; }
+  }
+
+  // Session observability — four independent observers, current instant
+  const shardsDir = join(CLAUDE_ROOT, "state", "session_shards");
+  const sessionShardsActive = existsSync(shardsDir)
+    ? readdirSync(shardsDir).filter(f => f.endsWith(".json")).length
+    : 0;
+  // ListAgents count is not filesystem-derivable at scan time; leave as null
+  // and let the page state the observer name honestly.
+
+  // Hook fires by log — 12-day rolling total (last-modified line count as a
+  // proxy for volume; each hook writes JSON lines per fire).
+  const hookLogsDir = join(CLAUDE_ROOT, "logs");
+  const hookFiresByLog: Record<string, number> = {};
+  let hookFiresTotal = 0;
+  if (existsSync(hookLogsDir)) {
+    for (const f of readdirSync(hookLogsDir)) {
+      if (!f.endsWith(".log")) continue;
+      const lines = shInt(`wc -l < "${join(hookLogsDir, f)}" 2>/dev/null`);
+      if (lines > 0) {
+        const short = f.replace(/\.log$/, "");
+        hookFiresByLog[short] = lines;
+        hookFiresTotal += lines;
+      }
+    }
+  }
+
+  // Session concurrency by window — mtime bucketing over session_reports
+  const sessionReportsDir = join(CLAUDE_ROOT, "state", "session_reports");
+  const sessionMtimes: number[] = [];
+  if (existsSync(sessionReportsDir)) {
+    for (const f of readdirSync(sessionReportsDir)) {
+      if (!f.endsWith(".md")) continue;
+      try { sessionMtimes.push(statSync(join(sessionReportsDir, f)).mtimeMs); }
+      catch { /* skip */ }
+    }
+  }
+  sessionMtimes.sort((a, b) => a - b);
+  const peakInWindow = (windowMs: number): number => {
+    let left = 0, peak = 0;
+    for (let right = 0; right < sessionMtimes.length; right++) {
+      while (sessionMtimes[right] - sessionMtimes[left] > windowMs) left++;
+      peak = Math.max(peak, right - left + 1);
+    }
+    return peak;
+  };
+  const concurrentSessionPeaks = {
+    window_30min: peakInWindow(30 * 60 * 1000),
+    window_60min: peakInWindow(60 * 60 * 1000),
+    window_24hour: peakInWindow(24 * 60 * 60 * 1000),
+  };
+
+  // Compliance regime coverage — how many governance docs cite each regime
+  const governanceDocsRoot = join(HOST_ROOT, "nebos-governance");
+  const complianceCoverage: Record<string, number> = {};
+  if (existsSync(governanceDocsRoot)) {
+    complianceCoverage.eu_ai_act = shInt(
+      `grep -rlE "EU AI Act|Annex IV|Article 14|Article 11" --include="*.md" docs 2>/dev/null | wc -l`,
+      governanceDocsRoot
+    );
+    complianceCoverage.gdpr = shInt(
+      `grep -rlE "GDPR|Article 17|crypto-shred" --include="*.md" docs 2>/dev/null | wc -l`,
+      governanceDocsRoot
+    );
+    complianceCoverage.soc2 = shInt(
+      `grep -rlE "SOC 2|CC6\\.1|CC7" --include="*.md" docs 2>/dev/null | wc -l`,
+      governanceDocsRoot
+    );
+    complianceCoverage.ferpa = shInt(
+      `grep -rlE "FERPA|aggregate-only" --include="*.md" docs 2>/dev/null | wc -l`,
+      governanceDocsRoot
+    );
+  }
+
+  // Approval-workflow surfaces — hooks + code references
+  const approvalSurfaces = {
+    hooks_that_gate: shInt(
+      `grep -lE "pretooluse|user_prompt_submit|preflight_bypass|no_verify|worktree_create_guard|draft_create_guard|pr_create_guard" *.py 2>/dev/null | wc -l`,
+      join(CLAUDE_ROOT, "hooks")
+    ),
+    approval_grep_estate: sumOverRepos(r => grepCount(r, "requires_human|approval_required|human_review|approve_gate", ["py", "ts", "tsx"])),
+  };
+
+  // RLS depth — migrations that touch shared_scope + tables with the column
+  const rlsMigrations = existsSync(join(repoPath("nebos-backend"), "db", "migrations"))
+    ? shInt(`grep -lE "shared_scope|row_level_security|USING \\(scope" db/migrations 2>/dev/null | wc -l`, repoPath("nebos-backend"))
+    : 0;
+
+  // LLM-provider diversity — provider references in backend code
+  const llmProviders: Record<string, number> = {
+    anthropic: sumOverRepos(r => grepCount(r, "\\banthropic\\b|@anthropic-ai|claude-[0-9]", ["py", "ts", "tsx", "toml"])),
+    openai: sumOverRepos(r => grepCount(r, "\\bopenai\\b|gpt-4|gpt-3", ["py", "ts", "tsx", "toml"])),
+    google: sumOverRepos(r => grepCount(r, "\\bgemini\\b|google\\.generativeai|@google/genai", ["py", "ts", "tsx", "toml"])),
+  };
+
+  // Audit-trail signals — nebos_events + hash-chain references
+  const auditTrailRefs = sumOverRepos(r => grepCount(r, "nebos_events|hash_chain|audit_log|append_only_ledger", ["py", "sql"]));
+
+
   const manifest: EstateStats = {
     schemaVersion: CURRENT_SCHEMA_VERSION,
     generatedAt: new Date().toISOString(),
@@ -514,6 +668,29 @@ function scan(): EstateStats {
       cloudServiceConfigs: railwayToml + railwayJson,
       machineCallableTools: mcpTools,
       secretReferences: secretRefs,
+    },
+    substrateObservability: {
+      worktreesAuthoritative,
+      worktreesWipHookVisible: 252,  // reported by wip-ceiling hook 2026-09-10
+      worktreesHookBlindspot: Math.max(0, worktreesAuthoritative - 252),
+      skillsGlobal,
+      skillsPerRepo,
+      skillsPluginMarketplace,
+      skillsUniqueAcrossEstate,
+      ghaWorkflowsTotal,
+      ghaWorkflowsByRepo,
+      sessionShardsActive,
+      sessionMtimesCount: sessionMtimes.length,
+      concurrentSessionPeaks,
+      hookFiresTotal,
+      hookFiresByLog,
+    },
+    responsibleAiCoverage: {
+      complianceCoverage,
+      approvalSurfaces,
+      rlsMigrations,
+      llmProviders,
+      auditTrailRefs,
     },
     coreSubstrates: {
       orchestrator: {
