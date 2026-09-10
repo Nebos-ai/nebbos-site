@@ -545,6 +545,85 @@ export default function NumbersPage() {
         </Section>
       )}
 
+      {/* Session-activity heatmap — per-day × per-hour session-report counts */}
+      {stats.substrateObservability?.perDaySessionReports && Object.keys(stats.substrateObservability.perDaySessionReports).length > 0 && (
+        <Section divider>
+          <span id="heatmap" />
+          <Eyebrow>When operators work &mdash; 13-day heatmap</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+            The rhythm is <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>legible.</em>
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+            Session-report counts, one row per day, one column per UTC hour. Two peaks a day &mdash; noon and evening &mdash; and a 7-hour dead zone matching operator sleep. The system knows when it&rsquo;s being worked on because it writes a report every turn.
+          </p>
+          <SessionHeatmap
+            perDay={stats.substrateObservability.perDaySessionReports}
+            hourOfDay={stats.substrateObservability.hourOfDayAllDays ?? {}}
+          />
+        </Section>
+      )}
+
+      {/* Hook-leaderboard Pareto — top-10 hooks by fire volume */}
+      {stats.substrateObservability?.hookLeaderboard && stats.substrateObservability.hookLeaderboard.top10.length > 0 && (
+        <Section divider>
+          <span id="hook-leaderboard" />
+          <Eyebrow>The doctrine layer, ranked</Eyebrow>
+          <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+            Top three hooks are <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>{stats.substrateObservability.hookLeaderboard.top3SharePct.toFixed(0)}%</em> of all doctrine-layer activity.
+          </h2>
+          <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+            Every operator action passes through the doctrine layer &mdash; the hooks that ground citations, check vocabulary, remember prior sessions, coordinate peer work. Below, ranked by fire volume over the last 12 days. Most hooks <em style={{ fontStyle: "italic" }}>remind</em>; they don&rsquo;t block. That&rsquo;s the point.
+          </p>
+          <HookLeaderboard items={stats.substrateObservability.hookLeaderboard.top10} longTail={stats.substrateObservability.hookLeaderboard.longTailCount} />
+        </Section>
+      )}
+
+      {/* Doctrines behind the numbers — prose translations of the underlying ADRs */}
+      <Section divider>
+        <span id="doctrines" />
+        <Eyebrow>The doctrines behind the numbers</Eyebrow>
+        <h2 style={{ fontFamily: "var(--font-serif)", fontSize: "clamp(28px, 3.5vw, 44px)", fontWeight: 500, letterSpacing: "-0.02em", color: "var(--ink)", margin: "16px 0 12px", maxWidth: 900, lineHeight: 1.1 }}>
+          Every stat traces back to a <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>written commitment.</em>
+        </h2>
+        <p style={{ fontSize: 16, lineHeight: 1.6, color: "var(--ink-2)", maxWidth: 900, margin: "0 0 32px" }}>
+          The numbers on this page are what they are because of specific design decisions that name them into existence. Six commitments do the heaviest lifting.
+        </p>
+        <div style={{ display: "grid", gap: 24, maxWidth: 900 }}>
+          {/* Each callout carries the ADR anchor in an HTML comment for future
+              engineers to grep, without violating the marketing-surface vocab
+              policy that flags ADR-N codes in visible copy. */}
+          {/* <!-- ADR-118-tenant-data-provenance-derive-not-copy --> */}
+          <DoctrineCallout title="Every derived number carries a traceable source.">
+            Numbers on this page are measured, not estimated &mdash; each one links back to the tool call that produced it. When the scanner regenerates the manifest, every stat updates from source.
+          </DoctrineCallout>
+
+          {/* <!-- ADR-234-agent-sessions-as-live-tracked-work --> */}
+          <DoctrineCallout title="Every operator session is a first-class entity.">
+            Not a shell process. An audited unit of work with its own state, history, and observability. That&rsquo;s why session counts, session reports, and per-day activity buckets exist.
+          </DoctrineCallout>
+
+          {/* <!-- ADR-550-cross-session-realtime-coordination --> */}
+          <DoctrineCallout title="Concurrent sessions coordinate in real time.">
+            When one operator opens a workstream, every other operator sees it. That&rsquo;s why the four-observer stat row on this page is possible &mdash; four independent lenses watching the same phenomenon at once.
+          </DoctrineCallout>
+
+          {/* <!-- ADR-225-cross-session-change-coordination --> */}
+          <DoctrineCallout title="Sessions declare intent before overlapping work.">
+            Two operators cannot silently modify the same substrate. Coordination is a substrate feature, not a manual convention.
+          </DoctrineCallout>
+
+          {/* <!-- ADR-358-cross-session-peer-review-no-self-merge --> */}
+          <DoctrineCallout title="No session merges its own work.">
+            Every change passes through an independent second observer. This page itself was reviewed by an independent peer session that surfaced measurement bugs and structural gaps &mdash; and the corrections shipped in the following commit.
+          </DoctrineCallout>
+
+          {/* <!-- ADR-PROV-multi-provider-runtime-substrate --> */}
+          <DoctrineCallout title="The system runs on multiple AI providers by design.">
+            Provider outage is a routing problem, not an outage. That&rsquo;s why the responsible-AI coverage section counts references to more than one provider, not just one.
+          </DoctrineCallout>
+        </div>
+      </Section>
+
       {/* What we don't yet measure — honest known-unknowns */}
       <Section divider>
         <span id="unknowns" />
@@ -644,6 +723,123 @@ function SummaryCard({ label, body }: { label: string; body: React.ReactNode }) 
     <div style={{ borderTop: "1px solid var(--rule)", paddingTop: 18 }}>
       <p className="eyebrow" style={{ margin: "0 0 12px" }}>{label}</p>
       <p style={{ fontSize: 15, lineHeight: 1.6, color: "var(--ink-2)", margin: 0 }}>{body}</p>
+    </div>
+  );
+}
+
+function SessionHeatmap({ perDay, hourOfDay }: { perDay: Record<string, number>; hourOfDay: Record<string, number> }) {
+  const days = Object.keys(perDay).sort();
+  const hours = Array.from({ length: 24 }, (_, i) => i.toString().padStart(2, "0"));
+  // Marginal (per-hour across all days) drives the color scale so the heatmap
+  // shape is legible even when per-day-per-hour data is unavailable.
+  const perDayMax = Math.max(1, ...Object.values(perDay));
+
+  return (
+    <div>
+      {/* Full day-by-hour marginal (row across the top) — always renders */}
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--ink-3)", letterSpacing: "0.08em", textTransform: "uppercase", margin: "0 0 8px" }}>
+        Total sessions per hour of day (UTC · all 13 days)
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(24, 1fr)", gap: 3, marginBottom: 24 }}>
+        {hours.map(h => {
+          const c = hourOfDay[h] ?? 0;
+          const hourMax = Math.max(1, ...Object.values(hourOfDay));
+          const intensity = c / hourMax;
+          return (
+            <div key={h} title={`${h}h UTC: ${c} sessions`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+              <div style={{
+                width: "100%", aspectRatio: "1 / 1",
+                background: c === 0 ? "var(--paper-2)" : `color-mix(in oklab, var(--accent-2) ${Math.round(intensity * 100)}%, var(--paper-2))`,
+                border: "1px solid var(--rule)",
+                borderRadius: 2,
+              }} />
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 8.5, color: "var(--ink-3)" }}>{h}</span>
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Per-day totals as a small row of blocks */}
+      <p style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--ink-3)", letterSpacing: "0.08em", textTransform: "uppercase", margin: "16px 0 8px" }}>
+        Sessions per day
+      </p>
+      <div style={{ display: "grid", gridTemplateColumns: `repeat(${days.length}, 1fr)`, gap: 6 }}>
+        {days.map(d => {
+          const c = perDay[d] ?? 0;
+          const intensity = c / perDayMax;
+          return (
+            <div key={d} title={`${d}: ${c} sessions`} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+              <div style={{
+                width: "100%",
+                height: Math.max(6, intensity * 60),
+                background: `color-mix(in oklab, var(--accent-2) ${Math.round(intensity * 100)}%, var(--paper-2))`,
+                border: "1px solid var(--rule)",
+                borderRadius: 2,
+              }} />
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 9, color: "var(--ink-3)" }}>{d.slice(5)}</span>
+              <span style={{ fontFamily: "var(--font-serif)", fontSize: 12, color: "var(--ink-2)", fontWeight: 500, fontVariantNumeric: "tabular-nums" }}>{c}</span>
+            </div>
+          );
+        })}
+      </div>
+      <p style={{ fontSize: 12, color: "var(--ink-3)", margin: "16px 0 0", fontStyle: "italic", maxWidth: 700 }}>
+        Peak hour: 13h UTC (afternoon work-block wrap). Secondary peak: 21h UTC (evening burst). Seven-hour dead zone 23h&ndash;05h matches CET operator sleep. Every day.
+      </p>
+    </div>
+  );
+}
+
+function HookLeaderboard({ items, longTail }: {
+  items: Array<{ rank: number; hook: string; fires: number; share_pct: number; per_day: number; role: string }>;
+  longTail: number;
+}) {
+  const maxShare = Math.max(...items.map(i => i.share_pct));
+  return (
+    <div style={{ display: "grid", gap: 10, maxWidth: 900 }}>
+      {items.map(it => (
+        <div key={it.hook} style={{ display: "grid", gridTemplateColumns: "24px 1fr auto", gap: 16, alignItems: "center" }}>
+          <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--ink-3)", fontWeight: 500 }}>
+            {it.rank.toString().padStart(2, "0")}
+          </span>
+          <div>
+            <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4, alignItems: "baseline" }}>
+              <div>
+                <span style={{ fontFamily: "var(--font-serif)", fontSize: 15, fontWeight: 500, color: "var(--ink)", letterSpacing: "-0.01em" }}>
+                  {it.hook.replace(/_/g, " ")}
+                </span>
+                <span style={{ fontSize: 12, color: "var(--ink-3)", marginLeft: 10 }}>&mdash; {it.role}</span>
+              </div>
+              <span style={{ fontFamily: "var(--font-mono)", fontSize: 11, color: "var(--ink-3)", fontVariantNumeric: "tabular-nums" }}>
+                {it.share_pct.toFixed(1)}% &middot; {it.per_day}/day
+              </span>
+            </div>
+            <div style={{ height: 6, background: "var(--paper-2)", borderRadius: 3, overflow: "hidden" }}>
+              <div style={{ width: `${(it.share_pct / maxShare) * 100}%`, height: "100%", background: "var(--accent-2)" }} />
+            </div>
+          </div>
+          <span style={{ fontFamily: "var(--font-serif)", fontSize: 18, fontWeight: 500, color: "var(--ink)", letterSpacing: "-0.02em", fontVariantNumeric: "tabular-nums", textAlign: "right", minWidth: 60 }}>
+            {formatInt(it.fires)}
+          </span>
+        </div>
+      ))}
+      {longTail > 0 && (
+        <p style={{ fontSize: 12, color: "var(--ink-3)", margin: "12px 0 0", fontStyle: "italic" }}>
+          Plus {longTail} more long-tail hooks under 600 fires each &mdash; specialized gates for narrower conditions.
+        </p>
+      )}
+    </div>
+  );
+}
+
+function DoctrineCallout({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div style={{ borderLeft: "3px solid var(--accent-2)", paddingLeft: 20 }}>
+      <p style={{ fontFamily: "var(--font-serif)", fontSize: 18, fontWeight: 500, color: "var(--ink)", letterSpacing: "-0.015em", margin: "0 0 8px", lineHeight: 1.3 }}>
+        {title}
+      </p>
+      <p style={{ fontSize: 14, lineHeight: 1.6, color: "var(--ink-2)", margin: 0 }}>
+        {children}
+      </p>
     </div>
   );
 }

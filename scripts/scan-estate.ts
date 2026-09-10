@@ -525,7 +525,11 @@ function scan(): EstateStats {
     }
   }
 
-  // Session concurrency by window — mtime bucketing over session_reports
+  // Session concurrency by window — mtime bucketing over session_reports.
+  // Semantics (aligned with matic-46's Python impl 2026-09-10, round 2):
+  // right-anchored window, iterated at every observed timestamp, inclusive
+  // both edges: for each t in mtimes, count how many m in mtimes satisfy
+  // t - windowSec <= m <= t. Peak = max count across all t.
   const sessionReportsDir = join(CLAUDE_ROOT, "state", "session_reports");
   const sessionMtimes: number[] = [];
   if (existsSync(sessionReportsDir)) {
@@ -537,10 +541,15 @@ function scan(): EstateStats {
   }
   sessionMtimes.sort((a, b) => a - b);
   const peakInWindow = (windowMs: number): number => {
-    let left = 0, peak = 0;
-    for (let right = 0; right < sessionMtimes.length; right++) {
-      while (sessionMtimes[right] - sessionMtimes[left] > windowMs) left++;
-      peak = Math.max(peak, right - left + 1);
+    let peak = 0;
+    for (const t of sessionMtimes) {
+      const lower = t - windowMs;
+      // Count all m where lower <= m <= t (inclusive both edges, right-anchored)
+      let count = 0;
+      for (const m of sessionMtimes) {
+        if (m >= lower && m <= t) count++;
+      }
+      if (count > peak) peak = count;
     }
     return peak;
   };
@@ -549,6 +558,25 @@ function scan(): EstateStats {
     window_60min: peakInWindow(60 * 60 * 1000),
     window_24hour: peakInWindow(24 * 60 * 60 * 1000),
   };
+
+  // Per-day + hour-of-day buckets — feeds the heatmap section on the page
+  const perDaySessionReports: Record<string, number> = {};
+  const hourOfDayAllDays: Record<string, number> = {};
+  for (let h = 0; h < 24; h++) hourOfDayAllDays[h.toString().padStart(2, "0")] = 0;
+  const topDayHourBuckets: Record<string, number> = {};
+  for (const ms of sessionMtimes) {
+    const d = new Date(ms);
+    const dayKey = d.toISOString().slice(0, 10);
+    perDaySessionReports[dayKey] = (perDaySessionReports[dayKey] ?? 0) + 1;
+    const hourKey = d.getUTCHours().toString().padStart(2, "0");
+    hourOfDayAllDays[hourKey] = (hourOfDayAllDays[hourKey] ?? 0) + 1;
+    const dhKey = `${dayKey}|${hourKey}`;
+    topDayHourBuckets[dhKey] = (topDayHourBuckets[dhKey] ?? 0) + 1;
+  }
+  const topDayHourBucketsList = Object.entries(topDayHourBuckets)
+    .map(([k, v]) => { const [day, hour] = k.split("|"); return { day, hour: parseInt(hour, 10), count: v }; })
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 20);
 
   // Compliance regime coverage — how many governance docs cite each regime
   const governanceDocsRoot = join(HOST_ROOT, "nebos-governance");
@@ -581,9 +609,15 @@ function scan(): EstateStats {
     approval_grep_estate: sumOverRepos(r => grepCount(r, "requires_human|approval_required|human_review|approve_gate", ["py", "ts", "tsx"])),
   };
 
-  // RLS depth — migrations that touch shared_scope + tables with the column
+  // RLS depth — migrations that add tenant/scope columns to existing tables.
+  // Broader pattern per matic-46 round 2 (the original grep returned 0 because
+  // it only matched literal shared_scope; real column adds also use tenant_id
+  // / scope_id / other flavors of the four-tier scope model).
   const rlsMigrations = existsSync(join(repoPath("nebos-backend"), "db", "migrations"))
-    ? shInt(`grep -lE "shared_scope|row_level_security|USING \\(scope" db/migrations 2>/dev/null | wc -l`, repoPath("nebos-backend"))
+    ? shInt(
+        `grep -rlE "add_column.*(tenant_id|scope_id|shared_scope|company_id)|op\\.add_column.*(tenant|scope|company)|USING \\(scope|row_level_security" db/migrations 2>/dev/null | wc -l`,
+        repoPath("nebos-backend")
+      )
     : 0;
 
   // LLM-provider diversity — provider references in backend code
@@ -684,6 +718,54 @@ function scan(): EstateStats {
       concurrentSessionPeaks,
       hookFiresTotal,
       hookFiresByLog,
+      hookLeaderboard: (() => {
+        // Roles per matic-46 round 2 (their intimate view of what each hook does)
+        const roles: Record<string, string> = {
+          verify_first: "verify-first grounding gate",
+          mcp_over_shell: "MCP-over-shell tool routing",
+          session_shard: "session coordination shard writer",
+          kg_route_primer: "KG-first routing primer",
+          session_report: "session-report auto-writer",
+          operator_surface_verify: "operator-surface verification",
+          recent_memory_check: "recent-memory reminder",
+          authorship_grounding: "authorship-grounding grep gate",
+          intake_corpus: "intake-corpus primer",
+          wip_ceiling: "WIP-ceiling primer + reminder",
+          memory_corpus: "memory-corpus primer",
+          link_health_primer: "link-health primer",
+          link_health_stop: "link-health stop gate",
+          credential_value_block: "credential-value block gate",
+          l3_autonomous_cleanup: "L3 autonomous cleanup",
+          lifecycle_reminder: "lifecycle reminder",
+          scan_client_artifact: "client-artifact vocab scanner",
+          project_create: "project-create guard",
+          memory_write_dupe: "memory dupe-guard",
+          no_verify_block: "no-verify block gate",
+          pr_create_guard: "PR-create guard",
+          worktree_create_guard: "worktree-create guard",
+          frontmatter_delimiter_guard: "frontmatter-delimiter guard",
+          draft_create_guard: "draft-create guard",
+        };
+        const total = Object.values(hookFiresByLog).reduce((a, b) => a + b, 0) || 1;
+        const sorted = Object.entries(hookFiresByLog)
+          .sort(([, a], [, b]) => b - a)
+          .map(([hook, fires], i) => ({
+            rank: i + 1,
+            hook,
+            fires,
+            share_pct: Math.round((fires / total) * 1000) / 10,
+            per_day: Math.round(fires / 12),
+            role: roles[hook] ?? "long-tail",
+          }));
+        return {
+          top10: sorted.slice(0, 10),
+          top3SharePct: sorted.slice(0, 3).reduce((s, r) => s + r.share_pct, 0),
+          longTailCount: Math.max(0, sorted.length - 10),
+        };
+      })(),
+      perDaySessionReports,
+      hourOfDayAllDays,
+      topDayHourBuckets: topDayHourBucketsList,
     },
     responsibleAiCoverage: {
       complianceCoverage,

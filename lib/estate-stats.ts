@@ -112,6 +112,14 @@ export type EstateStats = {
     };
     hookFiresTotal: number;              // sum of all hook log lines
     hookFiresByLog: Record<string, number>;
+    hookLeaderboard?: {
+      top10: Array<{ rank: number; hook: string; fires: number; share_pct: number; per_day: number; role: string }>;
+      top3SharePct: number;
+      longTailCount: number;
+    };
+    perDaySessionReports?: Record<string, number>;   // YYYY-MM-DD → count
+    hourOfDayAllDays?: Record<string, number>;       // "00".."23" → count
+    topDayHourBuckets?: Array<{ day: string; hour: number; count: number }>;
   };
   responsibleAiCoverage: {
     complianceCoverage: Record<string, number>;  // eu_ai_act / gdpr / soc2 / ferpa → doc count
