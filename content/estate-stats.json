@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0.0",
-  "generatedAt": "2026-09-10T11:14:24.738Z",
+  "generatedAt": "2026-09-10T11:44:35.914Z",
   "generator": {
     "script": "scripts/scan-estate.ts",
     "gitSha": "1b64afbd",
@@ -8,18 +8,18 @@
     "hostRoot": "/Users/matic/code"
   },
   "scale": {
-    "linesOfCodeTotal": 2492436,
+    "linesOfCodeTotal": 2493278,
     "linesOfCodeByLanguage": {
       "python": 1088918,
-      "typescript": 1057242,
+      "typescript": 1058084,
       "javascript": 17383,
       "markdown": 244040,
       "html/css": 81721,
       "sql": 3132
     },
-    "sourceFilesTotal": 33670,
+    "sourceFilesTotal": 33678,
     "reposTotal": 20,
-    "commitsTotal": 4895
+    "commitsTotal": 4896
   },
   "depth": {
     "pythonCallablesTotal": 39250,
@@ -29,11 +29,11 @@
     "typescriptExportsTotal": 6494,
     "typescriptExportFunctions": 6425,
     "typescriptExportArrowConsts": 69,
-    "testCasesTotal": 37436,
-    "testCasesTs": 25311,
+    "testCasesTotal": 37429,
+    "testCasesTs": 25304,
     "testCasesPython": 12125,
-    "testFilesTotal": 3963,
-    "testFilesTs": 2214,
+    "testFilesTotal": 3962,
+    "testFilesTs": 2213,
     "testFilesPython": 1749,
     "dbTables": 292,
     "dbMigrationsTotal": 531,
@@ -54,14 +54,14 @@
   "selfObservation": {
     "skills": 21,
     "enforcementHooks": 61,
-    "doctrineMemories": 507,
-    "feedbackMemories": 326,
+    "doctrineMemories": 508,
+    "feedbackMemories": 327,
     "sessionReports": 93
   },
   "velocity": {
-    "commitsLast7Days": 306,
-    "commitsLast30Days": 1022,
-    "activeWorktrees": 230
+    "commitsLast7Days": 307,
+    "commitsLast30Days": 1023,
+    "activeWorktrees": 231
   },
   "productSurface": {
     "reactComponentsTotal": 2017,
@@ -69,7 +69,7 @@
     "uiPackageModules": 28,
     "uiComposites": 11,
     "uiPrimitives": 17,
-    "designTokens": 42001
+    "designTokens": 444
   },
   "infrastructure": {
     "containerImages": 10,
