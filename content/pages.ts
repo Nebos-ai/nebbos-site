@@ -204,14 +204,14 @@ export const PAGES = {
   /* ═══════════════ DEMO ═════════════════════════════════════════════ */
   demo: {
     slug: "/demo",
-    title: "Book a demo · See a Pearl on your hardest department",
-    metaDescription: "See a Pearl on your hardest department. Live in days, not quarters.",
+    title: "Book a demo · See a Pearl on your hardest domain",
+    metaDescription: "See a Pearl on your hardest domain. Live in days, not quarters.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · Book a demo",
-        h1: "See a Pearl on your hardest department.",
+        h1: "See a Pearl on your hardest domain.",
         deck: "Thirty minutes. We show you a Pearl reading the signal your work emits, predicting what&rsquo;s about to go wrong, explaining why, and acting under your approval.",
       },
       {
@@ -220,10 +220,10 @@ export const PAGES = {
         eyebrow: "01 · What we&rsquo;ll cover",
         h2: "The thirty minutes.",
         items: [
-          { title: "Which of your departments is the highest-leverage candidate" },
-          { title: "The specific signals a Pearl for that department would ingest" },
+          { title: "Which of your domains is the highest-leverage candidate" },
+          { title: "The specific signals a Pearl for that domain would ingest" },
           { title: "How approval gates and audit trails fit your compliance shape" },
-          { title: "Time-to-live and priced shape for a two-department pilot" },
+          { title: "Time-to-live and priced shape for a two-domain pilot" },
         ],
       },
       {
