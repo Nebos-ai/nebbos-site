@@ -85,7 +85,7 @@ export function HomeStory() {
           >
             One{" "}
             <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-              operating system.
+              run layer.
             </em>{" "}
             Three chapters of a working day.
           </h2>
