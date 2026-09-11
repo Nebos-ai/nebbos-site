@@ -115,13 +115,34 @@ def _download_video(client: genai.Client, video_obj, out_path: str) -> None:
     client.files.download(file=video_obj, download_path=out_path)
 
 
+def _resolve_gemini_key_from_keychain() -> str | None:
+    """macOS Keychain fallback (2026-09-05+ canonical store)."""
+    import subprocess
+    try:
+        proc = subprocess.run(
+            ["security", "find-generic-password", "-s", "GEMINI_API_KEY", "-w"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode == 0:
+            val = proc.stdout.rstrip("\n")
+            return val if val else None
+    except FileNotFoundError:
+        pass
+    return None
+
+
 def main() -> int:
-    api_key = os.getenv("GEMINI_API_KEY")
+    api_key = os.getenv("GEMINI_API_KEY") or _resolve_gemini_key_from_keychain()
     if not api_key:
-        print("[generate-hero-video] Missing GEMINI_API_KEY environment variable.", file=sys.stderr)
-        print("  Get a key at https://ai.google.dev/gemini-api then:", file=sys.stderr)
-        print('    export GEMINI_API_KEY="AIza…"', file=sys.stderr)
+        print("[generate-hero-video] Missing GEMINI_API_KEY (env + Keychain both empty).", file=sys.stderr)
+        print("  Canonical store (2026-09-05+): macOS Keychain, service=GEMINI_API_KEY.", file=sys.stderr)
+        print("  Store: security add-generic-password -a matic -s GEMINI_API_KEY -w '<value>' -U", file=sys.stderr)
+        print("  Get a key at https://ai.google.dev/gemini-api — DO NOT paste into chat.", file=sys.stderr)
         return 1
+    # genai.Client() reads GEMINI_API_KEY from env — export it if we sourced from Keychain
+    os.environ["GEMINI_API_KEY"] = api_key
 
     args = parse_args()
     client = genai.Client()  # picks up GEMINI_API_KEY from env

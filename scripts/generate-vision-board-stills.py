@@ -67,12 +67,13 @@ def load_config(path: str) -> dict:
 
 
 def resolve_gemini_key() -> str | None:
-    """Resolve GEMINI_API_KEY per the Pearl-level canonical-store discipline.
+    """Resolve GEMINI_API_KEY per the canonical-store discipline.
 
-    Order (per feedback_secrets_live_in_canonical_store_never_chat_history):
-      1. Environment variable (Claude Code auto-injects from settings.local.json;
-         other runtimes may set it manually)
-      2. Fallback: jq-read from ~/.claude/settings.local.json .env.GEMINI_API_KEY
+    Order (per feedback_secrets_live_in_canonical_store_never_chat_history +
+    2026-09-05 keychain migration — plaintext values no longer live in
+    settings.local.json):
+      1. Environment variable (may be set manually or by parent shell)
+      2. Fallback: macOS Keychain generic-password service "GEMINI_API_KEY"
       3. Return None → caller reports fatal + points at canonical location
 
     NEVER: prompt the user to paste it. NEVER: source it from chat scrollback.
@@ -81,25 +82,34 @@ def resolve_gemini_key() -> str | None:
     if env_val:
         return env_val
 
-    canonical = Path.home() / ".claude" / "settings.local.json"
-    if not canonical.exists():
-        return None
+    # Keychain fallback (macOS only). Value stays in memory — subprocess
+    # stdout is captured, not printed.
+    import subprocess
     try:
-        blob = json.loads(canonical.read_text())
-        val = blob.get("env", {}).get("GEMINI_API_KEY")
-        return val if val else None
-    except (json.JSONDecodeError, OSError):
-        return None
+        proc = subprocess.run(
+            ["security", "find-generic-password", "-s", "GEMINI_API_KEY", "-w"],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if proc.returncode == 0:
+            val = proc.stdout.rstrip("\n")
+            return val if val else None
+    except FileNotFoundError:
+        # `security` CLI missing (non-macOS host) — silently fall through
+        pass
+    return None
 
 
 def main() -> int:
     api_key = resolve_gemini_key()
     if not api_key:
         print("[fatal] GEMINI_API_KEY not found.", file=sys.stderr)
-        print("  Canonical store on this machine: ~/.claude/settings.local.json (.env.GEMINI_API_KEY)", file=sys.stderr)
-        print("  Retrieval: jq -r .env.GEMINI_API_KEY ~/.claude/settings.local.json", file=sys.stderr)
+        print("  Canonical store on this machine (2026-09-05+): macOS Keychain", file=sys.stderr)
+        print("  Presence check: security find-generic-password -s GEMINI_API_KEY -w >/dev/null 2>&1 && echo OK", file=sys.stderr)
+        print("  Store it: security add-generic-password -a matic -s GEMINI_API_KEY -w '<value>' -U", file=sys.stderr)
         print("  Get a key at https://ai.google.dev/gemini-api", file=sys.stderr)
-        print("  Store it in the canonical location — DO NOT paste into chat.", file=sys.stderr)
+        print("  DO NOT paste into chat or add to settings.local.json.", file=sys.stderr)
         return 1
     os.environ["GEMINI_API_KEY"] = api_key  # genai.Client() reads from env
 
