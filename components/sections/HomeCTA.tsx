@@ -26,7 +26,7 @@ export function HomeCTA() {
           <h2 id="cta-heading" className="cta-fullbleed__title">
             Put a Pearl on your{" "}
             <em className="cta-fullbleed__accent">hardest</em>{" "}
-            department.
+            domain.
           </h2>
           <p className="cta-fullbleed__deck">
             Live in days, not quarters. Owned by you, portable to you,
