@@ -6,13 +6,24 @@ import { useState, useEffect, useRef } from "react";
 import { primaryNav, secondaryNav, productTree } from "@/lib/nav";
 
 /**
- * SiteHeader · v3 · 2026-08-24 (dark-chrome rebuild)
+ * SiteHeader · v4 · 2026-09-12 (flower-of-life-only identity)
  *
- * Founder direction 2026-08-24: header is always DARK. Nebbos mark +
- * wordmark are always the WHITE variants (never orange, never dark on
- * dark). No scroll-elevation crossfade — the chrome is a constant.
+ * Founder direction 2026-09-12: the flower of life is the Nebbos.ai
+ * identity; the wordmark is the Nebbos Technologies identity. The two
+ * sites serve different audiences and get different marks. This site
+ * (nebbos.ai) drops the wordmark from the header — the flower-of-life
+ * mark stands alone as the singular visual identity, echoed throughout
+ * the product register (CountCircles.tsx renders the same 19-ring
+ * geometry for numeric callouts).
  *
- * Left: mark + wordmark (both white). Center: primary nav (white text).
+ * v3 (2026-08-24): dark-chrome + mark + wordmark side-by-side.
+ * v4 (2026-09-12): dark-chrome + flower-of-life mark only.
+ *
+ * Layout: header is DARK, mark is the WHITE variant (never orange,
+ * never dark on dark). No scroll-elevation crossfade — the chrome is a
+ * constant.
+ *
+ * Left: flower-of-life mark alone. Center: primary nav (white text).
  * Right: secondary nav (paper CTA button on the ink background). Mobile:
  * hamburger opens full-screen dark drawer. Mega-menu drops down onto
  * paper for contrast against the ink chrome.
@@ -67,15 +78,6 @@ export function SiteHeader() {
             height={41}
             priority
             className="site-header__mark"
-          />
-          <Image
-            src="/nebbos-wordmark-white.svg"
-            alt=""
-            aria-hidden="true"
-            width={132}
-            height={25}
-            priority
-            className="site-header__wordmark"
           />
         </Link>
 
