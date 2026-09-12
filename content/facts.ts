@@ -29,8 +29,8 @@ export const FACTS = {
   /** Public product line. */
   productLine: [
     "Nebbos (company-brain operating system)",
-    "Pearl (per-department brain — Nebbos General [Domain], tuned by use)",
-    "Shell (per-department container that holds a Pearl)",
+    "Pearl (per-domain brain — Nebbos General [Domain], tuned by use)",
+    "Shell (per-domain container that holds a Pearl)",
     "Cradle (customer&rsquo;s owned memory · portable when you leave)",
   ] as const,
 } as const;

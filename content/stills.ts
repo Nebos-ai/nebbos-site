@@ -42,7 +42,7 @@ export const SCENES: Record<SceneId, Scene> = {
     narrative:
       "A young woman takes her coffee by the window. Outside, city workers place a sapling into the sidewalk. It's early. The tree will grow. The company she works for is being built the same way — decision by decision, quietly compounding underneath.",
     techNarrative:
-      "While she looks out, Nebbos is holding the substrate her operation runs on — the typed rows of every fact her company knows, the identity of every human and Pearl that will act on those facts, the shape of every department that will need coverage. The signal begins entering: messaging, calendar, source-control, HR, CRM. Every raw event is landing in an append-only log before anything else touches it. This is the foundation. This is where it starts.",
+      "While she looks out, Nebbos is holding the substrate her operation runs on — the typed rows of every fact her company knows, the identity of every human and Pearl that will act on those facts, the shape of every domain that will need coverage. The signal begins entering: messaging, calendar, source-control, HR, CRM. Every raw event is landing in an append-only log before anything else touches it. This is the foundation. This is where it starts.",
     bands: [1, 2],
     variants: [1, 2, 3, 4],
   },
