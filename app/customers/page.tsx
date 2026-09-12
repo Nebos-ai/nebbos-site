@@ -5,34 +5,27 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Nebbos ships case studies when the engagement is ready to share publicly — numbers verified, client sign-off in hand.",
+    "Nebbos is running today inside school districts across multiple U.S. states. Case studies land here as each district signs off publicly.",
 };
 
 /**
- * /customers · 2026-09-12 revision · coming-soon state
+ * /customers · 2026-09-12 revision 2 · in-production framing
  *
- * Prior version (pre-2026-09-12) rendered fictional customer case studies
- * (Northbridge School Network + Riverside Unified District) from
- * content/customers/*.mdx and claimed "enterprises running Nebbos on their
- * hardest departments — finance, operations, people, care, manufacturing,
- * financial services, civic case management" in the hero — implying
- * multi-vertical customer coverage we don't have.
+ * PR #23 (2026-09-12) replaced the fictional customer MDX with a pure
+ * coming-soon page. This revision adds the specific true claim the
+ * founder confirmed: Nebbos is deployed today inside school districts
+ * across multiple U.S. states, running district operations / coverage /
+ * compliance.
  *
- * Per founder directive 2026-09-12: "only have the right specific
- * information on this sites not made up work". The fictional MDX moved to
- * content/_archive/customers-fictional-drafts/ (additive-only per doctrine
- * feedback_governance_additive_only_never_delete_disable_ignore). This
- * route now renders a coming-soon page: no fake customer claims, no
- * hypothetical logos, no plausible-example testimonials.
+ * No specific district names (client sign-off pending). No specific
+ * numbers not yet publicly shareable. Coming-soon still applies to the
+ * per-case-study writeups.
  *
- * When the first real customer story is ready to share publicly (numbers
- * verified, client sign-off in hand), it lands here. Until then this page
- * says so honestly and routes visitors to the platform overview or the
- * demo form.
- *
- * The MDX-reading logic (fs / path / gray-matter) is removed from this
- * file; app/customers/[slug]/page.tsx retains its dynamic renderer for
- * when future MDX lands under content/customers/.
+ * Prior version's coming-soon framing is superseded by this in-
+ * production framing per founder directive 2026-09-12: "We want to say
+ * that nebbos is being used by school districts across multiple states."
+ * The prior version is preserved via git history on the branch
+ * fix/no-fake-customers-coming-soon-2026-09-12 (merged as PR #23).
  */
 
 export default function CustomersIndexPage() {
@@ -44,20 +37,21 @@ export default function CustomersIndexPage() {
         scrim="bottom"
         vignetteStrength={0.5}
         chapter="00"
-        chapterLabel="Coming soon"
+        chapterLabel="In production"
         priority
       >
         <div className="container hero-fullbleed__inner">
           <div className="hero-fullbleed__frame">
             <h1 className="hero-fullbleed__title">
-              The first case study lands soon.
+              Running in school districts across multiple states.
             </h1>
             <p className="hero-fullbleed__deck">
-              Nebbos ships case studies when the engagement is ready to share
-              publicly &mdash; numbers verified, client sign-off in hand.
-              Nothing here is a hypothetical; nothing here is a
-              plausible-example. When the first study is ready, it will land
-              here.
+              Nebbos is deployed today inside school districts across several
+              U.S. states &mdash; running district operations, coverage,
+              compliance, and superintendent-scoped approval trails. Case
+              studies land here as each district signs off publicly. Until
+              then, the shape of the work is real; the names come with
+              permission.
             </p>
           </div>
         </div>
@@ -81,7 +75,7 @@ export default function CustomersIndexPage() {
               margin: 0,
             }}
           >
-            01 &middot; In the meantime
+            01 &middot; The shape today
           </p>
           <h2
             style={{
@@ -96,7 +90,7 @@ export default function CustomersIndexPage() {
               textWrap: "balance",
             }}
           >
-            See the run layer, or walk through your own operations.
+            One Pearl per district operations.
           </h2>
           <p
             style={{
@@ -108,10 +102,12 @@ export default function CustomersIndexPage() {
               maxWidth: "56ch",
             }}
           >
-            Nebbos runs today. If you want to see the platform, the deck
-            lives on the site. If you want to see a Pearl scoped to a domain
-            you care about &mdash; a thirty-minute walkthrough on the
-            calendar &mdash; book a demo.
+            A Pearl scoped to district operations, deployed behind the systems
+            each district already runs &mdash; SIS, HR, substitute management,
+            state reporting, parent comms. Every consequential action passes
+            through named-superintendent approval; every action lands as an
+            append-only audit-event. That&rsquo;s the shape running today.
+            Case studies as the districts are ready.
           </p>
           <div
             style={{
@@ -121,8 +117,8 @@ export default function CustomersIndexPage() {
               flexWrap: "wrap",
             }}
           >
-            <Button href="/platform" variant="primary" size="lg">
-              See the platform
+            <Button href="/solutions/k12" variant="primary" size="lg">
+              See district operations
             </Button>
             <Button href="/demo" variant="ghost" size="lg" arrow={false}>
               Book a demo
