@@ -1,6 +1,7 @@
 import { HomeHero } from "@/components/sections/HomeHero";
 import { InProductionBand } from "@/components/sections/InProductionBand";
 import { BuiltWithNebbosBand } from "@/components/sections/BuiltWithNebbosBand";
+import { NebbosInventoryBand } from "@/components/sections/NebbosInventoryBand";
 import { HomeBands } from "@/components/sections/HomeBands";
 import { HomeStory } from "@/components/sections/HomeStory";
 import { HomeCTA } from "@/components/sections/HomeCTA";
@@ -35,6 +36,7 @@ export default function HomePage() {
       <HomeHero />
       <InProductionBand />
       <BuiltWithNebbosBand />
+      <NebbosInventoryBand />
       <HomeBands />
       <HomeStory />
       <HomeCTA />
