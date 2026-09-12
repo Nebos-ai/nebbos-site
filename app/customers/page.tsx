@@ -1,7 +1,3 @@
-import Link from "next/link";
-import { promises as fs } from "fs";
-import path from "path";
-import matter from "gray-matter";
 import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { Button } from "@/components/ui/Button";
 import type { Metadata } from "next";
@@ -9,130 +5,131 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "The enterprises running Nebbos on their hardest departments. Case studies by industry, deployment, and outcome.",
+    "Nebbos ships case studies when the engagement is ready to share publicly — numbers verified, client sign-off in hand.",
 };
 
-type CustomerMeta = {
-  slug: string;
-  title: string;
-  company: string;
-  industry: string;
-  description: string;
-  date: string;
-};
+/**
+ * /customers · 2026-09-12 revision · coming-soon state
+ *
+ * Prior version (pre-2026-09-12) rendered fictional customer case studies
+ * (Northbridge School Network + Riverside Unified District) from
+ * content/customers/*.mdx and claimed "enterprises running Nebbos on their
+ * hardest departments — finance, operations, people, care, manufacturing,
+ * financial services, civic case management" in the hero — implying
+ * multi-vertical customer coverage we don't have.
+ *
+ * Per founder directive 2026-09-12: "only have the right specific
+ * information on this sites not made up work". The fictional MDX moved to
+ * content/_archive/customers-fictional-drafts/ (additive-only per doctrine
+ * feedback_governance_additive_only_never_delete_disable_ignore). This
+ * route now renders a coming-soon page: no fake customer claims, no
+ * hypothetical logos, no plausible-example testimonials.
+ *
+ * When the first real customer story is ready to share publicly (numbers
+ * verified, client sign-off in hand), it lands here. Until then this page
+ * says so honestly and routes visitors to the platform overview or the
+ * demo form.
+ *
+ * The MDX-reading logic (fs / path / gray-matter) is removed from this
+ * file; app/customers/[slug]/page.tsx retains its dynamic renderer for
+ * when future MDX lands under content/customers/.
+ */
 
-async function getAllCustomers(): Promise<CustomerMeta[]> {
-  const dir = path.join(process.cwd(), "content", "customers");
-  const files = await fs.readdir(dir);
-  const items = await Promise.all(
-    files
-      .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
-      .map(async (file) => {
-        const raw = await fs.readFile(path.join(dir, file), "utf8");
-        const { data } = matter(raw);
-        return {
-          slug: file.replace(/\.mdx?$/, ""),
-          title: (data.title as string) ?? file,
-          company: (data.company as string) ?? "",
-          industry: (data.industry as string) ?? "",
-          description: (data.description as string) ?? "",
-          date:
-            data.date instanceof Date
-              ? data.date.toISOString().slice(0, 10)
-              : String(data.date ?? ""),
-        } satisfies CustomerMeta;
-      })
-  );
-  return items.sort((a, b) => (a.date > b.date ? -1 : 1));
-}
-
-function formatDate(iso: string): string {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
-}
-
-export default async function CustomersIndexPage() {
-  const customers = await getAllCustomers();
+export default function CustomersIndexPage() {
   return (
     <>
-        <FullBleedScene
-          className="hero-fullbleed"
-          scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
-          scrim="bottom"
-          vignetteStrength={0.5}
-          chapter="I"
-          chapterLabel="00 · Customers"
-          priority
-        >
-          <div className="container hero-fullbleed__inner">
-            <div className="hero-fullbleed__frame">
-              <h1 className="hero-fullbleed__title">The company brain, in production.</h1>
-              <p className="hero-fullbleed__deck">
-                Enterprises running Nebbos on their hardest departments &mdash;
-                finance, operations, people, care, manufacturing, financial
-                services, civic case management. Read how they deployed and
-                what they measured.
-              </p>
-            </div>
-          </div>
-        </FullBleedScene>
-
-        <section className="section section--paper">
-          <div className="container-narrow">
-            <p className="editorial-page__eyebrow">01 · Case studies</p>
-            <h2 className="editorial-page__title">Deployments, by industry.</h2>
-            <p className="editorial-page__deck">
-              Each case study describes a specific department, a specific
-              deployment window, and the outcome the enterprise measured.
+      <FullBleedScene
+        className="hero-fullbleed"
+        scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
+        scrim="bottom"
+        vignetteStrength={0.5}
+        chapter="00"
+        chapterLabel="Coming soon"
+        priority
+      >
+        <div className="container hero-fullbleed__inner">
+          <div className="hero-fullbleed__frame">
+            <h1 className="hero-fullbleed__title">
+              The first case study lands soon.
+            </h1>
+            <p className="hero-fullbleed__deck">
+              Nebbos ships case studies when the engagement is ready to share
+              publicly &mdash; numbers verified, client sign-off in hand.
+              Nothing here is a hypothetical; nothing here is a
+              plausible-example. When the first study is ready, it will land
+              here.
             </p>
-            <ol className="editorial-list" style={{ marginBlockStart: "var(--space-16)" }}>
-              {customers.map((c) => (
-                <li key={c.slug} className="editorial-list__item">
-                  <Link href={`/customers/${c.slug}`} aria-label={c.title}>
-                    <article>
-                      <p className="editorial-list__date">
-                        {c.industry}
-                        {c.company ? ` · ${c.company}` : ""}
-                        {c.date ? ` · ${formatDate(c.date)}` : ""}
-                      </p>
-                      <h3 className="editorial-list__title">{c.title}</h3>
-                      <p className="editorial-list__desc">{c.description}</p>
-                    </article>
-                  </Link>
-                </li>
-              ))}
-            </ol>
           </div>
-        </section>
+        </div>
+      </FullBleedScene>
 
-        <FullBleedScene
-          className="cta-fullbleed"
-          scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 2 }}
-          scrim="left"
-          vignetteStrength={0.5}
-          chapter="VII"
-          chapterLabel="Ready"
-        >
-          <div className="container cta-fullbleed__inner">
-            <div className="cta-fullbleed__frame">
-              <h2 className="cta-fullbleed__title">See a Pearl on your hardest department.</h2>
-              <p className="cta-fullbleed__deck">
-                A live product walkthrough with the Pearl scoped to a
-                department you care about. Thirty minutes.
-              </p>
-              <div className="cta-fullbleed__actions">
-                <Button href="/demo" variant="solid-light" size="lg">
-                  Remember who you are
-                </Button>
-                <Button href="mailto:enterprise@nebbos.ai" variant="ghost-light" size="lg" arrow={false}>
-                  Email enterprise
-                </Button>
-              </div>
-            </div>
+      <section
+        className="section section--paper"
+        style={{
+          paddingBlock: "clamp(64px, 10vh, 128px)",
+          borderTop: "1px solid var(--rule)",
+        }}
+      >
+        <div className="container-narrow">
+          <p
+            style={{
+              fontFamily: "var(--font-mono)",
+              fontSize: 11,
+              letterSpacing: "0.24em",
+              textTransform: "uppercase",
+              color: "var(--ink-3)",
+              margin: 0,
+            }}
+          >
+            01 &middot; In the meantime
+          </p>
+          <h2
+            style={{
+              fontFamily: "var(--font-serif)",
+              fontSize: "clamp(32px, 4.4vw, 56px)",
+              lineHeight: 1.04,
+              letterSpacing: "-0.022em",
+              fontWeight: 400,
+              color: "var(--ink)",
+              margin: "20px 0 0 0",
+              maxWidth: "26ch",
+              textWrap: "balance",
+            }}
+          >
+            See the run layer, or walk through your own operations.
+          </h2>
+          <p
+            style={{
+              fontFamily: "var(--font-sans)",
+              fontSize: "clamp(16px, 1.4vw, 18px)",
+              lineHeight: 1.5,
+              color: "var(--ink-2)",
+              margin: "20px 0 0 0",
+              maxWidth: "56ch",
+            }}
+          >
+            Nebbos runs today. If you want to see the platform, the deck
+            lives on the site. If you want to see a Pearl scoped to a domain
+            you care about &mdash; a thirty-minute walkthrough on the
+            calendar &mdash; book a demo.
+          </p>
+          <div
+            style={{
+              display: "flex",
+              gap: 16,
+              marginTop: "clamp(32px, 5vh, 56px)",
+              flexWrap: "wrap",
+            }}
+          >
+            <Button href="/platform" variant="primary" size="lg">
+              See the platform
+            </Button>
+            <Button href="/demo" variant="ghost" size="lg" arrow={false}>
+              Book a demo
+            </Button>
           </div>
-        </FullBleedScene>
+        </div>
+      </section>
     </>
   );
 }
