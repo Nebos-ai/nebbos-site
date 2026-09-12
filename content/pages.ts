@@ -379,7 +379,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Operations returns.",
-        body: "Two lines. First: incident hours avoided. Ops teams that deploy a Pearl typically see 30-50% fewer incident-hours in the first two quarters because the Pearl catches pattern-based incidents at the pattern stage, not the incident stage. At enterprise-tier commitment, a single avoided major incident often covers the first year of Nebbos. Second: attention returned to the ops team. Your senior ops leads spend disproportionate time on the highest-signal seams — precisely the work the Pearl handles. That&rsquo;s not headcount reduction; it&rsquo;s senior-hour reallocation toward the work only a senior human can do. Both lines compound as the Pearl tunes.",
+        body: "Two mechanisms. First: pattern-stage catch. The Pearl surfaces recurring incident-class patterns after the second occurrence, not the fifth. What used to be three separate P2s over a quarter becomes one pattern flagged and remediated once. Second: senior-hour reallocation. Your ops leads stop spending disproportionate time on the highest-signal seams &mdash; the Pearl handles that pattern-recognition tier &mdash; and reallocate senior hours toward the work only a senior human can do. Both compound as the Pearl tunes on your incident history.",
       },
 
       {
@@ -397,18 +397,11 @@ export const PAGES = {
         ],
       },
 
-      {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Regional logistics operator, 340 employees.",
-        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops domain in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;.",
-      },
 
       {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos People — for on-call rotation + coverage planning" },
@@ -421,7 +414,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, client provisions automatically, your engineering team wires the connectors for the systems the ops Pearl needs to read from (Slack, PagerDuty, calendar, ticketing). Solutions engineer available for pairing." },
@@ -532,7 +525,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Finance returns.",
-        body: "Two lines. First: close cycle compression. Finance teams that deploy a Pearl typically reduce close-week from 5-7 days to 3-4 within two quarters — because reconciliation surfaces mid-month, not close-week. At enterprise-tier commitment, a close-week that drops from 7 to 4 days pays back several times over in reallocated senior-controller hours. Second: variance surprise reduction. The quarterly variance that used to surface in QBR now surfaces mid-quarter, when there&rsquo;s time to actually fix the driver. That&rsquo;s a qualitative shift in CFO reporting — from &lsquo;here&rsquo;s what happened&rsquo; to &lsquo;here&rsquo;s what&rsquo;s about to happen and what we&rsquo;re doing about it&rsquo;.",
+        body: "Two mechanisms. First: continuous reconciliation. The Pearl surfaces reconciliation exceptions mid-month, not close-week. Close-week becomes a review of already-clean books instead of a scramble to make them clean. Second: prospective variance surface. The variance that used to surface at QBR shows up mid-quarter, when there is still time to fix the driver. That is a qualitative shift in CFO reporting &mdash; from &lsquo;here is what happened&rsquo; to &lsquo;here is what is about to happen and what we are doing about it&rsquo;.",
       },
       {
         id: "objections",
@@ -549,16 +542,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Regional financial services firm, 220 employees.",
-        body: "A mid-market regional financial-services firm deployed Nebbos Finance to their controller&rsquo;s office in month one. Baseline: 6.5-day monthly close, 12-15 quarterly variance surprises per year averaging $180k unexpected impact. By month four, close-week dropped to 4 days as reconciliation surfaces landed mid-month. By month twelve, quarterly variance surprises dropped to 3 per year and averaged $45k unexpected impact — because the driver-level detail surfaced in the quarter, not after it. The CFO calls it &lsquo;the best senior controller hire we made in five years, except it never takes vacation&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos Governance — for audit-trail + compliance filings" },
@@ -570,7 +556,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, client provisions, engineering wires NetSuite / bank / payroll / expense connectors. Solutions engineer pairs with your finance-systems lead." },
@@ -680,7 +666,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos People returns.",
-        body: "Two lines. First: retention improvement. HR teams that deploy a Pearl typically catch 40-60% of the &lsquo;preventable exits&rsquo; that used to surface as surprise resignations. At blended fully-loaded cost of $150-300k per lost mid-senior role, catching even one retention risk per quarter more than pays for the Pearl. Second: HR-partner hour reclamation. Your senior HR partners spend disproportionate time on the highest-signal manager teams and the highest-risk employees, not on universal-check-in busywork. That&rsquo;s a shift from spreading attention thinly to focusing it where it matters.",
+        body: "Two mechanisms. First: preventable-exit surface. The Pearl correlates signals a single HR partner cannot &mdash; engagement drift, manager-relationship strain, promotion-cycle position &mdash; and surfaces retention risk while there is still time to intervene. Surprise resignations become fewer because they were less surprising. Second: HR-partner hour reallocation. Your senior HR partners stop spreading attention thinly across universal check-ins and focus where the signal is strongest &mdash; the highest-risk employees and the highest-signal manager teams.",
       },
       {
         id: "objections",
@@ -697,16 +683,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Fast-growing SaaS company, 460 employees.",
-        body: "A fast-growing mid-market SaaS company deployed Nebbos People to their HR team in month one. Baseline: 22% annual regretted attrition, ~$4.1M annual replacement cost. By month nine, the Pearl was surfacing 3-4 retention-risk employees per week to HR partners, of whom roughly 60% engaged and stayed. Regretted attrition dropped to 14% by year-end — approximately $1.5M in avoided replacement cost. Head of People calls the Pearl &lsquo;the second HRBP we couldn&rsquo;t hire fast enough&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos Operations — for on-call rotation coverage tied to headcount" },
@@ -718,7 +697,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, engineering wires ATS + HRIS + engagement connectors." },
@@ -827,7 +806,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Education returns.",
-        body: "Two lines. First: coverage-crisis avoidance. Districts that deploy a Pearl typically eliminate 50-70% of same-day sub coverage scrambles by surfacing gaps 24-72 hours out. That&rsquo;s not just admin time saved — it&rsquo;s classroom continuity for students. Second: compliance filing on-time rate. Districts running Nebbos Education typically improve on-time state + federal filing rate from ~85% to ~99%, avoiding the state investigations and consent-decree risks that arise from missed filings. At district scale, both matter more than they cost.",
+        body: "Two mechanisms. First: anticipatory coverage. The Pearl surfaces coverage gaps 24-72 hours out, not the morning of. Same-day scrambles become the exception rather than the default. That is not just admin time saved &mdash; it is classroom continuity for students. Second: continuous compliance state. State and federal filings track through the year as a running state, not a deadline-week assembly. The Pearl flags missing inputs as they become missing, so filings ship on time rather than through the crunch that produces late-filing exposure.",
       },
       {
         id: "objections",
@@ -844,16 +823,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Mid-sized suburban district, 18 schools, 12,000 students.",
-        body: "A mid-sized suburban school district deployed Nebbos Education to their central-office operations team in month one. Baseline: 12-15 same-day substitute coverage scrambles per week, 4-6 late state filings per year averaging $50k in remediation costs. By month six, same-day scrambles dropped to 3-4 per week as the Pearl surfaced coverage gaps 48-72 hours out. By year-end, late state filings dropped to 1. The superintendent calls it &lsquo;the operations chief of staff we could never afford to hire&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos People — for teacher hiring pipeline + retention" },
@@ -865,7 +837,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, engineering wires SIS + HR + sub-platform + state portal connectors." },
@@ -975,7 +947,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Care returns.",
-        body: "Two lines. First: clinician hours reclaimed. Care organizations that deploy a Pearl typically reclaim 15-25% of care-coordinator time from cross-system coordination work back to direct patient interaction. Second: care-quality metric improvement. Follow-up adherence, referral completion, and compliance filing rates all typically improve 20-40% within the first two quarters. Both are quality metrics AND cost metrics — improved follow-up prevents readmissions, completed referrals prevent care fragmentation, on-time filings prevent penalty exposure.",
+        body: "Two mechanisms. First: coordinator-hour reallocation. The Pearl handles the cross-system chase that dominates care-coordinator schedules &mdash; EHR / referral tracker / eligibility portal &mdash; so coordinators reallocate hours to direct patient interaction. Second: care-quality state made visible. Follow-up adherence, referral completion, and compliance filing rates surface as a continuous state rather than periodic reports. Both are quality metrics AND cost metrics: improved follow-up prevents readmissions, completed referrals prevent care fragmentation, on-time filings prevent penalty exposure.",
       },
       {
         id: "objections",
@@ -992,16 +964,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Multi-specialty ambulatory practice, 340 clinicians.",
-        body: "A mid-sized multi-specialty ambulatory practice deployed Nebbos Care to their clinical-operations team in month one. Baseline: 34% referral completion rate at 30 days, 68% follow-up adherence, 4-6 compliance filings late per year. By month twelve, referral completion improved to 61%, follow-up adherence to 84%, and no compliance filings were late. The chief medical officer notes: &lsquo;we didn&rsquo;t change our clinicians&rsquo; workflow — we changed what happened between our clinicians&rsquo; workflows&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos People — for clinician hiring + retention" },
@@ -1013,7 +978,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA + BAA signed, engineering wires EMR + scheduling + referral + compliance connectors." },
@@ -1122,7 +1087,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos FS returns.",
-        body: "Two lines. First: operational-error reduction. Trading operations that deploy a Pearl typically reduce settlement-failure rate 40-60% and audit-remediation costs 30-50% within two quarters. In FS, both dollar amounts are large. Second: regulator readiness. What used to be a quarterly compliance-scramble is now a continuous state — the audit trail is complete every day, not assembled quarterly. Regulator inspection times measured in days, not weeks.",
+        body: "Two mechanisms. First: settlement-pattern surface. The Pearl flags settlement-failure patterns at the pattern stage &mdash; the third recurrence, not the fifteenth &mdash; so root cause is addressed before it compounds into audit-remediation cost. Second: continuous regulator readiness. The audit trail is complete every day, not assembled quarterly. Regulator inspection becomes a review of a running state rather than a scramble to reconstruct one. Days, not weeks.",
       },
       {
         id: "objections",
@@ -1139,16 +1104,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Regional broker-dealer, 180 traders + ops staff.",
-        body: "A mid-market regional broker-dealer deployed Nebbos FS to their operations desk in month one. Baseline: 2.3% settlement failure rate, 6-week annual audit-remediation cycle, ~$800k in operational-error costs. By month nine, settlement-failure rate dropped to 0.9%, audit-remediation compressed to 8 days, operational-error costs dropped ~55%. Their chief compliance officer notes: &lsquo;we&rsquo;re not less scrutinized — we&rsquo;re more prepared&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos Finance — for the corporate-finance side of an FS firm" },
@@ -1160,7 +1118,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, engineering wires OMS + EMS + risk + reconciliation connectors." },
@@ -1270,7 +1228,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Manufacturing returns.",
-        body: "Two lines. First: unplanned-downtime reduction. Plants that deploy a Pearl typically reduce unplanned downtime 20-35% within two quarters — because maintenance windows get surfaced before they slip. Second: first-pass-yield improvement. Quality-gate trend detection catches drift before it becomes scrap, typically improving first-pass yield 3-8 percentage points in the first year. In manufacturing, both drop directly to margin.",
+        body: "Two mechanisms. First: pre-slip maintenance surface. The Pearl surfaces maintenance windows before they slip &mdash; the sensor drift, the vibration trend, the lubrication interval &mdash; so unplanned downtime becomes planned. Second: quality-gate drift detection. The Pearl catches quality drift at the trend stage, before it becomes scrap. Both mechanisms drop directly to margin in manufacturing, where minutes of downtime and points of first-pass yield map straight to plant P&amp;L.",
       },
       {
         id: "objections",
@@ -1287,16 +1245,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Precision-parts manufacturer, 2 plants, 620 employees.",
-        body: "A mid-market precision-parts manufacturer deployed Nebbos Manufacturing to both plants in month one. Baseline: 8.4% unplanned downtime, 91.2% first-pass yield, ~$2.1M annual scrap cost. By month twelve, unplanned downtime dropped to 5.6%, first-pass yield rose to 94.8%, scrap cost dropped ~$700k. Plant director calls it &lsquo;the continuous-improvement engineer we don&rsquo;t have budget for&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos Operations — for cross-plant incident coordination" },
@@ -1308,7 +1259,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, engineering wires MES + ERP + QMS + CMMS connectors." },
@@ -1418,7 +1369,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Civic returns.",
-        body: "Two lines. First: citizen-response-time improvement. Agencies that deploy a Pearl typically improve statutory-response compliance from 80% range to 95%+ within two quarters. Second: caseworker capacity. 30-40% of caseworker time reclaimed from cross-system coordination back to direct case work. In public sector, both are outcomes citizens actually experience.",
+        body: "Two mechanisms. First: statutory-response tracking. The Pearl tracks statutory response windows as they run, surfacing at-risk cases while there is still time to respond rather than after the window closes. Compliance rate improves because misses stop happening quietly. Second: caseworker-hour reallocation. The Pearl handles the cross-system coordination that dominates caseworker schedules &mdash; benefits portal / eligibility system / case notes / court calendar &mdash; so caseworkers reallocate hours to direct case work. Both are outcomes citizens actually experience.",
       },
       {
         id: "objections",
@@ -1435,16 +1386,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "State human-services agency, 12 domains, 3,400 caseworkers.",
-        body: "A mid-sized state human-services agency deployed Nebbos Civic to their case-processing division in month one. Baseline: 78% statutory-response compliance, average 42 days case-processing time, 6-week annual accountability-filing cycle. By month twelve, statutory-response compliance reached 96%, case-processing time dropped to 28 days, accountability-filing cycle compressed to 12 days. The agency inspector-general notes: &lsquo;the audit trail is the most legible I&rsquo;ve seen in twenty years of this work&rsquo;.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos K-12 Education — for education agencies specifically" },
@@ -1456,7 +1400,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, engineering wires case management + document management + citizen portal connectors." },
@@ -1583,16 +1527,9 @@ export const PAGES = {
         ],
       },
       {
-        id: "case-study",
-        kind: "case-study",
-        eyebrow: "10 · Case study",
-        h2: "Mid-market fintech, 340 employees, 3 domains live on Nebbos.",
-        body: "A mid-market fintech deployed 3 Pearls (Finance, Operations, Governance) in month one. Their ML platform team wasn&rsquo;t consulted — the training corpus accumulated as a byproduct of ops teams using their Pearls. By month twelve, they had 340,000+ preference pairs across finance-operations and compliance-workflow domains. Their VP of Data called it &lsquo;the training corpus we would have paid $2M to build from scratch, that we got by using the operational software our teams needed anyway&rsquo;. They&rsquo;ve since fine-tuned two custom models on this corpus.",
-      },
-      {
         id: "related",
         kind: "list-plain",
-        eyebrow: "11 · Related solutions",
+        eyebrow: "10 · Related solutions",
         h2: "Deploys alongside.",
         items: [
           { title: "Nebbos Finance / Operations / People — every Pearl produces preference pairs" },
@@ -1602,7 +1539,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
-        eyebrow: "12 · Getting started",
+        eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Deploy first Pearl", body: "Standard Pearl deployment. Preference-pair capture starts automatically." },
@@ -1946,7 +1883,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "03 · SOC 2 Type II",
         h2: "SOC 2 Type II.",
-        body: "Nebbos operates to SOC 2 Type II trust services criteria across Security, Availability, Confidentiality, and Privacy. Controls are implemented and in continuous operation. The Type II report, control narratives mapped to each TSC, and the auditor&rsquo;s opinion are available under NDA. For clients with SOC 2 in their vendor-review checklist, these documents typically satisfy vendor onboarding directly.",
+        body: "SOC 2 Type II certification is in progress. Nebbos is implementing the trust services criteria across Security, Availability, Confidentiality, and Privacy, with the audit engaged and the observation window running. The Type II report will be available under NDA once the auditor&rsquo;s opinion issues. Clients with SOC 2 as a vendor-review gate can request the current control-implementation status and the projected report date via legal@nebbos.ai.",
       },
       {
         id: "iso",
