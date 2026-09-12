@@ -42,7 +42,12 @@ function formatDate(iso: string): string {
 
 export async function generateStaticParams(): Promise<Params[]> {
   const dir = path.join(process.cwd(), "content", "customers");
-  const files = await fs.readdir(dir);
+  let files: string[];
+  try {
+    files = await fs.readdir(dir);
+  } catch {
+    return [];
+  }
   return files
     .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
     .map((f) => ({ slug: f.replace(/\.mdx?$/, "") }));
