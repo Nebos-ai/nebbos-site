@@ -99,14 +99,14 @@ export const PAGES = {
     slug: "/",
     title: "The company brain your team never had time to build",
     metaDescription:
-      "Nebbos is the company brain your enterprise never had time to build. One Pearl per department, fifteen governance layers underneath.",
+      "Nebbos is the company brain your enterprise never had time to build. One Pearl per domain, fifteen governance layers underneath.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "Nebbos",
         h1: "The company brain your team never had time to build.",
-        deck: "One Pearl per department. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.",
+        deck: "One Pearl per domain. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.",
         imageV2: 1,
       },
       {
@@ -126,7 +126,7 @@ export const PAGES = {
         id: "cta",
         kind: "cta-full-bleed",
         eyebrow: "Where you take it next",
-        h2: "Put a Pearl on your hardest department.",
+        h2: "Put a Pearl on your hardest domain.",
         deck: "Live in days, not quarters. Owned by you, portable to you, compounding every quarter.",
         ctaPrimary: { label: "Remember who you are", href: "/demo", variant: "solid-light" },
         ctaSecondary: { label: "See the architecture", href: "/product", variant: "ghost-light" },
@@ -166,7 +166,7 @@ export const PAGES = {
         kind: "hero-paper",
         eyebrow: "00 · About",
         h1: "Built to be the company brain your enterprise never had time to build.",
-        deck: "Every enterprise has departments that would run better with a brain. Nebbos gives each one its own — a Pearl, pre-educated on your work, tuned by use, portable to you if you ever leave the platform.",
+        deck: "Every enterprise has domains that would run better with a brain. Nebbos gives each one its own — a Pearl, pre-educated on your work, tuned by use, portable to you if you ever leave the platform.",
       },
       {
         id: "facts",
@@ -261,16 +261,16 @@ export const PAGES = {
   /* ═══════════════ SOLUTIONS INDEX ═════════════════════════════════ */
   solutions: {
     slug: "/solutions",
-    title: "Solutions · A Pearl for every department",
+    title: "Solutions · A Pearl for every domain",
     metaDescription:
-      "Nebbos Operations, Nebbos Finance, Nebbos People, and more. A Pearl per department, per industry.",
+      "Nebbos Operations, Nebbos Finance, Nebbos People, and more. A Pearl per domain, per industry.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · Solutions",
-        h1: "A Pearl for every department.",
-        deck: "Every industry has departments that would run better with a brain. Nebbos ships a General for each — Nebbos Design, Nebbos Finance, Nebbos Operations, Nebbos People — that tunes to your team the more you use it.",
+        h1: "A Pearl for every domain.",
+        deck: "Every industry has domains that would run better with a brain. Nebbos ships a General for each — Nebbos Design, Nebbos Finance, Nebbos Operations, Nebbos People — that tunes to your team the more you use it.",
       },
       // Vertical cards rendered inline
     ],
@@ -310,7 +310,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What Nebbos Operations does",
         h2: "One Pearl that runs alongside your ops team.",
-        body: "Nebbos Operations is a per-department Pearl deployed to your operations Shell. It reads from every system your ops team already emits signal into — messaging, calendaring, on-call scheduling, ticketing, source-control, HR — and reasons across all of them at once. When a pattern emerges that historically precedes an incident, it surfaces the pattern with the specific evidence, the affected owners, and a proposed action. Your ops lead approves the action (or edits it, or rejects it with a reason that trains the Pearl). Every action taken lands in an attested audit trail your CISO and your compliance officer can verify. The Pearl gets better every week — at month twenty-four your Nebbos Operations is measurably better than at month one, because it has twenty-three months of your team&rsquo;s specific decisions in its memory.",
+        body: "Nebbos Operations is a per-domain Pearl deployed to your operations Shell. It reads from every system your ops team already emits signal into — messaging, calendaring, on-call scheduling, ticketing, source-control, HR — and reasons across all of them at once. When a pattern emerges that historically precedes an incident, it surfaces the pattern with the specific evidence, the affected owners, and a proposed action. Your ops lead approves the action (or edits it, or rejects it with a reason that trains the Pearl). Every action taken lands in an attested audit trail your CISO and your compliance officer can verify. The Pearl gets better every week — at month twenty-four your Nebbos Operations is measurably better than at month one, because it has twenty-three months of your team&rsquo;s specific decisions in its memory.",
       },
 
       {
@@ -318,7 +318,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "03 · How it fits your workflow",
         h2: "Deploys without disrupting.",
-        body: "Nebbos Operations sits behind your existing systems, not in front of them. Your team continues using Slack, PagerDuty, Jira, Linear, Google Calendar, Workday — nothing changes about how they work today. The Pearl reads events from those systems (via named connectors for the tools that matter and OAuth adapters for the long-tail), reasons across them in its memory graph, and surfaces attention through a per-department dashboard plus the messaging channel your team already uses. Approval requests land in Slack, not a new UI. Handoff summaries post to the on-call channel, not a portal nobody checks. The rule is: your team&rsquo;s workflow stays. Only the noise-to-signal ratio changes.",
+        body: "Nebbos Operations sits behind your existing systems, not in front of them. Your team continues using Slack, PagerDuty, Jira, Linear, Google Calendar, Workday — nothing changes about how they work today. The Pearl reads events from those systems (via named connectors for the tools that matter and OAuth adapters for the long-tail), reasons across them in its memory graph, and surfaces attention through a per-domain dashboard plus the messaging channel your team already uses. Approval requests land in Slack, not a new UI. Handoff summaries post to the on-call channel, not a portal nobody checks. The rule is: your team&rsquo;s workflow stays. Only the noise-to-signal ratio changes.",
       },
 
       {
@@ -392,7 +392,7 @@ export const PAGES = {
           { title: "What if the Pearl makes a wrong call?", body: "Every consequential action passes through your approval graph (Layer 11). The Pearl proposes; a named human approves or rejects with a reason that trains the Pearl. There is no autonomous consequential action without human sign-off." },
           { title: "How does this fit our compliance posture?", body: "Every action the Pearl takes lands as an attested record (Layer 15) with the identity that authorized it, the timestamp, and the hash-chained trail. Ready for SOC 2 evidence + EU AI Act Article 11 pack." },
           { title: "Can we take our tuning with us if we leave?", body: "Yes. Portability is a contractual guarantee, not a marketing claim. Your tuned Pearl and its memory export completely on offboarding." },
-          { title: "What about a runaway-Pearl scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). A Pearl cannot call itself in a loop, exceed its per-department action budget, or take down the client or the humans who share it." },
+          { title: "What about a runaway-Pearl scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). A Pearl cannot call itself in a loop, exceed its per-domain action budget, or take down the client or the humans who share it." },
           { title: "Is the model our data or their data?", body: "Every human decision your team makes trains YOUR Pearl. It doesn&rsquo;t train Nebbos&rsquo;s next base model without explicit opt-in. Your data trains your model, not someone else&rsquo;s." },
         ],
       },
@@ -402,7 +402,7 @@ export const PAGES = {
         kind: "case-study",
         eyebrow: "10 · Case study",
         h2: "Regional logistics operator, 340 employees.",
-        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops department in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;.",
+        body: "A mid-market regional logistics company deployed Nebbos Operations to their dispatch + fleet-ops domain in month one. Their baseline: 47 hours of major-incident time per month, mostly driver-schedule-cascade issues that were visible in the calendar 8-14 hours before they hit the road. By month four, incident-hours dropped 42% quarter-over-quarter — the Pearl was catching schedule-cascade patterns Sunday night for Monday-morning routes and surfacing them to the dispatch lead with a proposed re-route. By month twelve, the Pearl had also learned which shift leads escalated too early and which too late, and was tuning its own escalation-timing suggestions accordingly. Their director of operations calls it &lsquo;the fastest senior hire we&rsquo;ve made&rsquo;.",
       },
 
       {
@@ -413,8 +413,8 @@ export const PAGES = {
         items: [
           { title: "Nebbos People — for on-call rotation + coverage planning" },
           { title: "Nebbos Finance — when incident-hour cost attribution matters to the CFO" },
-          { title: "Nebbos Manufacturing — for operations departments running production floors" },
-          { title: "Nebbos Governance — when approval graphs need to cover multiple departments" },
+          { title: "Nebbos Manufacturing — for operations domains running production floors" },
+          { title: "Nebbos Governance — when approval graphs need to cover multiple domains" },
         ],
       },
 
@@ -425,7 +425,7 @@ export const PAGES = {
         h2: "Three weeks from signature to live.",
         items: [
           { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed, client provisions automatically, your engineering team wires the connectors for the systems the ops Pearl needs to read from (Slack, PagerDuty, calendar, ticketing). Solutions engineer available for pairing." },
-          { title: "Week 2 · Pearl deployment + department scoping", body: "Nebbos General Operations deploys into your operations Shell. Your approval graph gets configured. Your ops lead reviews the first-pass detection thresholds and adjusts." },
+          { title: "Week 2 · Pearl deployment + domain scoping", body: "Nebbos General Operations deploys into your operations Shell. Your approval graph gets configured. Your ops lead reviews the first-pass detection thresholds and adjusts." },
           { title: "Week 3 · First surfaces + tuning kickoff", body: "The Pearl starts surfacing detections to your ops lead. Every accept/reject/edit trains the Pearl. By end of week three, the initial tuning is in motion and your team is running with the Pearl in-loop." },
         ],
       },
@@ -469,7 +469,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your close.",
-        body: "Nebbos Finance is a per-department Pearl deployed to your finance Shell. It reads from your general ledger, your ERP, your bank feeds, your expense system, your payroll, and your subscription-management stack — and reasons across all of them in memory. During close week, it surfaces reconciliation breaks with the specific transactions that don&rsquo;t match and a proposed resolution. Between close cycles, it watches variance patterns and flags the vendors, cost centers, or accrual buckets that are drifting from forecast. Every consequential action (a manual journal, an accrual adjustment, a bank rec sign-off) passes through your approval graph with a named human&rsquo;s attested yes. Every action lands in an audit trail your external auditor can verify.",
+        body: "Nebbos Finance is a per-domain Pearl deployed to your finance Shell. It reads from your general ledger, your ERP, your bank feeds, your expense system, your payroll, and your subscription-management stack — and reasons across all of them in memory. During close week, it surfaces reconciliation breaks with the specific transactions that don&rsquo;t match and a proposed resolution. Between close cycles, it watches variance patterns and flags the vendors, cost centers, or accrual buckets that are drifting from forecast. Every consequential action (a manual journal, an accrual adjustment, a bank rec sign-off) passes through your approval graph with a named human&rsquo;s attested yes. Every action lands in an audit trail your external auditor can verify.",
       },
       {
         id: "how-it-fits",
@@ -617,14 +617,14 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your HR team.",
-        body: "Nebbos People is a per-department Pearl deployed to your people Shell. It reads from your ATS (Greenhouse, Lever, Ashby), your HRIS (Workday, BambooHR, Rippling), your engagement platform (Culture Amp, Lattice, 15Five), your calendar tool, and Slack — and reasons across all of them. It surfaces the hiring pipeline stages that are drifting, the onboarding steps that correlate with early exits, the manager teams with the fastest-declining engagement, and the tenure patterns that precede resignation. Every action (a follow-up nudge to a candidate, an escalation to a manager, a re-engagement task) passes through your approval graph.",
+        body: "Nebbos People is a per-domain Pearl deployed to your people Shell. It reads from your ATS (Greenhouse, Lever, Ashby), your HRIS (Workday, BambooHR, Rippling), your engagement platform (Culture Amp, Lattice, 15Five), your calendar tool, and Slack — and reasons across all of them. It surfaces the hiring pipeline stages that are drifting, the onboarding steps that correlate with early exits, the manager teams with the fastest-declining engagement, and the tenure patterns that precede resignation. Every action (a follow-up nudge to a candidate, an escalation to a manager, a re-engagement task) passes through your approval graph.",
       },
       {
         id: "how-it-fits",
         kind: "text-block",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing HR stack.",
-        body: "Nebbos People sits behind your ATS, HRIS, and engagement platform via named connectors. Nothing changes about how your team works with candidates, new hires, or existing employees. The Pearl surfaces attention through the channel your HR team already uses (Slack, email, or a lightweight per-department dashboard). Approval routes to your Head of People, your recruiter, or the manager involved.",
+        body: "Nebbos People sits behind your ATS, HRIS, and engagement platform via named connectors. Nothing changes about how your team works with candidates, new hires, or existing employees. The Pearl surfaces attention through the channel your HR team already uses (Slack, email, or a lightweight per-domain dashboard). Approval routes to your Head of People, your recruiter, or the manager involved.",
       },
       {
         id: "compounding",
@@ -668,7 +668,7 @@ export const PAGES = {
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
-          { title: "Layer 03 · Departments", body: "The department + manager hierarchy the Pearl reads employees against." },
+          { title: "Layer 03 · Departments", body: "The domain + manager hierarchy the Pearl reads employees against." },
           { title: "Layer 04 · Ingest", body: "The stream from ATS, HRIS, engagement platform, calendar, Slack." },
           { title: "Layer 07 · Memory", body: "Every hire, exit, comp-review, engagement signal lands here and becomes pattern context." },
           { title: "Layer 09 · Detectors", body: "Turns raw signal into the specific attention items HR partners see." },
@@ -764,7 +764,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs district operations.",
-        body: "Nebbos Education is a per-department Pearl deployed to your district-operations Shell. It reads from your SIS (PowerSchool, Infinite Campus), your HR system, your substitute-management platform (Frontline, Aesop), your state compliance portal, and your parent-communication tool — and reasons across all of them. It surfaces the coverage gaps, the compliance filings due, the enrollment shifts that will hit next year&rsquo;s budget, the teacher-pipeline stages that are stalling. Every action goes through your superintendent&rsquo;s approval graph with an attested trail — because K-12 accountability is public accountability.",
+        body: "Nebbos Education is a per-domain Pearl deployed to your district-operations Shell. It reads from your SIS (PowerSchool, Infinite Campus), your HR system, your substitute-management platform (Frontline, Aesop), your state compliance portal, and your parent-communication tool — and reasons across all of them. It surfaces the coverage gaps, the compliance filings due, the enrollment shifts that will hit next year&rsquo;s budget, the teacher-pipeline stages that are stalling. Every action goes through your superintendent&rsquo;s approval graph with an attested trail — because K-12 accountability is public accountability.",
       },
       {
         id: "how-it-fits",
@@ -912,7 +912,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your care coordination.",
-        body: "Nebbos Care is a per-department Pearl deployed to your clinical-operations Shell. It reads from your EMR (Epic, Cerner, Athenahealth), your scheduling platform, your referral-management system, your patient-portal messaging, and your compliance tooling — and reasons across all of them. It surfaces stalled referrals, patients due for follow-up, coverage gaps in the on-call rotation, compliance filings approaching deadline, and care-coordination handoffs that are missing context. Every action passes through your clinical-operations director&rsquo;s approval graph with a HIPAA-adequate audit trail.",
+        body: "Nebbos Care is a per-domain Pearl deployed to your clinical-operations Shell. It reads from your EMR (Epic, Cerner, Athenahealth), your scheduling platform, your referral-management system, your patient-portal messaging, and your compliance tooling — and reasons across all of them. It surfaces stalled referrals, patients due for follow-up, coverage gaps in the on-call rotation, compliance filings approaching deadline, and care-coordination handoffs that are missing context. Every action passes through your clinical-operations director&rsquo;s approval graph with a HIPAA-adequate audit trail.",
       },
       {
         id: "how-it-fits",
@@ -934,9 +934,9 @@ export const PAGES = {
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
-          { title: "Care-team coverage across shifts and specialties", body: "By day, by department, by specialty — surfaces gaps before they hit a patient." },
+          { title: "Care-team coverage across shifts and specialties", body: "By day, by domain, by specialty — surfaces gaps before they hit a patient." },
           { title: "Referrals + care-coordination handoffs", body: "Which referrals have stalled, at which specialist office, for how long." },
-          { title: "Compliance filings on schedule", body: "HIPAA, state health department reports, insurance credentialing renewals." },
+          { title: "Compliance filings on schedule", body: "HIPAA, state health domain reports, insurance credentialing renewals." },
           { title: "Patient-flow bottlenecks before they become backlogs", body: "Wait-time patterns by clinic, by day, by provider." },
           { title: "Follow-up appointment adherence patterns", body: "Which patient cohorts miss follow-up at higher-than-baseline rates." },
           { title: "Insurance-authorization drift", body: "Which prior-authorization requests are stalling and where." },
@@ -963,7 +963,7 @@ export const PAGES = {
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
-          { title: "Layer 03 · Departments", body: "Clinical departments + care teams first-class." },
+          { title: "Layer 03 · Departments", body: "Clinical domains + care teams first-class." },
           { title: "Layer 04 · Ingest", body: "EMR, scheduling, referrals, patient-portal, compliance systems." },
           { title: "Layer 07 · Memory", body: "Every care decision, every referral, every follow-up becomes context." },
           { title: "Layer 11 · Approval", body: "Every consequential action passes through the clinical-operations approval graph." },
@@ -1059,7 +1059,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your trading operations.",
-        body: "Nebbos Financial Services is a per-department Pearl deployed to your trading-operations Shell. It reads from your OMS/EMS, your risk-management system, your reconciliation platform, your regulatory-reporting stack — and reasons across all of them. It runs overnight P&L reconciliation, pre-market checks, post-trade attestation, and regulatory-filing preparation. Every consequential action passes through your compliance officer&rsquo;s approval graph with a cryptographically-verifiable audit trail (Layer 15).",
+        body: "Nebbos Financial Services is a per-domain Pearl deployed to your trading-operations Shell. It reads from your OMS/EMS, your risk-management system, your reconciliation platform, your regulatory-reporting stack — and reasons across all of them. It runs overnight P&L reconciliation, pre-market checks, post-trade attestation, and regulatory-filing preparation. Every consequential action passes through your compliance officer&rsquo;s approval graph with a cryptographically-verifiable audit trail (Layer 15).",
       },
       {
         id: "how-it-fits",
@@ -1207,7 +1207,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your plant operations.",
-        body: "Nebbos Manufacturing is a per-department Pearl deployed to your production-operations Shell. It reads from your MES, your ERP, your quality-management system, your CMMS (maintenance), and your supplier portal — and reasons across all of them. It surfaces production-schedule risks (before they hit the line), quality-gate trend shifts (before they hit the customer), supply reconciliation gaps (before they hit inventory), and maintenance-window slippage (before it hits uptime). Every consequential action passes through the plant manager&rsquo;s approval graph with an attested trail.",
+        body: "Nebbos Manufacturing is a per-domain Pearl deployed to your production-operations Shell. It reads from your MES, your ERP, your quality-management system, your CMMS (maintenance), and your supplier portal — and reasons across all of them. It surfaces production-schedule risks (before they hit the line), quality-gate trend shifts (before they hit the customer), supply reconciliation gaps (before they hit inventory), and maintenance-window slippage (before it hits uptime). Every consequential action passes through the plant manager&rsquo;s approval graph with an attested trail.",
       },
       {
         id: "how-it-fits",
@@ -1355,7 +1355,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your civic operations.",
-        body: "Nebbos Civic is a per-department Pearl deployed to your agency-operations Shell. It reads from your case-management system, your document management, your citizen-portal messaging, your inter-agency systems, and your compliance-reporting tools — and reasons across all of them. It surfaces case-queue drift, citizen-response patterns, accountability-filing status, and cross-agency handoff quality. Every action passes through your agency-director&rsquo;s approval graph with a public-accountability audit trail.",
+        body: "Nebbos Civic is a per-domain Pearl deployed to your agency-operations Shell. It reads from your case-management system, your document management, your citizen-portal messaging, your inter-agency systems, and your compliance-reporting tools — and reasons across all of them. It surfaces case-queue drift, citizen-response patterns, accountability-filing status, and cross-agency handoff quality. Every action passes through your agency-director&rsquo;s approval graph with a public-accountability audit trail.",
       },
       {
         id: "how-it-fits",
@@ -1377,8 +1377,8 @@ export const PAGES = {
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
-          { title: "Case queue by department, by caseworker", body: "Backlog dynamics + throughput per case type." },
-          { title: "Citizen response times and their patterns", body: "By channel, by case type, by department." },
+          { title: "Case queue by domain, by caseworker", body: "Backlog dynamics + throughput per case type." },
+          { title: "Citizen response times and their patterns", body: "By channel, by case type, by domain." },
           { title: "Accountability filings on schedule", body: "State + federal + local filings tracked continuously." },
           { title: "Cross-agency handoffs and their outcomes", body: "Which handoffs succeed, which stall, which drop context." },
           { title: "Case-outcome quality patterns", body: "Which case types have the highest reversal rates + why." },
@@ -1431,14 +1431,14 @@ export const PAGES = {
           { title: "What about union / civil-service work rules?", body: "Approval graph + delegation chains respect union work-rule scope." },
           { title: "Data ownership on offboarding?", body: "Full portability — your agency owns its data. Contractual." },
           { title: "What about accessibility + language requirements?", body: "Section 508 / WCAG 2.1 AA compliance. Language support extensible per state." },
-          { title: "Can we deploy per-department, not agency-wide?", body: "Yes. Per-department Pearl is the standard deployment shape." },
+          { title: "Can we deploy per-domain, not agency-wide?", body: "Yes. Per-domain Pearl is the standard deployment shape." },
         ],
       },
       {
         id: "case-study",
         kind: "case-study",
         eyebrow: "10 · Case study",
-        h2: "State human-services agency, 12 departments, 3,400 caseworkers.",
+        h2: "State human-services agency, 12 domains, 3,400 caseworkers.",
         body: "A mid-sized state human-services agency deployed Nebbos Civic to their case-processing division in month one. Baseline: 78% statutory-response compliance, average 42 days case-processing time, 6-week annual accountability-filing cycle. By month twelve, statutory-response compliance reached 96%, case-processing time dropped to 28 days, accountability-filing cycle compressed to 12 days. The agency inspector-general notes: &lsquo;the audit trail is the most legible I&rsquo;ve seen in twenty years of this work&rsquo;.",
       },
       {
@@ -1542,7 +1542,7 @@ export const PAGES = {
         items: [
           { title: "Enough preference pairs accumulated for a fine-tune", body: "Pearl surfaces to your ML platform team with the dataset ready." },
           { title: "Model drift detected between tuned Pearl and base", body: "Pearl surfaces the divergence + magnitude." },
-          { title: "Corpus coverage thin in a specific domain", body: "Pearl surfaces to that department&rsquo;s Pearl owner." },
+          { title: "Corpus coverage thin in a specific domain", body: "Pearl surfaces to that domain&rsquo;s Pearl owner." },
           { title: "Preference-pair quality dropping in a specific domain", body: "Pearl surfaces to the team with inter-annotator disagreement detail." },
           { title: "Bring-your-own-model performance regression", body: "Pearl surfaces to your ML platform team." },
           { title: "Portability export requested (offboarding or model migration)", body: "Pearl assembles the full corpus + metadata." },
@@ -1586,7 +1586,7 @@ export const PAGES = {
         id: "case-study",
         kind: "case-study",
         eyebrow: "10 · Case study",
-        h2: "Mid-market fintech, 340 employees, 3 departments live on Nebbos.",
+        h2: "Mid-market fintech, 340 employees, 3 domains live on Nebbos.",
         body: "A mid-market fintech deployed 3 Pearls (Finance, Operations, Governance) in month one. Their ML platform team wasn&rsquo;t consulted — the training corpus accumulated as a byproduct of ops teams using their Pearls. By month twelve, they had 340,000+ preference pairs across finance-operations and compliance-workflow domains. Their VP of Data called it &lsquo;the training corpus we would have paid $2M to build from scratch, that we got by using the operational software our teams needed anyway&rsquo;. They&rsquo;ve since fine-tuned two custom models on this corpus.",
       },
       {
@@ -1684,7 +1684,7 @@ export const PAGES = {
         items: [
           { title: "Layer 01 · Data", body: "Row-level client isolation enforced at the database, not the application. Structural, not policy." },
           { title: "Layer 02 · Identity", body: "Every request carries an identity. Service accounts, humans, and workloads each have distinct identity classes with distinct authorization scopes." },
-          { title: "Layer 11 · Approval", body: "Every consequential action flows through here. Approval routes are configurable per department, per action class, per risk tier." },
+          { title: "Layer 11 · Approval", body: "Every consequential action flows through here. Approval routes are configurable per domain, per action class, per risk tier." },
           { title: "Layer 13 · Onboarding", body: "The portability guarantee lives here. Offboarding is a first-class flow, not an exception path." },
           { title: "Layer 15 · Attestation", body: "Append-only, hash-chained audit trail. The record your regulator reads." },
         ],
@@ -1967,7 +1967,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "06 · FERPA — K-12 and higher-ed readiness",
         h2: "FERPA — K-12 and higher-ed readiness.",
-        body: "For US K-12 school districts and higher-ed institutions, Nebbos operates as a School Official under FERPA (34 CFR § 99.31(a)(1)) when performing services the institution would otherwise perform. Substrate controls map to FERPA educational-records handling: direct control of personally identifiable information from education records, use limited to the authorized purposes, redisclosure prohibited without consent, and access limited to legitimate educational interests. Retention policies configurable per state education-department requirements. Documented onboarding path for districts.",
+        body: "For US K-12 school districts and higher-ed institutions, Nebbos operates as a School Official under FERPA (34 CFR § 99.31(a)(1)) when performing services the institution would otherwise perform. Substrate controls map to FERPA educational-records handling: direct control of personally identifiable information from education records, use limited to the authorized purposes, redisclosure prohibited without consent, and access limited to legitimate educational interests. Retention policies configurable per state education-domain requirements. Documented onboarding path for districts.",
       },
       {
         id: "gdpr",
@@ -2063,7 +2063,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "01 · What we&rsquo;re building",
         h2: "An institution that watches the work.",
-        body: "Every enterprise has departments that would run better with a brain — operations handoffs, finance close, HR onboarding, procurement chase-ups, incident triage. None of those brains get built because the team is running the current ones. Nebbos is the architecture that lets each department have one — a Pearl, pre-educated on the work, tuned by use, portable to the customer if they ever leave. Fifteen governance layers underneath, one flat price per seat.",
+        body: "Every enterprise has domains that would run better with a brain — operations handoffs, finance close, HR onboarding, procurement chase-ups, incident triage. None of those brains get built because the team is running the current ones. Nebbos is the architecture that lets each domain have one — a Pearl, pre-educated on the work, tuned by use, portable to the customer if they ever leave. Fifteen governance layers underneath, one flat price per seat.",
       },
       {
         id: "roles",
@@ -2073,7 +2073,7 @@ export const PAGES = {
         items: [
           { title: "Founding engineer · substrate", body: "Own the Data + Identity + Departments band. Postgres + typed schema + row-level client isolation from day one." },
           { title: "Founding engineer · intelligence", body: "Own the Memory + Reasoning + Detectors band. Knowledge graph + multi-provider router + preference-pair capture." },
-          { title: "Founding engineer · action", body: "Own the Pearl + Shell + Approval + Orchestrator band. Per-department entity + human approval graph + action queue." },
+          { title: "Founding engineer · action", body: "Own the Pearl + Shell + Approval + Orchestrator band. Per-domain entity + human approval graph + action queue." },
           { title: "Founding designer · brand + product", body: "Own the marketing site + design system + Pearl UI. Editorial register · brand palette · concept-family imagery." },
           { title: "Founding operator · GTM + enterprise", body: "Land the enterprise cohort. Structure the pilot. Turn clients into references." },
         ],

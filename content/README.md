@@ -18,7 +18,7 @@ email) is ONE file edit that propagates everywhere it's used.
 | `pricing.ts` | price · minimum · discount · overage currency | "$150", 20-user min, "15% annual prepay", "Nebbos tokens" |
 | `contact.ts` | emails · form endpoints · social handles | `hello@nebbos.ai`, `press@nebbos.ai`, `security@nebbos.ai` |
 | `facts.ts` | company facts · founding · category · positioning | 2026 founding year, solo-founder-led, EU AI Act positioning |
-| `proof-points.ts` | reusable capability statements | "one Pearl per department", "every decision sourced" |
+| `proof-points.ts` | reusable capability statements | "one Pearl per domain", "every decision sourced" |
 
 ## When you add a new page
 
