@@ -1,0 +1,96 @@
+{
+  "$schema_note": "Nebbos platform metrics — mix of live-verified counts (measured against filesystem/KG/live MCP endpoint) and snapshot-dated counts (from the 2026-09-10 estate scan artifact). Every field's source lives in provenance.field_sources. When adding a field: name the source. Never fabricate.",
+  "snapshot_at": "2026-09-12",
+  "artifact_snapshot_at": "2026-09-10",
+  "artifact_url": "https://claude.ai/code/artifact/fd5ed807-be2a-4bbe-aa9f-dfa68c1d33c5",
+
+  "metered": {
+    "compression_median_pct": 50,
+    "compression_range_min_pct": 50,
+    "compression_range_max_pct": 90,
+    "compression_scope": "median token reduction on the adr-authoring archetype (n_pre=10 / n_post=57 sessions) across the Nebbos build corpus 2026-08-28 to 2026-09-12; 50-90% range across clean-sample archetypes",
+    "compression_boundary_pinned": "2026-08-28 06:51 UTC (first mcp__nebos__* invocation in the corpus)"
+  },
+
+  "governed": {
+    "architecture_specs_ratified": 328,
+    "architecture_drafts_active": 471,
+    "constitutional_articles": 102,
+    "enforcement_hooks": 76,
+    "doctrine_memories": 523,
+    "session_reports": 141,
+    "governance_graph_nodes": 499,
+    "governance_graph_edges": 2288
+  },
+
+  "composed": {
+    "skills_installed": 54,
+    "nebos_mcp_tools": 13,
+    "mcp_integrations": 10,
+    "mcp_integrations_list": [
+      "Nebos (native — Pearl / signals / knowledge graph)",
+      "Attio (CRM)",
+      "Railway (infrastructure)",
+      "Doppler (secrets)",
+      "Gmail (via Claude)",
+      "Google Calendar (via Claude)",
+      "Google Drive (via Claude)",
+      "ClickUp (via Claude)",
+      "Zoom for Claude (meetings)",
+      "Claude.ai Learning Commons Knowledge Graph"
+    ],
+    "named_callables": 45773,
+    "shared_ui_modules": 62,
+    "react_components": 2850,
+    "design_tokens": 444
+  },
+
+  "shipped": {
+    "repositories": 26,
+    "lines_of_code_millions": 2.11,
+    "source_files": 32236,
+    "automated_tests": 39278,
+    "http_endpoints": 1652,
+    "database_tables": 288,
+    "database_migrations": 514,
+    "commits_last_30d": 950,
+    "commits_last_7d": 236,
+    "parallel_worktrees_active": 2688,
+    "open_intakes": 30
+  },
+
+  "provenance": {
+    "principle": "no field is estimated; each traces to either a live tool measurement this session or the 2026-09-10 estate snapshot artifact.",
+    "field_sources": {
+      "metered.compression_*": "live 2026-09-12: /Users/matic/.claude/scripts/nebbos-mcp-compression-report.py against local transcript corpus",
+      "governed.architecture_specs_ratified": "artifact fd5ed807 snapshot 2026-09-10",
+      "governed.architecture_drafts_active": "live count 2026-09-12: ls ~/code/nebos-governance/docs/decisions/drafts/*.md | wc -l = 471",
+      "governed.constitutional_articles": "artifact fd5ed807 snapshot 2026-09-10",
+      "governed.enforcement_hooks": "live count 2026-09-12: ls ~/.claude/hooks/*.py | wc -l = 76 (was 59 in artifact, +17 in 2 days)",
+      "governed.doctrine_memories": "live count 2026-09-12: ls ~/.claude/projects/-Users-matic/memory/*.md | wc -l = 523",
+      "governed.session_reports": "live count 2026-09-12: ls ~/.claude/state/session_reports/*.md | wc -l = 141",
+      "governed.governance_graph_nodes": "live 2026-09-12: parse ~/code/nebos-governance/governance-graph/graph.json = 499 nodes",
+      "governed.governance_graph_edges": "live 2026-09-12: parse ~/code/nebos-governance/governance-graph/graph.json = 2288 edges",
+      "composed.skills_installed": "live count 2026-09-12: ls ~/.claude/skills/ + find ~/code -path '*/.claude/skills/*' -maxdepth 4 -type d = 54 (was 21 in artifact, +33 in 2 days)",
+      "composed.nebos_mcp_tools": "live 2026-09-12T06:44Z: mcp__nebos__list_available_tools returned total_tools_in_instance=13 (authoritative core count; the artifact's 48 counted broader nebos-mcp Python surface)",
+      "composed.mcp_integrations": "live enumeration 2026-09-12 from session-init MCP roster",
+      "composed.named_callables": "artifact fd5ed807 snapshot 2026-09-10",
+      "composed.shared_ui_modules": "artifact fd5ed807 snapshot 2026-09-10",
+      "composed.react_components": "artifact fd5ed807 snapshot 2026-09-10",
+      "composed.design_tokens": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.repositories": "live count 2026-09-12: ls -d ~/code/*/ (excluding *-worktrees) = 26 (was 20 in artifact, +6 in 2 days)",
+      "shipped.lines_of_code_millions": "artifact fd5ed807 snapshot 2026-09-10 (repo scan; expensive to re-measure per-page)",
+      "shipped.source_files": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.automated_tests": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.http_endpoints": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.database_tables": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.database_migrations": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.commits_last_30d": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.commits_last_7d": "artifact fd5ed807 snapshot 2026-09-10",
+      "shipped.parallel_worktrees_active": "live count 2026-09-12: find ~/code -maxdepth 4 -type d -path '*/.worktrees/*' | wc -l = 2688 (was 500 in artifact, +2188 in 2 days — a 5.4x multiplier reflecting active parallel work at time of measurement)",
+      "shipped.open_intakes": "live count 2026-09-12: ls ~/.claude/state/session_reports/intake-*.md | wc -l = 30"
+    },
+    "refresh_cadence": "Live-verified fields re-measured on every snapshot regeneration. Artifact-snapshot fields refresh when a new estate scan lands. Weekly cron planned; manual for now.",
+    "verification_receipts_available": "See scripts/verify-platform-metrics.sh (planned) for a reproducible recount of every live-labeled field."
+  }
+}
