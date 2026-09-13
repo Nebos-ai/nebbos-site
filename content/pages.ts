@@ -2009,8 +2009,8 @@ export const PAGES = {
         h2: "Placeholder roles &mdash; illustrative until formal hiring opens.",
         deck: "Two founding-engineer role shapes are described in detail in the /careers content collection. Formal application intake opens when the first customer engagement is signed; the role shapes below are how the work is scoped in the meantime.",
         items: [
-          { title: "Founding Backend Engineer", body: "Build the run layer, the Operational Graph, and the engine that turns operational signal into safe, reviewed action. Python + TypeScript, graph modeling, real data pipelines. Remote (EU hours). Reach out at careers@nebbos.ai with subject 'Founding Backend Engineer' for the full role description." },
-          { title: "Founding Frontend Engineer", body: "Help build the surfaces that make Operations Intelligence legible. Next.js, typography-forward design, real-time state. Remote (EU hours). Reach out at careers@nebbos.ai with subject 'Founding Frontend Engineer' for the full role description." },
+          { title: "Founding Backend Engineer", body: "Build the run layer, the Operational Graph, and the engine that turns operational signal into safe, reviewed action. Python + TypeScript, graph modeling, real data pipelines. Remote (EU hours). Read the full role at /careers/founding-backend-engineer." },
+          { title: "Founding Frontend Engineer", body: "Help build the surfaces that make Operations Intelligence legible. Next.js, typography-forward design, real-time state. Remote (EU hours). Read the full role at /careers/founding-frontend-engineer." },
         ],
       },
       {
