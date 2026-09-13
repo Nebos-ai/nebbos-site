@@ -108,8 +108,8 @@ export const LAYERS: Layer[] = [
     related: [2, 7, 15],
     pearls: ["Nebbos Design", "Nebbos Finance", "Nebbos Operations", "Nebbos Governance"],
     resources: [
-      { title: "Why substrate isolation matters more than app-layer", href: "/blog" },
-      { title: "Versioned migrations for enterprise AI", href: "/blog" },
+      { title: "Why substrate isolation matters more than app-layer", href: "/blog/client-isolation-as-a-database-primitive" },
+      { title: "Versioned migrations for enterprise AI", href: "/blog/governance-must-be-architectural" },
     ],
   },
   {
@@ -147,8 +147,8 @@ export const LAYERS: Layer[] = [
     related: [1, 11, 15],
     pearls: ["Nebbos Security", "Nebbos Governance", "Nebbos People"],
     resources: [
-      { title: "Workload identity for AI systems", href: "/blog" },
-      { title: "How to design break-glass without breaking audit", href: "/blog" },
+      { title: "Workload identity for AI systems", href: "/blog/client-isolation-as-a-database-primitive" },
+      { title: "How to design break-glass without breaking audit", href: "/blog/governance-must-be-architectural" },
     ],
   },
   {
@@ -185,7 +185,7 @@ export const LAYERS: Layer[] = [
     ],
     related: [10, 11, 14],
     pearls: ["Nebbos People", "Nebbos Operations", "Nebbos Finance"],
-    resources: [{ title: "Why AI needs to be department-first", href: "/blog" }],
+    resources: [{ title: "Why AI needs to be department-first", href: "/blog/naming-a-pearl-for-a-department" }],
   },
 
   // ─── Band 2 · Boundary ─────────────────────────────────────────────
@@ -223,7 +223,7 @@ export const LAYERS: Layer[] = [
     ],
     related: [1, 6, 9],
     pearls: ["Nebbos Operations", "Nebbos People", "Nebbos Development"],
-    resources: [{ title: "Why raw-first ingest is a compliance requirement", href: "/blog" }],
+    resources: [{ title: "Why raw-first ingest is a compliance requirement", href: "/blog/deterministic-before-the-model" }],
   },
   {
     n: 5,
@@ -260,7 +260,7 @@ export const LAYERS: Layer[] = [
     related: [2, 6, 12],
     pearls: ["Nebbos Design", "Nebbos Development", "Nebbos Operations"],
     resources: [
-      { title: "Why one contract beats two", href: "/blog" },
+      { title: "Why one contract beats two", href: "/blog/the-fifteen-layers-in-fifteen-minutes" },
       { title: "How MCP fits your existing API", href: "/docs" },
     ],
   },
@@ -303,7 +303,7 @@ export const LAYERS: Layer[] = [
       "Nebbos People",
     ],
     resources: [
-      { title: "The connector catalog philosophy", href: "/blog" },
+      { title: "The connector catalog philosophy", href: "/blog/the-fifteen-layers-in-fifteen-minutes" },
     ],
   },
 
@@ -350,9 +350,9 @@ export const LAYERS: Layer[] = [
       "Nebbos People",
     ],
     resources: [
-      { title: "The compounding value of enterprise memory", href: "/blog" },
-      { title: "Memory-first retrieval — why it matters", href: "/blog" },
-      { title: "How to think about your AI moat", href: "/blog" },
+      { title: "The compounding value of enterprise memory", href: "/blog/the-company-brain" },
+      { title: "Memory-first retrieval — why it matters", href: "/blog/the-company-brain" },
+      { title: "How to think about your AI moat", href: "/blog/the-company-brain" },
     ],
   },
   {
@@ -396,8 +396,8 @@ export const LAYERS: Layer[] = [
       "Nebbos Legal",
     ],
     resources: [
-      { title: "Multi-provider routing explained", href: "/blog" },
-      { title: "Nebbos tokens — the stable-currency model", href: "/blog" },
+      { title: "Multi-provider routing explained", href: "/blog/deterministic-before-the-model" },
+      { title: "Nebbos tokens — the stable-currency model", href: "/blog/deterministic-before-the-model" },
     ],
   },
   {
@@ -439,7 +439,7 @@ export const LAYERS: Layer[] = [
       "Nebbos Finance",
     ],
     resources: [
-      { title: "Precision vs recall for enterprise AI alerts", href: "/blog" },
+      { title: "Precision vs recall for enterprise AI alerts", href: "/blog/why-dashboards-tell-you-too-late" },
     ],
   },
 
@@ -487,9 +487,9 @@ export const LAYERS: Layer[] = [
       "Nebbos People",
     ],
     resources: [
-      { title: "How to pick which department gets a Pearl first", href: "/blog" },
-      { title: "Nebbos General → your tuned Pearl", href: "/blog" },
-      { title: "The portability clause every enterprise buyer needs", href: "/blog" },
+      { title: "How to pick which department gets a Pearl first", href: "/blog/naming-a-pearl-for-a-department" },
+      { title: "Nebbos General → your tuned Pearl", href: "/blog/preference-pairs-are-your-training-data" },
+      { title: "The portability clause every enterprise buyer needs", href: "/blog/the-company-brain" },
     ],
   },
   {
@@ -532,7 +532,7 @@ export const LAYERS: Layer[] = [
       "Nebbos Security",
     ],
     resources: [
-      { title: "Designing an approval graph that scales", href: "/blog" },
+      { title: "Designing an approval graph that scales", href: "/blog/approval-is-the-moat" },
     ],
   },
   {
@@ -573,7 +573,7 @@ export const LAYERS: Layer[] = [
       "Nebbos Development",
     ],
     resources: [
-      { title: "Idempotent retries for AI action systems", href: "/blog" },
+      { title: "Idempotent retries for AI action systems", href: "/blog/governance-must-be-architectural" },
     ],
   },
 
@@ -617,7 +617,7 @@ export const LAYERS: Layer[] = [
       "Nebbos Operations",
     ],
     resources: [
-      { title: "Onboarding-through-offboarding as one substrate", href: "/blog" },
+      { title: "Onboarding-through-offboarding as one substrate", href: "/blog/naming-a-pearl-for-a-department" },
     ],
   },
   {
@@ -659,7 +659,7 @@ export const LAYERS: Layer[] = [
       "Nebbos Legal",
     ],
     resources: [
-      { title: "Why Nebbos tokens over per-provider billing", href: "/blog" },
+      { title: "Why Nebbos tokens over per-provider billing", href: "/blog/deterministic-before-the-model" },
     ],
   },
   {
@@ -702,9 +702,9 @@ export const LAYERS: Layer[] = [
       "Nebbos Security",
     ],
     resources: [
-      { title: "EU AI Act Article 11 explained", href: "/blog" },
-      { title: "Attestation vs logging — why the difference matters", href: "/blog" },
-      { title: "Preparing for the AI regulator you don&rsquo;t know yet", href: "/blog" },
+      { title: "EU AI Act Article 11 explained", href: "/blog/governance-must-be-architectural" },
+      { title: "Attestation vs logging — why the difference matters", href: "/blog/governance-must-be-architectural" },
+      { title: "Preparing for the AI regulator you don&rsquo;t know yet", href: "/blog/governance-must-be-architectural" },
     ],
   },
 ];

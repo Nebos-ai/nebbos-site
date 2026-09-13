@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
 import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
@@ -8,16 +9,19 @@ export const metadata = pageMetadata({
   title: "Presentation",
   path: "/platform/presentation",
   description:
-    "Cradle. Shell. Pearl. The four-slide presentation that explains what Nebbos is, why it matters, and what changes at every company size.",
+    "The four-slide Nebbos presentation. Deep-linked from anywhere that needs the four-slide story: what the run layer is, what it meters, what its primitives are, and what deploying on it changes.",
 });
 
-const slides = [
-  { k: "01", title: "Intelligence that compounds.", body: "One Pearl per department. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave." },
-  { k: "02", title: "You are training AI you don't own.", body: "With data you don't control, for a company that isn't yours. Every generic AI vendor uses your operational judgment to sharpen THEIR next release. Nebbos inverts that." },
-  { k: "03", title: "Cradle. Shell. Pearl.", body: "The three-tier substrate. Cradle owns the memory + audit trail. Shell holds the department context. Pearl is the per-department brain that persists across every human who comes and goes." },
-  { k: "04", title: "Same 5 years. Same choice at every company size.", body: "From mid-market to enterprise, the operational-judgment question is the same. The choice: train your model, or train someone else&rsquo;s." },
-];
-
+/**
+ * /platform/presentation — Wave 5 · 2026-09-13 rewrite
+ *
+ * Was: 48-line stub carrying the stale Cradle/Shell/Pearl three-tier
+ * story with CTAs pointing at /presentation (which now exists).
+ * Now: an editorial gateway. The four-slide narrative deck lives at
+ * /presentation; this page is the reader-in-the-platform-subtree
+ * pointer to it, with the shape of the deck outlined for anyone landing
+ * here from search or an internal link.
+ */
 export default function PresentationPage() {
   return (
     <>
@@ -25,21 +29,44 @@ export default function PresentationPage() {
         eyebrow="Presentation"
         title={
           <>
-            Cradle. <em style={{ fontStyle: "italic", color: "var(--gold)" }}>Shell.</em> Pearl.
+            The four-slide{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>run-layer story.</em>
           </>
         }
-        deck="Four slides. Same 5 years. Same choice at every company size."
+        deck="The canonical Nebbos presentation lives at /presentation with the deck embedded inline. Below is what it covers, so you can decide whether to open it now or forward it first."
       >
-        <Link href="/presentation" className="btn btn-primary">Open the presentation →</Link>
+        <ButtonLink href="/presentation" variant="primary">Open the presentation</ButtonLink>
       </Hero>
 
-      {slides.map((s) => (
-        <FeatureRow key={s.k} eyebrow={s.k} title={s.title} body={<p style={{ margin: 0 }} dangerouslySetInnerHTML={{ __html: s.body }} />} />
-      ))}
+      <FeatureRow
+        eyebrow="Slide 01"
+        title="Every AI call needs a run layer."
+        body={<p style={{ margin: 0 }}>The class of work that sits between intent and state. Not the model. Not the app. The layer that decides whether the call runs, what it costs, what it touches, and what it leaves behind.</p>}
+      />
+
+      <FeatureRow
+        reverse
+        eyebrow="Slide 02"
+        title="Metered. Isolated. Modular."
+        body={<p style={{ margin: 0 }}>Every call is measured &mdash; tokens are the unit of accounting. Every call is scoped &mdash; no reach across workloads. Every call is composable &mdash; nested calls roll up, the substrate settles.</p>}
+      />
+
+      <FeatureRow
+        eyebrow="Slide 03"
+        title="Pearl runs. Tokens meter. Nested calls rollup. KG settles."
+        body={<p style={{ margin: 0 }}>Four primitives. Pearl is the VM your workload runs on. Tokens are the unit of accounting. Nested calls roll their traces back up to Pearl. The knowledge graph is where the substrate settles the truth.</p>}
+      />
+
+      <FeatureRow
+        reverse
+        eyebrow="Slide 04"
+        title="Deploy on Nebbos. Every call is governed by default."
+        body={<p style={{ margin: 0 }}>Governance is not a feature layered on top. It is the shape of the runtime. Every call you route through Nebbos carries its own audit, its own metering, its own isolation. You do not opt in.</p>}
+      />
 
       <CTABand
-        headline="Walk it live."
-        deck="The four slides ship together as an interactive presentation. Download the PDF or open the live view."
+        headline="Open the deck with the PDF inline."
+        deck="The canonical /presentation surface has all four slides plus the downloadable PDF embedded inline. This page is the map; that page is the deck."
         primary={{ label: "Open the presentation", href: "/presentation" }}
         secondary={{ label: "Download PDF", href: "/nebbos-presentation.pdf" }}
       />

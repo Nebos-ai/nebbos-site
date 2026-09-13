@@ -1,5 +1,7 @@
 import Link from "next/link";
+import { ButtonLink } from "@/components/ui/Button";
 import { Hero } from "@/components/ui/Hero";
+import { FeatureRow } from "@/components/ui/FeatureRow";
 import { CTABand } from "@/components/ui/CTABand";
 import { pageMetadata } from "@/lib/seo";
 
@@ -7,12 +9,16 @@ export const metadata = pageMetadata({
   title: "Dashboard",
   path: "/platform/dashboard",
   description:
-    "The Nebbos overview at a glance — brand posture, key metrics, and the doc-meta a buyer needs before they walk into the interactive presentation.",
+    "The at-a-glance view of a Nebbos deployment — the fires the run layer counted, the actions the approval graph routed, the workloads Pearl is running today.",
 });
 
 /**
- * /platform/dashboard — mirrors the Dashboard tab of the sales presentation.
- * See /presentation for the full interactive dashboard with live tab switching.
+ * /platform/dashboard — Wave 5 · 2026-09-13 rewrite
+ *
+ * Was: 40-line "Intelligence that compounds" stub with 2 CTAs to /presentation.
+ * Now: real dashboard concept — the surface your operators see when a Pearl
+ * is live in production. Run-layer voice. Distinct from /presentation which
+ * is the four-slide narrative deck.
  */
 export default function DashboardPage() {
   return (
@@ -21,19 +27,46 @@ export default function DashboardPage() {
         eyebrow="Dashboard"
         title={
           <>
-            Intelligence <em style={{ fontStyle: "italic", color: "var(--gold)" }}>that compounds.</em>
+            The view when your Pearl is{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>live.</em>
           </>
         }
-        deck="Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave."
+        deck="What the operators running your Nebbos deployment see. Fires counted, actions routed, approvals pending, workloads pooled. The at-a-glance surface, not the sales deck."
       >
-        <Link href="/presentation" className="btn btn-primary">Open the interactive dashboard →</Link>
+        <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
+      <FeatureRow
+        eyebrow="01 · Fires counted"
+        title="Every hook fire on your workload, over 30 days."
+        body={<p style={{ margin: 0 }}>The run layer emits a fire on every governance decision it makes &mdash; verify-first checks, KG-route lookups, credential guards, session-shard writes. The dashboard shows the 30-day rolling count, sliced by hook. Nebbos itself runs at ~62,000 fires per month; your Pearl is measured against that same baseline.</p>}
+      />
+
+      <FeatureRow
+        reverse
+        eyebrow="02 · Actions routed"
+        title="What the approval graph handled this week."
+        body={<p style={{ margin: 0 }}>Every consequential action the Pearl drafted, who approved it, how fast it landed, what got kicked back. The graph is the governance; the dashboard is the graph made legible.</p>}
+      />
+
+      <FeatureRow
+        eyebrow="03 · Workloads pooled"
+        title="The workloads your Pearls handled, by department."
+        body={<p style={{ margin: 0 }}>Coverage handoffs, ticket triage, close-week actions, procurement chase-ups &mdash; whatever the Pearl is scoped to. Aggregate by department, drill down to the specific call, replay any decision against a different context.</p>}
+      />
+
+      <FeatureRow
+        reverse
+        eyebrow="04 · Substrate understanding"
+        title="Your baseline against the Nebbos 100%."
+        body={<p style={{ margin: 0 }}>Nebbos measures every deployment against its own substrate-understanding baseline (30-day fire count on Nebbos itself). Your Pearl reads at some percentage of that. The dashboard shows the percentage, the trend, and the gap that governs promotion to production.</p>}
+      />
+
       <CTABand
-        headline="See the full sales presentation."
-        deck="Dashboard is one of four tabs. Presentation, Standout, and Trends live alongside it in the interactive view."
-        primary={{ label: "Open the presentation", href: "/presentation" }}
-        secondary={{ label: "Download PDF", href: "/nebbos-presentation.pdf" }}
+        headline="See the dashboard on your workload's shape."
+        deck="A 30-minute walkthrough shows the panels above populated against your industry's typical workload pattern, before the four-week deployment starts."
+        primary={{ label: "Book a demo", href: "/demo" }}
+        secondary={{ label: "See the presentation", href: "/presentation" }}
       />
     </>
   );
