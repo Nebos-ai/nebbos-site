@@ -1983,24 +1983,35 @@ export const PAGES = {
 
   careers: {
     slug: "/careers",
-    title: "Careers · Building the company brain",
+    title: "Careers · Building the run layer",
     metaDescription:
-      "Founding roles at Nebbos — the operating system for the AI-native enterprise.",
+      "Founding roles at Nebbos — the run layer for AI-native enterprises.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Careers",
-        h1: "Building the company brain.",
-        deck: "Founding roles across engineering, design, and operations. If you want to build the operating system for the AI-native enterprise, reach out.",
+        h1: "Building the run layer.",
+        deck: "Founding roles across engineering, design, and operations. If you want to build the run layer for AI-native enterprises, reach out.",
         imageFamily: "concept-pearl",
       },
       {
         id: "what-were-building",
         kind: "text-block",
         eyebrow: "01 · What we&rsquo;re building",
-        h2: "An institution that watches the work.",
-        body: "Every enterprise has domains that would run better with a brain — operations handoffs, finance close, HR onboarding, procurement chase-ups, incident triage. None of those brains get built because the team is running the current ones. Nebbos is the architecture that lets each domain have one — a Pearl, pre-educated on the work, tuned by use, portable to the customer if they ever leave. Fifteen governance layers underneath, one flat price per seat.",
+        h2: "The layer that sits between intent and state.",
+        body: "Every AI call needs a run layer &mdash; the metered, isolated, modular executor that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every enterprise has departments that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing layer. Fifteen substrate layers underneath, one architecture that carries the work.",
+      },
+      {
+        id: "current-openings",
+        kind: "list-numbered",
+        eyebrow: "01a · Currently open",
+        h2: "Placeholder roles &mdash; illustrative until formal hiring opens.",
+        deck: "Two founding-engineer role shapes are described in detail in the /careers content collection. Formal application intake opens when the first customer engagement is signed; the role shapes below are how the work is scoped in the meantime.",
+        items: [
+          { title: "Founding Backend Engineer", body: "Build the run layer, the Operational Graph, and the engine that turns operational signal into safe, reviewed action. Python + TypeScript, graph modeling, real data pipelines. Remote (EU hours). Reach out at careers@nebbos.ai with subject 'Founding Backend Engineer' for the full role description." },
+          { title: "Founding Frontend Engineer", body: "Help build the surfaces that make Operations Intelligence legible. Next.js, typography-forward design, real-time state. Remote (EU hours). Reach out at careers@nebbos.ai with subject 'Founding Frontend Engineer' for the full role description." },
+        ],
       },
       {
         id: "roles",
@@ -2192,6 +2203,64 @@ export const PAGES = {
         kind: "table-rows",
         eyebrow: "01 · Facts on file",
         // Rendered from content/facts.ts
+      },
+      {
+        id: "kit",
+        kind: "list-numbered",
+        eyebrow: "02 · Press kit",
+        h2: "Nebbos wordmarks and marks.",
+        deck: "Download the brand assets for coverage. Use the wordmark on light backgrounds; use the mark on dark or paper-2 grounds; use the orange variants only against the ink base.",
+        items: [
+          { title: "Wordmark &mdash; dark ink", body: "/nebbos-wordmark-dark.svg &mdash; the default wordmark on light and paper backgrounds." },
+          { title: "Wordmark &mdash; paper", body: "/nebbos-wordmark-white.svg &mdash; the wordmark reversed for dark and ink backgrounds." },
+          { title: "Wordmark &mdash; accent", body: "/nebbos-wordmark-orange.svg &mdash; the accent-color wordmark, single-use only, never on ink." },
+          { title: "Mark &mdash; dark ink", body: "/nebbos-mark-dark.svg &mdash; the standalone mark for tight spaces and social avatars." },
+          { title: "Mark &mdash; paper", body: "/nebbos-mark-white.svg &mdash; the standalone mark reversed for dark grounds." },
+          { title: "Mark &mdash; accent", body: "/nebbos-mark-orange.svg &mdash; the accent-color mark, single-use only." },
+          { title: "Presentation deck (PDF)", body: "/nebbos-presentation.pdf &mdash; the current four-slide deck. Live view at /presentation." },
+        ],
+      },
+    ],
+  },
+
+  "legal/law-enforcement": {
+    slug: "/legal/law-enforcement",
+    title: "Law-enforcement request procedure",
+    metaDescription:
+      "How Nebbos handles subpoenas, warrants, and law-enforcement requests. Route through counsel. Notify the client. Minimum-necessary responsive material.",
+    sections: [
+      {
+        id: "hero",
+        kind: "hero-paper",
+        eyebrow: "00 · Law enforcement",
+        h1: "Subpoena and law-enforcement procedure.",
+        deck: "How Nebbos responds when law-enforcement requests customer data. The rule: route through counsel, notify the client, provide minimum-necessary responsive material.",
+      },
+      {
+        id: "process",
+        kind: "list-numbered",
+        eyebrow: "01 · The four-step process",
+        h2: "Every request follows the same path.",
+        items: [
+          { title: "Valid legal process required", body: "Nebbos requires valid legal process &mdash; a subpoena, court order, or warrant issued under proper jurisdiction. Informal law-enforcement requests are declined." },
+          { title: "Route through counsel", body: "Every request lands with Nebbos legal counsel first. Counsel assesses jurisdiction, scope, and legal validity before any data is touched." },
+          { title: "Notify the client", body: "The affected client is notified of the request unless legally prohibited (gag order, ongoing investigation, statutory secrecy). When notification is prohibited, the reason is logged in the transparency report." },
+          { title: "Minimum necessary responsive material", body: "Overly broad requests are challenged. Only the specific data responsive to the valid legal process is produced. Nothing beyond the request's actual scope." },
+        ],
+      },
+      {
+        id: "transparency",
+        kind: "text-block",
+        eyebrow: "02 · Transparency report",
+        h2: "Annual cadence. Published on the trust page.",
+        body: "Nebbos publishes an annual transparency report enumerating law-enforcement requests received, requests complied with, requests challenged, and requests where client notification was prohibited (with the legal basis for the prohibition). The current report and prior years are on the trust page.",
+      },
+      {
+        id: "contact",
+        kind: "inbox-router",
+        eyebrow: "03 · How to serve process",
+        h2: "Route valid legal process through counsel.",
+        deck: "Nebbos legal counsel handles all law-enforcement process. Do not route to product or support inboxes.",
       },
     ],
   },
