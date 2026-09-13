@@ -30,7 +30,7 @@ export default function PresentationPage() {
         }
         deck="Four slides. Same 5 years. Same choice at every company size."
       >
-        <Link href="/presentation" className="btn btn-primary">See the full presentation →</Link>
+        <Link href="/presentation" className="btn btn-primary">Open the presentation →</Link>
       </Hero>
 
       {slides.map((s) => (
