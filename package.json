@@ -4,18 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "bash scripts/check-vocab.sh",
+    "prebuild": "pnpm run sync:brand-assets && bash scripts/check-vocab.sh",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "check:vocab": "bash scripts/check-vocab.sh",
+    "sync:brand-assets": "cp node_modules/@nebbos/brand/logo/nebbos-mark.svg public/favicon.svg",
+    "postinstall": "pnpm run sync:brand-assets 2>/dev/null || true",
     "build:pdf": "node scripts/build-presentation-pdf.mjs",
     "test:a11y": "playwright test",
     "test:lh": "lhci autorun --config=.lighthouserc.json"
   },
   "dependencies": {
     "@google/genai": "^2.18.0",
-    "@nebbos/brand": "github:Nebos-ai/nebbos-brand#v1.0.0",
+    "@nebbos/brand": "github:Nebos-ai/nebbos-brand#v2.0.1",
     "marked": "^18.0.10",
     "motion": "^13.1.1",
     "next": "15.5.21",

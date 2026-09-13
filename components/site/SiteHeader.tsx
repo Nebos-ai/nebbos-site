@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { primaryNav, secondaryNav, productTree } from "@/lib/nav";
 
 /**
@@ -70,15 +71,16 @@ export function SiteHeader() {
   return (
     <header ref={containerRef} className="site-header">
       <div className="container site-header__inner">
-        <Link href="/" aria-label="Nebbos home" className="site-header__brand">
-          <Image
-            src="/nebbos-mark-white.svg"
-            alt="Nebbos"
-            width={40}
-            height={41}
-            priority
-            className="site-header__mark"
-          />
+        <Link
+          href="/"
+          aria-label="Nebbos home"
+          className="site-header__brand"
+          style={{ color: "var(--paper)" }}
+        >
+          {/* Flower-of-life mark from @nebbos/brand v2.0.1. Renders white
+              via currentColor + parent color: var(--paper) — matches the
+              dark-chrome header background. */}
+          <NebbosMark size={40} className="site-header__mark" />
         </Link>
 
         <nav aria-label="Primary" className="site-header__nav site-header__hide-mobile">
