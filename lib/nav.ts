@@ -159,6 +159,7 @@ export const solutionsNav: NavLink[] = [
   { label: "Financial Services", href: "/solutions/financial-services", strap: "Trading ops · risk · audit" },
   { label: "Manufacturing",      href: "/solutions/manufacturing",      strap: "Production · quality · supply" },
   { label: "Public Sector",      href: "/solutions/public-sector",      strap: "Case management · accountability" },
+  { label: "Model Training",     href: "/solutions/model-training",     strap: "Train the model on your operational judgment" },
 ];
 
 /* ── Secondary (right-aligned in header) ──────────────────────────────── */

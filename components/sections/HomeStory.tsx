@@ -58,7 +58,7 @@ const SCENE_CAPTIONS: Record<SceneId, { title: string; sub: string }> = {
 
 export function HomeStory() {
   return (
-    <section aria-labelledby="story-heading" style={{ background: "var(--paper)" }}>
+    <section id="story" aria-labelledby="story-heading" style={{ background: "var(--paper)" }}>
       {/* Section header — tight, no deck paragraph */}
       <div
         style={{
