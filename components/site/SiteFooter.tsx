@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { footerNav } from "@/lib/nav";
 import { BRAND } from "@/content/brand";
 
@@ -40,13 +41,12 @@ export function SiteFooter() {
               aria-label="Nebbos home"
               style={{ display: "inline-flex", alignItems: "center", gap: 16, color: "var(--ink)", marginBottom: 20, textDecoration: "none" }}
             >
-              <Image
-                src="/nebbos-mark-dark.svg"
-                alt=""
-                aria-hidden="true"
-                width={48}
-                height={49}
-              />
+              {/* Flower-of-life mark from @nebbos/brand v2.0.1. Renders
+                  dark-ink via currentColor + parent color: var(--ink).
+                  The wordmark stays as a hand-cp'd asset — brand v2 has
+                  no lockup export yet (see @nebbos/brand v2.0.1 index.tsx
+                  docstring). */}
+              <NebbosMark size={48} />
               <Image
                 src="/nebbos-wordmark-dark.svg"
                 alt="Nebbos"
