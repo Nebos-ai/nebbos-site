@@ -54,6 +54,13 @@ export const metadata: Metadata = {
   description: BRAND.descriptionShort,
   applicationName: BRAND.name,
   authors: [{ name: BRAND.name }],
+  icons: {
+    icon: [
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
   keywords: [
     "run layer",
     "AI execution substrate",
