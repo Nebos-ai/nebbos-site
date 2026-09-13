@@ -1,0 +1,74 @@
+{
+  "total_fires": 62678,
+  "by_hook": {
+    "active_agent_board": 619,
+    "adr_plan_arithmetic": 258,
+    "agent_board_primer": 498,
+    "authorship_grounding": 1943,
+    "auto_close_stale_prs": 3,
+    "credential_value_block": 246,
+    "draft_create_guard": 18,
+    "frontmatter_delimiter_guard": 93,
+    "git_config_integrity": 95,
+    "git_identity_block": 18,
+    "intake_corpus": 2638,
+    "kg_route_primer": 5284,
+    "l3_autonomous_cleanup": 1868,
+    "lifecycle_reminder": 109,
+    "link_health_primer": 1229,
+    "link_health_stop": 1725,
+    "mcp_over_shell": 8667,
+    "mcp_tool_invocations": 189,
+    "memory_corpus": 1516,
+    "memory_write_dupe": 62,
+    "mvs_detection": 699,
+    "nebbos-mcp-compression-report": 186,
+    "no_verify_block": 35,
+    "operator_surface_verify": 2603,
+    "placeholder_author_block": 127,
+    "pr_create_guard": 140,
+    "project_create": 53,
+    "recent_memory_check": 3027,
+    "scan_client_artifact": 95,
+    "session_report": 4885,
+    "session_shard": 9826,
+    "system_history_ingest": 1324,
+    "verify_first": 10020,
+    "wip_ceiling": 2485,
+    "worktree_create_guard": 86,
+    "worktree_marker_block": 9
+  },
+  "as_of": "2026-09-13T18:47:50.343693+00:00",
+  "baseline_source": "self",
+  "understanding_pct": 100.0,
+  "self_total_fires": 62678,
+  "by_tenant_total": {
+    "self": 62678
+  },
+  "window_days": 30,
+  "exclude_hooks": [
+    "nebos_agent_reconciler"
+  ],
+  "provenance": {
+    "log_file_count": 36,
+    "first_ts": "2026-08-28T13:41:28.259674+00:00",
+    "last_ts": "2026-09-13T18:47:47.225877+00:00",
+    "row_count": 62678
+  },
+  "tenant_tree": {
+    "main": "Nebbos Technologies Corp.",
+    "children": [
+      {
+        "name": "nebos.ai",
+        "kind": "product tenant",
+        "baseline_pct": 0.0
+      },
+      {
+        "name": "nebos-mcp",
+        "kind": "substrate tenant",
+        "baseline_pct": 0.0
+      }
+    ],
+    "note": "Baseline percentages are live as of the run \u2014 untagged rows attribute to the main tenant (self); tagged rows attribute to their tenant_id."
+  }
+}
