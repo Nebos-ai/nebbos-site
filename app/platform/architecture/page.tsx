@@ -7,10 +7,18 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata = pageMetadata({
   title: "Architecture",
   path: "/platform/architecture",
-  description: "Cheap to watch. Sharp when it counts. The shape of the platform.",
+  description:
+    "How the Nebbos run layer is built. Four primitives, one runtime — Pearl runs the workload, tokens meter the consumption, nested calls roll up their traces, the knowledge graph settles the truth.",
 });
 
-/** Architecture — rebuild-2026 v4 · Delta brief editorial. */
+/**
+ * /platform/architecture — the shape of the run layer (Wave 3 · 2026-09-13 rewrite)
+ *
+ * Prior version cited "Cradle · Shell · Pearl" three-tier which was
+ * superseded 2026-09-11 by the run-layer north star. This rewrite adopts
+ * the current architecture: Pearl (VM) · Tokens (gas) · Nested calls
+ * (rollup) · KG (settlement).
+ */
 export default function ArchitecturePage() {
   return (
     <>
@@ -18,30 +26,52 @@ export default function ArchitecturePage() {
         eyebrow="Architecture"
         title={
           <>
-            Cheap to watch.
-            <br />
-            Sharp when it <em style={{ fontStyle: "italic", color: "var(--gold)" }}>counts</em>.
+            Four primitives.{" "}
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>One runtime.</em>
           </>
         }
-        deck="Small models listen. Big models decide."
+        deck="The shape of the run layer. What each primitive does, what it guarantees, and how the four compose into a single call."
       >
         <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
-        eyebrow="The shape"
-        title="Three layers. One direction."
-        body={<p style={{ margin: 0 }}>Cradle remembers. Shell governs. Pearl acts. Each layer earns its keep — nothing runs on a cost you can&rsquo;t explain.</p>}
+        eyebrow="01 · Pearl"
+        title="The VM your workload runs on."
+        body={<p style={{ margin: 0 }}>Pearl is the process boundary for a Nebbos deployment. Every call — every prompt, every action, every retrieval — runs inside a Pearl. The Pearl carries the context, holds the identity, enforces the boundary. Multiple Pearls per department; one department per Pearl.</p>}
       />
 
       <FeatureRow
         reverse
-        eyebrow="What that buys"
-        title="You own the memory."
-        body={<p style={{ margin: 0 }}>The intelligence compounds inside your client. Portable to you, never trained back into somebody else&rsquo;s model.</p>}
+        eyebrow="02 · Tokens"
+        title="The unit of accounting. Not just consumption &mdash; provenance."
+        body={<p style={{ margin: 0 }}>Every token consumed on Nebbos is traced to a call, a Pearl, a user, and a business action. Not a monthly aggregate. Every token, every time. When cost audit lands, you know which decision paid for which tokens.</p>}
       />
 
-      <CTABand headline="See the shape on your own stack." primary={{ label: "Book a demo", href: "/demo" }} />
+      <FeatureRow
+        eyebrow="03 · Nested calls"
+        title="Composition without sprawl. Traces roll up."
+        body={<p style={{ margin: 0 }}>A Pearl can spawn nested calls to answer harder questions. Every nested call carries its parent&rsquo;s context, contributes its trace to the parent, and cannot escape the parent&rsquo;s boundary. The composition is the accounting.</p>}
+      />
+
+      <FeatureRow
+        reverse
+        eyebrow="04 · Knowledge graph"
+        title="Where the substrate settles the truth."
+        body={<p style={{ margin: 0 }}>The KG is not a search index; it is where every fact the run layer establishes goes to live. Every approval, every action, every consequence &mdash; append-only, hash-chained, replay-able. When compliance asks &ldquo;what did the system know, and when,&rdquo; the answer is a KG query.</p>}
+      />
+
+      <FeatureRow
+        eyebrow="What the four guarantee together"
+        title="Every call, governed by construction."
+        body={<p style={{ margin: 0 }}>Metered because tokens are the unit. Isolated because Pearl is the boundary. Composable because nested calls roll up. Auditable because the KG settles. Not four features glued on top of a model &mdash; the shape of the runtime itself.</p>}
+      />
+
+      <CTABand
+        headline="See the four primitives on your workload."
+        primary={{ label: "Book a demo", href: "/demo" }}
+        secondary={{ label: "Read the docs", href: "/docs" }}
+      />
     </>
   );
 }
