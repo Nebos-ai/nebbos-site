@@ -2,6 +2,7 @@
   "name": "nebbos-site",
   "version": "2.0.0",
   "private": true,
+  "packageManager": "pnpm@10.33.2",
   "scripts": {
     "dev": "next dev",
     "prebuild": "pnpm run sync:brand-assets && bash scripts/check-vocab.sh",

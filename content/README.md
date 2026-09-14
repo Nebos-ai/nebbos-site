@@ -14,7 +14,7 @@ email) is ONE file edit that propagates everywhere it's used.
 
 | file | owns | example strings |
 |---|---|---|
-| `brand.ts` | tagline · category · one-liners · voice guardrails | "The company brain your team never had time to build", "Company-brain infrastructure for enterprise" |
+| `brand.ts` | tagline · category · one-liners · voice guardrails | "The run layer for AI-native operations.", "Run-layer substrate for enterprise AI" |
 | `pricing.ts` | price · minimum · discount · overage currency | "$150", 20-user min, "15% annual prepay", "Nebbos tokens" |
 | `contact.ts` | emails · form endpoints · social handles | `hello@nebbos.ai`, `press@nebbos.ai`, `security@nebbos.ai` |
 | `facts.ts` | company facts · founding · category · positioning | 2026 founding year, solo-founder-led, EU AI Act positioning |

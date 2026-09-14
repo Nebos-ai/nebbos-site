@@ -106,6 +106,7 @@ export function HomeBands() {
             <div
               key={band.n}
               role="tab"
+              id={`band-${band.n}-tab`}
               tabIndex={0}
               aria-selected={isActive}
               aria-controls={`band-${band.n}-panel`}
@@ -127,7 +128,13 @@ export function HomeBands() {
               <SceneOverlay scrim={isActive ? "bottom" : "even"} vignetteStrength={0.55} />
 
               {isActive ? (
-                <ExpandedContent band={band} href={href} layers={layers} />
+                <div
+                  role="tabpanel"
+                  id={`band-${band.n}-panel`}
+                  aria-labelledby={`band-${band.n}-tab`}
+                >
+                  <ExpandedContent band={band} href={href} layers={layers} />
+                </div>
               ) : (
                 <CompressedContent bandName={band.name} bandN={band.n} />
               )}

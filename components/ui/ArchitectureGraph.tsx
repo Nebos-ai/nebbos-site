@@ -7,7 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { AnimatePresence, LayoutGroup, motion, useMotionValue, useSpring, useTransform } from "motion/react";
+import { AnimatePresence, LayoutGroup, motion, useMotionValue, useReducedMotion, useSpring, useTransform } from "motion/react";
 import {
   BANDS,
   EDGES,
@@ -119,10 +119,15 @@ export function ArchitectureGraph() {
   const canvasRef = useRef<HTMLDivElement | null>(null);
 
   // Mouse-tracked parallax — mouse xy relative to canvas center → tilt.
+  const prefersReducedMotion = useReducedMotion();
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-  const rotY = useSpring(useTransform(mouseX, [-1, 1], [-6, 6]), { stiffness: 90, damping: 20, mass: 0.5 });
-  const rotX = useSpring(useTransform(mouseY, [-1, 1], [4, -4]), { stiffness: 90, damping: 20, mass: 0.5 });
+  // When reduced-motion is active, clamp the spring range to 0 so the SVG stays flat.
+  // The global CSS reduced-motion rule zeros CSS transitions but does NOT neutralize
+  // motion/react inline transforms, so this gate is required for a11y.
+  const tiltRange: [number, number] = prefersReducedMotion ? [0, 0] : [-1, 1];
+  const rotY = useSpring(useTransform(mouseX, tiltRange, prefersReducedMotion ? [0, 0] : [-6, 6]), { stiffness: 90, damping: 20, mass: 0.5 });
+  const rotX = useSpring(useTransform(mouseY, tiltRange, prefersReducedMotion ? [0, 0] : [4, -4]), { stiffness: 90, damping: 20, mass: 0.5 });
 
   const shownN = pinned ?? active;
   const shownLayer: Layer | null = useMemo(() => {
@@ -201,13 +206,14 @@ export function ArchitectureGraph() {
   );
 
   const onCanvasMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    if (prefersReducedMotion) return;
     const rect = e.currentTarget.getBoundingClientRect();
     // Normalize mouse position to [-1, 1] relative to canvas center.
     const nx = ((e.clientX - rect.left) / rect.width) * 2 - 1;
     const ny = ((e.clientY - rect.top) / rect.height) * 2 - 1;
     mouseX.set(nx);
     mouseY.set(ny);
-  }, [mouseX, mouseY]);
+  }, [mouseX, mouseY, prefersReducedMotion]);
 
   const onCanvasMouseLeave = useCallback(() => {
     mouseX.set(0);
