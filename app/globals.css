@@ -83,6 +83,15 @@ a:hover {
   --accent-2:   #F6A03F;  /* Nebbos orange · brand · primary accent */
   --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
 
+  /* Product-line colors — placeholder tokens for the four-color flower-of-life
+     variant pack (founder-directed 2026-09-14). All four resolve to `--gold`
+     today; @nebbos/brand v2.1.0 ships the four hex codes founder ratifies.
+     Grounded in reference_nebbos_customer_product_matrix_4_products_3_tiers_12_skus_2026_09_14. */
+  --product-color-platform: var(--gold);
+  --product-color-app:      var(--gold);
+  --product-color-mcp:      var(--gold);
+  --product-color-usb:      var(--gold);
+
   /* Scene palette (Hand-of-God register) — used in scene-adjacent surfaces */
   --scene-1:    #C9B896;  /* coffee shop warmth */
   --scene-2:    #A8874F;  /* Central Park autumn */
