@@ -692,7 +692,7 @@ export const LAYERS: Layer[] = [
     benchmarks: [
       { label: "Attestation coverage", value: "100%", context: "Every human approval + every Pearl action + every model call" },
       { label: "Chain verification time", value: "<1s per event", context: "Regulator or auditor can verify any single event trail" },
-      { label: "EU AI Act Article 11 Annex IV readiness", value: "Pack available under NDA", context: "Ahead of 2027-08-02 deadline" },
+      { label: "EU AI Act Article 11 Annex IV readiness", value: "Pack in preparation", context: "Ahead of the 2027-08-02 Article 6/Annex III deadline; obligation-tracking substrate live via Layer 15" },
       { label: "Retention", value: "Configurable per client", context: "SOX / HIPAA / GDPR / sector-specific retention supported" },
     ],
     related: [2, 11, 14],
