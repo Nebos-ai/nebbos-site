@@ -12,9 +12,13 @@
  * don't hold copy strings themselves. Editing any string on the site =
  * editing one field in this file.
  *
- * Vocabulary rules (per feedback_nebbos_do_not_use_agent_use_brain_os_architecture):
- *   Use: company brain, operating system, architecture, Pearl, Nebbos [Domain]
- *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot
+ * Vocabulary rules (per feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14,
+ * amendment 2026-09-14 supersedes the 2026-09-11 run-layer wave and the 2026-08-23 company-brain
+ * wave on customer-facing hero surfaces; retained internally as technical register):
+ *   Use (customer-hero, 2026-09-14): platform, tools, MCP, USB, security, sovereignty, biometric, attested
+ *   Use (retained, brand names): Pearl, Nebbos [Domain]
+ *   Use (retained, internal/technical register only): run layer, executor, metered, isolated, modular, substrate, architecture, operating system
+ *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot (vendor framing forbidden)
  *
  * Related registries:
  *   content/brand.ts       — brand-level strings (name, tagline, description)
