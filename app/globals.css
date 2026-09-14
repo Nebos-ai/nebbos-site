@@ -83,14 +83,15 @@ a:hover {
   --accent-2:   #F6A03F;  /* Nebbos orange · brand · primary accent */
   --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
 
-  /* Product-line colors — placeholder tokens for the four-color flower-of-life
-     variant pack (founder-directed 2026-09-14). All four resolve to `--gold`
-     today; @nebbos/brand v2.1.0 ships the four hex codes founder ratifies.
-     Grounded in reference_nebbos_customer_product_matrix_4_products_3_tiers_12_skus_2026_09_14. */
-  --product-color-platform: var(--gold);
-  --product-color-app:      var(--gold);
-  --product-color-mcp:      var(--gold);
-  --product-color-usb:      var(--gold);
+  /* Product-line colors — CANDIDATE hex values pending founder ratification
+     (proposed 2026-09-14). Palette grounded in Apple's device-color grammar
+     × Zegna's institutional earth-tone restraint. Full reasoning at
+     docs/reference/nebbos-hardware-color-palette-2026-09-14.md. When founder
+     ratifies, these move to @nebbos/brand v2.1.0/tokens.css canonically. */
+  --product-color-platform: #4A4A52;  /* Nebbos Titanium Steel — gray, the operating substrate */
+  --product-color-app:      #6D4C2F;  /* Nebbos Cedar — brown, the local native in your hand */
+  --product-color-mcp:      #7B2F2A;  /* Nebbos Oxblood — red, the tool substrate carrying the signal */
+  --product-color-usb:      #1D1C22;  /* Nebbos Obsidian — black, the hardware you trust (matches --ink) */
 
   /* Scene palette (Hand-of-God register) — used in scene-adjacent surfaces */
   --scene-1:    #C9B896;  /* coffee shop warmth */
