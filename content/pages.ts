@@ -18,7 +18,13 @@
  *   Use (customer-hero, 2026-09-14): platform, tools, MCP, USB, security, sovereignty, biometric, attested
  *   Use (retained, brand names): Pearl, Nebbos [Domain]
  *   Use (retained, internal/technical register only): run layer, executor, metered, isolated, modular, substrate, architecture, operating system
- *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot (vendor framing forbidden)
+ *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot, tenant(s), multi-tenant (vendor framing + architecture-internal forbidden on customer surfaces)
+ *   Retired (do not resurrect): company brain, operating system (as brand framing), fifteen governance layers, department(s) (use "domain"), per-domain brain
+ *   Retracted claim patterns (do not resurrect — legal exposure, per elite-bar Phase 1 2026-09-14):
+ *     "SOC 2 Type II report available under NDA", "Annex IV pack available under NDA",
+ *     "HIPAA BAA available", "Engineered to SOC 2 Type II and ISO 27001",
+ *     "Auditors accept it as SOX-adequate", "Bessemer/Avante/SFAI Labs 2026 benchmark",
+ *     "twenty-three-percent inference-of-revenue"
  *
  * Related registries:
  *   content/brand.ts       — brand-level strings (name, tagline, description)
@@ -394,7 +400,7 @@ export const PAGES = {
         items: [
           { title: "How is this different from an AI-powered PagerDuty add-on?", body: "PagerDuty read your alerts. Nebbos Operations reads your operations — every system, every channel, every handoff. And the Pearl learns your team specifically, not a generic ops model." },
           { title: "What if the Pearl makes a wrong call?", body: "Every consequential action passes through your approval graph (Layer 11). The Pearl proposes; a named human approves or rejects with a reason that trains the Pearl. There is no autonomous consequential action without human sign-off." },
-          { title: "How does this fit our compliance posture?", body: "Every action the Pearl takes lands as an attested record (Layer 15) with the identity that authorized it, the timestamp, and the hash-chained trail. Ready for SOC 2 evidence + EU AI Act Article 11 pack." },
+          { title: "How does this fit our compliance posture?", body: "Every action the Pearl takes lands as an attested record (Layer 15) with the identity that authorized it, the timestamp, and the hash-chained trail. Substrate designed to produce SOC 2 evidence and EU AI Act Article 11 documentation; SOC 2 Type II certification is in progress, Annex IV pack is in preparation ahead of the 2027-08-02 deadline. See /compliance for the authoritative current-status memo." },
           { title: "Can we take our tuning with us if we leave?", body: "Yes. Portability is a contractual guarantee, not a marketing claim. Your tuned Pearl and its memory export completely on offboarding." },
           { title: "What about a runaway-Pearl scenario?", body: "Rate limits and approval gates apply uniformly to human and Pearl calls (Layer 05 · API + MCP). A Pearl cannot call itself in a loop, exceed its per-domain action budget, or take down the client or the humans who share it." },
           { title: "Is the model our data or their data?", body: "Every human decision your team makes trains YOUR Pearl. It doesn&rsquo;t train Nebbos&rsquo;s next base model without explicit opt-in. Your data trains your model, not someone else&rsquo;s." },
@@ -539,7 +545,7 @@ export const PAGES = {
         items: [
           { title: "How is this different from BlackLine + a script?", body: "BlackLine automates the mechanical reconciliation. Nebbos Finance reads the reconciliation, PLUS the pattern of reconciliations across quarters, PLUS your team&rsquo;s specific handling of edge cases, PLUS every other financial signal in your stack. The compounding memory is what a script can&rsquo;t replicate." },
           { title: "Our data is highly sensitive — how does isolation work?", body: "Row-level client isolation at Layer 01 · Data means no application-layer bug can leak your data to another client. Every request carries an identity checked at the substrate." },
-          { title: "What about audit acceptance?", body: "Every action the Pearl takes is attested (Layer 15) with the identity, timestamp, and hash-chained trail. External auditors we&rsquo;ve walked through it accept the attestation as SOX-adequate evidence." },
+          { title: "What about audit acceptance?", body: "Every action the Pearl takes is attested (Layer 15) with the identity, timestamp, and hash-chained trail. The attestation architecture is designed to satisfy SOX-adequate evidence standards for financial-controls testing; client auditors reviewing the substrate see the same append-only Layer 15 audit trail their evidence packages would cite. For a formal SOX-adequacy statement from a specific auditor, request their walk-through and Nebbos supports the review." },
           { title: "Can we take our tuning with us?", body: "Yes — portability is contractual. Your tuned Pearl and its memory export on offboarding." },
           { title: "What if the Pearl proposes a wrong journal?", body: "It proposes; a named controller approves or rejects. There is no autonomous posting of material journals without human sign-off (Layer 11)." },
           { title: "How does overage bill during close-week spikes?", body: "AI-usage overage bills in Nebbos tokens — a stable currency independent of provider pricing. Close-week spikes don&rsquo;t create surprise CFO invoices." },
@@ -818,7 +824,7 @@ export const PAGES = {
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
-          { title: "Is this FERPA-compliant?", body: "Row-level client isolation at Layer 01 means student data never leaves your district client. Retention configured to FERPA. Audit trail (Layer 15) ready for state review." },
+          { title: "Is this FERPA-compliant?", body: "Nebbos substrate does not currently process individual-level student education records. Preventive controls against future ingestion are in place per ratified internal architectural decision. For district deployments scoped to student PII, Nebbos would operate as a School Official under FERPA (34 CFR &sect; 99.31(a)(1)); the corresponding controls, retention configuration, and School Official documentation are in preparation. Districts evaluating Nebbos: request current scope map and School Official onboarding path via legal@nebbos.ai. Full compliance detail at /compliance." },
           { title: "What about data ownership?", body: "Your district owns its data. Portability is contractual — everything exports on offboarding." },
           { title: "How does this fit with our state SIS?", body: "Named connectors for the major SIS platforms (PowerSchool, Infinite Campus, Skyward). OAuth adapters for state-specific systems." },
           { title: "What if the Pearl proposes a coverage decision that violates union rules?", body: "It proposes; a named district admin approves. Union rules are context the Pearl learns from your team&rsquo;s past decisions." },
@@ -943,7 +949,7 @@ export const PAGES = {
           { title: "Layer 04 · Ingest", body: "EMR, scheduling, referrals, patient-portal, compliance systems." },
           { title: "Layer 07 · Memory", body: "Every care decision, every referral, every follow-up becomes context." },
           { title: "Layer 11 · Approval", body: "Every consequential action passes through the clinical-operations approval graph." },
-          { title: "Layer 15 · Attestation", body: "HIPAA-adequate audit trail ready for regulatory review." },
+          { title: "Layer 15 · Attestation", body: "Audit trail designed to map onto HIPAA 45 CFR 164.312(b). HIPAA-readiness is in progress site-wide; see /compliance for current posture." },
         ],
       },
       {
@@ -959,7 +965,7 @@ export const PAGES = {
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
-          { title: "Is this HIPAA-compliant?", body: "Yes. Row-level client isolation (Layer 01), attested audit trail (Layer 15), BAA available, retention configurable per HIPAA requirements. Full compliance detail at /compliance." },
+          { title: "Is this HIPAA-compliant?", body: "HIPAA-readiness is in progress. Substrate technical safeguards (row-level client isolation at Layer 01, attested audit trail at Layer 15, access control, entity authentication, transmission security) are implemented and map to the HIPAA Security Rule technical-safeguards section. Administrative safeguards, physical safeguards, and BAA template are in preparation ahead of first healthcare deployment. Full status + BAA availability timeline at /compliance." },
           { title: "How does this fit with our EMR&rsquo;s AI features?", body: "Nebbos Care reads FROM your EMR + every other system — it doesn&rsquo;t replace EMR-native functionality, it adds a cross-system coordination layer above." },
           { title: "What about clinical decision-making?", body: "Nebbos Care is a coordination Pearl, not a clinical-decision one. Every clinical decision remains with the clinician. Care-coordination + operational decisions pass through your approval graph." },
           { title: "Data residency requirements?", body: "Configurable per client." },
@@ -985,7 +991,7 @@ export const PAGES = {
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
-          { title: "Week 1 · Onboarding + connector wiring", body: "MSA + BAA signed, engineering wires EMR + scheduling + referral + compliance connectors." },
+          { title: "Week 1 · Onboarding + connector wiring", body: "MSA signed; BAA template review begins in parallel with implementation (BAA in preparation site-wide, see /compliance). Engineering wires EMR + scheduling + referral + compliance connectors." },
           { title: "Week 2 · Pearl deployment + clinical scoping", body: "Nebbos General Care deploys into your clinical-operations Shell." },
           { title: "Week 3 · First care-week in-loop", body: "The Pearl runs alongside your team. Every accept/reject trains it." },
         ],
@@ -1514,7 +1520,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "08 · The ROI framework",
         h2: "What Nebbos Training Substrate returns.",
-        body: "One line, and it&rsquo;s big. Your enterprise&rsquo;s operational judgment — the accumulated decisions of your best people about your specific work — becomes a portable training corpus that only your organization has. Competitors can buy the same base models. They can&rsquo;t buy your team&rsquo;s twenty-four months of decisions on your operation. That&rsquo;s the moat the 23% inference-of-revenue benchmark (Bessemer/Avante/SFAI Labs 2026) rewards — companies whose AI dollars produce owned intelligence, not vendor lock-in.",
+        body: "One line, and it&rsquo;s big. Your enterprise&rsquo;s operational judgment — the accumulated decisions of your best people about your specific work — becomes a portable training corpus that only your organization has. Competitors can buy the same base models. They can&rsquo;t buy your team&rsquo;s twenty-four months of decisions on your operation. AI-native companies whose AI dollars produce owned intelligence (not vendor lock-in) sit at a fundamentally lower inference-of-revenue ratio than companies whose AI dollars stream through third-party inference APIs. That&rsquo;s the moat: preference pairs your team produces stay in your client and are exportable to any model you own or license.",
       },
       {
         id: "objections",
@@ -1526,7 +1532,7 @@ export const PAGES = {
           { title: "Can we bring our own fine-tuned model?", body: "Yes. Layer 08 supports bring-your-own-model — your custom-trained model routes alongside provider models." },
           { title: "What about IP ownership on the trained model?", body: "You own it. Contractual. Your preference pairs + your fine-tune weights + your derived models belong to you." },
           { title: "How does this compare to OpenAI Enterprise custom fine-tuning?", body: "OpenAI Enterprise trains YOUR model on YOUR data on OpenAI&rsquo;s infrastructure — which locks you to OpenAI. Nebbos trains YOUR model on YOUR data + gives you the weights + gives you provider choice." },
-          { title: "What about the 23% inference-of-revenue KPI?", body: "That&rsquo;s the Bessemer/Avante/SFAI Labs 2026 benchmark — AI-native companies whose AI dollars produce owned intelligence run at ~23% inference-of-revenue. OpenAI is running at 56%. The training substrate is what closes that gap." },
+          { title: "What about inference-of-revenue economics?", body: "The economics diverge based on ownership. Companies renting inference through third-party APIs live with a spend curve set by the vendor&rsquo;s model, the vendor&rsquo;s routing, and the vendor&rsquo;s margin. Companies producing preference pairs that stay in their client build a substrate they can point at any model they own or license — and their inference-of-revenue ratio reflects that ownership. The training substrate is what closes that gap." },
           { title: "Can we take our corpus with us?", body: "Yes — portability is contractual and non-negotiable." },
         ],
       },
@@ -1615,7 +1621,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "05 · Attestation as product",
         h2: "Attestation — the audit trail as a first-class product.",
-        body: "Layer 15 · Attestation is not a logging feature — it is a load-bearing product surface. Every read against your data by any Pearl carries an attestation record identifying which Pearl, which action, which human authorization, and which context. The chain is hash-linked at the storage layer so tampering is detectable end-to-end. Attestation is queryable by your team through the same interface your Pearls use — your inspector-general has direct access to the raw audit surface, not a filtered dashboard. The record format is documented and stable. Auditors accept it as SOX-adequate, HIPAA-adequate, and EU-AI-Act-Article-12-adequate evidence.",
+        body: "Layer 15 · Attestation is not a logging feature — it is a load-bearing product surface. Every read against your data by any Pearl carries an attestation record identifying which Pearl, which action, which human authorization, and which context. The chain is hash-linked at the storage layer so tampering is detectable end-to-end. Attestation is queryable by your team through the same interface your Pearls use — your inspector-general has direct access to the raw audit surface, not a filtered dashboard. The record format is documented and stable. The trail is designed to satisfy EU AI Act Article 12 record-keeping obligations and to map cleanly onto SOC 2 CC7, ISO 27001 A.12.4, and HIPAA 45 CFR 164.312(b) control families. Client auditors reviewing the substrate see the same append-only trail their evidence packages would cite. Formal SOC 2 Type II report is in progress; ISO 27001:2022 certification is not yet held; HIPAA-readiness is in progress. See /compliance for authoritative status.",
       },
       {
         id: "layers",
@@ -1671,11 +1677,11 @@ export const PAGES = {
         eyebrow: "10 · Attestations + certifications",
         h2: "Attestations and certifications.",
         items: [
-          { title: "SOC 2 Type II", body: "Controls implemented and operating across security, availability, confidentiality, and privacy trust services criteria. Report available under NDA." },
-          { title: "ISO 27001:2022", body: "Information security management system built to ISO 27001:2022. Statement of applicability, risk register, and control narratives available under NDA." },
-          { title: "EU AI Act Article 11 · Annex IV", body: "Technical documentation pack for high-risk AI systems available under NDA. Compiled per Article 11 requirements. Compliance deadline for Annex III scope: 2027-08-02." },
-          { title: "HIPAA — healthcare readiness", body: "BAA available. Substrate controls map to HIPAA Security Rule administrative, physical, and technical safeguards." },
-          { title: "FERPA — K-12 and higher-ed readiness", body: "Substrate controls map to FERPA educational-records handling. Documented onboarding path for districts and higher-ed." },
+          { title: "SOC 2 Type II", body: "SOC 2 Type II certification is in progress. Trust services criteria: Security, Availability, Confidentiality, Privacy. Report available under NDA once the auditor&rsquo;s opinion issues. Full status at /compliance." },
+          { title: "ISO 27001:2022", body: "ISO 27001:2022 certification is not yet held. Substrate controls that map to Annex A are implemented; ISMS is in preparation ahead of a formal certification cycle. Full status at /compliance." },
+          { title: "EU AI Act Article 11 · Annex IV", body: "Annex IV technical documentation pack is in preparation ahead of the 2027-08-02 Annex III compliance deadline. Obligation-tracking substrate exists internally (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation). Full status at /compliance." },
+          { title: "HIPAA — healthcare readiness", body: "HIPAA-readiness is in progress. Substrate technical safeguards implemented; Administrative safeguards, physical safeguards, and BAA template in preparation ahead of first healthcare deployment. Full status at /compliance." },
+          { title: "FERPA — K-12 and higher-ed readiness", body: "Nebbos substrate does not currently process individual-level student education records. Preventive controls against future ingestion in place. School Official controls, retention configuration, and documentation in preparation ahead of first district deployment scoped to student PII. Full status at /compliance." },
           { title: "GDPR + CCPA + state-privacy regimes", body: "DPA at /legal/dpa. Data-subject rights (access, correction, deletion, portability) implemented as first-class flows." },
         ],
       },
@@ -1711,16 +1717,16 @@ export const PAGES = {
 
   security: {
     slug: "/security",
-    title: "Security · Engineered to SOC 2 and ISO 27001 controls",
+    title: "Security · Substrate controls implemented against institutional targets",
     metaDescription:
-      "Nebbos is engineered to SOC 2 Type II and ISO 27001:2022 controls from the substrate up. Every attestation portable to your auditor.",
+      "Substrate controls implemented against SOC 2 and ISO 27001:2022 targets. SOC 2 Type II certification is in progress; ISO 27001:2022 is not yet held. Full status at /compliance.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Security",
         h1: "Engineered to institutional controls.",
-        deck: "Nebbos is engineered to SOC 2 Type II and ISO 27001:2022 controls from the substrate up. Every attestation portable to your auditor.",
+        deck: "Substrate controls implemented against SOC 2 and ISO 27001:2022 targets. SOC 2 Type II certification is in progress; ISO 27001:2022 is not yet held. Full status at /compliance.",
         imageFamily: "concept-audit-attestation",
       },
       {
@@ -1826,7 +1832,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "11 · Certifications + reports",
         h2: "Certifications and reports.",
-        body: "SOC 2 Type II report available under NDA. ISO 27001:2022 certification and Annex A control statements available under NDA. HIPAA BAA available. FedRAMP path for federal deployments — contact enterprise procurement. All external attestations available under NDA; contact security@nebbos.ai.",
+        body: "SOC 2 Type II certification is in progress; the Type II report will be available under NDA once the auditor&rsquo;s opinion issues. ISO 27001:2022 certification is not yet held; ISMS statement of applicability, risk register, and control narratives are in preparation. HIPAA BAA template is in preparation ahead of first healthcare deployment. FedRAMP path for federal deployments — contact enterprise procurement. All statuses: see /compliance for the authoritative record; contact security@nebbos.ai for scoped attestation requests.",
       },
       {
         id: "response-times",
@@ -1848,16 +1854,16 @@ export const PAGES = {
 
   compliance: {
     slug: "/compliance",
-    title: "Compliance · EU AI Act Article 11 · SOC 2 · ISO 27001",
+    title: "Compliance · Status per framework · SOC 2 · ISO 27001 · Annex IV · HIPAA · FERPA · GDPR",
     metaDescription:
-      "Nebbos ships an EU AI Act Article 11 Annex IV pack. Engineered to SOC 2 Type II and ISO 27001. Every attestation portable to your auditor.",
+      "Nebbos&rsquo;s compliance posture — status per framework. Some in progress, some not yet held. Every posture stated honestly; formal reports available under NDA when they land.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Compliance",
         h1: "Compliance is the substrate, not a feature.",
-        deck: "Nebbos ships an EU AI Act Article 11 Annex IV pack. Engineered to SOC 2 Type II and ISO 27001. Every attestation portable to your auditor.",
+        deck: "Nebbos&rsquo;s compliance posture — status per framework. Some in progress, some not yet held. Every posture stated honestly; formal reports available under NDA when they land.",
         imageFamily: "concept-audit-attestation",
       },
       {
@@ -1866,10 +1872,10 @@ export const PAGES = {
         eyebrow: "01 · Frameworks",
         h2: "Frameworks Nebbos operates to.",
         items: [
-          { title: "EU AI Act — Regulation (EU) 2024/1689", body: "Annex IV technical documentation pack available under NDA. Compliance deadline for high-risk systems (Article 6 · Annex III scope): 2027-08-02. Nebbos deployments in scope carry documentation from the substrate up." },
-          { title: "SOC 2 Type II", body: "Trust services criteria: Security, Availability, Confidentiality, Privacy. Controls implemented and operating. Report available under NDA." },
-          { title: "ISO 27001:2022", body: "Information security management system implemented. Statement of applicability, risk register, and control narratives available under NDA." },
-          { title: "HIPAA (US healthcare clients)", body: "Business Associate Agreement available. Substrate controls mapped to HIPAA Security Rule Administrative, Physical, and Technical safeguards." },
+          { title: "EU AI Act — Regulation (EU) 2024/1689", body: "Annex IV technical documentation pack is in preparation ahead of the 2027-08-02 Annex III compliance deadline. Substrate exists internally (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation); client-facing pack ships as it clears review. See §02 below for authoritative status." },
+          { title: "SOC 2 Type II", body: "Trust services criteria: Security, Availability, Confidentiality, Privacy. SOC 2 Type II certification is in progress; audit engaged, observation window running. Report available under NDA once the auditor&rsquo;s opinion issues. See §03 below for authoritative status." },
+          { title: "ISO 27001:2022", body: "ISO 27001:2022 certification is not yet held. ISMS is in preparation ahead of a formal certification cycle. Substrate controls that would map to Annex A are implemented today. See §04 below for authoritative status." },
+          { title: "HIPAA (US healthcare clients)", body: "HIPAA-readiness is in progress. Substrate technical safeguards implemented; Administrative safeguards, physical safeguards, and BAA template are in preparation ahead of first healthcare deployment. See §05 below for authoritative status." },
           { title: "FERPA (US K-12 + higher-ed clients)", body: "Substrate controls mapped to FERPA educational-records handling. Documented onboarding path for school districts and higher-ed." },
           { title: "GDPR (EU clients + EU data subjects)", body: "Data Processing Addendum at /legal/dpa. Data-subject rights (access, correction, deletion, portability) implemented as first-class flows." },
           { title: "CCPA + state privacy regimes", body: "Consumer rights implemented. State-by-state addenda where relevant." },

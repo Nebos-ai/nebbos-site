@@ -53,6 +53,19 @@ FORBIDDEN_PATTERNS=(
   '\bmulti-tenant\b'
   '\bper-tenant\b'
   '\bcross-tenant\b'
+  # Retracted-claim patterns (2026-09-14) — regressions on Phase 1 truth-claim sweep
+  '\bBessemer/Avante/SFAI Labs\b'
+  '\btwenty-three-percent inference-of-revenue\b'
+  '\bSOC 2 Type II report available under NDA\b'
+  '\bAnnex IV pack available under NDA\b'
+  '\bHIPAA BAA available\b'
+  '\bEngineered to SOC 2 Type II and ISO 27001\b'
+  '\bAuditors accept it as SOX-adequate\b'
+  '\bcompany-brain infrastructure\b'
+  # NOTE: voice-drift patterns (company brain, operating system, fifteen layers,
+  # department, per-domain brain) deferred to Phase 4 vocab-guard extension —
+  # adding them here now would fire on live lib/architecture.ts hits that Phase 4
+  # sweeps. Added AFTER the voice-drift PR lands.
 )
 
 # Forbidden pricing exposure on marketing site
@@ -91,7 +104,7 @@ for pat in "${FORBIDDEN_PATTERNS[@]}"; do
     # Skip lines that document the rule (JSDoc / block-comment context) OR
     # reference internal technical identifiers (concept-family keys, code
     # column names) that never appear as customer-visible strings.
-    FILTERED=$(echo "$FILTERED" | grep -vE ':\s*\* +(Never|NEVER|Use:|Canonical|Vocabulary rule|Rule|canonical vocabulary)|// +NEVER|nebbos-agent-gateway|nebbos-agent-|AI-agent governance|concept-tenant-onboarding|family-concept-tenant-onboarding|tenant_id' || true)
+    FILTERED=$(echo "$FILTERED" | grep -vE ':\s*\* +(Never|NEVER|Use:|Canonical|Vocabulary rule|Rule|canonical vocabulary|Retired|Retracted)|// +NEVER|nebbos-agent-gateway|nebbos-agent-|AI-agent governance|concept-tenant-onboarding|family-concept-tenant-onboarding|tenant_id' || true)
 
     if [ -n "$FILTERED" ]; then
       echo ""
