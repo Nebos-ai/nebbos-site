@@ -76,7 +76,8 @@ a:hover {
   --paper-3:    #F0EEE9;  /* one step darker than paper-2 · btn-light hover (added 2026-09-15 to resolve undefined-var references, previously fell back to browser default) */
   --ink:        #1D1C22;  /* Nebbos dark · brand */
   --ink-2:      #4A4952;  /* secondary text */
-  --ink-3:      #6B6A73;  /* tertiary text · muted (darkened 2026-09-15 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1; previous #7C7B84 measured 3.83:1) */
+  --ink-3:      #6B6A73;  /* tertiary text · muted (Wave 1a 2026-09-15: darkened from #7C7B84 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1) */
+  --ink-3-inverse: #B8BAC3;  /* tertiary text · muted, INVERSE for dark-bg contexts (Wave 1d 2026-09-15: bifurcated because a single --ink-3 cannot hit 4.5:1 on both light + dark backgrounds. --ink-3 works on paper/paper-2; --ink-3-inverse works on ink/dark chrome — hits 5.5:1 against --ink #1D1C22.) */
   --muted:      #A0A0A8;  /* disabled · hint */
   --rule:       #E8E6E2;  /* hairline border · sits on white */
   --rule-2:     #F0EEE9;  /* softer hairline · sub-dividers */
@@ -418,7 +419,10 @@ main {
   color: var(--paper);
 }
 .site-header__link--quiet {
-  color: var(--ink-3);
+  /* Dark chrome: SiteHeader background is --ink #1D1C22, so use the
+     inverse token that hits 4.5:1 against dark. --ink-3 would fail
+     (3.16:1) here. See --ink-3-inverse token declaration in :root. */
+  color: var(--ink-3-inverse);
 }
 .site-header__link--button {
   cursor: pointer;
