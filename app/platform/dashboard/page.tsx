@@ -9,16 +9,16 @@ export const metadata = pageMetadata({
   title: "Dashboard",
   path: "/platform/dashboard",
   description:
-    "The at-a-glance view of a Nebbos deployment — the fires the run layer counted, the actions the approval graph routed, the workloads Pearl is running today.",
+    "The at-a-glance view of a Nebbos deployment — the fires the platform counted, the actions the approval graph routed, the workloads Pearl is running today.",
 });
 
 /**
- * /platform/dashboard — Wave 5 · 2026-09-13 rewrite
+ * /platform/dashboard — Wave 5 · 2026-09-13 rewrite; Wave 4 vocab-refresh 2026-09-15.
  *
  * Was: 40-line "Intelligence that compounds" stub with 2 CTAs to /presentation.
  * Now: real dashboard concept — the surface your operators see when a Pearl
- * is live in production. Run-layer voice. Distinct from /presentation which
- * is the four-slide narrative deck.
+ * is live in production. Platform voice (was run-layer voice pre-2026-09-14
+ * doctrine flip). Distinct from /presentation which is the four-slide deck.
  */
 export default function DashboardPage() {
   return (
@@ -39,7 +39,7 @@ export default function DashboardPage() {
       <FeatureRow
         eyebrow="01 · Fires counted"
         title="Every hook fire on your workload, over 30 days."
-        body={<p style={{ margin: 0 }}>The run layer emits a fire on every governance decision it makes &mdash; verify-first checks, KG-route lookups, credential guards, session-shard writes. The dashboard shows the 30-day rolling count, sliced by hook. Nebbos itself runs at ~62,000 fires per month; your Pearl is measured against that same baseline.</p>}
+        body={<p style={{ margin: 0 }}>The platform emits a fire on every governance decision it makes &mdash; verify-first checks, KG-route lookups, credential guards, session-shard writes. The dashboard shows the 30-day rolling count, sliced by hook. Nebbos itself runs at ~62,000 fires per month; your Pearl is measured against that same baseline.</p>}
       />
 
       <FeatureRow

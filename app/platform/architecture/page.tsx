@@ -8,16 +8,21 @@ export const metadata = pageMetadata({
   title: "Architecture",
   path: "/platform/architecture",
   description:
-    "How the Nebbos run layer is built. Four primitives, one runtime — Pearl runs the workload, tokens meter the consumption, nested calls roll up their traces, the knowledge graph settles the truth.",
+    "How the Nebbos platform is built. Four primitives, one runtime — Pearl runs the workload, tokens meter the consumption, nested calls roll up their traces, the knowledge graph settles the truth.",
 });
 
 /**
- * /platform/architecture — the shape of the run layer (Wave 3 · 2026-09-13 rewrite)
+ * /platform/architecture — the shape of the platform (Wave 3 · 2026-09-13,
+ * Wave 4 vocab-refresh 2026-09-15).
  *
- * Prior version cited "Cradle · Shell · Pearl" three-tier which was
- * superseded 2026-09-11 by the run-layer north star. This rewrite adopts
- * the current architecture: Pearl (VM) · Tokens (gas) · Nested calls
- * (rollup) · KG (settlement).
+ * Voice history:
+ * - "Cradle · Shell · Pearl" three-tier (2026-08-23) superseded 2026-09-11
+ *   by run-layer north star.
+ * - Run-layer voice (2026-09-13) superseded 2026-09-14 by platform + tools
+ *   + MCP + USB doctrine on customer-hero surfaces.
+ *   Architecture (Pearl/Tokens/Nested calls/KG) unchanged — the primitives
+ *   are technical facts of the runtime; only the customer-hero framing
+ *   changes to "platform" from "run layer."
  */
 export default function ArchitecturePage() {
   return (
@@ -30,7 +35,7 @@ export default function ArchitecturePage() {
             <em style={{ fontStyle: "italic", color: "var(--gold)" }}>One runtime.</em>
           </>
         }
-        deck="The shape of the run layer. What each primitive does, what it guarantees, and how the four compose into a single call."
+        deck="The shape of the platform. What each primitive does, what it guarantees, and how the four compose into a single call."
       >
         <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
@@ -58,7 +63,7 @@ export default function ArchitecturePage() {
         reverse
         eyebrow="04 · Knowledge graph"
         title="Where the substrate settles the truth."
-        body={<p style={{ margin: 0 }}>The KG is not a search index; it is where every fact the run layer establishes goes to live. Every approval, every action, every consequence &mdash; append-only, hash-chained, replay-able. When compliance asks &ldquo;what did the system know, and when,&rdquo; the answer is a KG query.</p>}
+        body={<p style={{ margin: 0 }}>The KG is not a search index; it is where every fact the platform establishes goes to live. Every approval, every action, every consequence &mdash; append-only, hash-chained, replay-able. When compliance asks &ldquo;what did the system know, and when,&rdquo; the answer is a KG query.</p>}
       />
 
       <FeatureRow
