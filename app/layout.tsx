@@ -3,6 +3,7 @@ import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { BRAND } from "@/content/brand";
+import { organizationJsonLd } from "@/lib/seo";
 
 import "./globals.css";
 
@@ -22,20 +23,19 @@ import "./globals.css";
  *
  * Self-hosted via next/font so no external CSS fetch on first paint
  * (CLS-safe). Variable weight — one load for the whole 300-700 range.
+ *
+ * 2026-09-14: de-duplicated Space_Grotesk load — was loading the same family
+ * twice under two variable names. Now one load, shared across --font-serif
+ * + --font-sans via a single CSS class carrying both variable declarations.
  */
 
-const display = Space_Grotesk({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: "swap",
-  variable: "--font-serif",
-});
-
-const body = Space_Grotesk({
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  display: "swap",
-  variable: "--font-sans",
+  // Emits `--font-space-grotesk`; we then map globals.css --font-serif AND
+  // --font-sans to that single variable in the html className below.
+  variable: "--font-space-grotesk",
 });
 
 const mono = Fira_Code({
@@ -106,8 +106,22 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${display.variable} ${body.variable} ${mono.variable}`}>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${mono.variable}`}
+      // Alias --font-serif + --font-sans onto the single Space Grotesk load;
+      // the deduplication that de-duplicates the previous 2× next/font fetch.
+      style={{
+        // @ts-expect-error — CSS custom property assignment via style prop
+        "--font-serif": "var(--font-space-grotesk)",
+        "--font-sans": "var(--font-space-grotesk)",
+      }}
+    >
       <body>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
+        />
         <a href="#main" className="skip-link">Skip to content</a>
         <SiteHeader />
         <main id="main">{children}</main>
