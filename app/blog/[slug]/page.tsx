@@ -84,7 +84,7 @@ export default async function BlogPostPage({
       <footer className="editorial-post__footer">
         <p>
           <Link href="/blog">More notes</Link> ·{" "}
-          <Link href="/product">See the architecture</Link> ·{" "}
+          <Link href="/products">See the products</Link> ·{" "}
           <Link href="/demo">Book a demo</Link>
         </p>
       </footer>
