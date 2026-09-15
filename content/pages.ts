@@ -1991,24 +1991,24 @@ export const PAGES = {
 
   careers: {
     slug: "/careers",
-    title: "Careers · Building the run layer",
+    title: "Careers · Building the operator platform",
     metaDescription:
-      "Founding roles at Nebbos — the run layer for AI-native enterprises.",
+      "Founding roles at Nebbos — the operator platform, its tools, its MCP, and the USB that gates its authority.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Careers",
-        h1: "Building the run layer.",
-        deck: "Founding roles across engineering, design, and operations. If you want to build the run layer for AI-native enterprises, reach out.",
+        h1: "Building the operator platform.",
+        deck: "Founding roles across engineering, design, and operations. If you want to build the platform your operators live in — its tools, its MCP, its USB — reach out.",
         imageFamily: "concept-pearl",
       },
       {
         id: "what-were-building",
         kind: "text-block",
         eyebrow: "01 · What we&rsquo;re building",
-        h2: "The layer that sits between intent and state.",
-        body: "Every AI call needs a run layer &mdash; the metered, isolated, modular executor that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every enterprise has departments that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing layer. Fifteen substrate layers underneath, one architecture that carries the work.",
+        h2: "The platform that sits between intent and state.",
+        body: "Every AI call needs a substrate &mdash; metered, isolated, modular, and attested — that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every operator has domains that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing platform. A substrate underneath, tools on top, an MCP surface every caller routes through, and a USB that gates the elevated actions.",
       },
       {
         id: "current-openings",
@@ -2017,7 +2017,7 @@ export const PAGES = {
         h2: "Placeholder roles &mdash; illustrative until formal hiring opens.",
         deck: "Two founding-engineer role shapes are described in detail in the /careers content collection. Formal application intake opens when the first customer engagement is signed; the role shapes below are how the work is scoped in the meantime.",
         items: [
-          { title: "Founding Backend Engineer", body: "Build the run layer, the Operational Graph, and the engine that turns operational signal into safe, reviewed action. Python + TypeScript, graph modeling, real data pipelines. Remote (EU hours). Read the full role at /careers/founding-backend-engineer." },
+          { title: "Founding Backend Engineer", body: "Build the platform, its MCP, the Operational Graph, and the engine that turns operational signal into safe, reviewed action. Python + TypeScript, graph modeling, real data pipelines. Remote (EU hours). Read the full role at /careers/founding-backend-engineer." },
           { title: "Founding Frontend Engineer", body: "Help build the surfaces that make Operations Intelligence legible. Next.js, typography-forward design, real-time state. Remote (EU hours). Read the full role at /careers/founding-frontend-engineer." },
         ],
       },
@@ -2080,12 +2080,12 @@ export const PAGES = {
         h2: "The six surfaces every deployment touches.",
         deck: "The doc set is organized around the six surfaces a team touches to bring a Pearl online. Each surface has its own reference material, worked examples, and troubleshooting.",
         items: [
-          { title: "Pearl", body: "The runtime a workload runs on. Reference for defining a Pearl, scoping its context, and deploying it into your run layer." },
+          { title: "Pearl", body: "The runtime a workload runs on. Reference for defining a Pearl, scoping its context, and deploying it into your Nebbos platform." },
           { title: "Approval graph", body: "How Nebbos routes consequential actions through the humans who must sign off. Reference for graph structure, delegation, and audit contract." },
           { title: "Integrations", body: "How the systems you already run wire into Nebbos — SIS, HR, ERP, CRM, ticketing, comms. Reference adapters and the shape of a custom integration." },
           { title: "Ingest", body: "How your policy documents, procedures, and structured data get resolved into the Pearl's context. Reference for connectors, ingest cadence, and provenance." },
           { title: "Audit ledger", body: "How every consequential action lands as an append-only event with a hash chain. Reference for the schema, retention, and export contract." },
-          { title: "SDK & API", body: "How your services talk to Nebbos. Reference for the MCP surface, the client SDK, authentication, and the run-layer call shape." },
+          { title: "SDK & API", body: "How your services talk to Nebbos. Reference for the MCP surface, the client SDK, authentication, and the tool-call shape." },
         ],
       },
       {
@@ -2144,7 +2144,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · Cadence",
         h2: "One entry per material substrate change.",
-        body: "The changelog covers material changes to the run layer, the substrate, and the surfaces built on top. Cosmetic tweaks and internal refactors do not appear here — they live in each deployment's own release notes. Subscribe to the RSS feed to get every entry as it lands.",
+        body: "The changelog covers material changes to the platform, the MCP, the USB, and the substrate underneath. Cosmetic tweaks and internal refactors do not appear here — they live in each deployment's own release notes. Subscribe to the RSS feed to get every entry as it lands.",
       },
     ],
   },
@@ -2152,14 +2152,14 @@ export const PAGES = {
   status: {
     slug: "/status",
     title: "Status · All systems operational",
-    metaDescription: "Live status of the Nebbos run layer across regions and services.",
+    metaDescription: "Live status of the Nebbos platform, MCP, and hardware-attested USB substrate across regions and services.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · Status",
         h1: "All systems operational.",
-        deck: "Live status of the Nebbos run layer across regions and services. Incident history, subscribable notification channels, and the honest empty-state when there is nothing to report.",
+        deck: "Live status of the Nebbos platform, its MCP, and hardware-attested USB substrate across regions and services. Incident history, subscribable notification channels, and the honest empty-state when there is nothing to report.",
       },
       {
         id: "surfaces",
