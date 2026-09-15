@@ -30,16 +30,14 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_ENV: staging
       - name: run a11y sweep
-        # Advisory (2026-09-15) — attempted blocking flip in this same PR
-        # surfaced a chicken-and-egg: --ink-3 needs different values on
-        # light-bg vs dark-bg contexts to hit 4.5:1 in both directions
-        # (post-darkening #6B6A73 clears light-bg #F7F5F1 at 5.4:1 but only
-        # 3.16:1 on dark-bg #1D1C22). Single token can't satisfy both.
-        # Follow-up (Axis C Wave 1d): bifurcate --ink-3 into --ink-3-on-paper
-        # + --ink-3-on-ink OR add context-scoped overrides; verify axe zero
-        # violations across all 18 test cases; then flip. Charter elite-bar
-        # dim 6 pending Wave 1d.
-        run: npm run test:a11y || true
+        # BLOCKING (2026-09-15 Wave 1e). Axis C Wave 1d shipped --ink-3-inverse
+        # bifurcation in PR #55 (2026-09-15); axe has been consistently green
+        # across every subsequent PR (#56, #57, #58). Both light-bg (--ink-3
+        # #6B6A73 on --paper-2 #F7F5F1 = 5.4:1) and dark-bg (--ink-3-inverse
+        # #B8BAC3 on --ink #1D1C22 = 5.5:1) hit WCAG 2.2 AA 4.5:1. Guard
+        # removed; sweep now blocks merges on regression.
+        # Charter elite-bar dim 6 (a11y CI-gated) satisfied.
+        run: npm run test:a11y
       - name: upload html report
         if: always()
         uses: actions/upload-artifact@v4
