@@ -22,6 +22,7 @@
  */
 
 import { BANDS, LAYERS, type Band, type Layer } from "@/lib/architecture";
+import { PRODUCTS, TIERS, type ProductKey, type TierKey } from "@/content/products";
 
 /* ── URL slug maps ────────────────────────────────────────────────────── */
 
@@ -131,17 +132,62 @@ export const productTreeByImportance: ProductBandGroup[] = MARKETING_ORDER
   .map((n) => productTree.find((pt) => pt.band.n === n)!)
   .filter(Boolean);
 
+/* ── Mega-menu (2026-09-14 IA: 4 products × 3 tiers) ──────────────────── */
+
+/**
+ * The 4-product × 3-tier customer taxonomy — feeds the primary-nav
+ * mega-menu, the home-page product overview (once HomeBands rebuilds),
+ * and the footer Product column.
+ *
+ * Derived from `content/products.ts` (PRODUCTS + TIERS) — the source of
+ * truth for the customer taxonomy per feedback_nebbos_ai_product_framing_
+ * platform_tools_mcp_usb_security_2026_09_14 + reference_nebbos_customer_
+ * product_matrix_4_products_3_tiers_12_skus_2026_09_14.
+ *
+ * Product order = declaration order in PRODUCTS (platform → app → mcp →
+ * usb), matching the ratified taxonomy: software (2) → tooling (1) →
+ * hardware (1).
+ *
+ * Tier links point to the product page with a hash fragment (tiers do not
+ * yet have dedicated URLs — L1/L2/L3 are documented on the product page).
+ */
+export type MegaProduct = {
+  key: ProductKey;
+  name: string;
+  eyebrow: string;
+  tagline: string;
+  href: string;
+  tiers: Array<{
+    key: TierKey;
+    label: string;
+    href: string;
+  }>;
+};
+
+export const megaProducts: MegaProduct[] = PRODUCTS.map((product) => ({
+  key: product.key,
+  name: product.name,
+  eyebrow: product.eyebrow,
+  tagline: product.tagline,
+  href: `/products/${product.slug}`,
+  tiers: TIERS.map((tier) => ({
+    key: tier.key,
+    label: tier.label,
+    href: `/products/${product.slug}#${tier.key.toLowerCase()}`,
+  })),
+}));
+
 /* ── Primary nav ──────────────────────────────────────────────────────── */
 
 export type PrimaryNavItem = {
   label: string;
   href: string;
-  megaMenu?: "product";
+  megaMenu?: "products";
   strap?: string;
 };
 
 export const primaryNav: PrimaryNavItem[] = [
-  { label: "Product",   href: "/product",   megaMenu: "product", strap: "Fifteen layers. Five bands. One system." },
+  { label: "Products",  href: "/products",  megaMenu: "products", strap: "The platform. The app. The MCP. The USB." },
   { label: "Solutions", href: "/solutions", strap: "Coordination is where the work lives." },
   { label: "Customers", href: "/customers", strap: "Who's building on it." },
   { label: "Trust",     href: "/trust",     strap: "Accountable by architecture." },
@@ -178,12 +224,12 @@ export type FooterColumn = {
 
 export const footerNav: FooterColumn[] = [
   {
-    label: "Product",
+    label: "Products",
     links: [
-      { label: "Overview", href: "/product" },
-      ...productTree.map(({ band }) => ({
-        label: band.name,
-        href: bandPath(band),
+      { label: "Overview", href: "/products" },
+      ...PRODUCTS.map((product) => ({
+        label: product.name.replace("Nebbos.ai ", "").replace("Nebbos ", ""),
+        href: `/products/${product.slug}`,
       })),
       { label: "Changelog", href: "/changelog" },
     ],
