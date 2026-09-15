@@ -1,5 +1,13 @@
 "use client";
 
+/* eslint-disable jsx-a11y/no-static-element-interactions,jsx-a11y/no-noninteractive-tabindex --
+ * HomeBands v5 uses a plain <div> click-surface pattern deliberately: role=tab
+ * would trigger axe's nested-interactive violation on the Links inside
+ * (product-page CTA + tier rows). The div has aria-expanded + aria-controls +
+ * keyboard onKeyDown handler, which conveys the accessibility semantics without
+ * the ARIA-role-nested-interactive conflict. Rule disabled at file scope with
+ * this rationale so future maintainers see why. */
+
 import Link from "next/link";
 import { useState } from "react";
 import { megaProducts, type MegaProduct } from "@/lib/nav";
