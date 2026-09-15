@@ -5,12 +5,16 @@
       "startServerReadyPattern": "Ready in",
       "url": [
         "http://localhost:3000/",
-        "http://localhost:3000/pricing",
+        "http://localhost:3000/products",
+        "http://localhost:3000/products/platform",
+        "http://localhost:3000/products/app",
+        "http://localhost:3000/products/mcp",
+        "http://localhost:3000/products/usb",
         "http://localhost:3000/platform",
         "http://localhost:3000/security",
         "http://localhost:3000/trust",
-        "http://localhost:3000/governance",
-        "http://localhost:3000/design"
+        "http://localhost:3000/compliance",
+        "http://localhost:3000/customers"
       ],
       "numberOfRuns": 2,
       "settings": {
