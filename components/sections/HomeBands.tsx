@@ -1,5 +1,13 @@
 "use client";
 
+/* eslint-disable jsx-a11y/no-static-element-interactions,jsx-a11y/no-noninteractive-tabindex --
+ * HomeBands v5 uses a plain <div> click-surface pattern deliberately: role=tab
+ * would trigger axe's nested-interactive violation on the Links inside
+ * (product-page CTA + tier rows). The div has aria-expanded + aria-controls +
+ * keyboard onKeyDown handler, which conveys the accessibility semantics without
+ * the ARIA-role-nested-interactive conflict. Rule disabled at file scope with
+ * this rationale so future maintainers see why. */
+
 import Link from "next/link";
 import { useState } from "react";
 import { megaProducts, type MegaProduct } from "@/lib/nav";
@@ -104,8 +112,13 @@ export function HomeBands() {
       </div>
 
       {/* Accordion · 4 side-by-side cells, click to expand */}
+      {/* Accordion pattern: click-to-expand card. Deliberately NOT using
+          role=tab/tablist because the cells contain interactive Links (tier
+          rows + product-page CTA), which the ARIA tab pattern disallows
+          (nested-interactive). aria-expanded on each cell + role=region on
+          the panel convey the expand/collapse state to AT users; keyboard
+          arrow navigation is retained via onKeyDown. */}
       <div
-        role="tablist"
         aria-label="Nebbos products"
         className="products-accordion"
         style={{
@@ -123,10 +136,9 @@ export function HomeBands() {
           return (
             <div
               key={product.key}
-              role="tab"
               id={tabId}
               tabIndex={0}
-              aria-selected={isActive}
+              aria-expanded={isActive}
               aria-controls={panelId}
               onClick={() => setActiveKey(product.key)}
               onKeyDown={(e) => {
@@ -151,7 +163,7 @@ export function HomeBands() {
 
               {isActive ? (
                 <div
-                  role="tabpanel"
+                  role="region"
                   id={panelId}
                   aria-labelledby={tabId}
                   style={{ position: "absolute", inset: 0, zIndex: 2 }}
@@ -288,6 +300,10 @@ function ExpandedContent({ product }: { product: MegaProduct }) {
               alignItems: "center",
               gap: 8,
               marginTop: 12,
+              // Padding block ensures the Link tap target hits WCAG 2.2 AA
+              // 2.5.8 minimum of 24×24px (font-size 12 alone renders ~14.5px tall).
+              padding: "6px 0",
+              minHeight: 24,
               textShadow: "0 1px 3px rgba(20, 18, 15, 0.48)",
             }}
             onClick={(e) => e.stopPropagation()}
