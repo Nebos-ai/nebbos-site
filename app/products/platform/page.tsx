@@ -18,7 +18,7 @@ const PLATFORM_SUBSCRIPTIONS = subscriptionsForProduct("platform");
 export const metadata: Metadata = {
   title: "Nebbos.ai platform · The AI operations platform for institutional scale.",
   description:
-    "Runs your Pearls, your fleet, your governance. Multi-tenant by default. Live in production with government and enterprise customers today.",
+    "Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today.",
 };
 
 function Hero() {
@@ -33,7 +33,7 @@ function Hero() {
           <em className="font-serif italic text-gold">at institutional scale.</em>
         </h1>
         <p className="mt-8 max-w-2xl text-lg md:text-xl text-ink-2 leading-relaxed">
-          Runs your Pearls, your fleet, your governance. Multi-tenant by
+          Runs your Pearls, your fleet, your governance. Multi-Shell by
           default. Live in production with government and enterprise
           customers today. Every action attested. Every substrate yours.
         </p>
@@ -57,7 +57,7 @@ function Hero() {
 }
 
 const HIGHLIGHTS = [
-  { label: "Register", value: "Multi-tenant", note: "Tenant isolation by default. Cross-tenant is a ceremony, not an accident." },
+  { label: "Register", value: "Multi-Shell", note: "Tenant isolation by default. Cross-Shell is a ceremony, not an accident." },
   { label: "Runtime", value: "Pearls at scale", note: "Every Pearl runs metered, isolated, and modular. Fleet-wide governance in one plane." },
   { label: "Auth", value: "Biometric-native", note: "Touch ID · Face ID · Windows Hello. Every session, every operator, every action." },
   { label: "Audit", value: "Hash-chained", note: "Every action writes a hash-chained audit event. Replay-proof, tamper-evident." },
@@ -89,7 +89,7 @@ function Highlights() {
 }
 
 const CAPABILITIES = [
-  { heading: "Pearl orchestration", body: "Run agent workflows in tenant-scoped Shells. Metered execution, per-Pearl audit trails, and per-tenant policy enforcement out of the box." },
+  { heading: "Pearl orchestration", body: "Run Pearl workflows in isolated Shells. Metered execution, per-Pearl audit trails, and per-Shell policy enforcement out of the box." },
   { heading: "Knowledge graph as memory", body: "Your operational context lives in a queryable graph. Every substrate change writes a settled entry; every query resolves to the same truth." },
   { heading: "Approval-as-a-mechanism", body: "Every elevated action gates on operator biometric plus the Nebbos USB. Approval is architectural, not a policy paragraph." },
   { heading: "Full-observability from day one", body: "Metrics, logs, traces, and audit shards wired from your first deploy. Not a follow-up quarter." },
@@ -185,7 +185,7 @@ const VALUE_CARDS = [
   {
     factor: "Sovereignty",
     headline: "You own the substrate you run on.",
-    body: "Nebbos.ai does not lock you into our data plane. Your tenant state, your keys, your operators &mdash; portable to any Nebbos deployment.",
+    body: "Nebbos.ai does not lock you into our data plane. Your Shell state, your keys, your operators &mdash; portable to any Nebbos deployment.",
   },
   {
     factor: "Attestation",
@@ -308,7 +308,7 @@ function FooterCTA() {
         </h2>
         <p className="mt-6 max-w-xl mx-auto text-lg text-ink-2 leading-relaxed">
           Enterprise and government procurement: reach out and we&rsquo;ll
-          walk you through tenant provisioning, tier gates, and deployment.
+          walk you through Shell provisioning, tier gates, and deployment.
         </p>
         <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
           <Link

@@ -64,9 +64,9 @@ function Hero() {
 const HIGHLIGHTS = [
   { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
   { label: "Attestation", value: "Server-verified", note: "The MCP verifies factors before executing. Client claims mean nothing." },
-  { label: "Isolation", value: "Tenant-scoped", note: "Cross-tenant reads require enclave-signed approval. No accidental crossing." },
+  { label: "Isolation", value: "Tenant-scoped", note: "Cross-Shell reads require enclave-signed approval. No accidental crossing." },
   { label: "Binary", value: "Ships on the USB", note: "Config, credentials, and code live on your Nebbos USB. Unplug removes them." },
-  { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per tenant. Overage billed at cost-follow with quarterly reconciliation." },
+  { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per Shell. Overage billed at cost-follow with quarterly reconciliation." },
 ];
 
 function Highlights() {
@@ -100,7 +100,7 @@ function Highlights() {
 const ARCHITECTURE = [
   {
     heading: "One substrate, every tool call",
-    body: "Every action that touches tenant state &mdash; reads, writes, mutations, cross-boundary joins &mdash; passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors.",
+    body: "Every action that touches Shell state &mdash; reads, writes, mutations, cross-boundary joins &mdash; passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors.",
   },
   {
     heading: "Tier-gate decorator",
@@ -108,7 +108,7 @@ const ARCHITECTURE = [
   },
   {
     heading: "Binary lives on the USB",
-    body: "The MCP binary, the config, the attestation credentials, and the tenant state that seeds a session all ship on the encrypted Nebbos USB volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations.",
+    body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos USB volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations.",
   },
   {
     heading: "Audit chain on every call",
@@ -229,13 +229,13 @@ const VALUE_CARDS = [
   },
   {
     factor: "Tenant isolation",
-    headline: "Cross-tenant reads are a ceremony.",
-    body: "The MCP refuses cross-tenant operations without an enclave-signed approval token. Accidental crossing is impossible; deliberate crossing is audited and reviewable.",
+    headline: "Cross-Shell reads are a ceremony.",
+    body: "The MCP refuses cross-Shell operations without an enclave-signed approval token. Accidental crossing is impossible; deliberate crossing is audited and reviewable.",
   },
   {
     factor: "Cost-follow",
     headline: "Overage matches provider cost.",
-    body: "Tool-call quotas per tenant. When you exceed, overage rates follow underlying provider costs with quarterly reconciliation. No markup surprises, no lock-in.",
+    body: "Tool-call quotas per Shell. When you exceed, overage rates follow underlying provider costs with quarterly reconciliation. No markup surprises, no lock-in.",
   },
 ];
 

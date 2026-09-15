@@ -34,7 +34,7 @@ function Hero() {
         <p className="mt-8 max-w-2xl text-lg md:text-xl text-ink-2 leading-relaxed">
           The Nebbos app for macOS and Windows. Runs an offline-capable
           subset of the platform. Syncs to the cloud through the Nebbos MCP
-          when online. Every operator's first install.
+          when online. Every operator&rsquo;s first install.
         </p>
         <div className="mt-10 flex flex-wrap items-center gap-6">
           <Link
