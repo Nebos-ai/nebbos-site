@@ -33,7 +33,7 @@ export default function CustomersIndexPage() {
     <>
       <FullBleedScene
         className="hero-fullbleed"
-        scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
+        scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
         scrim="bottom"
         vignetteStrength={0.5}
         chapter="00"
