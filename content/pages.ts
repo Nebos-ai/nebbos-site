@@ -17,9 +17,9 @@
  * wave on customer-facing hero surfaces; retained internally as technical register):
  *   Use (customer-hero, 2026-09-14): platform, tools, MCP, USB, security, sovereignty, biometric, attested
  *   Use (retained, brand names): Pearl, Nebbos [Domain]
- *   Use (retained, internal/technical register only): run layer, executor, metered, isolated, modular, substrate, architecture, operating system
+ *   Use (retained, internal/technical register only): executor, metered, isolated, modular, substrate, architecture (technical-register nouns; brand-hero framing is the four pillars above)
  *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot, tenant(s), multi-tenant (vendor framing + architecture-internal forbidden on customer surfaces)
- *   Retired (do not resurrect): company brain, operating system (as brand framing), fifteen governance layers, department(s) (use "domain"), per-domain brain
+ *   Retired (do not resurrect): pre-2026-09-14 brand-framing nouns (see supersede-log in content/brand.ts and RETRACTED_CLAIM_PATTERNS in scripts/check-vocab.sh); on customer surfaces use "domain" (never "department"), "platform" (never legacy brand nouns), and the four-pillar framing above
  *   Retracted claim patterns (do not resurrect — legal exposure, per elite-bar Phase 1 2026-09-14):
  *     canonical list enforced in scripts/check-vocab.sh RETRACTED_CLAIM_PATTERNS array
  *     (SOC 2 / ISO 27001 / HIPAA / EU AI Act Annex IV / FERPA / benchmark claims retracted)
@@ -105,15 +105,15 @@ export const PAGES = {
   /* ═══════════════ HOME ═════════════════════════════════════════════ */
   home: {
     slug: "/",
-    title: "The company brain your team never had time to build",
+    title: "The platform your operators live in",
     metaDescription:
-      "Nebbos is the company brain your enterprise never had time to build. One Pearl per domain, fifteen governance layers underneath.",
+      "Nebbos is the operator platform whose tools ship as MCP capabilities and whose privileged actions are gated by the USB you keep with you. Biometric approves; USB attests; MCP executes.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "Nebbos",
-        h1: "The company brain your team never had time to build.",
+        h1: "The platform your operators live in.",
         deck: "One Pearl per domain. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.",
         imageV2: 1,
       },
@@ -122,13 +122,13 @@ export const PAGES = {
         kind: "band-overview",
         eyebrow: "02 · The architecture",
         h2: "What&rsquo;s underneath every Pearl you deploy.",
-        deck: "Fifteen governance layers, grouped as five bands. Data at the bottom. Boundaries the world crosses at. Reasoning across providers. Action and the humans who approve it. Commerce at the top. Deploy Nebbos Design, Nebbos Finance, Nebbos Operations — every layer applies, automatically.",
+        deck: "Four products. Twelve SKUs. One system. The platform your operators live in, the tools it gives your team, the MCP its capabilities route through, and the USB that gates privileged action. Deploy Nebbos Design, Nebbos Finance, Nebbos Operations — every pillar applies, automatically.",
       },
       {
         id: "story",
         kind: "story-triptych",
         eyebrow: "03 · Three chapters",
-        h2: "One operating system. Three chapters of a working day.",
+        h2: "One platform. Three chapters of a working day.",
       },
       {
         id: "cta",
@@ -146,15 +146,15 @@ export const PAGES = {
   /* ═══════════════ PRODUCT INDEX ═════════════════════════════════════ */
   product: {
     slug: "/product",
-    title: "Product · Fifteen layers. Five bands. One architecture.",
+    title: "Product · The platform. The tools. The MCP. The USB.",
     metaDescription:
-      "The complete architecture underneath every Pearl. Fifteen governance layers, grouped as five bands.",
+      "The complete architecture underneath every Pearl. The platform your operators live in, the tools it gives your team, the MCP its capabilities route through, and the USB that gates privileged action.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · The architecture",
-        h1: "Fifteen layers. Five bands. One architecture.",
+        h1: "The platform. The tools. The MCP. The USB.",
         deck: "The complete architecture underneath every Pearl. Data at the bottom. Boundaries the world crosses at. Reasoning across providers. Action and the humans who approve it. Commerce at the top.",
         imageV2: 1,
       } as SectionBase,
