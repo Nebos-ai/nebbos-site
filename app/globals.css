@@ -73,6 +73,7 @@ a:hover {
    */
   --paper:      #FFFFFF;  /* Nebbos white · brand */
   --paper-2:    #F7F5F1;  /* barely-off-white for hairline elevation */
+  --paper-3:    #F0EEE9;  /* one step darker than paper-2 · btn-light hover (added 2026-09-15 to resolve undefined-var references, previously fell back to browser default) */
   --ink:        #1D1C22;  /* Nebbos dark · brand */
   --ink-2:      #4A4952;  /* secondary text */
   --ink-3:      #6B6A73;  /* tertiary text · muted (darkened 2026-09-15 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1; previous #7C7B84 measured 3.83:1) */
@@ -1484,8 +1485,8 @@ main {
   border-color: var(--ink);
 }
 .btn-primary:hover {
-  background: var(--accent);
-  border-color: var(--accent);
+  background: var(--gold);
+  border-color: var(--gold);
   color: var(--paper);
 }
 .btn-ghost {
@@ -1597,7 +1598,7 @@ main {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--accent);
+  color: var(--gold);
   font-weight: 500;
   padding-top: 4px;
 }
@@ -1714,7 +1715,7 @@ main {
   stroke-opacity: 0;
   transition:
     stroke var(--dur-fast) var(--ease-out),
-    stroke-opacity var(--dur-default) var(--ease-settle),
+    stroke-opacity var(--dur-med) var(--ease-settle),
     stroke-width var(--dur-fast) var(--ease-out);
   pointer-events: none;
 }
@@ -1812,7 +1813,7 @@ main {
 .arch-graph-node.is-highlighted .arch-graph-node-label,
 .arch-graph-node.is-active .arch-graph-node-label,
 .arch-graph-node.is-pinned .arch-graph-node-label {
-  fill: var(--accent);
+  fill: var(--gold);
 }
 .arch-graph-node-hit {
   cursor: pointer;
@@ -1834,7 +1835,7 @@ main {
   border-radius: 0 30px 0 0;
 }
 .arch-graph-detail-inner {
-  animation: arch-graph-fade var(--dur-default) var(--ease-settle);
+  animation: arch-graph-fade var(--dur-med) var(--ease-settle);
 }
 .arch-graph-detail-header {
   display: grid;
@@ -1927,7 +1928,7 @@ main {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
-  fill: var(--accent);
+  fill: var(--gold);
   font-weight: 500;
 }
 .arch-graph-note-name {
