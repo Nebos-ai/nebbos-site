@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { NebbosMark } from "@nebbos/brand/logo";
-import { primaryNav, secondaryNav, productTree } from "@/lib/nav";
+import { primaryNav, secondaryNav, megaProducts } from "@/lib/nav";
 
 /**
  * SiteHeader · v4 · 2026-09-12 (flower-of-life-only identity)
@@ -33,7 +33,7 @@ import { primaryNav, secondaryNav, productTree } from "@/lib/nav";
  * app/globals.css — no inline color literals, no clamp() magic numbers.
  */
 export function SiteHeader() {
-  const [openMega, setOpenMega] = useState<"product" | null>(null);
+  const [openMega, setOpenMega] = useState<"products" | null>(null);
   const [mobileOpen, setMobileOpen] = useState(false);
   const containerRef = useRef<HTMLElement>(null);
 
@@ -66,7 +66,7 @@ export function SiteHeader() {
     };
   }, [mobileOpen]);
 
-  const isProductOpen = openMega === "product";
+  const isProductsOpen = openMega === "products";
 
   return (
     <header ref={containerRef} className="site-header">
@@ -94,8 +94,8 @@ export function SiteHeader() {
                     type="button"
                     aria-expanded={isOpen}
                     aria-controls={`mega-${item.megaMenu}`}
-                    onClick={() => setOpenMega(isOpen ? null : (item.megaMenu as "product"))}
-                    onMouseEnter={() => setOpenMega(item.megaMenu as "product")}
+                    onClick={() => setOpenMega(isOpen ? null : (item.megaMenu as "products"))}
+                    onMouseEnter={() => setOpenMega(item.megaMenu as "products")}
                     className="site-header__link site-header__link--button"
                   >
                     {item.label}
@@ -145,41 +145,46 @@ export function SiteHeader() {
         </button>
       </div>
 
-      {isProductOpen && (
+      {isProductsOpen && (
         <div
-          id="mega-product"
+          id="mega-products"
           role="region"
-          aria-label="Product menu"
+          aria-label="Products menu"
           onMouseLeave={() => setOpenMega(null)}
           className="site-mega"
         >
           <div className="container-wide">
             <div className="site-mega__grid">
-              {productTree.map(({ band, href, layers }) => (
-                <div key={band.n} className="site-mega__band">
+              {megaProducts.map(({ key, name, tagline, href, tiers }) => (
+                <div key={key} className="site-mega__band">
                   <Link
                     href={href}
                     onClick={() => setOpenMega(null)}
                     className="site-mega__band-link"
                   >
-                    <div className="site-mega__band-name">{band.name}</div>
-                    <div className="site-mega__band-strap">{band.strap}</div>
+                    <div className="site-mega__band-name">
+                      {name.replace("Nebbos.ai ", "").replace("Nebbos ", "")}
+                    </div>
+                    <div className="site-mega__band-strap">{tagline}</div>
                   </Link>
                   <ul className="site-mega__layers">
-                    {layers.map(({ layer, href: lHref }) => (
-                      <li key={layer.n}>
-                        <Link
-                          href={lHref}
-                          onClick={() => setOpenMega(null)}
-                          className="site-mega__layer-link"
-                        >
-                          <span className="site-mega__layer-num">
-                            {String(layer.n).padStart(2, "0")}
-                          </span>
-                          <span className="site-mega__layer-name">{layer.name}</span>
-                        </Link>
-                      </li>
-                    ))}
+                    {tiers.map((tier) => {
+                      // tier.label is "L1 · Basic" — split for two-column layout
+                      const [tierNum, ...rest] = tier.label.split(" · ");
+                      const tierName = rest.join(" · ") || tier.key;
+                      return (
+                        <li key={tier.key}>
+                          <Link
+                            href={tier.href}
+                            onClick={() => setOpenMega(null)}
+                            className="site-mega__layer-link"
+                          >
+                            <span className="site-mega__layer-num">{tierNum}</span>
+                            <span className="site-mega__layer-name">{tierName}</span>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               ))}

@@ -4,13 +4,13 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "prebuild": "pnpm run sync:brand-assets && bash scripts/check-vocab.sh",
+    "prebuild": "npm run sync:brand-assets && bash scripts/check-vocab.sh",
     "build": "next build",
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "check:vocab": "bash scripts/check-vocab.sh",
     "sync:brand-assets": "cp node_modules/@nebbos/brand/logo/nebbos-mark.svg public/favicon.svg",
-    "postinstall": "pnpm run sync:brand-assets 2>/dev/null || true",
+    "postinstall": "npm run sync:brand-assets 2>/dev/null || true",
     "build:pdf": "node scripts/build-presentation-pdf.mjs",
     "test:a11y": "playwright test",
     "test:lh": "lhci autorun --config=.lighthouserc.json"

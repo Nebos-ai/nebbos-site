@@ -36,8 +36,8 @@ export function HomeCTA() {
             <Button href="/demo" variant="solid-light" size="lg">
               Remember who you are
             </Button>
-            <Button href="/product" variant="ghost-light" size="lg" arrow={false}>
-              See the system
+            <Button href="/products" variant="ghost-light" size="lg" arrow={false}>
+              See the products
             </Button>
           </div>
         </div>
