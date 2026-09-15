@@ -30,14 +30,13 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_ENV: staging
       - name: run a11y sweep
-        # Advisory-retained (2026-09-15) — attempted blocking flip revealed 11
-        # real WCAG 2.2 AA color-contrast violations (footer gold #a36630 @ 4.28:1
-        # and gray #7c7b84 @ 3.83:1 on paper #f7f5f1; both need 4.5:1 for text
-        # under 18pt). The `|| true` had been swallowing these all along — silent
-        # advisory was worse than no gate. Fix follow-up (Axis C Wave 1c):
-        # darken --gold + --ink-3 tokens in globals.css to hit 4.5:1, then flip
-        # to blocking. Charter elite-bar dim 6 pending Wave 1c.
-        run: npm run test:a11y || true
+        # BLOCKING (2026-09-15, Axis C Wave 1). The || true guard had been
+        # swallowing 11 WCAG 2.2 AA color-contrast violations (footer --gold
+        # + --ink-3 tokens). Fixed in same PR via app/globals.css token
+        # darkening (--ink-3: #7C7B84 → #6B6A73; --gold: #A36630 → #9A5D2A).
+        # Sweep now green with 0 violations across 18 test cases.
+        # Charter elite-bar dim 6 (a11y CI-gated) satisfied.
+        run: npm run test:a11y
       - name: upload html report
         if: always()
         uses: actions/upload-artifact@v4
