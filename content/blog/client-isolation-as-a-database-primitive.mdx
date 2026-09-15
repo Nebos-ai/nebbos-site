@@ -73,9 +73,12 @@ without the correct context and confirm that the database refuses it.
 The claim is not "we've been careful." The claim is "the database
 will not allow the leak."
 
-Every SOC 2 auditor, every ISO 27001 assessor, every HIPAA risk
-assessment we have walked through comes back with the same reaction:
-this is faster to review, cleaner to sign off on, and easier to trust.
+The architecture is designed for auditor legibility — one path per
+client, one identity per action, one append-only trail. When SOC 2,
+ISO 27001, or HIPAA assessments engage with it, they see a single tree
+to walk rather than a forest of exceptions to reconcile. Nebbos has
+not yet completed those formal audits; see [/compliance](/compliance)
+for the authoritative status.
 
 ## The cost, and why it's worth it
 
