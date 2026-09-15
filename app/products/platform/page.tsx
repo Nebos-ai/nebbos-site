@@ -57,7 +57,7 @@ function Hero() {
 }
 
 const HIGHLIGHTS = [
-  { label: "Register", value: "Multi-Shell", note: "Tenant isolation by default. Cross-Shell is a ceremony, not an accident." },
+  { label: "Register", value: "Multi-Shell", note: "Shell isolation by default. Cross-Shell is a ceremony, not an accident." },
   { label: "Runtime", value: "Pearls at scale", note: "Every Pearl runs metered, isolated, and modular. Fleet-wide governance in one plane." },
   { label: "Auth", value: "Biometric-native", note: "Touch ID · Face ID · Windows Hello. Every session, every operator, every action." },
   { label: "Audit", value: "Hash-chained", note: "Every action writes a hash-chained audit event. Replay-proof, tamper-evident." },

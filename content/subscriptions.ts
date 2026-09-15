@@ -44,7 +44,7 @@ export type BillingCadence =
 /** Seat model — what unit the subscription is priced on. */
 export type SeatModel =
   | "per-user-per-month"        // human operator seat (Platform · App)
-  | "per-tenant-per-month"      // one tenant = one subscription (MCP)
+  | "per-Shell-per-month"      // one Shell = one subscription (MCP)
   | "per-device-one-time"       // hardware purchase (USB)
   | "per-device-annual"         // hardware attestation / support renewal (USB)
   | "included-with-platform";   // no separate charge, bundled
@@ -58,9 +58,9 @@ export type ContractTerm =
 /** Minimum commit — the floor the operator must satisfy to purchase. */
 export type MinimumCommit = {
   users?: number;                // e.g., 20 users
-  tenants?: number;              // e.g., 1 tenant floor
+  Shells?: number;              // e.g., 1 Shell floor
   devices?: number;              // e.g., 1 device
-  monthly_floor_note?: string;   // "per Nebbos-tenant minimum" — one-line
+  monthly_floor_note?: string;   // "per Nebbos-Shell minimum" — one-line
 };
 
 /** Subscription model — the full shape of a purchasable SKU-subscription combination. */
@@ -112,7 +112,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     contract_term: ["month-to-month", "annual"],
     minimum_commit: {
       users: 20,
-      monthly_floor_note: "20-user minimum per Nebbos tenant",
+      monthly_floor_note: "20-user minimum per Nebbos Shell",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -123,7 +123,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Dashboard access, personal-scope reads, low-risk automations.",
     sales_description:
-      "Basic-tier Nebbos.ai platform access for a tenant of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No USB required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
+      "Basic-tier Nebbos.ai platform access for a Shell of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No USB required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
     prepay_discount_note: null,
   },
   {
@@ -135,7 +135,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     contract_term: ["annual", "multi-year"],
     minimum_commit: {
       users: 20,
-      monthly_floor_note: "20-user minimum per Nebbos tenant",
+      monthly_floor_note: "20-user minimum per Nebbos Shell",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -147,7 +147,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Privileged operator access with USB physical-presence gate.",
     sales_description:
-      "Privileged-tier Nebbos.ai platform access. Each operator paired with a Nebbos USB device; elevated operations (tenant writes, memory registers, admin ops within tenant) require both biometric AND physical USB presence. Includes annual attestation renewal per USB. Suitable for operators executing writes on tenant substrate.",
+      "Privileged-tier Nebbos.ai platform access. Each operator paired with a Nebbos USB device; elevated operations (Shell writes, memory registers, admin ops within Shell) require both biometric AND physical USB presence. Includes annual attestation renewal per USB. Suitable for operators executing writes on Shell substrate.",
     prepay_discount_note: null,
   },
   {
@@ -159,7 +159,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     contract_term: ["annual", "multi-year"],
     minimum_commit: {
       users: 20,
-      monthly_floor_note: "20-user minimum per Nebbos tenant",
+      monthly_floor_note: "20-user minimum per Nebbos Shell",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -169,7 +169,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Admin-tier access with enclave-signed approval for cross-boundary and quorum operations.",
     sales_description:
-      "Admin-tier Nebbos.ai platform access. Each admin user provisioned with a Nebbos USB plus enclave-signed approval capability (AGSE-attested). Unlocks tenant creation and destruction, substrate mutation, cross-tenant reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
+      "Admin-tier Nebbos.ai platform access. Each admin user provisioned with a Nebbos USB plus enclave-signed approval capability (AGSE-attested). Unlocks Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
     prepay_discount_note: null,
   },
 
@@ -238,11 +238,11 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     product: "mcp",
     tier: "L1",
     billing_cadence: ["monthly", "annual-with-monthly-payment"],
-    seat_model: "per-tenant-per-month",
+    seat_model: "per-Shell-per-month",
     contract_term: ["month-to-month", "annual"],
     minimum_commit: {
-      tenants: 1,
-      monthly_floor_note: "One tenant floor; scales per Nebbos tenant",
+      Shells: 1,
+      monthly_floor_note: "One Shell floor; scales per Nebbos Shell",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -250,9 +250,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "tool-calls beyond monthly quota",
       "outbound-egress-GB beyond monthly quota",
     ],
-    headline: "MCP tool substrate for a tenant — read tools and low-risk operations.",
+    headline: "MCP tool substrate for a Shell — read tools and low-risk operations.",
     sales_description:
-      "The Nebbos MCP served over authenticated HTTPS at api.nebbos.ai/mcp for a tenant. L1 tier exposes read tools, personal-scope queries, and low-risk operations. Tool-call quota per tenant per month; overage billed at cost-follow rate. Includes standard SLA (99.5% uptime).",
+      "The Nebbos MCP served over authenticated HTTPS at api.nebbos.ai/mcp for a Shell. L1 tier exposes read tools, personal-scope queries, and low-risk operations. Tool-call quota per Shell per month; overage billed at cost-follow rate. Includes standard SLA (99.5% uptime).",
     prepay_discount_note: null,
   },
   {
@@ -260,12 +260,12 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     product: "mcp",
     tier: "L2",
     billing_cadence: ["monthly", "annual"],
-    seat_model: "per-tenant-per-month",
+    seat_model: "per-Shell-per-month",
     contract_term: ["annual", "multi-year"],
     minimum_commit: {
-      tenants: 1,
+      Shells: 1,
       devices: 1,
-      monthly_floor_note: "One tenant + at least one Nebbos USB with MCP binary",
+      monthly_floor_note: "One Shell + at least one Nebbos USB with MCP binary",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -274,9 +274,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "additional MCP-carrier USB units",
       "outbound-egress-GB beyond monthly quota",
     ],
-    headline: "MCP substrate with USB-attested elevated tool surface for a tenant.",
+    headline: "MCP substrate with USB-attested elevated tool surface for a Shell.",
     sales_description:
-      "The Nebbos MCP with L2 tier exposure — tenant writes, memory registers, admin ops within tenant. MCP binary + config + attestation credentials ship on a Nebbos USB; elevated tool calls verify USB physical presence server-side before executing. Includes 99.9% SLA and quarterly cost-follow reconciliation.",
+      "The Nebbos MCP with L2 tier exposure — Shell writes, memory registers, admin ops within Shell. MCP binary + config + attestation credentials ship on a Nebbos USB; elevated tool calls verify USB physical presence server-side before executing. Includes 99.9% SLA and quarterly cost-follow reconciliation.",
     prepay_discount_note: null,
   },
   {
@@ -284,23 +284,23 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     product: "mcp",
     tier: "L3",
     billing_cadence: ["annual"],
-    seat_model: "per-tenant-per-month",
+    seat_model: "per-Shell-per-month",
     contract_term: ["annual", "multi-year"],
     minimum_commit: {
-      tenants: 1,
+      Shells: 1,
       devices: 1,
-      monthly_floor_note: "Enclave-attested admin substrate; per-tenant floor",
+      monthly_floor_note: "Enclave-attested admin substrate; per-Shell floor",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
     overage_dimensions: [
       "admin tool-calls beyond quota",
-      "cross-tenant read volume",
+      "cross-Shell read volume",
       "quorum-signing rate",
     ],
     headline: "MCP substrate for substrate-mutation and cross-boundary admin ops.",
     sales_description:
-      "The Nebbos MCP with L3 tier exposure — tenant creation and destruction, substrate mutation, cross-tenant reads, ADR-cluster ratification, and quorum-required actions. Requires enclave-signed approval tokens per admin call. Includes 99.99% SLA, dedicated support tier, and multi-year contract minimum.",
+      "The Nebbos MCP with L3 tier exposure — Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Requires enclave-signed approval tokens per admin call. Includes 99.99% SLA, dedicated support tier, and multi-year contract minimum.",
     prepay_discount_note: null,
   },
 
@@ -337,7 +337,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     contract_term: ["annual", "multi-year"],
     minimum_commit: {
       devices: 1,
-      monthly_floor_note: "One-time hardware purchase; annual attestation + tenant-write authority renewal",
+      monthly_floor_note: "One-time hardware purchase; annual attestation + Shell-write authority renewal",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
@@ -347,9 +347,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "replacement device (tamper-evident break)",
       "tier-upgrade re-provisioning",
     ],
-    headline: "Nebbos USB with privileged-tier attestation, tenant-write authority.",
+    headline: "Nebbos USB with privileged-tier attestation, Shell-write authority.",
     sales_description:
-      "One Nebbos USB device provisioned with L2-tier attestation credentials + MCP binary + tenant-write scope. Physical presence gates tenant writes, memory register operations, and admin ops within the operator's tenant. Purchase includes device + one year of attestation renewal.",
+      "One Nebbos USB device provisioned with L2-tier attestation credentials + MCP binary + Shell-write scope. Physical presence gates Shell writes, memory register operations, and admin ops within the operator's Shell. Purchase includes device + one year of attestation renewal.",
     prepay_discount_note: null,
   },
   {
@@ -373,7 +373,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Nebbos USB with admin-tier attestation + enclave-signing authority.",
     sales_description:
-      "One Nebbos USB device provisioned with L3-tier attestation credentials + MCP binary + enclave-signing scope. Physical presence + enclave-signed approval token gate substrate mutations, cross-tenant reads, ADR-cluster ratification, and quorum-required actions. Replacement device requires a new key ceremony. Purchase includes device + one year of attestation renewal.",
+      "One Nebbos USB device provisioned with L3-tier attestation credentials + MCP binary + enclave-signing scope. Physical presence + enclave-signed approval token gate substrate mutations, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Replacement device requires a new key ceremony. Purchase includes device + one year of attestation renewal.",
     prepay_discount_note: null,
   },
 ];
