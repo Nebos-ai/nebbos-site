@@ -21,10 +21,8 @@
  *   Never: agent, agents, AI agent, bot, chatbot, assistant, copilot, tenant(s), multi-tenant (vendor framing + architecture-internal forbidden on customer surfaces)
  *   Retired (do not resurrect): company brain, operating system (as brand framing), fifteen governance layers, department(s) (use "domain"), per-domain brain
  *   Retracted claim patterns (do not resurrect — legal exposure, per elite-bar Phase 1 2026-09-14):
- *     "SOC 2 Type II report available under NDA", "Annex IV pack available under NDA",
- *     "HIPAA BAA available", "Engineered to SOC 2 Type II and ISO 27001",
- *     "Auditors accept it as SOX-adequate", "Bessemer/Avante/SFAI Labs 2026 benchmark",
- *     "twenty-three-percent inference-of-revenue"
+ *     canonical list enforced in scripts/check-vocab.sh RETRACTED_CLAIM_PATTERNS array
+ *     (SOC 2 / ISO 27001 / HIPAA / EU AI Act Annex IV / FERPA / benchmark claims retracted)
  *
  * Related registries:
  *   content/brand.ts       — brand-level strings (name, tagline, description)
