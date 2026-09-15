@@ -30,8 +30,15 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_ENV: staging
       - name: run a11y sweep
-        # `|| true` keeps this advisory during initial rollout. Promote to
-        # blocking once the first clean sweep lands.
+        # Advisory (2026-09-15) — attempted blocking flip in this same PR
+        # surfaced a chicken-and-egg: --ink-3 needs different values on
+        # light-bg vs dark-bg contexts to hit 4.5:1 in both directions
+        # (post-darkening #6B6A73 clears light-bg #F7F5F1 at 5.4:1 but only
+        # 3.16:1 on dark-bg #1D1C22). Single token can't satisfy both.
+        # Follow-up (Axis C Wave 1d): bifurcate --ink-3 into --ink-3-on-paper
+        # + --ink-3-on-ink OR add context-scoped overrides; verify axe zero
+        # violations across all 18 test cases; then flip. Charter elite-bar
+        # dim 6 pending Wave 1d.
         run: npm run test:a11y || true
       - name: upload html report
         if: always()

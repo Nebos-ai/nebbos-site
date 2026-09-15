@@ -75,11 +75,11 @@ a:hover {
   --paper-2:    #F7F5F1;  /* barely-off-white for hairline elevation */
   --ink:        #1D1C22;  /* Nebbos dark · brand */
   --ink-2:      #4A4952;  /* secondary text */
-  --ink-3:      #7C7B84;  /* tertiary text · muted */
+  --ink-3:      #6B6A73;  /* tertiary text · muted (darkened 2026-09-15 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1; previous #7C7B84 measured 3.83:1) */
   --muted:      #A0A0A8;  /* disabled · hint */
   --rule:       #E8E6E2;  /* hairline border · sits on white */
   --rule-2:     #F0EEE9;  /* softer hairline · sub-dividers */
-  --gold:       #A36630;  /* deep · reserved secondary accent */
+  --gold:       #9A5D2A;  /* deep · reserved secondary accent (darkened 2026-09-15 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1; previous #A36630 measured 4.28:1) */
   --accent-2:   #F6A03F;  /* Nebbos orange · brand · primary accent */
   --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
 
