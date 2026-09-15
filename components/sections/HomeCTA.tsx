@@ -4,17 +4,23 @@ import { Button } from "@/components/ui/Button";
 /**
  * HomeCTA · v3 · 2026-08-24 (C15 refactor)
  *
- * The closing band. Full-bleed concept-tenant-onboarding scene — the customer
- * moment, the natural next-step after walking the site. Chapter VII metadata
- * plate top-right; the narrative arc opened at HomeHero (Chapter I) closes
- * here. Composes FullBleedScene primitive.
+ * The closing band. Full-bleed concept-operator-onboarding scene — the
+ * customer moment, the natural next-step after walking the site. Chapter VII
+ * metadata plate top-right; the narrative arc opened at HomeHero (Chapter I)
+ * closes here. Composes FullBleedScene primitive.
+ *
+ * v3.1 (2026-09-15, Axis A Wave 2): scene family renamed to concept-operator-
+ * onboarding per feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_
+ * security_2026_09_14 banned-term list (see scripts/check-vocab.sh for the
+ * enforced pattern set). "Operator" is the ratified customer role per
+ * feedback_operator_and_pearl_shape_doctrine_8.
  */
 
 export function HomeCTA() {
   return (
     <FullBleedScene
       className="cta-fullbleed"
-      scene={{ imageFamily: "concept-tenant-onboarding", imageFamilyVariant: 1 }}
+      scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
       scrim="left"
       vignetteStrength={0.5}
       chapter="VII"

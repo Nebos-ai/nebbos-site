@@ -43,6 +43,20 @@ const nextConfig: NextConfig = {
       { source: "/presentation", destination: "/nebbos-delta-brief.html" },
     ];
   },
+  // /product/* URLs retired 2026-09-15 (Axis A Wave 2 per feedback_nebbos_ai_
+  // product_framing_platform_tools_mcp_usb_security_2026_09_14). The
+  // architecture treatise at /product/{band}/{layer} was the pre-2026-09-14
+  // 15-layer × 5-band framing; superseded by the 4-product × 3-tier customer
+  // taxonomy at /products. Redirects preserve inbound links (SEO, bookmarks,
+  // shared URLs) while pointing visitors at the current IA. 302 (temporary)
+  // per founder-decision 2026-09-15 — leaves room to reinstate /product as a
+  // /how-style internal doctrine surface later without breaking the redirect.
+  async redirects() {
+    return [
+      { source: "/product", destination: "/products", permanent: false },
+      { source: "/product/:path*", destination: "/products", permanent: false },
+    ];
+  },
   // Cache headers · rapid-iteration marketing site.
   // Default Next behavior on `force-static` + `revalidate:false` was
   // Cache-Control: s-maxage=31536000 (1 year on CDN) which meant every
