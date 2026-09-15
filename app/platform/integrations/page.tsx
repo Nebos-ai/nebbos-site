@@ -34,7 +34,7 @@ export default function IntegrationsPage() {
       </Hero>
 
       <FeatureRow
-        eyebrow="What the run layer reads"
+        eyebrow="What the platform reads"
         title="Six adapter families."
         body={<p style={{ margin: 0 }}>Identity + directory (Google Workspace, Microsoft 365, WorkOS). ERP + finance (NetSuite, QuickBooks, Xero). CRM (Salesforce, HubSpot, Pipedrive). Ticketing + ops (Jira, Linear, ServiceNow). Comms (Slack, Teams, email). Industry-specific systems of record (SIS for K-12, EHR for healthcare, LOS for financial services). Each family has a stable adapter contract; specific vendors light up as demand lands.</p>}
       />

@@ -9,15 +9,17 @@ export const metadata = pageMetadata({
   title: "Trends",
   path: "/platform/trends",
   description:
-    "The AI economy in 2026 — where the value pools across the stack, and why the run layer is the layer that captures it. Structural market read.",
+    "The AI economy in 2026 — where the value pools across the stack, and why the operator platform is the layer that captures it. Structural market read.",
 });
 
 /**
- * /platform/trends — Wave 5 · 2026-09-13 rewrite
+ * /platform/trends — Wave 5 · 2026-09-13; Wave 4 vocab-refresh 2026-09-15.
  *
- * Was: 48-line market read structured around silicon/foundation/middle/agentic.
- * Now: same structural map, current voice, sharper positioning of where the
- * run layer sits in the stack.
+ * Structural market map (silicon → foundation → apps → operator platform →
+ * agentic payments). Wave 4 refresh flips customer-hero framing from "run
+ * layer" to "operator platform" per 2026-09-14 doctrine. Historical
+ * "05 · Agentic payments" section retains "run layer" as internal-technical
+ * register (it names a category-of-work, not the customer product).
  */
 export default function TrendsPage() {
   return (
@@ -31,7 +33,7 @@ export default function TrendsPage() {
             Where the value pools.
           </>
         }
-        deck="A structural read of who controls what across the AI stack — from silicon at the bottom to governance at the top — and why the run layer is where the value is compounding."
+        deck="A structural read of who controls what across the AI stack — from silicon at the bottom to governance at the top — and why the operator platform is where the value is compounding."
       >
         <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
@@ -57,15 +59,15 @@ export default function TrendsPage() {
 
       <FeatureRow
         reverse
-        eyebrow="04 · The run layer"
+        eyebrow="04 · The operator platform"
         title="Where governance meets the call. Where the value pools."
-        body={<p style={{ margin: 0 }}>Between the model and the world sits the run layer &mdash; the class of work that decides whether the call runs, what it costs, what it touches, what it leaves behind. This is the layer that owns the operational judgment your team generates. This is where enterprise AI value now compounds.</p>}
+        body={<p style={{ margin: 0 }}>Between the model and the world sits the operator platform &mdash; the class of work that decides whether the call runs, what it costs, what it touches, what it leaves behind. This is the layer that owns the operational judgment your team generates. This is where enterprise AI value now compounds.</p>}
       />
 
       <FeatureRow
-        eyebrow="05 · Agentic payments"
-        title="The emerging layer above run."
-        body={<p style={{ margin: 0 }}>AI-mediated commerce is beginning to move real value. Governance, attestation, and human approval graphs move from nice-to-have to regulatory floor. The run layer that already owns the audit contract is where agentic payments will be settled.</p>}
+        eyebrow="05 · AI-mediated commerce"
+        title="The emerging layer above the platform."
+        body={<p style={{ margin: 0 }}>AI-mediated commerce is beginning to move real value. Governance, attestation, and human approval graphs move from nice-to-have to regulatory floor. The operator platform that already owns the audit contract is where AI-mediated commerce will be settled.</p>}
       />
 
       <CTABand

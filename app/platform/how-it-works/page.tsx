@@ -12,10 +12,12 @@ export const metadata = pageMetadata({
 });
 
 /**
- * /platform/how-it-works — the deployment path (Wave 3 · 2026-09-13 rewrite)
+ * /platform/how-it-works — the deployment path (Wave 3 · 2026-09-13; Wave 4
+ * vocab-refresh 2026-09-15).
  *
  * Concretizes the "live in days" claim into a 4-week timeline every
- * engagement follows. Run-layer voice throughout.
+ * engagement follows. Platform voice (was run-layer voice pre-2026-09-14
+ * doctrine flip).
  */
 export default function HowItWorksPage() {
   return (
@@ -62,7 +64,7 @@ export default function HowItWorksPage() {
       <FeatureRow
         eyebrow="After production"
         title="Every action audited. Every consumption metered. Every Pearl replayable."
-        body={<p style={{ margin: 0 }}>Once the Pearl is live, the run-layer contract holds: every action lands in the audit ledger with a hash chain, every token is traced to its call and its business action, every decision can be replayed against a different context to answer &ldquo;what would have changed if we had known X.&rdquo; The four weeks front-load the shape; the substrate carries it forward.</p>}
+        body={<p style={{ margin: 0 }}>Once the Pearl is live, the platform contract holds: every action lands in the audit ledger with a hash chain, every token is traced to its call and its business action, every decision can be replayed against a different context to answer &ldquo;what would have changed if we had known X.&rdquo; The four weeks front-load the shape; the substrate carries it forward.</p>}
       />
 
       <CTABand

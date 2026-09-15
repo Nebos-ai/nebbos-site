@@ -9,18 +9,17 @@ export const metadata = pageMetadata({
   title: "Presentation",
   path: "/platform/presentation",
   description:
-    "The four-slide Nebbos presentation. Deep-linked from anywhere that needs the four-slide story: what the run layer is, what it meters, what its primitives are, and what deploying on it changes.",
+    "The four-slide Nebbos presentation. Deep-linked from anywhere that needs the four-slide story: what the platform is, what it meters, what its primitives are, and what deploying on it changes.",
 });
 
 /**
- * /platform/presentation — Wave 5 · 2026-09-13 rewrite
+ * /platform/presentation — Wave 5 · 2026-09-13; Wave 4 vocab-refresh 2026-09-15.
  *
- * Was: 48-line stub carrying the stale Cradle/Shell/Pearl three-tier
- * story with CTAs pointing at /presentation (which now exists).
- * Now: an editorial gateway. The four-slide narrative deck lives at
- * /presentation; this page is the reader-in-the-platform-subtree
- * pointer to it, with the shape of the deck outlined for anyone landing
- * here from search or an internal link.
+ * Editorial gateway. The four-slide narrative deck lives at /presentation;
+ * this page is the reader-in-the-platform-subtree pointer to it, with the
+ * shape of the deck outlined for anyone landing here from search or an
+ * internal link. Wave 4 flips customer-hero framing to "platform" per
+ * 2026-09-14 doctrine.
  */
 export default function PresentationPage() {
   return (
@@ -30,7 +29,7 @@ export default function PresentationPage() {
         title={
           <>
             The four-slide{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>run-layer story.</em>
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>platform story.</em>
           </>
         }
         deck="The canonical Nebbos presentation lives at /presentation with the deck embedded inline. Below is what it covers, so you can decide whether to open it now or forward it first."
@@ -40,8 +39,8 @@ export default function PresentationPage() {
 
       <FeatureRow
         eyebrow="Slide 01"
-        title="Every AI call needs a run layer."
-        body={<p style={{ margin: 0 }}>The class of work that sits between intent and state. Not the model. Not the app. The layer that decides whether the call runs, what it costs, what it touches, and what it leaves behind.</p>}
+        title="Every AI call needs a platform."
+        body={<p style={{ margin: 0 }}>The class of work that sits between intent and state. Not the model. Not the app. The platform that decides whether the call runs, what it costs, what it touches, and what it leaves behind.</p>}
       />
 
       <FeatureRow

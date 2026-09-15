@@ -8,15 +8,19 @@ export const metadata = pageMetadata({
   title: "Platform",
   path: "/platform",
   description:
-    "The Nebbos run layer — the metered, isolated, modular executor that sits between intent and state. Four primitives. Every call governed.",
+    "The Nebbos operator platform — a metered, isolated, attested substrate. Its tools ship as MCP capabilities. Its privileged actions are gated by the USB you keep with you.",
 });
 
 /**
- * /platform — the platform overview surface (Wave 3 · 2026-09-13 rewrite)
+ * /platform — the platform overview surface.
  *
- * Prior version (Delta-brief-editorial · Cradle/Shell/Pearl three-tier) is
- * superseded by the run-layer north star (reference_nebbos_north_star_
- * run_layer_architecture · 2026-09-11). Voice: substrate-being-called.
+ * Voice history:
+ * - Delta-brief-editorial (Cradle/Shell/Pearl three-tier, 2026-08-23)
+ *   superseded by the run-layer north star (2026-09-11).
+ * - Run-layer voice (2026-09-13 rewrite) superseded 2026-09-14 on customer-
+ *   hero surfaces by the platform + tools + MCP + USB doctrine per
+ *   feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14.
+ *   Retained as internal-technical register for engineering docs.
  */
 export default function PlatformPage() {
   return (
@@ -25,19 +29,19 @@ export default function PlatformPage() {
         eyebrow="Platform"
         title={
           <>
-            The <em style={{ fontStyle: "italic", color: "var(--gold)" }}>run layer</em>{" "}
+            The <em style={{ fontStyle: "italic", color: "var(--gold)" }}>platform</em>{" "}
             between intent and state.
           </>
         }
-        deck="Metered. Isolated. Modular. Every AI call goes through it; every call is governed by default; every call leaves an audit."
+        deck="Metered. Isolated. Attested. Every AI call goes through it; every call is governed by default; every call leaves an audit."
       >
         <ButtonLink href="/demo" variant="primary">Book a demo</ButtonLink>
       </Hero>
 
       <FeatureRow
-        eyebrow="Why a run layer"
+        eyebrow="Why a platform"
         title="The class of work that sits between the model and the world."
-        body={<p style={{ margin: 0 }}>Models decide. Applications act. But something has to decide whether the call runs, what it costs, what it touches, and what it leaves behind. That something is the run layer. Nebbos is that layer.</p>}
+        body={<p style={{ margin: 0 }}>Models decide. Applications act. But something has to decide whether the call runs, what it costs, what it touches, and what it leaves behind. That something is the operator platform. Nebbos is that platform.</p>}
       />
 
       <FeatureRow
@@ -50,18 +54,18 @@ export default function PlatformPage() {
       <FeatureRow
         eyebrow="What changes when you deploy here"
         title="Governance stops being a feature."
-        body={<p style={{ margin: 0 }}>On Nebbos, every AI call is audited by construction. Every action is scoped by construction. Every consumption is metered by construction. Not a policy you configure; the shape of the runtime.</p>}
+        body={<p style={{ margin: 0 }}>On Nebbos, every AI call is audited by construction. Every action is scoped by construction. Every consumption is metered by construction. Not a policy you configure; the shape of the platform.</p>}
       />
 
       <FeatureRow
         reverse
         eyebrow="What you keep"
         title="Your systems. Your data. Your operators."
-        body={<p style={{ margin: 0 }}>The run layer reads what you already run &mdash; SIS, HR, ERP, CRM, ticketing, comms. It never becomes the system of record. It answers questions on top and leaves the operators the ones who sign off.</p>}
+        body={<p style={{ margin: 0 }}>The platform reads what you already run &mdash; SIS, HR, ERP, CRM, ticketing, comms. It never becomes the system of record. It answers questions on top and leaves the operators the ones who sign off.</p>}
       />
 
       <CTABand
-        headline="See the run layer on your own workload."
+        headline="See the platform on your own workload."
         deck="A 30-minute walkthrough of your workload's shape, the Pearl scope that fits it, and the approval graph it needs."
         primary={{ label: "Book a demo", href: "/demo" }}
         secondary={{ label: "Read the docs", href: "/docs" }}

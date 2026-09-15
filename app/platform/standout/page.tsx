@@ -9,15 +9,16 @@ export const metadata = pageMetadata({
   title: "Standout",
   path: "/platform/standout",
   description:
-    "The one-page argument for Nebbos. Every other AI vendor sits above the run layer and can only recommend. Nebbos IS the run layer — governance by construction, not by policy.",
+    "The one-page argument for Nebbos. Every other AI vendor sits above the operator platform and can only recommend. Nebbos IS the platform — governance by construction, not by policy.",
 });
 
 /**
- * /platform/standout — Wave 5 · 2026-09-13 rewrite
+ * /platform/standout — Wave 5 · 2026-09-13 rewrite; Wave 4 vocab-refresh 2026-09-15.
  *
  * Was: 42-line "somebody else's model" argument.
- * Now: a proper standout page contrasting the run-layer position against
- * every other vendor category. Same rhetorical shape, current voice.
+ * Now: a proper standout page contrasting the platform position against
+ * every other vendor category. Same rhetorical shape; Wave 4 refresh flips
+ * customer-hero framing from "run layer" to "platform" per 2026-09-14 doctrine.
  */
 export default function StandoutPage() {
   return (
@@ -27,9 +28,9 @@ export default function StandoutPage() {
         title={
           <>
             Every other vendor sits{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>above</em> the run layer.
+            <em style={{ fontStyle: "italic", color: "var(--gold)" }}>above</em> the platform.
             <br />
-            Nebbos <em style={{ fontStyle: "italic", color: "var(--gold)" }}>is</em> the run layer.
+            Nebbos <em style={{ fontStyle: "italic", color: "var(--gold)" }}>is</em> the platform.
           </>
         }
         deck="One page. One argument. The category difference every enterprise buying committee needs to see before the shortlist gets drawn."
@@ -40,14 +41,14 @@ export default function StandoutPage() {
       <FeatureRow
         eyebrow="01 · The frontier labs"
         title="Sell you a model. Never see the workload."
-        body={<p style={{ margin: 0 }}>OpenAI, Anthropic, Google, Meta &mdash; the model providers train the world&rsquo;s best generalists. They cannot see your workload, your operators, your systems of record. They cannot govern a call because the call never reaches their runtime. They are downstream of the run layer.</p>}
+        body={<p style={{ margin: 0 }}>OpenAI, Anthropic, Google, Meta &mdash; the model providers train the world&rsquo;s best generalists. They cannot see your workload, your operators, your systems of record. They cannot govern a call because the call never reaches their runtime. They are downstream of the platform.</p>}
       />
 
       <FeatureRow
         reverse
         eyebrow="02 · The application vendors"
         title="Wrap a model in a UI. Governance ends at the wrapper."
-        body={<p style={{ margin: 0 }}>Every AI-native application vendor sits above the model AND above the run layer &mdash; they call a frontier API and render the response. Their governance ends at the API boundary. What the call touched, what it consumed, what it committed &mdash; opaque to them, opaque to you, only auditable at the model provider they don&rsquo;t control.</p>}
+        body={<p style={{ margin: 0 }}>Every AI-native application vendor sits above the model AND above the platform &mdash; they call a frontier API and render the response. Their governance ends at the API boundary. What the call touched, what it consumed, what it committed &mdash; opaque to them, opaque to you, only auditable at the model provider they don&rsquo;t control.</p>}
       />
 
       <FeatureRow
@@ -59,7 +60,7 @@ export default function StandoutPage() {
       <FeatureRow
         reverse
         eyebrow="04 · Nebbos"
-        title="The run layer itself. Governance IS the runtime."
+        title="The platform itself. Governance IS the runtime."
         body={<p style={{ margin: 0 }}>Nebbos is where the AI call lives. Every call carries its own audit, its own metering, its own isolation. Every action passes through the approval graph. Every consumption traces to a business decision. Not a wrapper. Not a dashboard. The substrate.</p>}
       />
 
