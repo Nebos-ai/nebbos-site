@@ -19,7 +19,7 @@ const MCP_SUBSCRIPTIONS = subscriptionsForProduct("mcp");
 export const metadata: Metadata = {
   title: "Nebbos MCP · The tool substrate. Attested.",
   description:
-    "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos USB — physical presence gates elevated tiers. Server-verified attestation. Tenant-scoped isolation.",
+    "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos USB — physical presence gates elevated tiers. Server-verified attestation. Shell-scoped isolation.",
 };
 
 // ── Section 1 · Hero ─────────────────────────────────────────────────────
@@ -64,7 +64,7 @@ function Hero() {
 const HIGHLIGHTS = [
   { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
   { label: "Attestation", value: "Server-verified", note: "The MCP verifies factors before executing. Client claims mean nothing." },
-  { label: "Isolation", value: "Tenant-scoped", note: "Cross-Shell reads require enclave-signed approval. No accidental crossing." },
+  { label: "Isolation", value: "Shell-scoped", note: "Cross-Shell reads require enclave-signed approval. No accidental crossing." },
   { label: "Binary", value: "Ships on the USB", note: "Config, credentials, and code live on your Nebbos USB. Unplug removes them." },
   { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per Shell. Overage billed at cost-follow with quarterly reconciliation." },
 ];
@@ -228,7 +228,7 @@ const VALUE_CARDS = [
     body: "Every elevated call requires factors the server verifies against enrolled credentials. Signature counter, origin, attestation chain, tier gate &mdash; all checked before the tool runs.",
   },
   {
-    factor: "Tenant isolation",
+    factor: "Shell isolation",
     headline: "Cross-Shell reads are a ceremony.",
     body: "The MCP refuses cross-Shell operations without an enclave-signed approval token. Accidental crossing is impossible; deliberate crossing is audited and reviewable.",
   },

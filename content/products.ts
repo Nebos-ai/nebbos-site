@@ -45,13 +45,13 @@ export const TIERS: Tier[] = [
     key: "L2",
     label: "L2 · Privileged",
     factors: "Biometric + Nebbos USB physical presence",
-    scope: "Tenant writes, memory registers, admin operations within the tenant.",
+    scope: "Shell writes, memory registers, admin operations within the Shell.",
   },
   {
     key: "L3",
     label: "L3 · Admin",
     factors: "Biometric + Nebbos USB + enclave-signed approval token",
-    scope: "Tenant creation and destruction, substrate mutation, cross-tenant, quorum-required actions.",
+    scope: "Shell creation and destruction, substrate mutation, cross-Shell, quorum-required actions.",
   },
 ];
 
@@ -74,7 +74,7 @@ export const PRODUCTS: Product[] = [
     name: "Nebbos.ai platform",
     tagline: "The AI operations platform for institutional scale.",
     description:
-      "The web platform where operators run their Pearls, view dashboards, and approve actions. Multi-tenant by default, enterprise-grade, live in production.",
+      "The web platform where operators run their Pearls, view dashboards, and approve actions. Multi-Shell by default, enterprise-grade, live in production.",
     colorVar: "--product-color-platform",
     slug: "platform",
   },
