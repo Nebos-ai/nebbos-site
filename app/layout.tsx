@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
+import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
 import { BRAND } from "@/content/brand";
 import { organizationJsonLd } from "@/lib/seo";
 
@@ -126,6 +127,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <SiteHeader />
         <main id="main">{children}</main>
         <SiteFooter />
+        <WebVitalsReporter />
       </body>
     </html>
   );
