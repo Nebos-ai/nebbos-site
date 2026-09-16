@@ -255,8 +255,9 @@ function TableRows({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
   const rows: Array<[string, string]> = [
     ["Founded", String(FACTS.foundingYear)],
     ["Category", FACTS.category],
-    ["Legal entity", BRAND.legalEntity],
-    ["Jurisdiction", FACTS.jurisdiction],
+    ["US parent", `${BRAND.parentEntity} · ${BRAND.parentEntityLocation}`],
+    ["AI unit", `${BRAND.aiEntity} · ${BRAND.aiEntityLocation}`],
+    ["Serbian subsidiary", `${BRAND.legalEntity} · ${BRAND.legalEntityLocation}`],
     ["Team shape", FACTS.teamShape],
   ];
   return (

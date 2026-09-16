@@ -78,15 +78,28 @@ export const BRAND = {
     "Your operation is the training data. Nebbos captures every human decision as a preference pair, portable to any model you own or license.",
 
   /**
-   * Legal entity name — the Serbian operating entity.
+   * Three-tier corporate taxonomy (per session 3c918563 message-board note
+   * 2026-09-16 12:34Z + founder ratification during nebbos-signature.html
+   * iteration). Extends the 2026-09-16 08:00Z rename doctrine by adding
+   * the AI operating tier that was missing from the initial two-tier form.
    *
-   * Ratified 2026-09-16: TR3I D.O.O. superseded by Nebbos D.O.O. (Serbian
-   * subsidiary of Nebbos Technologies Corp US parent). Per
-   * `feedback_data_classification_chat_contents_private_entity_attribution_only_2026_09_16`
-   * — supersedes prior legal-entity value per governance-additive-only.
+   * Structure top-to-bottom:
+   *   1. Nebbos Technologies Corp · Wilmington, Delaware (US parent)
+   *   2. Nebbos AI · Los Angeles, California (AI product/business unit)
+   *   3. Nebbos D.O.O. · Beograd, Serbia (Serbian operating subsidiary)
+   *
+   * `legalEntity` remains the Serbian tier name for legacy footer usage
+   * (single-line copyright). `parentEntity` remains the US parent. The
+   * new `aiEntity` fills the middle tier. Full colophon = all three.
    */
   legalEntity: "Nebbos D.O.O.",
+  legalEntityLocation: "Beograd, Serbia",
 
-  /** US parent entity (Delaware C-Corp). Used in colophon signature blocks. */
+  /** US parent entity (Delaware C-Corp). */
   parentEntity: "Nebbos Technologies Corp",
+  parentEntityLocation: "Wilmington, Delaware",
+
+  /** AI product/business unit — the middle tier. */
+  aiEntity: "Nebbos AI",
+  aiEntityLocation: "Los Angeles, California",
 } as const;

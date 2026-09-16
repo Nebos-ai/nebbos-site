@@ -19,8 +19,12 @@ export const FACTS = {
   /** Category positioning (mirrored to content/brand.ts for cross-file consistency). */
   category: "Operator platform for AI-native operations",
 
-  /** One-line legal footer (colophon form per 2026-09-16 corporate-taxonomy doctrine). */
-  legalFooter: "© 2026 Nebbos D.O.O. · a subsidiary of Nebbos Technologies Corp. All rights reserved.",
+  /**
+   * One-line legal footer — three-tier form per 2026-09-16 corporate-taxonomy
+   * amendment (session 3c918563 clarification, adds middle Nebbos AI tier).
+   * Ordered outer → inner: Delaware parent, LA AI unit, Serbian subsidiary.
+   */
+  legalFooter: "© 2026 Nebbos Technologies Corp · Nebbos AI · Nebbos D.O.O. — All rights reserved.",
 
   /** Compliance stance (retracted 2026-09-14 to match /compliance body §§02-06 authoritative phrasing). */
   complianceStance:
