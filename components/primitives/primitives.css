@@ -1,0 +1,299 @@
+/* ============================================================================
+   components/primitives/primitives.css · Design substrate v3 · @layer primitives
+
+   The visual contract for every primitive under components/primitives/*.
+   Every declaration references a --token from @layer tokens. Zero literals.
+
+   Loaded once from app/globals.css via `@import`. Every class here lives
+   under `@layer primitives` — sits between `tokens` and `patterns` in the
+   cascade so patterns can compose primitives without specificity fights.
+   ============================================================================ */
+
+@layer primitives {
+
+  /* ─── Eyebrow ────────────────────────────────────────────────────── */
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    margin: 0;
+    line-height: var(--lh-body);
+  }
+  .eyebrow--default { color: var(--color-ink-3); }
+  .eyebrow--accent  { color: var(--color-accent); }
+  .eyebrow--onDark {
+    color: oklch(97.5% 0.002 106 / 0.85);
+    text-shadow: 0 1px 2px oklch(15% 0.006 258 / 0.32);
+  }
+
+  /* ─── Numeral ────────────────────────────────────────────────────── */
+
+  .numeral {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: var(--tracking-normal);
+    color: var(--color-ink);
+  }
+  .numeral--sm { font-size: var(--fs-eyebrow); }
+  .numeral--md { font-size: var(--fs-body); }
+  .numeral--lg { font-size: var(--fs-h3); }
+
+  .numeral__plus-marker {
+    display: inline-block;
+    width: 0.75em;
+    height: 0.75em;
+    position: relative;
+  }
+  .numeral__plus-marker::before,
+  .numeral__plus-marker::after {
+    content: "";
+    position: absolute;
+    background: var(--color-accent);
+  }
+  .numeral__plus-marker::before {
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 0.08em;
+    transform: translateY(-50%);
+  }
+  .numeral__plus-marker::after {
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 0.08em;
+    transform: translateX(-50%);
+  }
+
+  .numeral__digits { line-height: 1; }
+
+  /* ─── Button ─────────────────────────────────────────────────────── */
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-3) var(--space-5);
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    font-weight: var(--fw-medium);
+    line-height: 1;
+    letter-spacing: var(--tracking-normal);
+    text-decoration: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    background: transparent;
+    transition:
+      background-color var(--dur-default) var(--ease-out),
+      border-color var(--dur-default) var(--ease-out),
+      color var(--dur-default) var(--ease-out),
+      transform var(--dur-default) var(--ease-out);
+  }
+  .btn:focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+  }
+  .btn__chevron {
+    display: inline-block;
+    transition: transform var(--dur-fast) var(--ease-out);
+    line-height: 1;
+  }
+  .btn:hover .btn__chevron { transform: translateX(2px); }
+
+  /* Primary — solid ink pill on paper */
+  .btn--primary.btn--onPaper {
+    background: var(--color-ink);
+    color: var(--color-paper);
+    border-color: var(--color-ink);
+  }
+  .btn--primary.btn--onPaper:hover {
+    background: oklch(from var(--color-ink) calc(l + 0.08) c h);
+  }
+  /* Primary on dark scrim — paper pill on scene */
+  .btn--primary.btn--onDark {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    border-color: var(--color-paper);
+  }
+  .btn--primary.btn--onDark:hover {
+    background: oklch(from var(--color-paper) calc(l - 0.05) c h);
+  }
+
+  /* Ghost — text-only, no ground. Underline on hover. */
+  .btn--ghost {
+    padding: var(--space-2) 0;
+    border-radius: var(--radius-none);
+    border: 0;
+  }
+  .btn--ghost.btn--onPaper {
+    color: var(--color-ink);
+  }
+  .btn--ghost.btn--onPaper:hover {
+    color: var(--color-accent-deep);
+  }
+  .btn--ghost.btn--onDark {
+    color: var(--color-paper);
+  }
+  .btn--ghost.btn--onDark:hover {
+    color: oklch(from var(--color-paper) calc(l - 0.1) c h);
+  }
+
+  /* ─── PageSection ────────────────────────────────────────────────── */
+
+  .page-section {
+    display: block;
+    padding-block: var(--section-y);
+    background: var(--color-paper);
+    color: var(--color-ink);
+  }
+  .page-section--paper2 { background: var(--color-paper-2); }
+  .page-section--ink {
+    background: var(--color-ink);
+    color: var(--color-paper);
+  }
+  .page-section--ruled { border-top: 1px solid var(--color-rule); }
+  .page-section--compact { padding-block: calc(var(--section-y) / 2); }
+
+  /* ─── PageHero ───────────────────────────────────────────────────── */
+
+  .page-hero {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    min-height: var(--section-hero-min);
+    overflow: hidden;
+    isolation: isolate;
+    border-bottom: 1px solid var(--color-rule);
+  }
+  .page-hero--paper {
+    background: var(--color-paper);
+    color: var(--color-ink);
+    align-items: center;
+  }
+  .page-hero--scene {
+    color: var(--color-paper);
+  }
+
+  .page-hero__scrim {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    background: linear-gradient(
+      to top,
+      oklch(15% 0.006 258 / 0.68) 0%,
+      oklch(15% 0.006 258 / 0.42) 32%,
+      oklch(15% 0.006 258 / 0.04) 62%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+
+  .page-hero__chapter {
+    position: absolute;
+    top: var(--space-6);
+    right: var(--space-6);
+    z-index: 3;
+    display: inline-flex;
+    align-items: baseline;
+    gap: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    color: var(--color-paper);
+    text-shadow: 0 1px 2px oklch(15% 0.006 258 / 0.32);
+  }
+  .page-hero--paper .page-hero__chapter {
+    color: var(--color-ink-3);
+    text-shadow: none;
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 2;
+    padding-block: clamp(var(--space-7), 9vh, var(--space-10));
+    width: 100%;
+  }
+  .page-hero__frame {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    max-width: var(--measure-title);
+  }
+  .page-hero--center .page-hero__frame {
+    margin-inline: auto;
+    text-align: center;
+    align-items: center;
+    max-width: 28ch;
+  }
+
+  .page-hero__eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--fs-eyebrow);
+    letter-spacing: var(--tracking-caps);
+    text-transform: uppercase;
+    margin: 0;
+    color: currentColor;
+    opacity: 0.85;
+  }
+
+  .page-hero__headline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-hero);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-tight);
+    margin: 0;
+    text-wrap: balance;
+    color: currentColor;
+  }
+  .page-hero--scene .page-hero__headline {
+    text-shadow: 0 2px 4px oklch(15% 0.006 258 / 0.42);
+  }
+  .page-hero__headline em {
+    font-style: italic;
+    color: var(--color-gold);
+    font-weight: var(--fw-regular);
+  }
+  .page-hero--scene .page-hero__headline em {
+    color: var(--color-gold-light);
+  }
+
+  .page-hero__deck {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    line-height: var(--lh-body);
+    margin: 0;
+    max-width: var(--measure-deck);
+    color: currentColor;
+    opacity: 0.9;
+  }
+  .page-hero--scene .page-hero__deck {
+    text-shadow: 0 1px 2px oklch(15% 0.006 258 / 0.32);
+  }
+
+  .page-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    margin-top: var(--space-3);
+  }
+  .page-hero--center .page-hero__ctas {
+    justify-content: center;
+  }
+
+  /* Prefers-reduced-motion: kill button chevron transition + all others */
+  @media (prefers-reduced-motion: reduce) {
+    .btn,
+    .btn__chevron,
+    .btn__label {
+      transition: none;
+    }
+  }
+}

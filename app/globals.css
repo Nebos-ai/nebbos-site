@@ -35,6 +35,10 @@
 
 @import "../components/tokens/tokens.css";
 
+/* ── PRIMITIVES LAYER · visual contracts for every reusable primitive ─ */
+
+@import "../components/primitives/primitives.css";
+
 /* ── 1. RESET · @layer reset ─────────────────────────────────────────── */
 
 *,
