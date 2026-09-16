@@ -1,10 +1,8 @@
-import Link from "next/link";
 import {
   SCENES_IN_ORDER,
   type SceneId,
 } from "@/content/stills";
 import { LAYERS } from "@/lib/architecture";
-import { layerPath } from "@/lib/nav";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { SceneStill } from "@/components/ui/SceneStill";
 import { SceneOverlay, SceneMetadataPlate } from "@/components/ui/SceneOverlay";
@@ -184,23 +182,13 @@ export function HomeStory() {
                 }}
               >
                 <span style={{ color: "var(--gold)" }}>
-                  {String(chapterNum - 1).padStart(2, "0")} · Layers active
+                  {String(chapterNum - 1).padStart(2, "0")} · Under the surface
                 </span>
                 <span aria-hidden style={{ opacity: 0.4 }}>—</span>
                 {bandLayers.map((layer, i) => (
                   <span key={layer.n} style={{ display: "inline-flex", alignItems: "center", gap: 8 }}>
                     {i > 0 && <span aria-hidden style={{ opacity: 0.3 }}>·</span>}
-                    <Link
-                      href={layerPath(layer)}
-                      style={{
-                        color: "var(--ink-2)",
-                        textDecoration: "none",
-                        transition: "color var(--dur-fast) var(--ease-out)",
-                      }}
-                      className="layer-link"
-                    >
-                      {layer.name}
-                    </Link>
+                    <span style={{ color: "var(--ink-2)" }}>{layer.name}</span>
                   </span>
                 ))}
               </div>

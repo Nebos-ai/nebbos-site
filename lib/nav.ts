@@ -76,12 +76,20 @@ export function layerSlug(layer: Layer | number): string {
   return LAYER_SLUGS[n];
 }
 
-export function bandPath(band: Band | number): string {
-  return `/product/${bandSlug(band)}`;
+/**
+ * Retired 2026-09-16 (real fix — PR #75 lost these edits in a staging
+ * mistake): the /product/{band}/{layer} route family was deleted (files
+ * gone via #75, redirects still catch external inbound). These path
+ * helpers now return the live /products index so any residual consumer
+ * (HomeStory, productTree below) never emits a link into the retired
+ * URL space. bandSlug/layerSlug are still exported for tests + docs.
+ */
+export function bandPath(_band: Band | number): string {
+  return `/products`;
 }
 
-export function layerPath(layer: Layer): string {
-  return `/product/${bandSlug(layer.band)}/${layerSlug(layer)}`;
+export function layerPath(_layer: Layer): string {
+  return `/products`;
 }
 
 /* ── Derived structures ───────────────────────────────────────────────── */
