@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import packageJson from "@/package.json";
+import { PlusMark } from "@/components/ui/PlusMark";
 
 export const metadata: Metadata = {
   title: "How this was built",
@@ -133,6 +134,30 @@ const eyebrow: React.CSSProperties = {
   margin: 0,
 };
 
+/**
+ * Numbered section eyebrow (per design/tokens.json signature-devices.section-numeral):
+ *   <PlusMark size="sm" /> + tabular numeral + · + LABEL
+ * The PlusMark sits inline with the mono numeral for the delta-brief
+ * editorial signature-mark density.
+ */
+function NumeralEyebrow({ n, label }: { n: string; label: string }) {
+  return (
+    <p
+      style={{
+        ...eyebrow,
+        display: "inline-flex",
+        alignItems: "center",
+        gap: 10,
+      }}
+    >
+      <PlusMark size="sm" />
+      <span style={{ fontVariantNumeric: "tabular-nums" }}>{n}</span>
+      <span aria-hidden>&middot;</span>
+      <span>{label}</span>
+    </p>
+  );
+}
+
 export default function HowPage() {
   const nextVersion = (packageJson.dependencies as Record<string, string>).next;
   const reactVersion = (packageJson.dependencies as Record<string, string>).react;
@@ -160,7 +185,7 @@ export default function HowPage() {
         style={{ paddingBlock: "clamp(80px, 14vh, 160px)" }}
       >
         <div className="container">
-          <p style={eyebrow}>00 &middot; How this was built</p>
+          <NumeralEyebrow n="00" label="How this was built" />
           <h1
             style={{
               fontFamily: "var(--font-serif)",
@@ -211,7 +236,7 @@ export default function HowPage() {
         }}
       >
         <div className="container">
-          <p style={eyebrow}>01 &middot; The 12-dimension scorecard</p>
+          <NumeralEyebrow n="01" label="The 12-dimension scorecard" />
           <ol
             style={{
               listStyle: "none",
@@ -313,7 +338,7 @@ export default function HowPage() {
         }}
       >
         <div className="container">
-          <p style={eyebrow}>02 &middot; Build stamp</p>
+          <NumeralEyebrow n="02" label="Build stamp" />
           <dl
             style={{
               display: "grid",
