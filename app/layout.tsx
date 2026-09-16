@@ -123,6 +123,38 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
+        {/*
+         * Speculation Rules API — Chrome 121+ · Elite bar dim 12 (2026-09-16).
+         * Document-source prefetch with moderate eagerness = hover/pointerdown
+         * trigger against every same-origin anchor on the page. Complements
+         * (does not replace) next/link's viewport-based prefetch: this catches
+         * plain <a> tags in body copy, footer, blog article cross-links, etc.
+         *
+         * "moderate" is the second-most-conservative tier — no bandwidth spent
+         * until the user actually hovers a link. Browsers that don't support
+         * Speculation Rules silently ignore the block. Excluded API + auth
+         * routes to avoid burning session state or CSRF tokens.
+         */}
+        <script
+          type="speculationrules"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              prefetch: [
+                {
+                  source: "document",
+                  where: {
+                    and: [
+                      { href_matches: "/*" },
+                      { not: { href_matches: "/api/*" } },
+                      { not: { href_matches: "/*.pdf" } },
+                    ],
+                  },
+                  eagerness: "moderate",
+                },
+              ],
+            }),
+          }}
+        />
         <a href="#main" className="skip-link">Skip to content</a>
         <SiteHeader />
         <main id="main">{children}</main>
