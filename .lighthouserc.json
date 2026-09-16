@@ -14,7 +14,8 @@
         "http://localhost:3000/security",
         "http://localhost:3000/trust",
         "http://localhost:3000/compliance",
-        "http://localhost:3000/customers"
+        "http://localhost:3000/customers",
+        "http://localhost:3000/design"
       ],
       "numberOfRuns": 2,
       "settings": {
