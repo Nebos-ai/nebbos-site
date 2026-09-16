@@ -59,13 +59,16 @@
     --font-sans: var(--font-space-grotesk, ui-sans-serif, system-ui, sans-serif);
     --font-mono: var(--font-mono-src, ui-monospace, SFMono-Regular, monospace);
 
-    /* Fluid type scale — modular 1.25 major-third from 15px body */
-    --fs-hero:    clamp(3.5rem, 5.5vw + 1rem, 6rem);        /* 56 →  96 */
-    --fs-display: clamp(2.75rem, 3.5vw + 1rem, 4.2rem);     /* 44 →  67 */
-    --fs-h1:      clamp(2.25rem, 2.5vw + 1rem, 2.75rem);    /* 36 →  44 */
-    --fs-h2:      clamp(1.75rem, 1.8vw + 1rem, 2.25rem);    /* 28 →  36 */
-    --fs-h3:      clamp(1.35rem, 0.6vw + 1rem, 1.75rem);    /* 22 →  28 */
-    --fs-body-lg: clamp(1.125rem, 0.25vw + 1rem, 1.3125rem);/* 18 →  21 */
+    /* Fluid type scale — refined 2026-09-16 for hero dominance
+     * apple.com's tile-headline sits ~80px desktop with tight tracking.
+     * Bumped hero + display bands to hit that visual weight. Body-side
+     * bands unchanged (15→17px reads as premium — Apple's default). */
+    --fs-hero:    clamp(3.75rem, 6vw + 1rem, 7rem);         /*  60 → 112 */
+    --fs-display: clamp(3rem,    4vw + 1rem, 5rem);         /*  48 →  80 */
+    --fs-h1:      clamp(2.5rem,  2.75vw + 1rem, 3.25rem);   /*  40 →  52 */
+    --fs-h2:      clamp(2rem,    2vw + 1rem, 2.75rem);      /*  32 →  44 */
+    --fs-h3:      clamp(1.5rem,  0.75vw + 1rem, 2rem);      /*  24 →  32 */
+    --fs-body-lg: clamp(1.1875rem, 0.3vw + 1rem, 1.375rem); /*  19 →  22 */
     --fs-body:    clamp(0.9375rem, 0.1vw + 0.875rem, 1.0625rem); /* 15 → 17 */
     --fs-eyebrow: 0.6875rem;   /* 11px */
     --fs-micro:   0.65rem;     /* 10.5px */
@@ -80,10 +83,14 @@
     --lh-body:    1.5;
     --lh-loose:   1.7;
 
+    /* Tracking refined 2026-09-16 — tighter hero display, wider caps mono
+     * matches apple.com specimen (letter-spacing: -0.03em on huge headlines,
+     * 0.24em uppercase mono for eyebrows). */
+    --tracking-hero:   -0.032em;
     --tracking-tight:  -0.028em;
     --tracking-normal: -0.011em;
     --tracking-wide:    0.02em;
-    --tracking-caps:    0.16em;
+    --tracking-caps:    0.24em;
 
     /* ─── MOTION ──────────────────────────────────────────────────────── */
     --dur-instant: 75ms;
