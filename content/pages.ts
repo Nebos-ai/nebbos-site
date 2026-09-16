@@ -103,18 +103,24 @@ export type Page = {
 
 export const PAGES = {
   /* ═══════════════ HOME ═════════════════════════════════════════════ */
+  /* NOTE: /home is rendered by bespoke Home* section components in app/page.tsx.
+   * The section blobs below are dormant (kept for schema completeness); only
+   * title + metaDescription are consumed anywhere (app/page.tsx doesn't export
+   * metadata today, so app/layout.tsx defaults apply). Kept aligned to the
+   * 2026-09-14 platform·MCP·USB voice so a future re-wiring inherits the right
+   * words. */
   home: {
     slug: "/",
-    title: "The company brain your team never had time to build",
+    title: "The operator platform for AI-native operations.",
     metaDescription:
-      "Nebbos is the company brain your enterprise never had time to build. One Pearl per domain, fifteen governance layers underneath.",
+      "Nebbos is the operator platform for AI-native operations. A Pearl per domain, tools mediated through the MCP, keys on hardware you can hold.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "Nebbos",
-        h1: "The company brain your team never had time to build.",
-        deck: "One Pearl per domain. Every human decision your team makes trains your model, not someone else&rsquo;s. Portable to you if you ever leave.",
+        h1: "The operator platform for AI-native operations.",
+        deck: "One Pearl per domain. Tools mediated through the MCP. Keys on hardware you can hold. Every human decision your team makes trains your model, not someone else&rsquo;s.",
         imageV2: 1,
       },
       {
@@ -122,13 +128,13 @@ export const PAGES = {
         kind: "band-overview",
         eyebrow: "02 · The architecture",
         h2: "What&rsquo;s underneath every Pearl you deploy.",
-        deck: "Fifteen governance layers, grouped as five bands. Data at the bottom. Boundaries the world crosses at. Reasoning across providers. Action and the humans who approve it. Commerce at the top. Deploy Nebbos Design, Nebbos Finance, Nebbos Operations — every layer applies, automatically.",
+        deck: "A platform, a tools protocol, a hardware-attested USB. The platform runs the work. The MCP mediates every tool call. The USB carries the keys. Deploy a Pearl on any domain — the same substrate runs underneath.",
       },
       {
         id: "story",
         kind: "story-triptych",
         eyebrow: "03 · Three chapters",
-        h2: "One operating system. Three chapters of a working day.",
+        h2: "One platform. Three chapters of a working day.",
       },
       {
         id: "cta",
@@ -165,16 +171,16 @@ export const PAGES = {
   /* ═══════════════ ABOUT ═══════════════════════════════════════════ */
   about: {
     slug: "/about",
-    title: "About · Built to be the company brain your enterprise never had time to build.",
+    title: "About · The operator platform for AI-native operations.",
     metaDescription:
-      "Nebbos is the operating system your enterprise never had time to build. Founded 2026, based in Serbia, engineered to SOC 2 and ISO 27001 controls.",
+      "Nebbos is the operator platform for AI-native operations. Founded 2026, based in Serbia, hardware-attested at every tier.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · About",
-        h1: "Built to be the company brain your enterprise never had time to build.",
-        deck: "Every enterprise has domains that would run better with a brain. Nebbos gives each one its own — a Pearl, pre-educated on your work, tuned by use, portable to you if you ever leave the platform.",
+        h1: "Built to be the operator platform for AI-native operations.",
+        deck: "Every enterprise has domains that would run better with a platform underneath them. Nebbos gives each one its own — a Pearl per domain, tools mediated through the MCP, keys on hardware you can hold.",
       },
       {
         id: "facts",
@@ -201,8 +207,8 @@ export const PAGES = {
         id: "cta",
         kind: "cta-full-bleed",
         eyebrow: "04 · Where we&rsquo;re going",
-        h2: "An operating system that watches the work.",
-        deck: "Nebbos is a substrate. Fifteen layers, five bands, one architecture. Owned by the enterprise that runs it, portable to the models it trusts, quiet enough that the humans it serves get their mornings, mid-mornings, and evenings back.",
+        h2: "A platform that watches the work.",
+        deck: "Nebbos is a substrate. A platform, a tools protocol, a hardware-attested USB. Owned by the enterprise that runs it, portable to the models it trusts, quiet enough that the humans it serves get their mornings, mid-mornings, and evenings back.",
         ctaPrimary: { label: "See the products", href: "/products", variant: "solid-light" },
         imagePerspective: 4,
       },
