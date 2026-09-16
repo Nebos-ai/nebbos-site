@@ -1,5 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
+import { connection } from "next/server";
+import { headers } from "next/headers";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
@@ -105,7 +107,17 @@ export const viewport: Viewport = {
   ],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+// Opt every route through dynamic rendering so middleware's per-request CSP
+// nonce is available to Next's SSR nonce-stamper. Per Next 15 canonical CSP
+// guide: "To use a nonce, your page must be dynamically rendered … Static
+// pages are generated at build time, when no request or response headers
+// exist — so no nonce can be injected." `await connection()` in the root
+// layout is the ratified way to opt out of static-shell prerender for every
+// descendant route.
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  await connection();
+  const nonce = (await headers()).get("x-nonce") ?? undefined;
+
   return (
     <html
       lang="en"
@@ -121,6 +133,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body>
         <script
           type="application/ld+json"
+          nonce={nonce}
           dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd()) }}
         />
         {/*
@@ -137,6 +150,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
          */}
         <script
           type="speculationrules"
+          nonce={nonce}
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               prefetch: [
