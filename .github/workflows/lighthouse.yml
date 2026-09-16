@@ -6,11 +6,13 @@ on:
   pull_request:
     branches: [main]
 
-# Advisory-only for now — the || true guard was hiding an ERRORED_DOCUMENT_REQUEST
-# failure (LHCI hitting 404 at document-load, not measuring perf at all).
-# Fix follow-up (Axis C Wave 1b): configure lighthouserc.json with
-# startServerCommand or spin up npm run start in the workflow before lhci autorun.
-# Then can promote to blocking. Charter elite-bar dim 5 pending until then.
+# BLOCKING (2026-09-15 Wave 1e). Wave 1b (PR #51) fixed the URL-list
+# 404s that were causing ERRORED_DOCUMENT_REQUEST silent failures under
+# `|| true`. LHCI now hits 11 real routes (home + /products/* + /platform +
+# security + trust + compliance + customers) and asserts against the
+# .lighthouserc.json budget (perf >=0.85, a11y >=0.95, LCP <=2.5s,
+# CLS <=0.1). Consistently green across #51-#58; guard removed.
+# Charter elite-bar dim 5 (perf CI-gated) satisfied.
 concurrency:
   group: lighthouse-${{ github.ref }}
   cancel-in-progress: true
@@ -33,6 +35,5 @@ jobs:
         env:
           NEXT_PUBLIC_SITE_ENV: staging
       - name: lighthouse ci
-        # Advisory per header comment above — || true retained until LHCI can
-        # actually load the built pages (fix scheduled as Axis C Wave 1b).
-        run: npx lhci autorun --config=.lighthouserc.json || true
+        # BLOCKING per header comment above (Axis C Wave 1e flip).
+        run: npx lhci autorun --config=.lighthouserc.json
