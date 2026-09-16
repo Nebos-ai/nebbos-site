@@ -107,7 +107,7 @@ export function SiteFooter() {
           ))}
         </div>
 
-        {/* Bottom bar: legal entity + © + status */}
+        {/* Bottom bar: three-tier legal colophon + status */}
         <div
           style={{
             borderTop: "1px solid var(--rule)",
@@ -116,7 +116,7 @@ export function SiteFooter() {
             flexWrap: "wrap",
             gap: 24,
             justifyContent: "space-between",
-            alignItems: "center",
+            alignItems: "flex-start",
           }}
         >
           <div
@@ -125,9 +125,15 @@ export function SiteFooter() {
               fontSize: 11,
               letterSpacing: "0.06em",
               color: "var(--ink-3)",
+              lineHeight: 1.6,
+              maxWidth: "60ch",
             }}
           >
-            © {new Date().getFullYear()} {BRAND.legalEntity} · a subsidiary of {BRAND.parentEntity} · All rights reserved
+            © {new Date().getFullYear()} {BRAND.parentEntity} &middot; {BRAND.parentEntityLocation}
+            <br />
+            {BRAND.aiEntity} &middot; {BRAND.aiEntityLocation}
+            <br />
+            {BRAND.legalEntity} &middot; {BRAND.legalEntityLocation} — All rights reserved
           </div>
           <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
             <Link
