@@ -77,6 +77,16 @@ export const BRAND = {
   positioningTrainingSubstrate:
     "Your operation is the training data. Nebbos captures every human decision as a preference pair, portable to any model you own or license.",
 
-  /** Legal entity name (per project_nebbos_naming_ratified_2026_08_21). */
-  legalEntity: "TR3I",
+  /**
+   * Legal entity name — the Serbian operating entity.
+   *
+   * Ratified 2026-09-16: TR3I D.O.O. superseded by Nebbos D.O.O. (Serbian
+   * subsidiary of Nebbos Technologies Corp US parent). Per
+   * `feedback_data_classification_chat_contents_private_entity_attribution_only_2026_09_16`
+   * — supersedes prior legal-entity value per governance-additive-only.
+   */
+  legalEntity: "Nebbos D.O.O.",
+
+  /** US parent entity (Delaware C-Corp). Used in colophon signature blocks. */
+  parentEntity: "Nebbos Technologies Corp",
 } as const;
