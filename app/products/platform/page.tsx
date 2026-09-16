@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 
 /**
  * PAGE · /products/platform · the Nebbos.ai platform product page
@@ -23,36 +24,59 @@ export const metadata: Metadata = {
 
 function Hero() {
   return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-32 md:py-40">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-          Nebbos.ai platform
-        </p>
-        <h1 className="mt-4 font-serif text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-ink leading-[1.02] text-balance">
-          Your operations,{" "}
-          <em className="font-serif italic text-gold">at institutional scale.</em>
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg md:text-xl text-ink-2 leading-relaxed">
-          Runs your Pearls, your fleet, your governance. Multi-Shell by
-          default. Live in production with government and enterprise
-          customers today. Every action attested. Every substrate yours.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+    <FullBleedScene
+      className="hero-fullbleed"
+      scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
+      scrim="bottom"
+      vignetteStrength={0.5}
+      chapter="01"
+      chapterLabel="Nebbos.ai platform"
+      priority
+    >
+      <div className="container hero-fullbleed__inner">
+        <div className="hero-fullbleed__frame">
+          <h1 className="hero-fullbleed__title">
+            Your operations, <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>at institutional scale.</em>
+          </h1>
+          <p className="hero-fullbleed__deck">
+            Runs your Pearls, your fleet, your governance. Multi-Shell by
+            default. Live in production with government and enterprise
+            customers today. Every action attested. Every substrate yours.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
+            <Link
+              href="/contact"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "var(--paper)",
+                borderBottom: "1px solid var(--paper)",
+                paddingBottom: 4,
+                textDecoration: "none",
+              }}
+            >
+              Contact sales &rarr;
+            </Link>
+            <Link
+              href="/demo"
+              style={{
+                fontFamily: "var(--font-mono)",
+                fontSize: 12,
+                letterSpacing: "0.16em",
+                textTransform: "uppercase",
+                color: "var(--paper-2)",
+                textDecoration: "none",
+                opacity: 0.85,
+              }}
+            >
+              Book a demo
+            </Link>
+          </div>
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
 

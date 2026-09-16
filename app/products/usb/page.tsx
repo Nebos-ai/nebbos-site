@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 
 /**
  * PAGE · /products/usb · the Nebbos USB product page
@@ -36,39 +37,37 @@ export const metadata: Metadata = {
 
 function Hero() {
   return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-32 md:py-40">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-          Nebbos USB
-        </p>
-        <h1 className="mt-4 font-serif text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-ink leading-[1.02] text-balance">
-          Peace of mind{" "}
-          <em className="font-serif italic text-gold">
-            you can hold.
-          </em>
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg md:text-xl text-ink-2 leading-relaxed">
-          Hardware-attested security for the operators running work that matters.
-          FIPS 140-3 Level 3. On-device keypad. Tamper-evident and
-          epoxy-sealed. The Nebbos MCP ships on the device &mdash; physical
-          presence gates every elevated action.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+    <FullBleedScene
+      className="hero-fullbleed"
+      scene={{ imageFamily: "concept-audit-attestation", imageFamilyVariant: 1 }}
+      scrim="bottom"
+      vignetteStrength={0.5}
+      chapter="04"
+      chapterLabel="Nebbos USB"
+      priority
+    >
+      <div className="container hero-fullbleed__inner">
+        <div className="hero-fullbleed__frame">
+          <h1 className="hero-fullbleed__title">
+            Peace of mind <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>you can hold.</em>
+          </h1>
+          <p className="hero-fullbleed__deck">
+            Hardware-attested security for the operators running work that matters.
+            FIPS 140-3 Level 3. On-device keypad. Tamper-evident and
+            epoxy-sealed. The Nebbos MCP ships on the device &mdash; physical
+            presence gates every elevated action.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
+            <Link href="/contact" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper)", borderBottom: "1px solid var(--paper)", paddingBottom: 4, textDecoration: "none" }}>
+              Contact sales &rarr;
+            </Link>
+            <Link href="/demo" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper-2)", textDecoration: "none", opacity: 0.85 }}>
+              Book a demo
+            </Link>
+          </div>
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
 

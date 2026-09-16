@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
+import { FullBleedScene } from "@/components/site/FullBleedScene";
 
 /**
  * PAGE · /products/app · the Nebbos app product page
@@ -22,36 +23,36 @@ export const metadata: Metadata = {
 
 function Hero() {
   return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-32 md:py-40">
-        <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-          Nebbos app
-        </p>
-        <h1 className="mt-4 font-serif text-5xl sm:text-6xl md:text-7xl font-medium tracking-tight text-ink leading-[1.02] text-balance">
-          Local. Native.{" "}
-          <em className="font-serif italic text-gold">Yours.</em>
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg md:text-xl text-ink-2 leading-relaxed">
-          The Nebbos app for macOS and Windows. Runs an offline-capable
-          subset of the platform. Syncs to the cloud through the Nebbos MCP
-          when online. Every operator&rsquo;s first install.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-xs uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+    <FullBleedScene
+      className="hero-fullbleed"
+      scene={{ imageFamily: "concept-memory", imageFamilyVariant: 1 }}
+      scrim="bottom"
+      vignetteStrength={0.5}
+      chapter="02"
+      chapterLabel="Nebbos app"
+      priority
+    >
+      <div className="container hero-fullbleed__inner">
+        <div className="hero-fullbleed__frame">
+          <h1 className="hero-fullbleed__title">
+            Local. Native. <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>Yours.</em>
+          </h1>
+          <p className="hero-fullbleed__deck">
+            The Nebbos app for macOS and Windows. Runs an offline-capable
+            subset of the platform. Syncs to the cloud through the Nebbos MCP
+            when online. Every operator&rsquo;s first install.
+          </p>
+          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
+            <Link href="/contact" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper)", borderBottom: "1px solid var(--paper)", paddingBottom: 4, textDecoration: "none" }}>
+              Contact sales &rarr;
+            </Link>
+            <Link href="/demo" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper-2)", textDecoration: "none", opacity: 0.85 }}>
+              Book a demo
+            </Link>
+          </div>
         </div>
       </div>
-    </section>
+    </FullBleedScene>
   );
 }
 
