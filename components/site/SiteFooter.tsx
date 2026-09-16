@@ -127,7 +127,7 @@ export function SiteFooter() {
               color: "var(--ink-3)",
             }}
           >
-            © {new Date().getFullYear()} {BRAND.legalEntity} · All rights reserved
+            © {new Date().getFullYear()} {BRAND.legalEntity} · a subsidiary of {BRAND.parentEntity} · All rights reserved
           </div>
           <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
             <Link

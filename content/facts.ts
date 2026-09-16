@@ -13,14 +13,14 @@ export const FACTS = {
   /** Team shape descriptor. */
   teamShape: "Founder-led",
 
-  /** Country / jurisdiction (per project_nebbos_naming_ratified_2026_08_21 legal entity TR3I). */
+  /** Country / jurisdiction — Nebbos D.O.O. is the Serbian operating entity. */
   jurisdiction: "Serbia (RS)",
 
   /** Category positioning (mirrored to content/brand.ts for cross-file consistency). */
-  category: "Run-layer substrate for enterprise AI",
+  category: "Operator platform for AI-native operations",
 
-  /** One-line legal footer. */
-  legalFooter: "© 2026 TR3I d.o.o. All rights reserved.",
+  /** One-line legal footer (colophon form per 2026-09-16 corporate-taxonomy doctrine). */
+  legalFooter: "© 2026 Nebbos D.O.O. · a subsidiary of Nebbos Technologies Corp. All rights reserved.",
 
   /** Compliance stance (retracted 2026-09-14 to match /compliance body §§02-06 authoritative phrasing). */
   complianceStance:
