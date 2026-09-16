@@ -149,21 +149,26 @@ export const PAGES = {
     ],
   },
 
-  /* ═══════════════ PRODUCT INDEX ═════════════════════════════════════ */
-  product: {
+  /* ═══════════════ PRODUCT INDEX — retired 2026-09-15 ═════════════════
+   * /product route retired via next.config.ts 302 → /products.
+   * This registry entry was orphaned by that redirect (zero references
+   * from app/, components/, lib/ — grep-verified 2026-09-16 during
+   * Axis C Wave 1f residual cleanup). The block is kept as a comment
+   * for one release window (per governance-additive-only) then removed;
+   * do NOT re-wire this entry without also un-retiring the /product
+   * route.
+   *
+   * Prior content (retired vocab: "Fifteen layers. Five bands. One
+   * architecture." + "governance layers, grouped as five bands"):
+   * see git log commit 87e92e9 for the last live copy.
+   * ────────────────────────────────────────────────────────────── */
+  // (retired — no key)
+  productLegacyRetired2026_09_15: {
     slug: "/product",
-    title: "Product · Fifteen layers. Five bands. One architecture.",
+    title: "(retired · 302 to /products)",
     metaDescription:
-      "The complete architecture underneath every Pearl. Fifteen governance layers, grouped as five bands.",
+      "(retired · content moved to per-product routes at /products/{platform,app,mcp,usb})",
     sections: [
-      {
-        id: "hero",
-        kind: "hero-paper",
-        eyebrow: "00 · The architecture",
-        h1: "Fifteen layers. Five bands. One architecture.",
-        deck: "The complete architecture underneath every Pearl. Data at the bottom. Boundaries the world crosses at. Reasoning across providers. Action and the humans who approve it. Commerce at the top.",
-        imageV2: 1,
-      } as SectionBase,
       // Band gallery rendered from lib/architecture BANDS + productTree
     ],
   },
@@ -298,7 +303,7 @@ export const PAGES = {
     slug: "/solutions/operations",
     title: "Nebbos Operations · The Pearl for handoffs, coverage, incident triage",
     metaDescription:
-      "Nebbos Operations reads the signal your ops team already emits — handoffs, coverage, on-call, escalations — and shows you what breaks next. Fifteen governance layers underneath, portable to you.",
+      "Nebbos Operations reads the signal your ops team already emits — handoffs, coverage, on-call, escalations — and shows you what breaks next. Operator platform underneath, portable to you.",
     sections: [
       {
         id: "hero",
