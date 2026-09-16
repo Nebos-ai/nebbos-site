@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import tokens from "@/design/tokens.json";
+import { PlusMark } from "@/components/ui/PlusMark";
 
 export const metadata: Metadata = {
   title: "Design · Living style guide",
@@ -86,8 +87,18 @@ function Section({
       }}
     >
       <div className="container">
-        <p style={eyebrow}>
-          {n} &middot; {label}
+        <p
+          style={{
+            ...eyebrow,
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 10,
+          }}
+        >
+          <PlusMark size="sm" />
+          <span style={{ fontVariantNumeric: "tabular-nums" }}>{n}</span>
+          <span aria-hidden>&middot;</span>
+          <span>{label}</span>
         </p>
         <h2 style={sectionH2}>{title}</h2>
         <p style={sectionDeck}>{deck}</p>
@@ -106,7 +117,19 @@ export default function DesignPage() {
         style={{ paddingBlock: "clamp(80px, 14vh, 160px)" }}
       >
         <div className="container">
-          <p style={eyebrow}>00 &middot; Design substrate</p>
+          <p
+            style={{
+              ...eyebrow,
+              display: "inline-flex",
+              alignItems: "center",
+              gap: 10,
+            }}
+          >
+            <PlusMark size="sm" />
+            <span style={{ fontVariantNumeric: "tabular-nums" }}>00</span>
+            <span aria-hidden>&middot;</span>
+            <span>Design substrate</span>
+          </p>
           <h1
             style={{
               fontFamily: "var(--font-serif)",
