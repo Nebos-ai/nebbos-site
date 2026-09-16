@@ -1954,3 +1954,30 @@ main {
   fill: var(--ink-2);
   letter-spacing: 0.01em;
 }
+
+/* ── View Transitions API opt-in (2026-09-16 Axis C wave) ──────────
+   Next 15's experimental.viewTransition flag (already true in next.config.ts)
+   wraps App Router navigations in document.startViewTransition. The CSS
+   below opts the root scope into a subtle 200ms cross-fade with reduced-
+   motion honored. Same-taxonomy navigation (e.g. /products/platform →
+   /products/mcp) gets a smoother visual continuity than the default
+   blank-repaint.
+
+   Charter elite-bar dim 12 (View Transitions on navigation). */
+
+@view-transition {
+  navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation-duration: 0.01ms;
+  }
+}
