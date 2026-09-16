@@ -1,20 +1,41 @@
 /* ============================================================================
-   Nebbos site v2 · globals.css · rebuild 2026-08-23
+   Nebbos site · globals.css · substrate v3 — product-catalog register
 
-   Design tokens sourced from design/tokens.json (single source of truth).
-   Register: Institutional Reserve · warm cream paper · hairline everything ·
-   Newsreader serif + Host Grotesk sans + JetBrains Mono numerals.
+   Ratified 2026-09-16 · supersedes v2 Institutional Reserve editorial register.
 
-   Layers, top to bottom:
-     1. Reset (minimal, opinionated)
-     2. Design tokens (color, type, motion, layout — CSS custom properties)
-     3. Base typography + defaults
-     4. Layout primitives (.container, .container-narrow, .container-wide)
-     5. Focus + a11y (skip-link, :focus-visible, reduced-motion)
-     6. Utilities used across sections
+   Cascade layer order (ratified this ratification):
+     @layer reset, tokens, primitives, patterns, page
+
+   Every design decision lives in exactly ONE layer:
+     - reset      · minimal opinionated CSS reset (rules 17–110 below)
+     - tokens     · CSS custom properties for color / space / type / motion /
+                    layout / radius / z — imported from
+                    `components/tokens/tokens.css` (paired with
+                    `components/tokens/tokens.ts` typed exports)
+     - primitives · reusable-component styles (Button, PageHero, PageSection,
+                    Eyebrow, Numeral) — landed in follow-up Phase 2 PRs
+     - patterns   · page-shape sections (HomePattern, ProductGridPattern) —
+                    landed in follow-up Phase 3 PRs
+     - page       · route-specific rules (retained here for legacy pages,
+                    migrated out per-route as Phase 3 sweeps)
+
+   Legacy content still in this file (rules 110–end) is scoped to
+   `@layer page` while Phase 3 migrates each route to compose primitives
+   that reference token vars.
+
+   Never introduce hardcoded `clamp()`, `padding: <px>`, or `color: #<hex>`
+   in new code outside this file. CI gates enforce this on merge into main.
    ============================================================================ */
 
-/* ── 1. RESET ─────────────────────────────────────────────────────────── */
+/* ── LAYER DECLARATION ───────────────────────────────────────────────── */
+
+@layer reset, tokens, primitives, patterns, page;
+
+/* ── TOKENS LAYER · CSS-side runtime of components/tokens/tokens.ts ─── */
+
+@import "../components/tokens/tokens.css";
+
+/* ── 1. RESET · @layer reset ─────────────────────────────────────────── */
 
 *,
 *::before,

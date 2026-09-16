@@ -68,12 +68,16 @@ for (const layer of LAYERS) {
 
 export function bandSlug(band: Band | number): string {
   const n = typeof band === "number" ? band : band.n;
-  return BAND_SLUGS[n];
+  const slug = BAND_SLUGS[n];
+  if (!slug) throw new Error(`lib/nav.ts · missing BAND_SLUGS entry for band ${n}`);
+  return slug;
 }
 
 export function layerSlug(layer: Layer | number): string {
   const n = typeof layer === "number" ? layer : layer.n;
-  return LAYER_SLUGS[n];
+  const slug = LAYER_SLUGS[n];
+  if (!slug) throw new Error(`lib/nav.ts · missing LAYER_SLUGS entry for layer ${n}`);
+  return slug;
 }
 
 /**

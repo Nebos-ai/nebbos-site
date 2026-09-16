@@ -1,0 +1,136 @@
+/* ============================================================================
+   components/tokens/tokens.css · nebbos.ai design substrate v3 · 2026-09-16
+
+   The CSS runtime paired with components/tokens/tokens.ts. Emits every token
+   as a CSS custom property under `:root` inside the `tokens` cascade layer.
+   Every primitive / composite / pattern consumes these via `var(--...)`.
+
+   Cascade layer order (declared in globals.css):
+     @layer reset, tokens, primitives, patterns, page
+
+   Consumers MUST reference tokens by name (--color-ink, --space-6, --fs-h2)
+   and MUST NOT hardcode literal clamp() or pixel/color values. Grep-CI gate
+   enforces the second rule.
+   ============================================================================ */
+
+@layer tokens {
+  :root {
+    /* ─── COLOR ───────────────────────────────────────────────────────── */
+    --color-paper:       oklch(100% 0 0);
+    --color-paper-2:     oklch(97.5% 0.002 106);
+    --color-paper-3:     oklch(95% 0.003 106);
+
+    --color-ink:         oklch(15% 0.006 258);
+    --color-ink-2:       oklch(38% 0.006 258);
+    --color-ink-3:       oklch(55% 0.006 258);
+    --color-muted:       oklch(72% 0.005 258);
+
+    --color-rule:        oklch(87% 0.003 106);
+    --color-rule-2:      oklch(93% 0.003 106);
+
+    --color-accent:      oklch(75% 0.155 60);
+    --color-accent-deep: oklch(65% 0.155 55);
+
+    --color-gold:        oklch(52% 0.1 70);
+    --color-gold-light:  oklch(85% 0.08 85);
+
+    --color-focus:       oklch(58% 0.2 258);
+
+    --color-success:     oklch(58% 0.15 155);
+    --color-warning:     oklch(72% 0.15 75);
+    --color-danger:      oklch(58% 0.2 25);
+
+    /* ─── SPACE (8-based ladder) ──────────────────────────────────────── */
+    --space-0:  0;
+    --space-1:  0.25rem;    /*   4px */
+    --space-2:  0.5rem;     /*   8px */
+    --space-3:  0.75rem;    /*  12px */
+    --space-4:  1rem;       /*  16px */
+    --space-5:  1.5rem;     /*  24px */
+    --space-6:  2rem;       /*  32px */
+    --space-7:  3rem;       /*  48px */
+    --space-8:  4rem;       /*  64px */
+    --space-9:  6rem;       /*  96px */
+    --space-10: 8rem;       /* 128px */
+    --space-11: 12rem;      /* 192px */
+    --space-12: 16rem;      /* 256px */
+
+    /* ─── TYPE ────────────────────────────────────────────────────────── */
+    --font-sans: var(--font-space-grotesk, ui-sans-serif, system-ui, sans-serif);
+    --font-mono: var(--font-mono-src, ui-monospace, SFMono-Regular, monospace);
+
+    /* Fluid type scale — modular 1.25 major-third from 15px body */
+    --fs-hero:    clamp(3.5rem, 5.5vw + 1rem, 6rem);        /* 56 →  96 */
+    --fs-display: clamp(2.75rem, 3.5vw + 1rem, 4.2rem);     /* 44 →  67 */
+    --fs-h1:      clamp(2.25rem, 2.5vw + 1rem, 2.75rem);    /* 36 →  44 */
+    --fs-h2:      clamp(1.75rem, 1.8vw + 1rem, 2.25rem);    /* 28 →  36 */
+    --fs-h3:      clamp(1.35rem, 0.6vw + 1rem, 1.75rem);    /* 22 →  28 */
+    --fs-body-lg: clamp(1.125rem, 0.25vw + 1rem, 1.3125rem);/* 18 →  21 */
+    --fs-body:    clamp(0.9375rem, 0.1vw + 0.875rem, 1.0625rem); /* 15 → 17 */
+    --fs-eyebrow: 0.6875rem;   /* 11px */
+    --fs-micro:   0.65rem;     /* 10.5px */
+
+    --fw-regular:  400;
+    --fw-medium:   500;
+    --fw-semibold: 600;
+    --fw-bold:     700;
+
+    --lh-tight:   1.05;
+    --lh-heading: 1.15;
+    --lh-body:    1.5;
+    --lh-loose:   1.7;
+
+    --tracking-tight:  -0.028em;
+    --tracking-normal: -0.011em;
+    --tracking-wide:    0.02em;
+    --tracking-caps:    0.16em;
+
+    /* ─── MOTION ──────────────────────────────────────────────────────── */
+    --dur-instant: 75ms;
+    --dur-fast:    120ms;
+    --dur-default: 180ms;
+    --dur-slow:    275ms;
+    --dur-page:    400ms;
+
+    --ease-out:    cubic-bezier(0.22, 1, 0.36, 1);
+    --ease-in:     cubic-bezier(0.55, 0.055, 0.675, 0.19);
+    --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+    --ease-settle: cubic-bezier(0.19, 1, 0.22, 1);
+
+    /* ─── LAYOUT ──────────────────────────────────────────────────────── */
+    --container-max:    77.5rem;   /* 1240px */
+    --container-narrow: 48rem;     /*  768px */
+    --gutter:           1.5rem;    /*   24px */
+
+    --measure-prose: 72ch;
+    --measure-title: 22ch;
+    --measure-deck:  56ch;
+
+    --section-y:        clamp(3rem, 6vh, 6rem);
+    --section-mono-min: 88vh;
+    --section-hero-min: min(88vh, 56.25rem);
+
+    /* ─── RADIUS + Z ──────────────────────────────────────────────────── */
+    --radius-none: 0;
+    --radius-sm:   0.25rem;
+    --radius-md:   0.5rem;
+    --radius-lg:   1rem;
+    --radius-full: 9999px;
+    --radius-cut-corner: 0 1.875rem 0 0;
+
+    --z-base:    0;
+    --z-raised:  1;
+    --z-overlay: 10;
+    --z-scrim:   20;
+    --z-header:  30;
+    --z-modal:   40;
+    --z-toast:   50;
+  }
+
+  /* ─── @property registered animatable tokens ────────────────────────── */
+  @property --color-accent-runtime {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: oklch(75% 0.155 60);
+  }
+}

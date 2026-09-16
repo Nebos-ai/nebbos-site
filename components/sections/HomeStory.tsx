@@ -111,7 +111,7 @@ export function HomeStory() {
               <SceneStill family={STORY_FAMILIES[scene.id]} familyVariant={1} shape="fullBleed" />
               <SceneOverlay scrim="bottom" />
               <SceneMetadataPlate
-                chapter={ROMAN[chapterNum]}
+                chapter={ROMAN[chapterNum] ?? ""}
                 label={scene.chapter}
                 position="top-right"
               />

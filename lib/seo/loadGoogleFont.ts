@@ -44,7 +44,9 @@ export async function loadGoogleFont(
   if (!match) {
     throw new Error(`Could not extract font URL from Google Fonts CSS for ${family} ${weight} ${style}`);
   }
-  const fontUrl = match[1].replace(/^['"]|['"]$/g, "");
+  const rawUrl = match[1];
+  if (!rawUrl) throw new Error(`Font URL regex matched but capture group was empty for ${family}`);
+  const fontUrl = rawUrl.replace(/^['"]|['"]$/g, "");
 
   const buf = await fetch(fontUrl).then((r) => r.arrayBuffer());
   return buf;

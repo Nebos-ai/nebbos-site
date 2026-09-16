@@ -62,7 +62,9 @@ const PRODUCT_FAMILIES: Record<string, string> = {
 };
 
 export function HomeBands() {
-  const [activeKey, setActiveKey] = useState<string>(megaProducts[0].key);
+  const firstProduct = megaProducts[0];
+  if (!firstProduct) throw new Error("HomeBands · megaProducts is empty — content/products.ts must declare at least one product");
+  const [activeKey, setActiveKey] = useState<string>(firstProduct.key);
 
   // Dynamic grid: active gets 6fr, others 1fr (6 + 3×1 = 9, active ≈ 67%)
   const cols = megaProducts
@@ -150,10 +152,12 @@ export function HomeBands() {
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveKey(product.key); }
                 if (e.key === "ArrowRight") {
-                  setActiveKey(megaProducts[(i + 1) % megaProducts.length].key);
+                  const next = megaProducts[(i + 1) % megaProducts.length];
+                  if (next) setActiveKey(next.key);
                 }
                 if (e.key === "ArrowLeft") {
-                  setActiveKey(megaProducts[(i - 1 + megaProducts.length) % megaProducts.length].key);
+                  const prev = megaProducts[(i - 1 + megaProducts.length) % megaProducts.length];
+                  if (prev) setActiveKey(prev.key);
                 }
               }}
               className="product-cell"
@@ -164,7 +168,7 @@ export function HomeBands() {
                 borderRight: i < megaProducts.length - 1 ? "1px solid var(--rule)" : "none",
               }}
             >
-              <SceneStill family={PRODUCT_FAMILIES[product.key]} familyVariant={1} shape="fullBleed" />
+              <SceneStill family={PRODUCT_FAMILIES[product.key] ?? "band-substrate"} familyVariant={1} shape="fullBleed" />
               <SceneOverlay scrim={isActive ? "bottom" : "even"} vignetteStrength={0.55} />
 
               {isActive ? (
@@ -205,7 +209,7 @@ function shortName(product: MegaProduct): string {
 
 function ExpandedContent({ product }: { product: MegaProduct }) {
   const name = shortName(product);
-  const numeral = PRODUCT_NUMERALS[product.key];
+  const numeral = PRODUCT_NUMERALS[product.key] ?? "01";
   return (
     <>
       <SceneMetadataPlate chapter={numeral} label={name} position="top-right" />
