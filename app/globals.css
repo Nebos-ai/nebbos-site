@@ -2020,3 +2020,55 @@ main {
   width: 1.5px;
   height: 19px;
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Native CSS motion primitives — 2026-09-16 (Axis C dim 4)
+
+   @property registers CSS custom properties as typed values so they can
+   be interpolated (plain --var declarations are opaque strings that
+   snap instead of transitioning). Registering the accent color enables
+   smooth hover-transition on interactive elements that swap accent
+   shade under the cursor without JavaScript.
+
+   @starting-style declares initial values for transitions when an element
+   is first painted (element mounts, dialog opens, view transitions in) —
+   the browser interpolates from starting-style to the resolved style over
+   the transition duration. Native CSS entry animation, no keyframes.
+   ══════════════════════════════════════════════════════════════════════ */
+
+@property --plus-color {
+  syntax: "<color>";
+  inherits: true;
+  initial-value: #F6A03F;
+}
+
+@property --hero-opacity {
+  syntax: "<number>";
+  inherits: false;
+  initial-value: 1;
+}
+
+/* Hero H1 entry — fades from opacity 0 to 1 on first paint. Skipped
+   entirely by prefers-reduced-motion. The @starting-style block is
+   inert in browsers that don't support it (progressive enhancement). */
+.hero-fullbleed__title,
+.hero-paper__title {
+  --hero-opacity: 1;
+  opacity: var(--hero-opacity);
+  transition: opacity 400ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@starting-style {
+  .hero-fullbleed__title,
+  .hero-paper__title {
+    --hero-opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fullbleed__title,
+  .hero-paper__title {
+    transition: none;
+    --hero-opacity: 1;
+  }
+}
