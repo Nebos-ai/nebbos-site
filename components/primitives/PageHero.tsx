@@ -42,12 +42,21 @@ import { SceneStill } from "@/components/ui/SceneStill";
 
 export type PageHeroSurface = "scene" | "paper";
 export type PageHeroAlign = "center" | "start";
+export type PageHeroHeadingLevel = "h1" | "h2" | "h3";
 
 export type PageHeroProps = {
   /** Small mono uppercase label above the headline. */
   eyebrow?: ReactNode;
-  /** Big sans H1 — the primary hero utterance. Renders as <h1>. */
+  /**
+   * The primary hero utterance. Rendered inside the heading element
+   * selected by `headingLevel` (default `h1`). A page composing MULTIPLE
+   * PageHeros (product-catalog stack on home) MUST render only ONE h1
+   * (typically hidden `.sr-only`) and pass `headingLevel="h2"` on every
+   * PageHero to keep the document outline valid.
+   */
   headline: ReactNode;
+  /** Semantic heading level for the headline. Default `h1`. */
+  headingLevel?: PageHeroHeadingLevel;
   /** Optional deck below the headline. */
   deck?: ReactNode;
   /** Full-bleed image family key (from content/stills.ts). Required when surface="scene". */
@@ -62,13 +71,14 @@ export type PageHeroProps = {
   align?: PageHeroAlign;
   /** LCP priority — set true on the FIRST hero of the FIRST route only. */
   priority?: boolean;
-  /** ARIA labelledby target — set if the h1 needs a matching id. */
+  /** ARIA labelledby target — set if the heading needs a matching id. */
   ariaLabelledby?: string;
 };
 
 export function PageHero({
   eyebrow,
   headline,
+  headingLevel = "h1",
   deck,
   imageFamily,
   imageFamilyVariant = 1,
@@ -86,6 +96,8 @@ export function PageHero({
     `page-hero--${surface}`,
     `page-hero--${align}`,
   ].join(" ");
+
+  const Heading = headingLevel;
 
   return (
     <section className={classes} aria-labelledby={ariaLabelledby}>
@@ -107,7 +119,7 @@ export function PageHero({
       <div className="container page-hero__inner">
         <div className="page-hero__frame">
           {eyebrow && <p className="page-hero__eyebrow">{eyebrow}</p>}
-          <h1 className="page-hero__headline">{headline}</h1>
+          <Heading className="page-hero__headline">{headline}</Heading>
           {deck && <p className="page-hero__deck">{deck}</p>}
           {ctas && <div className="page-hero__ctas">{ctas}</div>}
         </div>
