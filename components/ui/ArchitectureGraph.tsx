@@ -54,8 +54,8 @@ const ADJACENCY: Record<number, Set<number>> = (() => {
   const map: Record<number, Set<number>> = {};
   for (const layer of LAYERS) map[layer.n] = new Set<number>();
   for (const e of EDGES) {
-    map[e.from].add(e.to);
-    map[e.to].add(e.from);
+    map[e.from]?.add(e.to);
+    map[e.to]?.add(e.from);
   }
   return map;
 })();
@@ -71,6 +71,7 @@ const SCALE_X = VB_W / 800;
 const SCALE_Y = VB_H / 720;
 function nodePos(n: number): { x: number; y: number } {
   const p = NODE_POSITIONS[n];
+  if (!p) throw new Error(`ArchitectureGraph · missing NODE_POSITIONS entry for node ${n}`);
   return { x: p.x * SCALE_X, y: p.y * SCALE_Y };
 }
 

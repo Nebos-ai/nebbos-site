@@ -108,8 +108,8 @@ export const ECO_ADJACENCY: Record<string, Set<string>> = (() => {
   for (const a of ACTORS) map[a.id] = new Set<string>();
   for (const p of PRIMITIVES) map[p.id] = new Set<string>();
   for (const e of EDGES) {
-    map[e.from].add(e.to);
-    map[e.to].add(e.from);
+    map[e.from]?.add(e.to);
+    map[e.to]?.add(e.from);
   }
   return map;
 })();
