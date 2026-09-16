@@ -195,22 +195,41 @@
   }
 
   /*
-   * Refined scrim — softer top-third fade, deeper bottom anchor for text
-   * legibility. Uses OKLCH with cubic distribution (perceptually smoother
-   * than the previous 4-stop linear).
+   * Scrim — anchors headline against bright interior AI stills.
+   *
+   * The v1 scrim (0.05→0.22→0.50→0.75) assumed moody-atmospheric photography.
+   * The stills in production are BRIGHT interior editorial shots (offices,
+   * libraries, boardrooms) — cream walls, tall windows, full daylight. A
+   * light scrim disappears against them and the paper-white headline
+   * dissolves.
+   *
+   * v2 stacks two layers, both cubic OKLCH:
+   *   1. Base vertical ramp — deeper across the whole tile, deepest at bottom
+   *      where headline sits (0.55 mid, 0.90 bottom).
+   *   2. Radial vignette — additional darkening centered where the frame
+   *      lives, so the headline reads as intentional local low-key against
+   *      a bright environment (Apple product-hero pattern).
    */
   .page-hero__scrim {
     position: absolute;
     inset: 0;
     z-index: 1;
-    background: linear-gradient(
-      to top,
-      oklch(12% 0.008 258 / 0.75) 0%,
-      oklch(12% 0.008 258 / 0.50) 22%,
-      oklch(12% 0.008 258 / 0.22) 45%,
-      oklch(12% 0.008 258 / 0.05) 72%,
-      transparent 100%
-    );
+    background:
+      radial-gradient(
+        ellipse 80% 60% at 50% 68%,
+        oklch(12% 0.008 258 / 0.55) 0%,
+        oklch(12% 0.008 258 / 0.25) 45%,
+        transparent 75%
+      ),
+      linear-gradient(
+        to top,
+        oklch(12% 0.008 258 / 0.90) 0%,
+        oklch(12% 0.008 258 / 0.72) 18%,
+        oklch(12% 0.008 258 / 0.50) 38%,
+        oklch(12% 0.008 258 / 0.28) 62%,
+        oklch(12% 0.008 258 / 0.15) 85%,
+        transparent 100%
+      );
     pointer-events: none;
   }
 
@@ -277,7 +296,13 @@
     color: currentColor;
   }
   .page-hero--scene .page-hero__headline {
-    text-shadow: 0 2px 12px oklch(12% 0.008 258 / 0.45);
+    /* Stacked shadow — tight inner core + soft outer bloom + deep drop.
+       Tuned for legibility against bright interior AI stills where a
+       single-layer shadow gets washed out by the scene's own highlights. */
+    text-shadow:
+      0 1px 2px  oklch(12% 0.008 258 / 0.85),
+      0 4px 20px oklch(12% 0.008 258 / 0.55),
+      0 8px 40px oklch(12% 0.008 258 / 0.40);
   }
   .page-hero__headline em {
     font-style: italic;
@@ -298,7 +323,12 @@
     opacity: 0.92;
   }
   .page-hero--scene .page-hero__deck {
-    text-shadow: 0 1px 8px oklch(12% 0.008 258 / 0.38);
+    text-shadow:
+      0 1px 2px  oklch(12% 0.008 258 / 0.75),
+      0 3px 16px oklch(12% 0.008 258 / 0.45);
+  }
+  .page-hero--scene .page-hero__eyebrow {
+    text-shadow: 0 1px 2px oklch(12% 0.008 258 / 0.80);
   }
 
   .page-hero__ctas {
