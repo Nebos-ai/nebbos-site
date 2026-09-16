@@ -1981,3 +1981,42 @@ main {
     animation-duration: 0.01ms;
   }
 }
+
+/* ══════════════════════════════════════════════════════════════════════
+   Signature devices — restored 2026-09-16 (Axis C Wave 2)
+
+   The .plus-marker CSS class was defined in Delta-brief v4 (commit e865116,
+   2026-08-24) and lost during the v5 rebuild-v2 scaffold (commit 038aa22,
+   2026-08-23 branch). Multiple components (Hero, FeatureRow, CTABand,
+   PresentationPage) still reference className="plus-marker" — the class
+   was a no-op after the loss.
+
+   Restoration matches the delta-brief-editorial signature-device spec
+   (per design/tokens.json signature-devices.plus-marker): a 19×1.5 orange
+   cross drawn at the top-left of any container carrying `.plus-marker`
+   via ::before + ::after pseudo-elements. Attach mode. Standalone mode
+   ships as the <PlusMark> React primitive in components/ui/PlusMark.tsx.
+   ══════════════════════════════════════════════════════════════════════ */
+
+.plus-marker {
+  position: relative;
+}
+.plus-marker::before,
+.plus-marker::after {
+  content: "";
+  position: absolute;
+  background: var(--accent-2);
+  display: block;
+}
+.plus-marker::before {
+  top: 0;
+  left: -20px;
+  width: 19px;
+  height: 1.5px;
+}
+.plus-marker::after {
+  top: -9px;
+  left: -11px;
+  width: 1.5px;
+  height: 19px;
+}
