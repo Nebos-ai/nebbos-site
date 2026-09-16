@@ -63,12 +63,12 @@ export const metadata: Metadata = {
     apple: "/favicon.svg",
   },
   keywords: [
-    "run layer",
-    "AI execution substrate",
+    "operator platform",
     "MCP substrate",
-    "metered AI execution",
-    "isolated AI runtime",
-    "modular AI orchestration",
+    "biometric-attested tools",
+    "hardware-attested USB",
+    "AI-native operations",
+    "sovereign AI",
     "Pearl per domain",
   ],
   openGraph: {

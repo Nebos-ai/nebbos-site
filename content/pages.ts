@@ -2168,7 +2168,7 @@ export const PAGES = {
         h2: "The surfaces measured.",
         deck: "Every surface below is measured continuously against the same 30-day rolling baseline. Green means the surface is responding within its normal envelope; anything else surfaces as a public incident on this page.",
         items: [
-          { title: "Nebbos run layer &mdash; production", body: "The core runtime every deployed Pearl runs on. Operational." },
+          { title: "Nebbos platform &mdash; production", body: "The core operator surface every deployed Pearl runs on. Operational." },
           { title: "Nebbos MCP &mdash; hosted", body: "The tool surface every peer integration calls. Operational." },
           { title: "Audit ledger", body: "Append-only event stream, hash-chained. Operational." },
           { title: "nebbos.ai", body: "This site. Operational." },
