@@ -143,7 +143,9 @@ export function HomeBands() {
               key={product.key}
               id={tabId}
               tabIndex={0}
-              aria-controls={panelId}
+              // aria-controls only when the panel actually renders (isActive).
+              // Pointing at a non-existent element trips axe's aria-valid-attr-value.
+              aria-controls={isActive ? panelId : undefined}
               onClick={() => setActiveKey(product.key)}
               onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") { e.preventDefault(); setActiveKey(product.key); }
