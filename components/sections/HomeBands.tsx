@@ -1,12 +1,17 @@
 "use client";
 
 /* eslint-disable jsx-a11y/no-static-element-interactions,jsx-a11y/no-noninteractive-tabindex --
- * HomeBands v5 uses a plain <div> click-surface pattern deliberately: role=tab
- * would trigger axe's nested-interactive violation on the Links inside
- * (product-page CTA + tier rows). The div has aria-expanded + aria-controls +
- * keyboard onKeyDown handler, which conveys the accessibility semantics without
- * the ARIA-role-nested-interactive conflict. Rule disabled at file scope with
- * this rationale so future maintainers see why. */
+ * HomeBands v5 uses a plain <div> click-surface pattern deliberately. Any
+ * ARIA interactive role (tab, button) would trigger axe's nested-interactive
+ * violation on the Links inside (product-page CTA + tier rows). aria-expanded
+ * ALSO requires an interactive role, so it's dropped here — aria-controls
+ * alone conveys the panel relationship. Keyboard access retained via
+ * tabIndex + onKeyDown. Screen-reader users don't get expand/collapse state
+ * announced, which is a partial compromise; a proper full a11y refactor
+ * (pull all Links out of the accordion body, use <details>/<summary>, or
+ * restructure interactive/non-interactive nesting) is Wave-scale work
+ * scheduled as Axis C Wave 2b. Rules disabled at file scope with this
+ * rationale so future maintainers see the trade-off. */
 
 import Link from "next/link";
 import { useState } from "react";
@@ -138,7 +143,6 @@ export function HomeBands() {
               key={product.key}
               id={tabId}
               tabIndex={0}
-              aria-expanded={isActive}
               aria-controls={panelId}
               onClick={() => setActiveKey(product.key)}
               onKeyDown={(e) => {
