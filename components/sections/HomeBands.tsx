@@ -76,7 +76,8 @@ export function HomeBands() {
       {/* Section header · paper */}
       <div
         style={{
-          paddingBlock: "clamp(80px, 12vh, 160px) clamp(56px, 8vh, 80px)",
+          // Section spacing tokens · anchor top / compact bottom (heading → accordion) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-anchor) var(--section-y-compact)",
           borderBottom: "1px solid var(--rule)",
         }}
       >
@@ -98,7 +99,7 @@ export function HomeBands() {
               }}
             >
               The platform. The app. The MCP.{" "}
-              <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
+              <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: "inherit" }}>
                 The Cradle.
               </em>
             </h2>

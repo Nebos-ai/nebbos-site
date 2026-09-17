@@ -75,9 +75,10 @@ export function HomeModesBand() {
       <div
         className="container home-modes__inner"
         style={{
-          paddingBlock: "clamp(80px, 12vh, 140px)",
+          // Section spacing tokens · standard tier — ratified 2026-09-18
+          paddingBlock: "var(--section-y-standard)",
           display: "grid",
-          gap: "clamp(32px, 4vw, 56px)",
+          gap: "var(--section-gap-standard)",
           maxWidth: "var(--container-max)",
         }}
       >
@@ -112,7 +113,7 @@ export function HomeModesBand() {
           }}
         >
           Whichever way{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
+          <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: "inherit" }}>
             you show up.
           </em>
         </h2>

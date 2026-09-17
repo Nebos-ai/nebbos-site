@@ -33,9 +33,10 @@ export function InProductionBand() {
       <div
         className="container"
         style={{
-          paddingBlock: "clamp(64px, 10vh, 120px)",
+          // Section spacing tokens · compact tier (trust band) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-compact)",
           display: "grid",
-          gap: "clamp(24px, 3vw, 40px)",
+          gap: "var(--section-gap-standard)",
         }}
       >
         <p
