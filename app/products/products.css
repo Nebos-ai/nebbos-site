@@ -21,6 +21,12 @@
     margin: var(--space-3) 0 var(--space-6);
     max-width: var(--measure-deck);
     text-wrap: balance;
+    /* Retire the site-wide h2 small-caps rule (Space Grotesk has no true
+       small-caps glyphs — the browser fakes them by shrinking lowercase,
+       producing an amateur cap-then-tiny letter pattern). See doctrine
+       note in primitives.css `.page-hero__headline`. */
+    font-variant: normal;
+    font-feature-settings: normal;
   }
 
   .products__tier-grid {

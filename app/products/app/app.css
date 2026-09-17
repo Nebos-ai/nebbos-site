@@ -17,11 +17,23 @@
     margin: var(--space-3) 0 var(--space-7);
     max-width: var(--measure-deck);
     text-wrap: balance;
+    font-variant: normal;
+    font-feature-settings: normal;
   }
   .app__section-heading em {
     font-style: italic;
     color: var(--color-gold);
     font-weight: var(--fw-regular);
+  }
+
+  .app__capability-heading,
+  .app__value-headline,
+  .app__audience,
+  .app__highlight-value,
+  .app__related-name,
+  .app__footer-headline {
+    font-variant: normal;
+    font-feature-settings: normal;
   }
 
   ul.app__highlights,

@@ -14,11 +14,23 @@
     margin: var(--space-3) 0 var(--space-7);
     max-width: var(--measure-deck);
     text-wrap: balance;
+    font-variant: normal;
+    font-feature-settings: normal;
   }
   .platform__section-heading em {
     font-style: italic;
     color: var(--color-gold);
     font-weight: var(--fw-regular);
+  }
+
+  .platform__capability-heading,
+  .platform__value-headline,
+  .platform__audience,
+  .platform__highlight-value,
+  .platform__related-name,
+  .platform__footer-headline {
+    font-variant: normal;
+    font-feature-settings: normal;
   }
 
   ul.platform__highlights,

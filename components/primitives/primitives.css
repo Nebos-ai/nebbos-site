@@ -315,7 +315,13 @@
     font-weight: var(--fw-medium);
   }
 
-  /* Hero-tier headline — tightest tracking, medium weight, balance-wrap. */
+  /* Hero-tier headline — tightest tracking, medium weight, balance-wrap.
+     `font-variant: normal` overrides the site-wide h1/h2/h3/h4 small-caps
+     legacy rule in globals.css (retired by substrate v3 product-catalog
+     register; Space Grotesk has no true small-caps glyphs so the browser
+     fakes them by shrinking lowercase, producing an amateur cap-then-tiny
+     letter pattern on live pages). Same reset applied to deck + eyebrow +
+     chapter below. */
   .page-hero__headline {
     font-family: var(--font-sans);
     font-size: var(--fs-hero);
@@ -325,6 +331,8 @@
     margin: 0;
     text-wrap: balance;
     color: currentColor;
+    font-variant: normal;
+    font-feature-settings: normal;
   }
   .page-hero--scene .page-hero__headline {
     /* Stacked shadow — tight inner core + soft outer bloom + deep drop.
