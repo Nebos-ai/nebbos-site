@@ -23,7 +23,7 @@ import "./platform.css";
 const PLATFORM_SUBSCRIPTIONS = subscriptionsForProduct("platform");
 
 export const metadata: Metadata = {
-  title: "Nebbos.ai platform · The AI operations platform for institutional scale.",
+  title: "Nebbos.ai Platform · The AI operations platform for institutional scale.",
   description:
     "Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today.",
 };
@@ -75,9 +75,9 @@ export default function ProductPlatformPage() {
       <PageHero
         surface="scene"
         align="start"
-        eyebrow="Nebbos.ai platform"
+        eyebrow="Nebbos.ai Platform"
         chapter="01"
-        chapterLabel="Nebbos.ai platform"
+        chapterLabel="Nebbos.ai Platform"
         imageFamily="concept-operator-onboarding"
         priority
         headline={

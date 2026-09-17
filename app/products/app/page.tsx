@@ -22,7 +22,7 @@ import "./app.css";
 const APP_SUBSCRIPTIONS = subscriptionsForProduct("app");
 
 export const metadata: Metadata = {
-  title: "Nebbos app · Local native. Yours.",
+  title: "Nebbos App · Local native. Yours.",
   description:
     "The Nebbos app for macOS and Windows. Runs offline-capable operations; syncs through the MCP when online. Bundled with every Platform subscription.",
 };
@@ -74,9 +74,9 @@ export default function ProductAppPage() {
       <PageHero
         surface="scene"
         align="start"
-        eyebrow="Nebbos app"
+        eyebrow="Nebbos App"
         chapter="02"
-        chapterLabel="Nebbos app"
+        chapterLabel="Nebbos App"
         imageFamily="concept-memory"
         priority
         headline={

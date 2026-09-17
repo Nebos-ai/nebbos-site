@@ -113,7 +113,7 @@ export default function ProductsPage() {
                   <div key={`${product.key}-${tier.key}`} className="products__sku">
                     <Eyebrow tone="accent">{tier.label}</Eyebrow>
                     <p className="products__sku-name">
-                      {product.name.replace("Nebbos.ai platform", "Platform").replace("Nebbos ", "")}
+                      {product.name.replace("Nebbos.ai ", "").replace("Nebbos ", "")}
                       {" · "}
                       {tier.key}
                     </p>

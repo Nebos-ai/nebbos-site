@@ -71,7 +71,7 @@ export const PRODUCTS: Product[] = [
   {
     key: "platform",
     eyebrow: "Software",
-    name: "Nebbos.ai platform",
+    name: "Nebbos.ai Platform",
     tagline: "The AI operations platform for institutional scale.",
     description:
       "The web platform where operators run their Pearls, view dashboards, and approve actions. Multi-Shell by default, enterprise-grade, live in production.",
@@ -81,7 +81,7 @@ export const PRODUCTS: Product[] = [
   {
     key: "app",
     eyebrow: "Software",
-    name: "Nebbos app",
+    name: "Nebbos App",
     tagline: "Local native for macOS and Windows.",
     description:
       "The local native application. Runs an offline-capable subset of the platform and syncs to the cloud through the MCP when online. First install of every operator's tier ceremony.",

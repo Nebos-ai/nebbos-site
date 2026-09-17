@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 import { OGImageShell, Accent } from "@/lib/og-image-shell";
 
 export const runtime = "edge";
-export const alt = "Nebbos app — local native for macOS and Windows";
+export const alt = "Nebbos App — local native for macOS and Windows";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
