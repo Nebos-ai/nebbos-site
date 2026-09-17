@@ -86,16 +86,35 @@ const RING_CENTERS: readonly { cx: number; cy: number }[] = [
 ] as const;
 
 /**
- * Split-layout offsets — each ring's final translation in the fan-out
- * state, in viewBox coordinate space (246 × 257). Business-lens rank 0
- * (Security) sits at the center; rank 18 (Collaboration) on the furthest
- * orbit. Angles distributed evenly around each orbit.
+ * Split-layout geometry — viewBox coordinate space.
+ *
+ * viewBox is expanded from the mark's natural 0 0 246 257 to
+ * VIEWBOX_MIN_X..VIEWBOX_MIN_X+VIEWBOX_W (same for Y). The mark stays
+ * visually centered because the expanded viewBox is symmetric around the
+ * mark's center (123, 128.5).
+ *
+ * Rank 0 (Security) stays at the mark center. Ranks 1-6 on inner orbit,
+ * 7-12 middle, 13-18 outer. Angles evenly distributed per orbit with a
+ * per-band phase offset so the three orbits stagger and don't align into
+ * radial spokes.
+ *
+ * Radii chosen so rings (~40 unit radius) clear each other and stay
+ * within the expanded viewBox: inner 60, middle 100, outer 140.
  */
-function computeSplitOffset(rank: number, totalRanks: number): { dx: number; dy: number } {
+const VIEWBOX_W = 526;
+const VIEWBOX_H = 537;
+const VIEWBOX_MIN_X = -140;
+const VIEWBOX_MIN_Y = -140;
+
+function computeSplitOffset(rank: number, _totalRanks: number): { dx: number; dy: number } {
   if (rank === 0) return { dx: 0, dy: 0 };
-  const angleStep = (Math.PI * 2) / (totalRanks - 1);
-  const angle = angleStep * (rank - 1) - Math.PI / 2;
-  const orbitRadius = 40 + Math.floor((rank - 1) / 6) * 55;
+  const bandSize = 6;
+  const band = Math.floor((rank - 1) / bandSize);
+  const positionInBand = (rank - 1) % bandSize;
+  const orbitRadius = 60 + band * 40;
+  const angleStep = (Math.PI * 2) / bandSize;
+  const phaseOffset = band * (Math.PI / bandSize);
+  const angle = angleStep * positionInBand - Math.PI / 2 + phaseOffset;
   return {
     dx: Math.cos(angle) * orbitRadius,
     dy: Math.sin(angle) * orbitRadius,
@@ -149,8 +168,6 @@ export function HeroFlowerSplit() {
   }, [openTermKey]);
 
   const totalRanks = HERO_FLOWER_TERMS.length;
-  const VIEWBOX_W = 246;
-  const VIEWBOX_H = 257;
 
   return (
     <section
@@ -173,7 +190,7 @@ export function HeroFlowerSplit() {
 
         <div className="hero-flower__stage">
           <svg
-            viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
+            viewBox={`${VIEWBOX_MIN_X} ${VIEWBOX_MIN_Y} ${VIEWBOX_W} ${VIEWBOX_H}`}
             className="hero-flower__mark"
             aria-hidden="true"
             focusable="false"
@@ -205,8 +222,8 @@ export function HeroFlowerSplit() {
               if (!center) return null;
               const { dx, dy } = computeSplitOffset(rank, totalRanks);
               const isOpen = openTermKey === term.key;
-              const cxPct = ((center.cx + dx) / VIEWBOX_W) * 100;
-              const cyPct = ((center.cy + dy) / VIEWBOX_H) * 100;
+              const cxPct = ((center.cx + dx - VIEWBOX_MIN_X) / VIEWBOX_W) * 100;
+              const cyPct = ((center.cy + dy - VIEWBOX_MIN_Y) / VIEWBOX_H) * 100;
               return (
                 <li key={term.key}>
                   <button
