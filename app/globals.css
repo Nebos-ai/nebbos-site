@@ -212,10 +212,27 @@ h1, h2, h3, h4, h5, h6 {
   text-wrap: balance;
 }
 
-/* v3.1 · 2026-08-24 — small-caps restored as the site-wide h2/h3/h4
-   pattern. First letter of each word renders at natural cap-height, the
-   rest render at small-cap height (~70% of cap-height). Source text stays
-   mixed-case; the browser handles the conversion via font-variant. */
+/* Site-wide small-caps on h2/h3/h4 RETIRED 2026-09-17.
+ *
+ * Ratified 2026-08-24 for the v2 Institutional Reserve editorial register.
+ * Superseded 2026-09-16 by v3 product-catalog register per founder direction
+ * ("this is a product site what we have is not"). The small-caps was already
+ * faked at render time — Space Grotesk has no true small-caps glyphs, so the
+ * browser shrunk lowercase letters into fake caps, producing an amateur
+ * "T + tiny hree" cap-then-tiny letter pattern that read as broken typography
+ * on live nebbos.ai/products post-substrate-v3.
+ *
+ * Route-scoped and pattern-scoped overrides (`font-variant: normal` in
+ * @layer patterns / @layer primitives) could NOT override this because
+ * unlayered CSS always beats layered CSS regardless of specificity. Only
+ * removal at the source fixes the leak.
+ *
+ * Legacy routes still rendering under the v2 chrome (/solutions, /about,
+ * /how, /trust, /security, /compliance, /customers, /demo, /blog, /legal)
+ * now render mixed-case Space Grotesk on their H2s — an improvement over
+ * fake-small-caps in every case. Full migration to substrate v3 pattern
+ * layer continues per Phase 3 wave.
+ */
 h1 {
   font-size: var(--size-h1);
   line-height: 1.02;
@@ -228,24 +245,18 @@ h2 {
   line-height: 1.08;
   letter-spacing: -0.02em;
   font-weight: 600;
-  font-variant: small-caps;
-  font-feature-settings: "smcp", "c2sc";
 }
 h3 {
   font-size: var(--size-h3);
   line-height: 1.15;
   letter-spacing: -0.014em;
   font-weight: 600;
-  font-variant: small-caps;
-  font-feature-settings: "smcp", "c2sc";
 }
 h4 {
   font-size: var(--size-h4);
   line-height: 1.25;
   letter-spacing: -0.008em;
   font-weight: 500;
-  font-variant: small-caps;
-  font-feature-settings: "smcp", "c2sc";
 }
 
 em {
