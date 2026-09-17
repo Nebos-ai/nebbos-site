@@ -11,7 +11,7 @@ type EyebrowProps = {
  */
 export function Eyebrow({ children, tone = "default" }: EyebrowProps) {
   const color =
-    tone === "ink" ? "var(--ink)" : tone === "muted" ? "var(--ink-3)" : "var(--gold)";
+    tone === "ink" ? "var(--ink)" : tone === "muted" ? "var(--ink-3)" : "var(--accent-2)";
   return (
     <p className="eyebrow" style={{ color, margin: 0 }}>
       {children}

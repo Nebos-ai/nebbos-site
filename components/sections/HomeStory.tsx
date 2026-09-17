@@ -82,7 +82,7 @@ export function HomeStory() {
             }}
           >
             One{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
               platform.
             </em>{" "}
             Three chapters of a working day.
@@ -181,7 +181,7 @@ export function HomeStory() {
                   color: "var(--ink-3)",
                 }}
               >
-                <span style={{ color: "var(--gold)" }}>
+                <span style={{ color: "var(--accent-2)" }}>
                   {String(chapterNum - 1).padStart(2, "0")} · Under the surface
                 </span>
                 <span aria-hidden style={{ opacity: 0.4 }}>—</span>
@@ -198,7 +198,7 @@ export function HomeStory() {
       })}
 
       <style>{`
-        .layer-link:hover { color: var(--gold) !important; }
+        .layer-link:hover { color: var(--accent-2) !important; }
       `}</style>
     </section>
   );

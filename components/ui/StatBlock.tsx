@@ -15,7 +15,7 @@ export function StatBlock({ value, label, detail, tone = "ink" }: StatBlockProps
   const color = {
     ink: "var(--ink)",
     accent: "var(--accent-2)",
-    success: "var(--gold)",
+    success: "var(--accent-2)",
     muted: "var(--ink-3)",
   }[tone];
 

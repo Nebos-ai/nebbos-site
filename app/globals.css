@@ -217,7 +217,7 @@ a:hover {
   --section-y-lg:   clamp(96px, 14vh, 192px);
 
   /* Focus */
-  --focus-ring: 2px solid var(--gold);
+  --focus-ring: 2px solid var(--accent-2);
   --focus-offset: 2px;
 }
 
@@ -290,7 +290,7 @@ h4 {
 
 em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--accent-2);
   font-weight: inherit;
 }
 
@@ -390,7 +390,7 @@ main {
   font-size: var(--size-eyebrow);
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent-2);
   font-weight: 500;
 }
 
@@ -924,7 +924,7 @@ main {
   font-family: var(--font-mono);
   font-size: var(--size-eyebrow);
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--accent-2);
 }
 .list-numbered__title {
   font-family: var(--font-serif);
@@ -1091,7 +1091,7 @@ main {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent-2);
 }
 .inbox-list__addr {
   font-family: var(--font-serif);
@@ -1192,7 +1192,7 @@ main {
   margin-inline: auto;
 }
 .case-study__aside {
-  border-block-start: 2px solid var(--gold);
+  border-block-start: 2px solid var(--accent-2);
   padding-block-start: var(--space-4);
   display: flex;
   flex-direction: column;
@@ -1204,7 +1204,7 @@ main {
   font-weight: 500;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--gold);
+  color: var(--accent-2);
 }
 .case-study__chip {
   align-self: flex-start;
@@ -1244,7 +1244,7 @@ main {
   float: inline-start;
   margin-inline-end: var(--space-3);
   margin-block-start: var(--space-1);
-  color: var(--gold);
+  color: var(--accent-2);
   font-style: normal;
   font-weight: 500;
 }
@@ -1496,7 +1496,7 @@ main {
 }
 .blog-prose em {
   font-style: italic;
-  color: var(--gold);
+  color: var(--accent-2);
 }
 .blog-prose a {
   color: var(--accent-2);
@@ -1566,8 +1566,8 @@ main {
   border-color: var(--ink);
 }
 .btn-primary:hover {
-  background: var(--gold);
-  border-color: var(--gold);
+  background: var(--accent-2);
+  border-color: var(--accent-2);
   color: var(--paper);
 }
 .btn-ghost {
@@ -1679,7 +1679,7 @@ main {
   font-family: var(--font-mono);
   font-size: 11px;
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--accent-2);
   font-weight: 500;
   padding-top: 4px;
 }
@@ -1737,7 +1737,7 @@ main {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--accent-2);
   text-transform: uppercase;
 }
 .arch-graph-hint {
@@ -1779,7 +1779,7 @@ main {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
-  fill: var(--gold);
+  fill: var(--accent-2);
   text-anchor: middle;
 }
 .arch-graph-band-labels text.band-name {
@@ -1894,7 +1894,7 @@ main {
 .arch-graph-node.is-highlighted .arch-graph-node-label,
 .arch-graph-node.is-active .arch-graph-node-label,
 .arch-graph-node.is-pinned .arch-graph-node-label {
-  fill: var(--gold);
+  fill: var(--accent-2);
 }
 .arch-graph-node-hit {
   cursor: pointer;
@@ -1931,7 +1931,7 @@ main {
   font-family: var(--font-mono);
   font-size: 12px;
   letter-spacing: 0.14em;
-  color: var(--gold);
+  color: var(--accent-2);
   padding-top: 4px;
 }
 .arch-graph-detail-name {
@@ -2009,7 +2009,7 @@ main {
   font-family: var(--font-mono);
   font-size: 10px;
   letter-spacing: 0.14em;
-  fill: var(--gold);
+  fill: var(--accent-2);
   font-weight: 500;
 }
 .arch-graph-note-name {

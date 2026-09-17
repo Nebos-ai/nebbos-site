@@ -144,7 +144,7 @@ export default function DesignPage() {
             }}
           >
             The design substrate,{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
               rendered live.
             </em>
           </h1>

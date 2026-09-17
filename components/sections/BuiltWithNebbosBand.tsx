@@ -63,7 +63,7 @@ export function BuiltWithNebbosBand() {
             fontSize: 11,
             letterSpacing: "0.24em",
             textTransform: "uppercase",
-            color: "var(--gold)",
+            color: "var(--accent-2)",
             margin: 0,
           }}
         >
@@ -123,7 +123,7 @@ export function BuiltWithNebbosBand() {
                 flexDirection: "column",
                 gap: 6,
                 paddingLeft: 16,
-                borderLeft: "2px solid var(--gold)",
+                borderLeft: "2px solid var(--accent-2)",
               }}
             >
               <span
@@ -185,8 +185,8 @@ export function BuiltWithNebbosBand() {
 
       <style>{`
         .built-with-nebbos-band__link:hover {
-          color: var(--gold) !important;
-          border-color: var(--gold) !important;
+          color: var(--accent-2) !important;
+          border-color: var(--accent-2) !important;
         }
       `}</style>
     </section>

@@ -98,7 +98,7 @@ export function HomeBands() {
               }}
             >
               The platform. The app. The MCP.{" "}
-              <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+              <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
                 The Cradle.
               </em>
             </h2>
