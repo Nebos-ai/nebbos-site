@@ -26,12 +26,11 @@ export const alt = `${BRAND.name} — ${BRAND.taglineShort}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Warm neutral palette locked to brand:
-// --paper  #FFFFFF  --ink  #1D1C22  --gold  #9A5D2A  --paper-2  #F7F5F1
+// Palette locked to brand (post-2026-09-17 tagline shift):
+// --paper #FFFFFF · --ink #1D1C22 · --accent-2 #FF6B1E (electric Nebbos orange) · --ink-2 #4A4952
 const PAPER = "#FFFFFF";
 const INK = "#1D1C22";
-const GOLD = "#9A5D2A";
-const PAPER_2 = "#F7F5F1";
+const ACCENT = "#FF6B1E"; // was --gold #9A5D2A (dull) — electric Nebbos orange for the display accent
 const INK_2 = "#4A4952";
 
 export default async function OpenGraphImage() {
@@ -106,41 +105,41 @@ export default async function OpenGraphImage() {
           </div>
         </div>
 
-        {/* Main headline */}
+        {/* Main headline · Stripe-shape category claim */}
         <div
           style={{
-            fontSize: 76,
-            fontWeight: 500,
+            fontSize: 108,
+            fontWeight: 700,
             color: INK,
-            lineHeight: 1.05,
-            letterSpacing: "-0.025em",
-            maxWidth: 900,
+            lineHeight: 1.0,
+            letterSpacing: "-0.035em",
+            maxWidth: 1000,
             marginTop: "auto",
           }}
         >
-          The platform. Its tools.{" "}
+          Infrastructure{" "}
           <span
             style={{
-              fontStyle: "italic",
-              color: GOLD,
-              fontWeight: 400,
+              color: ACCENT,
+              fontWeight: 700,
             }}
           >
-            Its MCP. Its Cradle.
+            for AI operators.
           </span>
         </div>
 
-        {/* Subline */}
+        {/* Subline · three parallel claims */}
         <div
           style={{
-            fontSize: 24,
+            fontSize: 26,
             color: INK_2,
             lineHeight: 1.4,
-            marginTop: 32,
-            maxWidth: 800,
+            marginTop: 36,
+            maxWidth: 900,
+            fontWeight: 400,
           }}
         >
-          The operator platform whose privileged actions are gated by the Cradle you keep with you.
+          Every action attested. Every credential on hardware. Every substrate portable when you leave.
         </div>
 
         {/* Bottom bar: domain + orange plus-marker accent */}
@@ -167,8 +166,8 @@ export default async function OpenGraphImage() {
           <div
             style={{
               fontSize: 40,
-              color: "#F6A03F",
-              fontWeight: 300,
+              color: ACCENT,
+              fontWeight: 400,
               lineHeight: 1,
             }}
           >
