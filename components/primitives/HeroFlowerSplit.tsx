@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useEffect, useRef, type KeyboardEvent } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import Link from "next/link";
 import { HERO_FLOWER_TERMS } from "@/content/hero-flower-terms";
 
@@ -17,9 +17,12 @@ import { HERO_FLOWER_TERMS } from "@/content/hero-flower-terms";
  * content/hero-flower-terms.ts. Ring 0 (Security) fades in first ~250ms
  * after trigger; ring 18 (Collaboration) last ~3s in.
  *
- * SVG-native — 19 <path> elements match the production favicon geometry.
- * All positioning + motion via CSS custom properties + `@keyframes` so
- * the animation is GPU-accelerated and prefers-reduced-motion-respecting.
+ * A11y architecture — decorative SVG (aria-hidden) + HTML button overlay
+ * per ring. The SVG paths carry the geometry; the buttons carry the
+ * semantics. Avoids axe's nested-interactive rule which flags interactive
+ * SVG elements inside other interactive parents. Buttons position via
+ * inline CSS custom properties driven by the same rank-based math the
+ * ring translation uses, so the button always follows the ring visually.
  *
  * Founder-directed 2026-09-17. Company voice per
  * feedback_data_classification_chat_contents_private_entity_attribution_only_2026_09_16.
@@ -54,11 +57,39 @@ const RING_PATHS: readonly string[] = [
 ] as const;
 
 /**
+ * Original centers of each ring in the source SVG (viewBox 246 × 257 =
+ * center approx 123, 128.5). Extracted from the SVG's <path> arcs — each
+ * ring is a ~40-unit-radius circle drawn as bezier arcs; the center is
+ * the (cx, cy) implied by the arc endpoints. Order matches RING_PATHS
+ * and HERO_FLOWER_TERMS ringIndex.
+ */
+const RING_CENTERS: readonly { cx: number; cy: number }[] = [
+  { cx: 54.56, cy: 167.99 },
+  { cx: 88.78, cy: 187.73 },
+  { cx: 123.0, cy: 207.47 },
+  { cx: 54.56, cy: 128.5 },
+  { cx: 88.78, cy: 148.24 },
+  { cx: 123.0, cy: 167.99 },
+  { cx: 157.22, cy: 187.73 },
+  { cx: 54.56, cy: 89.01 },
+  { cx: 88.78, cy: 108.76 },
+  { cx: 123.0, cy: 128.5 },
+  { cx: 157.22, cy: 148.24 },
+  { cx: 191.44, cy: 167.99 },
+  { cx: 88.78, cy: 69.27 },
+  { cx: 123.0, cy: 89.01 },
+  { cx: 157.22, cy: 108.76 },
+  { cx: 191.44, cy: 128.5 },
+  { cx: 123.0, cy: 49.53 },
+  { cx: 157.22, cy: 69.27 },
+  { cx: 191.44, cy: 89.01 },
+] as const;
+
+/**
  * Split-layout offsets — each ring's final translation in the fan-out
- * state, expressed as (dx, dy) in the SVG viewBox coordinate space
- * (246×257). Business-lens rank drives radial distance: rank 0 (Security)
- * sits at the center; rank 18 (Collaboration) sits at the furthest orbit.
- * Angles distributed evenly around the ranked ring.
+ * state, in viewBox coordinate space (246 × 257). Business-lens rank 0
+ * (Security) sits at the center; rank 18 (Collaboration) on the furthest
+ * orbit. Angles distributed evenly around each orbit.
  */
 function computeSplitOffset(rank: number, totalRanks: number): { dx: number; dy: number } {
   if (rank === 0) return { dx: 0, dy: 0 };
@@ -83,16 +114,6 @@ export function HeroFlowerSplit() {
     if (!isRevealed) setIsRevealed(true);
   }, [isRevealed]);
 
-  const handleRingKey = useCallback((event: KeyboardEvent<SVGPathElement>, key: string) => {
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleRingActivate(key);
-    }
-    if (event.key === "Escape") {
-      setOpenTermKey(null);
-    }
-  }, [handleRingActivate]);
-
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -113,7 +134,7 @@ export function HeroFlowerSplit() {
     if (!openTermKey) return;
     const onDown = (e: MouseEvent) => {
       const target = e.target as Element | null;
-      if (target?.closest("[data-hero-flower-blurb]") || target?.closest("[data-hero-flower-ring]")) return;
+      if (target?.closest("[data-hero-flower-blurb]") || target?.closest("[data-hero-flower-btn]")) return;
       setOpenTermKey(null);
     };
     const onKey = (e: globalThis.KeyboardEvent) => {
@@ -128,6 +149,8 @@ export function HeroFlowerSplit() {
   }, [openTermKey]);
 
   const totalRanks = HERO_FLOWER_TERMS.length;
+  const VIEWBOX_W = 246;
+  const VIEWBOX_H = 257;
 
   return (
     <section
@@ -148,12 +171,12 @@ export function HeroFlowerSplit() {
           </p>
         </div>
 
-        <div className="hero-flower__stage" aria-hidden={openTerm !== null}>
+        <div className="hero-flower__stage">
           <svg
-            viewBox="0 0 246 257"
+            viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
             className="hero-flower__mark"
-            role="img"
-            aria-label="Nebbos flower-of-life mark — nineteen rings representing nineteen aspects of a company"
+            aria-hidden="true"
+            focusable="false"
           >
             {HERO_FLOWER_TERMS.map((term, rank) => {
               const path = RING_PATHS[term.ringIndex];
@@ -165,36 +188,49 @@ export function HeroFlowerSplit() {
                   key={term.key}
                   className={`hero-flower__ring ${isOpen ? "is-open" : ""}`}
                   style={{
-                    // Per-ring CSS custom properties consumed by @keyframes
                     ["--ring-dx" as string]: `${dx.toFixed(2)}px`,
                     ["--ring-dy" as string]: `${dy.toFixed(2)}px`,
-                    ["--ring-rank" as string]: rank,
                     ["--ring-reveal-delay" as string]: `${(rank * 140).toFixed(0)}ms`,
                   }}
                 >
-                  <path
-                    d={path}
-                    className="hero-flower__ring-path"
-                    tabIndex={0}
-                    role="button"
-                    aria-label={`${term.label}. ${term.blurb.split(".")[0]}.`}
-                    aria-expanded={isOpen}
-                    aria-controls={isOpen ? "hero-flower-blurb" : undefined}
-                    data-hero-flower-ring={term.key}
-                    onClick={() => handleRingActivate(term.key)}
-                    onKeyDown={(e) => handleRingKey(e, term.key)}
-                  />
-                  <text
-                    className="hero-flower__ring-label"
-                    aria-hidden="true"
-                    textAnchor="middle"
-                  >
-                    {term.label}
-                  </text>
+                  <path d={path} className="hero-flower__ring-path" />
                 </g>
               );
             })}
           </svg>
+
+          <ul className="hero-flower__ring-buttons" role="list">
+            {HERO_FLOWER_TERMS.map((term, rank) => {
+              const center = RING_CENTERS[term.ringIndex];
+              if (!center) return null;
+              const { dx, dy } = computeSplitOffset(rank, totalRanks);
+              const isOpen = openTermKey === term.key;
+              const cxPct = ((center.cx + dx) / VIEWBOX_W) * 100;
+              const cyPct = ((center.cy + dy) / VIEWBOX_H) * 100;
+              return (
+                <li key={term.key}>
+                  <button
+                    type="button"
+                    className={`hero-flower__ring-btn ${isOpen ? "is-open" : ""}`}
+                    style={{
+                      ["--btn-cx" as string]: `${cxPct.toFixed(2)}%`,
+                      ["--btn-cy" as string]: `${cyPct.toFixed(2)}%`,
+                      ["--btn-reveal-delay" as string]: `${(rank * 140).toFixed(0)}ms`,
+                    }}
+                    aria-label={`${term.label}. ${term.blurb.split(".")[0]}.`}
+                    aria-expanded={isOpen}
+                    aria-controls={isOpen ? "hero-flower-blurb" : undefined}
+                    data-hero-flower-btn={term.key}
+                    onClick={() => handleRingActivate(term.key)}
+                  >
+                    <span className="hero-flower__ring-btn-label" aria-hidden>
+                      {term.label}
+                    </span>
+                  </button>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
         {openTerm && (
