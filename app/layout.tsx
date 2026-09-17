@@ -68,7 +68,7 @@ export const metadata: Metadata = {
     "operator platform",
     "MCP substrate",
     "biometric-attested tools",
-    "hardware-attested USB",
+    "hardware-attested Cradle",
     "AI-native operations",
     "sovereign AI",
     "Pearl per domain",

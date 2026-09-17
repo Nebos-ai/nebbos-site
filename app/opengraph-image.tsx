@@ -126,7 +126,7 @@ export default async function OpenGraphImage() {
               fontWeight: 400,
             }}
           >
-            Its MCP. Its USB.
+            Its MCP. Its Cradle.
           </span>
         </div>
 
@@ -140,7 +140,7 @@ export default async function OpenGraphImage() {
             maxWidth: 800,
           }}
         >
-          The operator platform whose privileged actions are gated by the USB you keep with you.
+          The operator platform whose privileged actions are gated by the Cradle you keep with you.
         </div>
 
         {/* Bottom bar: domain + orange plus-marker accent */}
