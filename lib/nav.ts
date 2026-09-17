@@ -275,6 +275,7 @@ export const footerNav: FooterColumn[] = [
     links: [
       { label: "Trust center", href: "/trust" },
       { label: "Security",     href: "/security" },
+      { label: "Sovereignty",  href: "/sovereignty" },
       { label: "Compliance",   href: "/compliance" },
     ],
   },

@@ -38,23 +38,38 @@ const nextConfig: NextConfig = {
   async rewrites() {
     return [
       { source: "/brief/financial", destination: "/nebbos-delta-brief.html" },
-      // Public presentation — Dashboard / Presentation / Standout / Trends tabs
-      // are built into the HTML's view-switcher (self-contained interactive doc).
-      { source: "/presentation", destination: "/nebbos-delta-brief.html" },
+      // /presentation → nebbos-delta-brief.html rewrite retired 2026-09-17
+      // per docs/marketing/publication-readiness-2026-09-17.md §8. The delta
+      // brief is a client-facing artifact (NEB-26-02 Rev 19, authored for a
+      // specific holding co) — not appropriate for public marketing. Remains
+      // reachable via /brief/financial for share-only-via-exact-URL delivery
+      // (categorical slug, unlisted, noindex,nofollow per file <meta>).
     ];
   },
-  // /product/* URLs retired 2026-09-15 (Axis A Wave 2 per feedback_nebbos_ai_
-  // product_framing_platform_tools_mcp_usb_security_2026_09_14). The
-  // architecture treatise at /product/{band}/{layer} was the pre-2026-09-14
-  // 15-layer × 5-band framing; superseded by the 4-product × 3-tier customer
-  // taxonomy at /products. Redirects preserve inbound links (SEO, bookmarks,
-  // shared URLs) while pointing visitors at the current IA. 302 (temporary)
-  // per founder-decision 2026-09-15 — leaves room to reinstate /product as a
-  // /how-style internal doctrine surface later without breaking the redirect.
+  // Retired routes → redirect to current IA. Preserves inbound links (SEO,
+  // bookmarks, shared URLs) while pointing visitors at what's current. 302
+  // (temporary) leaves room to reinstate as internal-doctrine surface later
+  // without breaking the redirect.
+  //
+  // - /product · /product/* — pre-2026-09-14 15-layer × 5-band architecture
+  //   treatise · superseded by the 4-product × 3-tier customer taxonomy at
+  //   /products · retired 2026-09-15 (Axis A Wave 2 per feedback_nebbos_ai_
+  //   product_framing_platform_tools_mcp_usb_security_2026_09_14)
+  //
+  // - /platform · /platform/* — same architecture treatise family under a
+  //   different name (platform → architecture/dashboard/how-it-works/
+  //   integrations/presentation/standout/trends). Uses delta-brief-editorial
+  //   voice + FeatureRow + CTABand primitives — the pre-2026-09-14 register.
+  //   Retired 2026-09-17 per docs/marketing/publication-readiness-2026-09-17
+  //   .md §8. Bespoke files at app/platform/**/page.tsx stay on disk per
+  //   additive-only doctrine (feedback_governance_additive_only_never_delete_
+  //   disable_ignore); the redirect makes them unreachable via URL.
   async redirects() {
     return [
       { source: "/product", destination: "/products", permanent: false },
       { source: "/product/:path*", destination: "/products", permanent: false },
+      { source: "/platform", destination: "/products", permanent: false },
+      { source: "/platform/:path*", destination: "/products", permanent: false },
     ];
   },
   // Cache headers · rapid-iteration marketing site.

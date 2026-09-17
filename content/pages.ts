@@ -1774,6 +1774,28 @@ export const PAGES = {
         body: "Deployment on hyperscaler infrastructure with segregated client-data storage per Layer 01 · Data isolation model. Network segmentation: separate VPCs per environment, private subnets for data-plane workloads, egress restricted to allow-listed providers. Row-level client isolation enforced at the database — every table with client scope carries a Postgres RLS policy checking session identity. Object-storage buckets scoped per-client with client-identity-scoped IAM policies. Compute is stateless where possible; stateful workloads live in per-environment isolation with per-client scoping enforced at the query layer.",
       },
       {
+        id: "hardware-attested",
+        kind: "text-block",
+        eyebrow: "05a · Hardware-attested tier gate",
+        h2: "Hardware attestation for every elevated action.",
+        body: "Every action classified as consequential passes through a three-factor tier gate composed of biometric authentication, physical USB presence, and enclave-signed approval — combining into three tiers of authority. L1 Basic gates on biometric only (Touch ID / Face ID / Windows Hello / Android BiometricPrompt), covering dashboard reads and low-risk tool calls. L2 Privileged adds a Nebbos-issued USB in the port, covering client-scope writes, memory registers, and knowledge-graph mutations. L3 Admin adds an enclave-signed approval token derived from a WebAuthn ceremony, covering client create/destroy, substrate mutation, and cross-client operations. The USB substrate is a FIPS 140-3 Level 3 validated cryptographic module — the certificate covers the module boundary; the whole product is not FIPS-scoped. IP68 waterproof, MIL-STD-810G shock-tested, TAA-compliant supply chain, tamper-evident epoxy seal. The MCP binary and per-client key material ship on the encrypted volume; unplug the USB, and elevated capability is cryptographically absent — not policy-disabled. Two-person authorization is enforced in hardware at L3 through Admin-USB plus Developer-USB co-signature via WebAuthn with a 60-second time-to-live. Full hardware detail at /products/usb.",
+      },
+      {
+        id: "controls-map",
+        kind: "list-numbered",
+        eyebrow: "05b · NIST SP 800-53 control mapping",
+        h2: "The controls the substrate implements.",
+        items: [
+          { title: "AC-3(2) · Dual Authorization", body: "The L3 two-person rule enforced in hardware via co-signature of Admin K350 + Developer K350." },
+          { title: "AC-5 · Separation of Duties", body: "The tier-gate role model. L1 / L2 / L3 factor composition is a role separation enforced at the substrate." },
+          { title: "IA-11 · Re-authentication", body: "Session re-verify at every tier boundary. Elevation from L1 to L2 requires fresh biometric + USB presence assertion." },
+          { title: "SC-28(1)(2)(3) · Protection at rest, offline, crypto keys", body: "AES-256-GCM at rest for platform-side storage; the USB encrypted volume carries client keys offline, protecting per-client DEKs from any Nebbos-side breach." },
+          { title: "SC-12 · Cryptographic key establishment", body: "Per-client data-encryption keys wrapped by KMS-hosted master keys. Rotation cadence documented; access logged to Layer 15." },
+          { title: "SC-13 · Cryptographic protection", body: "TLS 1.3 in transit. AES-256-GCM at rest. FIPS 140-3 Level 3 on the K350 module." },
+          { title: "AU-2 through AU-12(1) · Audit-trail family", body: "Eleven controls in the audit family alone. Every request, every action, every approval hash-chained into Layer 15 · Attestation." },
+        ],
+      },
+      {
         id: "layers",
         kind: "list-numbered",
         eyebrow: "06 · Which architecture layers enforce security",
@@ -2381,6 +2403,115 @@ export const PAGES = {
         h1: "Responsible Disclosure",
         deck: "How to report a security vulnerability in Nebbos. Send reports to security@nebbos.ai. Please give us 90 days to remediate before public disclosure.",
         ctaPrimary: { label: "security@nebbos.ai", href: "mailto:security@nebbos.ai", variant: "primary" } as CTA,
+      },
+    ],
+  },
+
+  /* ═══════════════ SOVEREIGNTY ═════════════════════════════════════════
+   * Added 2026-09-17 per docs/marketing/site-wide-route-revision-plan-2026-09-17.md §2a #3.
+   * Source draft: docs/marketing/sovereignty-page-draft-2026-09-17.md.
+   * Substrate: reference_nebbos_technologies_three_pillar_positioning_2026_09_14 (Pillar 3),
+   *            reference_usb_tier_marketing_hooks_2026_09_17 §§20-52,
+   *            peer ADR 2026-09-17_ADR-PROV-nebbos-per-user-usb-data-treatment-model.
+   * Dual-path recovery language per Amendment 1 (peer 7988c2af, 2026-09-17):
+   *   vendor-mediated (default) + user-quorum (opt-in). Retracts "no vendor break-glass by design."
+   * ─────────────────────────────────────────────────────────────────── */
+  sovereignty: {
+    slug: "/sovereignty",
+    title: "Sovereignty · Your data. Your model. Your keys.",
+    metaDescription:
+      "Nebbos is designed so no vendor — not even Nebbos — sits between operator intent and enterprise state. Data sovereignty, model sovereignty, operational sovereignty — enforced by architecture, not policy.",
+    sections: [
+      {
+        id: "hero",
+        kind: "hero-full-bleed",
+        eyebrow: "00 · Sovereignty",
+        h1: "Your data. Your model. Your keys.",
+        deck: "Nebbos is designed so no vendor — not even Nebbos — sits between operator intent and enterprise state. When you leave, everything moves with you.",
+        imageFamily: "concept-audit-attestation",
+      },
+      {
+        id: "three-axes",
+        kind: "text-block",
+        eyebrow: "01 · Three axes of sovereignty",
+        h2: "Three commitments, one architecture.",
+        body: "Sovereignty on Nebbos is not a policy statement. It is a set of substrate guarantees, each enforced by the layer that ships it. Data sovereignty: row-level client isolation at Layer 01 · Data. No application-layer bug can leak your data to another client &mdash; the isolation is enforced at the substrate, not by the application code that sits on top of it. Every request carries an identity checked before the query runs. Model sovereignty: every human decision your team makes trains YOUR Pearl &mdash; not Nebbos&rsquo;s next base model. The tuned Pearl and its memory are your property, exportable in full when you offboard. Portability is a contractual guarantee, not a marketing line. Operational sovereignty: no vendor sits between operator intent and enterprise state. The classifier that decides which tier a request runs at executes on YOUR host, before egress. The MCP binary that mediates every tool call lives on YOUR USB. The audit trail is written to storage YOUR keys unlock.",
+      },
+      {
+        id: "tier-model",
+        kind: "list-numbered",
+        eyebrow: "02 · Five treatment tiers for your data",
+        h2: "You decide how much your model gets to see.",
+        deck: "Nebbos runs every workload against one of five data-treatment tiers. The tier is decided by the classifier at the MCP call boundary — on your host, client-side, before any data crosses the wire.",
+        items: [
+          { title: "Sealed", body: "Journal-grade artifacts stay on your USB. Decryptable only by you, only when you are physically present with the device. Nebbos never sees ciphertext or plaintext." },
+          { title: "Portable", body: "Cross-device personal state &mdash; same operator, multiple laptops. Server-stored, but wrapped with a key only your USB carries. Our operators see ciphertext only." },
+          { title: "Redacted-to-cloud", body: "Full-fidelity model performance without leaking PII. Personal identifiers are stripped on your host before egress; the response is re-materialized locally when it comes back." },
+          { title: "Attested-cloud", body: "Full-fidelity model running inside a hardware-attested enclave. Every response comes with a cryptographic receipt binding the output to the enclave that produced it." },
+          { title: "Air-gapped", body: "Local open-weights inference. Zero egress. For classified-sensitivity work where even attested-cloud is too much." },
+        ],
+      },
+      {
+        id: "classifier",
+        kind: "text-block",
+        eyebrow: "03 · The classifier",
+        h2: "The tier decision runs on your host. Not on our servers.",
+        body: "Before any query leaves your operator&rsquo;s laptop, the classifier reads the query text, the client policy, and the operator&rsquo;s current authority level. It decides which of the five tiers this specific request runs at, redacts any PII that would otherwise egress, and hands the tier decision to the MCP binary that services the call. The classifier is a binary carried on your USB. Its policy is YAML &mdash; you set the defaults, your admin overrides, your operator can force-downgrade a request to a stricter tier, your regulator can inspect the policy under NDA. The classifier does not run on Nebbos-hosted infrastructure. It cannot be swapped by a Nebbos-side deploy. Its behavior on any request is a fact about what your USB carries &mdash; not a policy Nebbos administers.",
+      },
+      {
+        id: "recovery",
+        kind: "text-block",
+        eyebrow: "04 · Recovery custodians",
+        h2: "You elect who has break-glass keys.",
+        body: "Vendor break-glass exists. The client chooses whether to use it. Path A &mdash; vendor-mediated recovery (default). If a user loses their USB and needs a fresh device, a Nebbos-side recovery flow re-issues one, with an audit event that lands in the client&rsquo;s own audit trail. Fast, standard, works for most enterprises. Path B &mdash; user-quorum recovery (opt-in). The client elects three-to-five recovery custodians from within its own organization. USB reissue requires a Shamir 3-of-5 quorum of the custodian USBs. Nebbos-side cannot unlock a lost device. The client carries the operational cost; the client carries the sovereignty guarantee. Every enterprise decides which posture it operates under. The two paths are not a technical accident &mdash; they are a designed choice about who holds the last mile of trust.",
+      },
+      {
+        id: "portability",
+        kind: "text-block",
+        eyebrow: "05 · Portability",
+        h2: "When you leave, everything moves with you.",
+        body: "Portability on Nebbos is contractual, not marketing. On offboarding: your tuned Pearl model &mdash; the weights, the preference pairs, the routing policy &mdash; exports as a portable format compatible with any inference substrate that speaks the same model spec. Your memory &mdash; the accumulated context that made the Pearl valuable &mdash; exports as a structured, importable graph. Query-compatible with the underlying substrate. Your audit trail &mdash; every action, every approval, every decision &mdash; exports as an append-only hash-chained record, verifiable on any auditor&rsquo;s tooling. Your MCP capability policy &mdash; the YAML that decided which tier which request ran at &mdash; exports as a versioned file. Your CRM data, your task history, your document graph, your identity roster &mdash; all export in the shape you can re-import into any successor substrate. Portability tests run continuously against the substrate; the export path is exercised as part of the pipeline, not as an offboarding-day surprise.",
+      },
+      {
+        id: "physical-usb",
+        kind: "text-block",
+        eyebrow: "06 · One physical USB per user",
+        h2: "Sovereignty enforced by the object on your desk.",
+        body: "Every operator authorized above L1 carries one Nebbos-issued USB, tied to their identity, sealed at manufacture. When they are at their desk, the USB is in the port. When they leave, the USB comes with them. Elevated capability follows the physical device, not the network location. This is what makes model, data, and operational sovereignty mechanically enforceable. The tier a request runs at is not a claim we make about our own trustworthiness. It is a fact about what hardware is on your operator&rsquo;s desk.",
+      },
+      {
+        id: "layers",
+        kind: "list-numbered",
+        eyebrow: "07 · Which architecture layers make sovereignty real",
+        h2: "Which architecture layers make sovereignty real.",
+        items: [
+          { title: "Layer 01 · Data", body: "Row-level client isolation. Structural, not policy. No application bug can leak across clients." },
+          { title: "Layer 02 · Identity", body: "Every request carries an identity. Hardware-attested at L2 (biometric + USB) and L3 (biometric + USB + enclave)." },
+          { title: "Layer 05 · API + MCP", body: "The classifier runs at this boundary, on the operator&rsquo;s host, before egress." },
+          { title: "Layer 07 · Memory", body: "Portability tests run continuously. Export path exercised on every deploy." },
+          { title: "Layer 15 · Attestation", body: "Hash-chained audit trail. Portable in machine-readable form. Your inspector-general reads the same records ours do." },
+        ],
+      },
+      {
+        id: "related",
+        kind: "list-plain",
+        eyebrow: "08 · Related",
+        h2: "Deeper reading.",
+        items: [
+          { title: "Trust — the meta-posture and accountability pillars" },
+          { title: "Security — technical controls in depth" },
+          { title: "Compliance — status per framework" },
+          { title: "Legal — MSA, DPA, Responsible Disclosure" },
+        ],
+      },
+      {
+        id: "cta",
+        kind: "cta-full-bleed",
+        h2: "Sovereignty is a substrate, not a policy.",
+        deck: "Every enterprise says its data is its own. Nebbos ships the architecture that makes it so.",
+        imageFamily: "concept-audit-attestation",
+        ctaPrimary: { label: "Request briefing", href: "/demo", variant: "solid-light" },
+        ctaSecondary: { label: "See security", href: "/security", variant: "ghost-light" },
       },
     ],
   },

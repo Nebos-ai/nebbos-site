@@ -1,85 +1,44 @@
-import { PageHero } from "@/components/primitives/PageHero";
-import { Button } from "@/components/primitives/Button";
+import { HomeHero } from "@/components/sections/HomeHero";
+import { HomeModesBand } from "@/components/sections/HomeModesBand";
+import { HomeBands } from "@/components/sections/HomeBands";
+import { HomeStory } from "@/components/sections/HomeStory";
+import { HomeCTA } from "@/components/sections/HomeCTA";
+import { InProductionBand } from "@/components/sections/InProductionBand";
+import { BuiltWithNebbosBand } from "@/components/sections/BuiltWithNebbosBand";
+import { NebbosInventoryBand } from "@/components/sections/NebbosInventoryBand";
 
 /**
- * PAGE · / (Home) · v9 · 2026-09-17 · Nebbos wordmark spray hero
+ * PAGE · / (Home) · v14 · 2026-09-17 · Modes-band scrim fix
  *
- * Hero: interactive canvas 2D physics playground where a spray-can dispenses
- * strands over the Nebbos wordmark. The strands collide with the wordmark
- * silhouette (rendered as an SVG collision map behind the canvas) and fall,
- * pile, and settle around it. Interactive on desktop + touch; auto-demo on
- * page load so the wordmark is discoverable within the first two seconds.
+ * v14 replaces the two sequential PageHero scene tiles (Managed / Federated)
+ * with a single HomeModesBand — Institutional Reserve cream ground, two
+ * columns side-by-side, hairline divider. Text-forward, matches the register
+ * of InProduction / BuiltWithNebbos / NebbosInventory bands. This lands the
+ * "TWO shapes, one MCP" story as parallel columns instead of sequential
+ * faded scene tiles.
  *
- * Served as a static HTML file under public/hero/nebbos-hero.html (own
- * document context) and embedded via iframe. Middleware exempts /hero/ so
- * the demo's inline `<script>` blocks and its jsDelivr importmap load
- * without CSP conflict.
- *
- * Below the hero: the four Nebbos product tiles (Platform / App / MCP /
- * USB) as scene-grounded PageHero primitives.
+ * Visual rhythm (scene / text-band alternation):
+ *   1. HomeHero          (scene)  — "Remember who you are."
+ *   2. InProductionBand  (text)   — Running in school districts today
+ *   3. HomeModesBand     (text)   — Building fresh? · Already have a stack?
+ *   4. HomeBands         (scene)  — 4-product click-to-expand accordion
+ *   5. HomeStory         (scene)  — 3-scene magazine editorial arc
+ *   6. BuiltWithNebbos   (text)   — 1 person · 160 days · 20 repos · 2.1M LoC
+ *   7. NebbosInventory   (text)   — 24 metrics · 4 quadrants
+ *   8. HomeCTA           (scene)  — "Put a Pearl on your hardest domain."
  */
-
-const PRODUCTS = [
-  {
-    key: "platform" as const,
-    eyebrow: "Nebbos Platform",
-    headline: "Operations at institutional scale.",
-    imageFamily: "concept-operator-onboarding",
-    learnHref: "/products/platform",
-  },
-  {
-    key: "app" as const,
-    eyebrow: "Nebbos App",
-    headline: "Local. Native. Yours.",
-    imageFamily: "concept-memory",
-    learnHref: "/products/app",
-  },
-  {
-    key: "mcp" as const,
-    eyebrow: "Nebbos MCP",
-    headline: "The tool substrate. Attested.",
-    imageFamily: "concept-pearl",
-    learnHref: "/products/mcp",
-  },
-  {
-    key: "usb" as const,
-    eyebrow: "Nebbos USB",
-    headline: "Peace of mind you can hold.",
-    imageFamily: "concept-audit-attestation",
-    learnHref: "/products/usb",
-  },
-];
 
 export default function HomePage() {
   return (
     <>
-      <h1 className="visually-hidden">Nebbos</h1>
-      <section className="home-hero-wordmark" aria-label="Nebbos wordmark, interactive hero">
-        <iframe
-          src="/hero/nebbos-hero.html"
-          title="Nebbos wordmark — interactive"
-          className="home-hero-wordmark__frame"
-          loading="eager"
-          scrolling="no"
-        />
-      </section>
-      {PRODUCTS.map((p) => (
-        <PageHero
-          key={p.key}
-          eyebrow={p.eyebrow}
-          headline={p.headline}
-          headingLevel="h2"
-          imageFamily={p.imageFamily}
-          surface="scene"
-          align="center"
-          ctas={
-            <>
-              <Button variant="ghost" tone="onDark" href={p.learnHref}>Learn more</Button>
-              <Button variant="ghost" tone="onDark" href="/contact">Get in touch</Button>
-            </>
-          }
-        />
-      ))}
+      <HomeHero />
+      <InProductionBand />
+      <HomeModesBand />
+      <HomeBands />
+      <HomeStory />
+      <BuiltWithNebbosBand />
+      <NebbosInventoryBand />
+      <HomeCTA />
     </>
   );
 }
