@@ -181,17 +181,36 @@
   }
 
   /*
-   * Scene image scale on hover — subtle 1.03 zoom, respected-reduced-motion.
+   * Scene image tone + hover motion.
+   *
+   * Tone: brightness(0.58) saturate(1.12) contrast(1.05) — the AI stills
+   * ship as bright, sun-drenched editorial interiors that beautifully
+   * describe the environment but fight paper-white hero-tier type on top
+   * (no amount of scrim can save white sans-serif over a bright cream
+   * wall). Darkening the source at render time is the elite-bar answer:
+   * Apple / Stripe / Linear never trust raw asset brightness for hero
+   * grounds. Saturation + contrast bumps recover the perceived richness
+   * lost to the darkening pass so the still still reads as premium.
+   *
+   * Combined with the stacked scrim + triple text-shadow already in
+   * place, headlines land unmistakably.
+   *
+   * Hover: subtle 1.03 zoom, respected-reduced-motion.
+   *
    * The <img> from SceneStill is a direct child of .page-hero when
    * SceneStill.shape="fullBleed" (uses next/image fill). Selecting
    * `.page-hero img` targets it via next/image's rendered <img>.
    */
   .page-hero--scene img {
-    transition: transform 700ms var(--ease-settle);
+    filter: brightness(0.58) saturate(1.12) contrast(1.05);
+    transition:
+      transform 700ms var(--ease-settle),
+      filter var(--dur-default) var(--ease-out);
     will-change: transform;
   }
   .page-hero--scene:hover img {
     transform: scale(1.03);
+    filter: brightness(0.62) saturate(1.15) contrast(1.05);
   }
 
   /*
