@@ -44,26 +44,32 @@ export const BRAND = {
   /** Legal / display name of the product. */
   name: "Nebbos",
 
-  /** Home-page hero title (canonical, most reused). */
-  taglineShort: "The platform. Its tools. Its MCP. Its Cradle.",
+  /** Home-page hero title (canonical, most reused).
+   *  Supersede-log 2026-09-17: "The platform. Its tools. Its MCP. Its Cradle."
+   *  → "Infrastructure for AI operators." Founder-directed shift from
+   *  enumerative-taxonomy tagline to categorical-infrastructure claim
+   *  (Stripe-shape: "Financial infrastructure to grow your revenue" → the
+   *  same 4-word category-defining move). Prior 4-thing enumeration retained
+   *  in `homeDeck` for the cold-visitor explainer under the H1. */
+  taglineShort: "Infrastructure for AI operators.",
 
   /** Slightly longer version used in <title> tags. */
   taglineLong:
-    "The platform your operators live in — its tools, its MCP's system abilities, the security of its Cradle.",
+    "Infrastructure for AI operators. Every action attested. Every credential on hardware. Every substrate yours to take with you.",
 
   /** Category the company sits in — market label used in press / SEO only. */
-  category: "Operator platform with hardware-attested MCP",
+  category: "Operator infrastructure",
 
   /** Home hero deck under the title. */
   homeDeck:
-    "A platform. The tools it gives operators. The MCP that runs its capabilities. The Cradle that gates its authority. Four things — one product.",
+    "Every AI action attested. Every credential on hardware you hold. Every substrate portable when you leave.",
 
   /** Sub-category for AI-first buyers (Wave 3e model-training angle). */
-  categorySecondary: "Cradle-attested MCP substrate for enterprise operators",
+  categorySecondary: "Hardware-attested infrastructure for the AI-native operator",
 
   /** One-line site description (SEO meta + share previews). */
   descriptionShort:
-    "Nebbos is the operator platform whose tools ship as MCP capabilities and whose privileged actions are gated by the Cradle you keep with you. Biometric approves; Cradle attests; MCP executes.",
+    "Nebbos is infrastructure for AI operators. Every action attested. Every credential on hardware. Every substrate portable when you leave.",
 
   /** Long-form site description (for landing-page bodies + doc). */
   descriptionLong:
