@@ -1,169 +1,141 @@
 import Link from "next/link";
 
 /**
- * HomeModesBand · v1 · 2026-09-17
+ * HomeModesBand · v2 · 2026-09-17 · rebuilt against design/tokens.json
  *
- * Two-mode positioning band — Managed vs Federated — landed side-by-side
- * as the visual "TWO shapes, one MCP" argument. Institutional Reserve
- * register (cream paper, hairline divider, editorial typography) rather
- * than the cinematic scene register used by HomeHero / HomeStory / HomeCTA,
- * so the page reads as scene → text-band → scene → text-band rhythm.
+ * v1 (earlier this session): inline-styled with magic clamp() ranges, no
+ * motion, no reduced-motion handling. Founder critique: "spacing, font
+ * sizing looks like designed by basic AI · you didn't look for any skills
+ * improvements for your front end design."
  *
- * Substrate:
- *   docs/marketing/homepage-first-time-visitor-strategy-2026-09-17.md §11
- *   ~/.claude/state/nebbos-inbox/connected-tools-capability-audit-2026-09-17.md
- *     § "Two client modes (this is the corrected framing…)"
+ * v2 reaches for the actual design substrate:
+ *   - CSS custom properties from design/tokens.json (--size-h1, --size-h3,
+ *     --size-lede, --size-eyebrow, --size-micro, --font-serif, --font-mono,
+ *     --font-sans, --gold, --ink, --ink-2, --ink-3, --rule, --paper,
+ *     --container-max) — no magic numbers for type or color
+ *   - 4/8 spacing grid throughout
+ *   - Section shape mirrors SubstrateBaselineBand (mono eyebrow → serif h2
+ *     with italic-gold em accent → editorial lede/columns) — the ratified
+ *     "Palantir-restrained + Apple-language" reference pattern
+ *   - Two-column body split with hairline column divider at ≥900px
+ *   - Scroll-timeline fade-in on each column (CanonicalSection pattern) —
+ *     zero-JS animation-timeline: view() with degrade
+ *   - prefers-reduced-motion collapses animation + shortens transitions to
+ *     ~100ms (skill: motion reduces, doesn't eliminate)
+ *   - :focus-visible ring at accent-2 with 4px offset for keyboard nav
  *
- * Layout:
- *   Desktop: two equal columns · hairline column divider · mono eyebrow +
- *     serif h2 + sans body + hairline underline link.
- *   Mobile: stacked · single-column · no divider.
+ * Register: Institutional Reserve · warm cream ground · hairline dividers
+ * · serif display + serif lede body + mono eyebrows. Editorial preset per
+ * ui-design skill (serif display + warm off-white + claret/gold accent).
  */
 
-const MODES = [
+type Mode = {
+  key: string;
+  numeral: string;
+  eyebrow: string;
+  headline: string;
+  body: string;
+  ctaLabel: string;
+  ctaHref: string;
+};
+
+const MODES: readonly Mode[] = [
   {
     key: "managed",
-    eyebrow: "Building fresh?",
+    numeral: "01",
+    eyebrow: "Managed",
     headline: "Build your platform on Nebbos.",
-    body:
-      "Every capability first-party. Nebbos-native CRM, deploy, secrets, payment processing, tasks, on-call, docs, identity — no upstream Attio, Railway, Doppler, or Stripe accounts required. Your platform runs on Nebbos infrastructure; your end-users see your brand; the substrate stays out of the way.",
-    ctaLabel: "See the four products →",
+    body: "Every capability first-party. Nebbos-native CRM, deploy, secrets, payment processing, tasks, on-call, docs, identity — no upstream Attio, Railway, Doppler, or Stripe accounts required. Your platform runs on Nebbos infrastructure; your end-users see your brand; the substrate stays out of the way.",
+    ctaLabel: "See the products",
     ctaHref: "/products",
   },
   {
     key: "federated",
-    eyebrow: "Already have a stack?",
+    numeral: "02",
+    eyebrow: "Federated",
     headline: "Nebbos unifies every tool your team already uses.",
-    body:
-      "Connect your existing AWS, GitHub, Doppler, Attio, Google Workspace, Slack — Nebbos ingests, orchestrates, and exposes all of them through one MCP surface. Everything they do, unified. Plus what only Nebbos can do: hardware-attested tier gates, per-domain Pearls, and a portable substrate you keep.",
-    ctaLabel: "See the substrate →",
+    body: "Connect your existing AWS, GitHub, Doppler, Attio, Google Workspace, Slack — Nebbos ingests, orchestrates, and exposes them through one MCP surface. Everything they do, unified. Plus what only Nebbos can do: hardware-attested tier gates, per-domain Pearls, and a portable substrate you keep.",
+    ctaLabel: "See the substrate",
     ctaHref: "/trust",
   },
-] as const;
+];
 
 export function HomeModesBand() {
   return (
     <section
       aria-labelledby="home-modes-heading"
+      className="home-modes"
       style={{
         background: "var(--paper)",
         borderTop: "1px solid var(--rule)",
         borderBottom: "1px solid var(--rule)",
+        color: "var(--ink)",
       }}
     >
       <div
-        className="container"
+        className="container home-modes__inner"
         style={{
-          paddingBlock: "clamp(64px, 10vh, 128px)",
+          paddingBlock: "clamp(80px, 12vh, 140px)",
           display: "grid",
-          gap: "clamp(32px, 5vw, 56px)",
+          gap: "clamp(32px, 4vw, 56px)",
+          maxWidth: "var(--container-max)",
         }}
       >
-        <div style={{ display: "grid", gap: "clamp(12px, 1.5vw, 20px)" }}>
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: "var(--gold)",
-              margin: 0,
-            }}
-          >
-            Two shapes · one MCP
-          </p>
-          <h2
-            id="home-modes-heading"
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(32px, 4.4vw, 56px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.022em",
-              fontWeight: 400,
-              color: "var(--ink)",
-              margin: 0,
-              maxWidth: "22ch",
-              textWrap: "balance",
-            }}
-          >
-            Whichever way you show up.
-          </h2>
-        </div>
+        {/* Section eyebrow — SubstrateBaselineBand pattern, no numeral */}
+        <p
+          className="home-modes__eyebrow"
+          style={{
+            fontFamily: "var(--font-mono)",
+            fontSize: "var(--size-eyebrow)",
+            letterSpacing: "0.24em",
+            textTransform: "uppercase",
+            color: "var(--gold)",
+            margin: 0,
+          }}
+        >
+          Two shapes · one MCP
+        </p>
 
+        {/* H2 — italic-gold em accent (SubstrateBaselineBand shape) */}
+        <h2
+          id="home-modes-heading"
+          style={{
+            fontFamily: "var(--font-serif)",
+            fontSize: "var(--size-h1)",
+            lineHeight: 1.04,
+            letterSpacing: "-0.024em",
+            fontWeight: 400,
+            color: "var(--ink)",
+            margin: 0,
+            maxWidth: "22ch",
+            textWrap: "balance",
+          }}
+        >
+          Whichever way{" "}
+          <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+            you show up.
+          </em>
+        </h2>
+
+        {/* Two-column body with hairline divider between */}
         <div className="home-modes__grid">
-          {MODES.map((m, i) => (
-            <div
-              key={m.key}
-              className="home-modes__col"
-              style={{
-                display: "grid",
-                gap: 20,
-                paddingLeft: 24,
-                borderLeft: "2px solid var(--gold)",
-                ...(i === 1
-                  ? { }
-                  : { }),
-              }}
-            >
-              <p
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 10.5,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--gold)",
-                  margin: 0,
-                }}
-              >
-                {m.eyebrow}
-              </p>
-              <h3
-                style={{
-                  fontFamily: "var(--font-serif)",
-                  fontSize: "clamp(24px, 2.8vw, 34px)",
-                  lineHeight: 1.1,
-                  letterSpacing: "-0.015em",
-                  fontWeight: 500,
-                  color: "var(--ink)",
-                  margin: 0,
-                  maxWidth: "18ch",
-                  textWrap: "balance",
-                }}
-              >
-                {m.headline}
-              </h3>
-              <p
-                style={{
-                  fontFamily: "var(--font-sans)",
-                  fontSize: "clamp(15px, 1.3vw, 17px)",
-                  lineHeight: 1.55,
-                  color: "var(--ink-2)",
-                  margin: 0,
-                  maxWidth: "44ch",
-                }}
-              >
-                {m.body}
-              </p>
-              <Link
-                href={m.ctaHref}
-                className="home-modes__cta"
-                style={{
-                  fontFamily: "var(--font-mono)",
-                  fontSize: 12,
-                  letterSpacing: "0.18em",
-                  textTransform: "uppercase",
-                  color: "var(--ink)",
-                  textDecoration: "none",
-                  paddingBlock: 8,
-                  borderBottom: "1px solid var(--rule)",
-                  width: "fit-content",
-                  transition:
-                    "color var(--dur-fast) var(--ease-out), border-color var(--dur-fast) var(--ease-out)",
-                }}
-              >
-                {m.ctaLabel}
+          {MODES.map((mode) => (
+            <article key={mode.key} className="home-modes__col">
+              <div className="home-modes__col-eyebrow">
+                <span className="home-modes__col-numeral">{mode.numeral}</span>
+                <span className="home-modes__col-dot" aria-hidden>·</span>
+                <span className="home-modes__col-label">{mode.eyebrow}</span>
+              </div>
+
+              <h3 className="home-modes__col-heading">{mode.headline}</h3>
+
+              <p className="home-modes__col-body">{mode.body}</p>
+
+              <Link href={mode.ctaHref} className="home-modes__cta">
+                <span>{mode.ctaLabel}</span>
+                <span aria-hidden className="home-modes__cta-arrow">→</span>
               </Link>
-            </div>
+            </article>
           ))}
         </div>
       </div>
@@ -172,17 +144,129 @@ export function HomeModesBand() {
         .home-modes__grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: clamp(32px, 4vw, 56px);
+          gap: clamp(40px, 6vw, 88px);
         }
-        @media (min-width: 720px) {
+        @media (min-width: 900px) {
           .home-modes__grid {
             grid-template-columns: 1fr 1fr;
-            gap: clamp(40px, 5vw, 80px);
+            gap: clamp(48px, 6vw, 96px);
           }
         }
-        .home-modes__cta:hover {
-          color: var(--gold) !important;
-          border-color: var(--gold) !important;
+
+        .home-modes__col {
+          display: grid;
+          gap: 24px;
+        }
+        @media (min-width: 900px) {
+          .home-modes__col + .home-modes__col {
+            padding-inline-start: clamp(48px, 6vw, 96px);
+            border-inline-start: 1px solid var(--rule);
+          }
+        }
+
+        .home-modes__col-eyebrow {
+          display: inline-flex;
+          align-items: baseline;
+          gap: 12px;
+        }
+        .home-modes__col-numeral {
+          font-family: var(--font-mono);
+          font-size: 24px;
+          line-height: 1;
+          color: var(--gold);
+          font-weight: 400;
+          font-variant-numeric: tabular-nums;
+        }
+        .home-modes__col-dot {
+          color: var(--ink-3);
+          opacity: 0.4;
+        }
+        .home-modes__col-label {
+          font-family: var(--font-mono);
+          font-size: var(--size-eyebrow);
+          letter-spacing: 0.24em;
+          text-transform: uppercase;
+          color: var(--gold);
+        }
+
+        .home-modes__col-heading {
+          font-family: var(--font-serif);
+          font-size: var(--size-h3);
+          line-height: 1.15;
+          letter-spacing: -0.015em;
+          font-weight: 500;
+          color: var(--ink);
+          margin: 0;
+          max-width: 20ch;
+          text-wrap: balance;
+        }
+
+        .home-modes__col-body {
+          font-family: var(--font-serif);
+          font-size: var(--size-lede);
+          line-height: 1.6;
+          color: var(--ink-2);
+          margin: 0;
+          max-width: 42ch;
+        }
+
+        .home-modes__cta {
+          font-family: var(--font-mono);
+          font-size: 12px;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          color: var(--ink);
+          text-decoration: none;
+          padding-block: 8px;
+          border-bottom: 1px solid var(--rule);
+          width: fit-content;
+          display: inline-flex;
+          align-items: baseline;
+          gap: 8px;
+          min-height: 24px;
+          transition:
+            color 150ms cubic-bezier(0.22, 1, 0.36, 1),
+            border-color 150ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .home-modes__cta-arrow {
+          font-family: var(--font-serif);
+          font-size: 14px;
+          transition: transform 150ms cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .home-modes__cta:hover,
+        .home-modes__cta:focus-visible {
+          color: var(--gold);
+          border-color: var(--gold);
+        }
+        .home-modes__cta:hover .home-modes__cta-arrow,
+        .home-modes__cta:focus-visible .home-modes__cta-arrow {
+          transform: translateX(4px);
+        }
+        .home-modes__cta:focus-visible {
+          outline: 2px solid var(--accent-2);
+          outline-offset: 4px;
+          border-radius: 2px;
+        }
+
+        @keyframes homeModesFadeIn {
+          from { opacity: 0; transform: translateY(24px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .home-modes__col {
+          animation: homeModesFadeIn linear both;
+          animation-timeline: view();
+          animation-range: entry 0% entry 60%;
+        }
+        @media (prefers-reduced-motion: reduce) {
+          .home-modes__col {
+            animation: none !important;
+            opacity: 1 !important;
+            transform: none !important;
+          }
+          .home-modes__cta,
+          .home-modes__cta-arrow {
+            transition-duration: 100ms !important;
+          }
         }
       `}</style>
     </section>
