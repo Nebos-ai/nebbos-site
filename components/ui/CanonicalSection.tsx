@@ -107,7 +107,7 @@ export function CanonicalSection({
                 fontFamily: "var(--font-mono)",
                 fontSize: 42,
                 lineHeight: 1,
-                color: "var(--gold)",
+                color: "var(--accent-2)",
                 fontWeight: 400,
                 letterSpacing: 0,
               }}
@@ -115,7 +115,7 @@ export function CanonicalSection({
               {numeral}
             </span>
             <span style={{ opacity: 0.6, color: "var(--ink-3)" }}>·</span>
-            <span style={{ color: "var(--gold)", fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.24em", textTransform: "uppercase" }}>
+            <span style={{ color: "var(--accent-2)", fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.24em", textTransform: "uppercase" }}>
               {label}
             </span>
           </div>
@@ -173,7 +173,7 @@ export function CanonicalSection({
                       fontFamily: "var(--font-mono)",
                       fontSize: 11,
                       letterSpacing: "0.14em",
-                      color: "var(--gold)",
+                      color: "var(--accent-2)",
                     }}
                   >
                     {String(i + 1).padStart(2, "0")}

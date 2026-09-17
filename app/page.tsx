@@ -1,5 +1,6 @@
 import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeModesBand } from "@/components/sections/HomeModesBand";
+import { CapabilityBentoGrid } from "@/components/sections/CapabilityBentoGrid";
 import { HomeBands } from "@/components/sections/HomeBands";
 import { HomeStory } from "@/components/sections/HomeStory";
 import { HomeCTA } from "@/components/sections/HomeCTA";
@@ -34,6 +35,7 @@ export default function HomePage() {
       <HomeHero />
       <InProductionBand />
       <HomeModesBand />
+      <CapabilityBentoGrid />
       <HomeBands />
       <HomeStory />
       <BuiltWithNebbosBand />

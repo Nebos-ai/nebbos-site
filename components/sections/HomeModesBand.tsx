@@ -89,7 +89,7 @@ export function HomeModesBand() {
             fontSize: "var(--size-eyebrow)",
             letterSpacing: "0.24em",
             textTransform: "uppercase",
-            color: "var(--gold)",
+            color: "var(--accent-2)",
             margin: 0,
           }}
         >
@@ -112,7 +112,7 @@ export function HomeModesBand() {
           }}
         >
           Whichever way{" "}
-          <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+          <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
             you show up.
           </em>
         </h2>
@@ -173,7 +173,7 @@ export function HomeModesBand() {
           font-family: var(--font-mono);
           font-size: 24px;
           line-height: 1;
-          color: var(--gold);
+          color: var(--accent-2);
           font-weight: 400;
           font-variant-numeric: tabular-nums;
         }
@@ -186,7 +186,7 @@ export function HomeModesBand() {
           font-size: var(--size-eyebrow);
           letter-spacing: 0.24em;
           text-transform: uppercase;
-          color: var(--gold);
+          color: var(--accent-2);
         }
 
         .home-modes__col-heading {
@@ -235,8 +235,8 @@ export function HomeModesBand() {
         }
         .home-modes__cta:hover,
         .home-modes__cta:focus-visible {
-          color: var(--gold);
-          border-color: var(--gold);
+          color: var(--accent-2);
+          border-color: var(--accent-2);
         }
         .home-modes__cta:hover .home-modes__cta-arrow,
         .home-modes__cta:focus-visible .home-modes__cta-arrow {

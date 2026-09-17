@@ -233,7 +233,7 @@ export function NebbosInventoryBand() {
               fontSize: 11,
               letterSpacing: "0.24em",
               textTransform: "uppercase",
-              color: "var(--gold)",
+              color: "var(--accent-2)",
               margin: 0,
             }}
           >
@@ -292,7 +292,7 @@ export function NebbosInventoryBand() {
                 display: "grid",
                 gap: 16,
                 paddingLeft: 20,
-                borderLeft: "2px solid var(--gold)",
+                borderLeft: "2px solid var(--accent-2)",
               }}
             >
               <div style={{ display: "grid", gap: 4 }}>
@@ -302,7 +302,7 @@ export function NebbosInventoryBand() {
                     fontSize: 10.5,
                     letterSpacing: "0.18em",
                     textTransform: "uppercase",
-                    color: "var(--gold)",
+                    color: "var(--accent-2)",
                     margin: 0,
                   }}
                 >
@@ -403,8 +403,8 @@ export function NebbosInventoryBand() {
 
       <style>{`
         .nebbos-inventory-band__link:hover {
-          color: var(--gold) !important;
-          border-color: var(--gold) !important;
+          color: var(--accent-2) !important;
+          border-color: var(--accent-2) !important;
         }
       `}</style>
     </section>

@@ -44,7 +44,7 @@ export function InProductionBand() {
             fontSize: 11,
             letterSpacing: "0.24em",
             textTransform: "uppercase",
-            color: "var(--gold)",
+            color: "var(--accent-2)",
             margin: 0,
           }}
         >
@@ -111,8 +111,8 @@ export function InProductionBand() {
 
       <style>{`
         .in-production-band__link:hover {
-          color: var(--gold) !important;
-          border-color: var(--gold) !important;
+          color: var(--accent-2) !important;
+          border-color: var(--accent-2) !important;
         }
       `}</style>
     </section>

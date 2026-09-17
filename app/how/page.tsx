@@ -26,7 +26,7 @@ export const metadata: Metadata = {
 type DimState = "at-elite" | "advancing" | "gap" | "miss";
 
 const DIM_STATE_META: Record<DimState, { label: string; tone: string }> = {
-  "at-elite": { label: "at elite", tone: "var(--gold)" },
+  "at-elite": { label: "at elite", tone: "var(--accent-2)" },
   advancing: { label: "advancing", tone: "var(--accent-2)" },
   gap: { label: "gap", tone: "var(--ink-2)" },
   miss: { label: "miss", tone: "var(--ink-3)" },
@@ -200,7 +200,7 @@ export default function HowPage() {
             }}
           >
             The bar we hold,{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
               and the state.
             </em>
           </h1>
@@ -217,7 +217,7 @@ export default function HowPage() {
             Twelve dimensions of what a 2026 front-end substrate looks like at
             elite. The scorecard below is what the running site is measured
             against &mdash; not what it aspires to. Any dim marked{" "}
-            <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>at elite</em>{" "}
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>at elite</em>{" "}
             has a CI-gate or a shipped surface behind it. Anything not there
             says so honestly.
           </p>
@@ -266,7 +266,7 @@ export default function HowPage() {
                       fontFamily: "var(--font-mono)",
                       fontSize: 20,
                       fontVariantNumeric: "tabular-nums",
-                      color: "var(--gold)",
+                      color: "var(--accent-2)",
                       lineHeight: 1,
                       paddingTop: 4,
                     }}

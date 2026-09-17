@@ -80,7 +80,7 @@ function bandColor(band: number): string {
     case 1: return "var(--ink-3)";
     case 2: return "var(--ink-2)";
     case 3: return "var(--ink)";
-    case 4: return "var(--gold)";
+    case 4: return "var(--accent-2)";
     case 5: return "var(--accent-2)";
     default: return "var(--ink)";
   }
@@ -448,7 +448,7 @@ export function ArchitectureGraph() {
 
       <div className="arch-graph-hint">
         <span className="arch-graph-hint-line">
-          Move the mouse for depth · hover a node · click to pin · <em style={{ fontStyle: "italic", color: "var(--gold)" }}>esc</em> to release
+          Move the mouse for depth · hover a node · click to pin · <em style={{ fontStyle: "italic", color: "var(--accent-2)" }}>esc</em> to release
         </span>
       </div>
     </div>
