@@ -19,7 +19,7 @@
     line-height: var(--lh-heading);
     color: var(--color-ink);
     margin: var(--space-3) 0 var(--space-6);
-    max-width: var(--measure-title);
+    max-width: var(--measure-deck);
     text-wrap: balance;
   }
 
