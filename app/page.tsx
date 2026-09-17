@@ -1,19 +1,20 @@
+import { HeroFlowerSplit } from "@/components/primitives/HeroFlowerSplit";
 import { PageHero } from "@/components/primitives/PageHero";
 import { Button } from "@/components/primitives/Button";
 
 /**
- * PAGE · / (Home) · v7 · 2026-09-16 · consumes design substrate v3 primitives
+ * PAGE · / (Home) · v8 · 2026-09-17 · flower-split hero + 4 product tiles
  *
- * Every visual value flows from `@layer tokens` via className on the
- * primitives. Zero inline `style={{fontFamily/fontSize/padding/gap: ...}}`
- * in this file. Zero hardcoded `clamp()`. Zero `<Link style={{}}>`.
+ * Hero: interactive 19-ring flower-of-life mark that opens unified and
+ * fans out to 19 clickable rings, each surfacing a Nebbos-lens blurb on
+ * click. Founder-directed 2026-09-17 — every ring is one aspect of a
+ * company (Security, Compliance, Memory, Workflow, ...), business-lens
+ * importance-ranked so the buyer's eye tracks priority as the reveal
+ * animation plays. See content/hero-flower-terms.ts for the 19 terms +
+ * blurbs; components/primitives/HeroFlowerSplit.tsx for the substrate.
  *
- * Composition: stack of 4 <PageHero surface="scene" align="center"> tiles,
- * one per Nebbos product line. Each with 2 <Button> CTAs (ghost / onDark).
- * Retires the ProductTile bespoke component; PageHero now carries the
- * entire tile shape from the primitive library.
- *
- * See docs/design/README.md for the substrate spec.
+ * Below the hero: the four Nebbos product tiles (Platform / App / MCP /
+ * USB) as scene-grounded PageHero primitives — retained from v7.
  */
 
 const PRODUCTS = [
@@ -50,9 +51,8 @@ const PRODUCTS = [
 export default function HomePage() {
   return (
     <>
-      {/* Screen-reader-only H1 — one per document, matches apple.com pattern. */}
-      <h1 className="visually-hidden">Nebbos</h1>
-      {PRODUCTS.map((p, i) => (
+      <HeroFlowerSplit />
+      {PRODUCTS.map((p) => (
         <PageHero
           key={p.key}
           eyebrow={p.eyebrow}
@@ -61,7 +61,6 @@ export default function HomePage() {
           imageFamily={p.imageFamily}
           surface="scene"
           align="center"
-          priority={i === 0}
           ctas={
             <>
               <Button variant="ghost" tone="onDark" href={p.learnHref}>Learn more</Button>

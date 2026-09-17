@@ -38,6 +38,7 @@
 /* ── PRIMITIVES LAYER · visual contracts for every reusable primitive ─ */
 
 @import "../components/primitives/primitives.css";
+@import "../components/primitives/HeroFlowerSplit.css";
 
 /* ── PATTERNS LAYER · shared page-shape sections ─────────────────────── */
 
