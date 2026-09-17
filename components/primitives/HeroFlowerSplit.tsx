@@ -199,7 +199,7 @@ export function HeroFlowerSplit() {
             })}
           </svg>
 
-          <ul className="hero-flower__ring-buttons" role="list">
+          <ul className="hero-flower__ring-buttons">
             {HERO_FLOWER_TERMS.map((term, rank) => {
               const center = RING_CENTERS[term.ringIndex];
               if (!center) return null;
