@@ -1,0 +1,225 @@
+/* ============================================================================
+   app/products/platform/platform.css · @layer page · /products/platform styles
+   All values via var(--token). Class prefix .platform__* scopes the file.
+   ============================================================================ */
+
+@layer page {
+  .platform__section-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-heading);
+    color: var(--color-ink);
+    margin: var(--space-3) 0 var(--space-7);
+    max-width: var(--measure-title);
+    text-wrap: balance;
+  }
+  .platform__section-heading em {
+    font-style: italic;
+    color: var(--color-gold);
+    font-weight: var(--fw-regular);
+  }
+
+  ul.platform__highlights,
+  ul.platform__capabilities,
+  ul.platform__built-for,
+  ul.platform__values,
+  ul.platform__tier-grid,
+  ul.platform__related {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .platform__highlights {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  @media (min-width: 48rem) { .platform__highlights { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 64rem) { .platform__highlights { grid-template-columns: repeat(5, 1fr); gap: var(--space-4); } }
+
+  .platform__highlight-cell,
+  .platform__built-for-cell,
+  .platform__value-cell,
+  .platform__tier-cell,
+  .platform__related-cell {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .platform__highlight-value {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+
+  .platform__cell-note {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .platform__cell-note strong {
+    font-weight: var(--fw-medium);
+    color: var(--color-ink);
+  }
+
+  .platform__capabilities {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .platform__capability-row {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-5);
+  }
+  .platform__capability-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-heading);
+    margin: 0 0 var(--space-3);
+  }
+  .platform__capability-body {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: 0;
+  }
+
+  .platform__core-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: var(--measure-deck);
+  }
+  .platform__core-body p {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .platform__core-body .btn {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  .platform__built-for {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .platform__built-for { grid-template-columns: repeat(3, 1fr); } }
+
+  .platform__audience {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+
+  .platform__values {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  @media (min-width: 48rem) { .platform__values { grid-template-columns: repeat(3, 1fr); } }
+
+  .platform__value-headline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-heading);
+    margin: 0;
+  }
+
+  .platform__tier-lede {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: 0 0 var(--space-6);
+  }
+  .platform__tier-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .platform__tier-grid { grid-template-columns: repeat(3, 1fr); } }
+  .platform__tier-cta {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-rule-2);
+  }
+
+  .platform__related {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .platform__related { grid-template-columns: repeat(3, 1fr); } }
+  .platform__related-name {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+  }
+
+  .platform__footer-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .platform__footer-headline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+    text-wrap: balance;
+    max-width: 24ch;
+  }
+  .platform__footer-deck {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+    max-width: var(--measure-deck);
+  }
+  .platform__footer-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: center;
+    margin-top: var(--space-3);
+  }
+}

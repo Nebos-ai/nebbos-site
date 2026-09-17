@@ -1,19 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
-import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { PageHero } from "@/components/primitives/PageHero";
+import { PageSection } from "@/components/primitives/PageSection";
+import { Eyebrow } from "@/components/primitives/Eyebrow";
+import { Button } from "@/components/primitives/Button";
+import "./platform.css";
 
 /**
- * PAGE · /products/platform · the Nebbos.ai platform product page
+ * PAGE · /products/platform · Nebbos.ai platform product page
  *
- * Follows the 14-section Apple device-marketing arc adapted for the
- * flagship software product. Sections align to the ratified product
- * framing per feedback_nebbos_ai_product_framing_platform_tools_mcp_
- * usb_security_2026_09_14.
+ * Substrate v3 · migrated 2026-09-16 from inline-Tailwind + legacy
+ * FullBleedScene to primitive composition. Nine sections, all consuming
+ * PageSection / PageHero / Eyebrow / Button. Zero inline style={{}},
+ * zero hand-written font-mono text-[10px] tracking-[0.14em] literals.
+ *
+ * Doctrine cross-refs:
+ *   - feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14
+ *   - feedback_nebbos_no_published_pricing_palantir_model  (contact-sales, no dollar figures)
  */
 
-const PLATFORM_PRODUCT = PRODUCTS.find((p) => p.key === "platform")!;
 const PLATFORM_SUBSCRIPTIONS = subscriptionsForProduct("platform");
 
 export const metadata: Metadata = {
@@ -21,64 +27,6 @@ export const metadata: Metadata = {
   description:
     "Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today.",
 };
-
-function Hero() {
-  return (
-    <FullBleedScene
-      className="hero-fullbleed"
-      scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
-      scrim="bottom"
-      vignetteStrength={0.5}
-      chapter="01"
-      chapterLabel="Nebbos.ai platform"
-      priority
-    >
-      <div className="container hero-fullbleed__inner">
-        <div className="hero-fullbleed__frame">
-          <h1 className="hero-fullbleed__title">
-            Your operations, <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>at institutional scale.</em>
-          </h1>
-          <p className="hero-fullbleed__deck">
-            Runs your Pearls, your fleet, your governance. Multi-Shell by
-            default. Live in production with government and enterprise
-            customers today. Every action attested. Every substrate yours.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
-            <Link
-              href="/contact"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--paper)",
-                borderBottom: "1px solid var(--paper)",
-                paddingBottom: 4,
-                textDecoration: "none",
-              }}
-            >
-              Contact sales &rarr;
-            </Link>
-            <Link
-              href="/demo"
-              style={{
-                fontFamily: "var(--font-mono)",
-                fontSize: 12,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--paper-2)",
-                textDecoration: "none",
-                opacity: 0.85,
-              }}
-            >
-              Book a demo
-            </Link>
-          </div>
-        </div>
-      </div>
-    </FullBleedScene>
-  );
-}
 
 const HIGHLIGHTS = [
   { label: "Register", value: "Multi-Shell", note: "Shell isolation by default. Cross-Shell is a ceremony, not an accident." },
@@ -88,30 +36,6 @@ const HIGHLIGHTS = [
   { label: "Deploy", value: "Live in production", note: "In use today by government and enterprise customers. Not vaporware." },
 ];
 
-function Highlights() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Get the highlights</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Five commitments. One platform.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4">
-          {HIGHLIGHTS.map((h) => (
-            <li key={h.label} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">{h.label}</p>
-              <p className="mt-2 font-serif text-2xl font-medium text-ink leading-tight">{h.value}</p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">{h.note}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
 const CAPABILITIES = [
   { heading: "Pearl orchestration", body: "Run Pearl workflows in isolated Shells. Metered execution, per-Pearl audit trails, and per-Shell policy enforcement out of the box." },
   { heading: "Knowledge graph as memory", body: "Your operational context lives in a queryable graph. Every substrate change writes a settled entry; every query resolves to the same truth." },
@@ -119,97 +43,17 @@ const CAPABILITIES = [
   { heading: "Full-observability from day one", body: "Metrics, logs, traces, and audit shards wired from your first deploy. Not a follow-up quarter." },
 ];
 
-function Capabilities() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-14 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Take a closer look</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">What the platform runs.</h2>
-        </header>
-        <ul className="space-y-10">
-          {CAPABILITIES.map((c) => (
-            <li key={c.heading} className="border-t border-rule pt-6">
-              <h3 className="font-serif text-xl md:text-2xl font-medium text-ink tracking-tight">{c.heading}</h3>
-              <p className="mt-3 max-w-2xl text-base text-ink-2 leading-relaxed">{c.body}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-function Core() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-8 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">The core</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            The tools your platform runs{" "}
-            <em className="font-serif italic text-gold">live on the substrate you own.</em>
-          </h2>
-        </header>
-        <div className="max-w-2xl space-y-6">
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            The platform composes with the Nebbos MCP (the tool substrate) and
-            the Nebbos USB (the hardware attestation gate). Every tool call
-            passes through the MCP; the MCP itself lives on your USB.
-          </p>
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            You own the ground. Sovereignty isn&rsquo;t marketing &mdash;
-            it&rsquo;s the architecture.
-          </p>
-          <p>
-            <Link
-              href="/products/mcp"
-              className="font-mono text-xs uppercase tracking-[0.14em] text-ink underline underline-offset-4 decoration-rule hover:decoration-ink transition-colors"
-            >
-              About the Nebbos MCP &rarr;
-            </Link>
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
 const BUILT_FOR = [
   { audience: "Government agencies", scope: "Classified and sensitive operations at scale." },
-  { audience: "Regulated enterprise", scope: "Finance, healthcare, energy, defense &mdash; every audit-heavy vertical." },
+  { audience: "Regulated enterprise", scope: "Finance, healthcare, energy, defense — every audit-heavy vertical." },
   { audience: "Institutional operators", scope: "Teams building the substrate other teams run on." },
 ];
-
-function BuiltFor() {
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Built for</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            The operators building{" "}
-            <em className="font-serif italic text-gold">what runs next.</em>
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {BUILT_FOR.map((b) => (
-            <li key={b.audience} className="border-t border-rule pt-5">
-              <p className="font-serif text-2xl font-medium text-ink tracking-tight">{b.audience}</p>
-              <p className="mt-3 text-base text-ink-2 leading-relaxed">{b.scope}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
 
 const VALUE_CARDS = [
   {
     factor: "Sovereignty",
     headline: "You own the substrate you run on.",
-    body: "Nebbos.ai does not lock you into our data plane. Your Shell state, your keys, your operators &mdash; portable to any Nebbos deployment.",
+    body: "Nebbos.ai does not lock you into our data plane. Your Shell state, your keys, your operators — portable to any Nebbos deployment.",
   },
   {
     factor: "Attestation",
@@ -223,148 +67,165 @@ const VALUE_CARDS = [
   },
 ];
 
-function Values() {
+export default function ProductPlatformPage() {
+  const others = PRODUCTS.filter((p) => p.key !== "platform");
+
   return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Values</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Three commitments. Architectural, not aspirational.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {VALUE_CARDS.map((v) => (
-            <li key={v.factor} className="border-t border-rule pt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">{v.factor}</p>
-              <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">{v.headline}</p>
-              <p className="mt-4 text-base text-ink-2 leading-relaxed">{v.body}</p>
+    <>
+      <PageHero
+        surface="scene"
+        align="start"
+        eyebrow="Nebbos.ai platform"
+        chapter="01"
+        chapterLabel="Nebbos.ai platform"
+        imageFamily="concept-operator-onboarding"
+        priority
+        headline={
+          <>
+            Your operations, <em>at institutional scale.</em>
+          </>
+        }
+        deck="Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today. Every action attested. Every substrate yours."
+        ctas={
+          <>
+            <Button variant="ghost" tone="onDark" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onDark" href="/demo">Book a demo</Button>
+          </>
+        }
+      />
+
+      <PageSection ruled>
+        <Eyebrow>Get the highlights</Eyebrow>
+        <h2 className="platform__section-heading">Five commitments. One platform.</h2>
+        <ul className="platform__highlights">
+          {HIGHLIGHTS.map((h) => (
+            <li key={h.label} className="platform__highlight-cell">
+              <Eyebrow>{h.label}</Eyebrow>
+              <p className="platform__highlight-value">{h.value}</p>
+              <p className="platform__cell-note">{h.note}</p>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-function TierPicker() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">Choose your tier</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            One platform. Three operator tiers.
-          </h2>
-          <p className="max-w-2xl text-base text-ink-2 leading-relaxed pt-2">
-            Every operator seat gates on device biometric. L2 seats add the
-            Nebbos USB physical-presence factor. L3 seats add enclave-signed
-            approval for cross-boundary and quorum operations.
+      <PageSection ruled>
+        <Eyebrow>Take a closer look</Eyebrow>
+        <h2 className="platform__section-heading">What the platform runs.</h2>
+        <ul className="platform__capabilities">
+          {CAPABILITIES.map((c) => (
+            <li key={c.heading} className="platform__capability-row">
+              <h3 className="platform__capability-heading">{c.heading}</h3>
+              <p className="platform__capability-body">{c.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>The core</Eyebrow>
+        <h2 className="platform__section-heading">
+          The tools your platform runs <em>live on the substrate you own.</em>
+        </h2>
+        <div className="platform__core-body">
+          <p>
+            The platform composes with the Nebbos MCP (the tool substrate) and
+            the Nebbos USB (the hardware attestation gate). Every tool call
+            passes through the MCP; the MCP itself lives on your USB.
           </p>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <p>You own the ground. Sovereignty isn&rsquo;t marketing — it&rsquo;s the architecture.</p>
+          <Button variant="ghost" tone="onPaper" href="/products/mcp">About the Nebbos MCP</Button>
+        </div>
+      </PageSection>
+
+      <PageSection ruled ground="paper2">
+        <Eyebrow>Built for</Eyebrow>
+        <h2 className="platform__section-heading">
+          The operators building <em>what runs next.</em>
+        </h2>
+        <ul className="platform__built-for">
+          {BUILT_FOR.map((b) => (
+            <li key={b.audience} className="platform__built-for-cell">
+              <p className="platform__audience">{b.audience}</p>
+              <p className="platform__cell-note">{b.scope}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Values</Eyebrow>
+        <h2 className="platform__section-heading">Three commitments. Architectural, not aspirational.</h2>
+        <ul className="platform__values">
+          {VALUE_CARDS.map((v) => (
+            <li key={v.factor} className="platform__value-cell">
+              <Eyebrow tone="accent">{v.factor}</Eyebrow>
+              <p className="platform__value-headline">{v.headline}</p>
+              <p className="platform__cell-note">{v.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Choose your tier</Eyebrow>
+        <h2 className="platform__section-heading">One platform. Three operator tiers.</h2>
+        <p className="platform__tier-lede">
+          Every operator seat gates on device biometric. L2 seats add the
+          Nebbos USB physical-presence factor. L3 seats add enclave-signed
+          approval for cross-boundary and quorum operations.
+        </p>
+        <ul className="platform__tier-grid">
           {PLATFORM_SUBSCRIPTIONS.map((sub) => {
             const tier = TIERS.find((t) => t.key === sub.tier)!;
             return (
-              <li key={sub.sku_id} className="border-t border-rule pt-6 flex flex-col">
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">{tier.label}</p>
-                <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">{sub.headline}</p>
-                <p className="mt-4 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Factors</strong> &middot; {tier.factors}
+              <li key={sub.sku_id} className="platform__tier-cell">
+                <Eyebrow tone="accent">{tier.label}</Eyebrow>
+                <p className="platform__value-headline">{sub.headline}</p>
+                <p className="platform__cell-note">
+                  <strong>Factors</strong> · {tier.factors}
                 </p>
-                <p className="mt-2 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Ops</strong> &middot; {tier.scope}
+                <p className="platform__cell-note">
+                  <strong>Ops</strong> · {tier.scope}
                 </p>
-                <p className="mt-6 pt-6 border-t border-rule-2">
-                  <Link
-                    href="/contact"
-                    className="font-mono text-xs uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                  >
-                    Contact sales &rarr;
-                  </Link>
-                </p>
+                <div className="platform__tier-cta">
+                  <Button variant="ghost" tone="onPaper" href="/contact">Contact sales</Button>
+                </div>
               </li>
             );
           })}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-function Related() {
-  const others = PRODUCTS.filter((p) => p.key !== "platform");
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">The other three products</p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">One matrix. Four products.</h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <PageSection ruled ground="paper2">
+        <Eyebrow>The other three products</Eyebrow>
+        <h2 className="platform__section-heading">One matrix. Four products.</h2>
+        <ul className="platform__related">
           {others.map((p) => (
-            <li key={p.key} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">{p.eyebrow}</p>
-              <p className="mt-2 font-serif text-xl font-medium text-ink tracking-tight">{p.name}</p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">{p.tagline}</p>
-              <p className="mt-4">
-                <Link
-                  href={`/products/${p.slug}`}
-                  className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                >
-                  Explore &rarr;
-                </Link>
-              </p>
+            <li key={p.key} className="platform__related-cell">
+              <Eyebrow>{p.eyebrow}</Eyebrow>
+              <p className="platform__related-name">{p.name}</p>
+              <p className="platform__cell-note">{p.tagline}</p>
+              <Button variant="ghost" tone="onPaper" href={`/products/${p.slug}`}>Explore</Button>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-function FooterCTA() {
-  return (
-    <section>
-      <div className="container-narrow py-24 md:py-32 text-center">
-        <h2 className="font-serif text-4xl md:text-5xl font-medium tracking-tight text-ink text-balance">
-          Run your operations on the substrate you own.
-        </h2>
-        <p className="mt-6 max-w-xl mx-auto text-lg text-ink-2 leading-relaxed">
-          Enterprise and government procurement: reach out and we&rsquo;ll
-          walk you through Shell provisioning, tier gates, and deployment.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+      <PageSection>
+        <div className="platform__footer-cta">
+          <h2 className="platform__footer-headline">
+            Run your operations on the substrate you own.
+          </h2>
+          <p className="platform__footer-deck">
+            Enterprise and government procurement: reach out and we&rsquo;ll
+            walk you through Shell provisioning, tier gates, and deployment.
+          </p>
+          <div className="platform__footer-ctas">
+            <Button variant="primary" tone="onPaper" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onPaper" href="/demo">Book a demo</Button>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-export default function ProductPlatformPage() {
-  return (
-    <main className="min-h-screen bg-paper">
-      <Hero />
-      <Highlights />
-      <Capabilities />
-      <Core />
-      <BuiltFor />
-      <Values />
-      <TierPicker />
-      <Related />
-      <FooterCTA />
-    </main>
+      </PageSection>
+    </>
   );
 }
