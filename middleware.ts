@@ -121,6 +121,6 @@ export const config = {
      *  - Every file with a known extension (fonts, images, media)
      * Middleware runs on the HTML page routes + /api routes.
      */
-    "/((?!_next/static|_next/image|_next/data|favicon|.*\\.(?:svg|png|jpg|jpeg|webp|avif|gif|ico|woff2|woff|ttf|otf|mp4|webm|pdf)).*)",
+    "/((?!_next/static|_next/image|_next/data|favicon|hero/|.*\\.(?:svg|png|jpg|jpeg|webp|avif|gif|ico|woff2|woff|ttf|otf|mp4|webm|pdf)).*)",
   ],
 };
