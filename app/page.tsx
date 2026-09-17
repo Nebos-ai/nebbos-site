@@ -1,20 +1,22 @@
-import { HeroFlowerSplit } from "@/components/primitives/HeroFlowerSplit";
 import { PageHero } from "@/components/primitives/PageHero";
 import { Button } from "@/components/primitives/Button";
 
 /**
- * PAGE · / (Home) · v8 · 2026-09-17 · flower-split hero + 4 product tiles
+ * PAGE · / (Home) · v9 · 2026-09-17 · Nebbos wordmark spray hero
  *
- * Hero: interactive 19-ring flower-of-life mark that opens unified and
- * fans out to 19 clickable rings, each surfacing a Nebbos-lens blurb on
- * click. Founder-directed 2026-09-17 — every ring is one aspect of a
- * company (Security, Compliance, Memory, Workflow, ...), business-lens
- * importance-ranked so the buyer's eye tracks priority as the reveal
- * animation plays. See content/hero-flower-terms.ts for the 19 terms +
- * blurbs; components/primitives/HeroFlowerSplit.tsx for the substrate.
+ * Hero: interactive canvas 2D physics playground where a spray-can dispenses
+ * strands over the Nebbos wordmark. The strands collide with the wordmark
+ * silhouette (rendered as an SVG collision map behind the canvas) and fall,
+ * pile, and settle around it. Interactive on desktop + touch; auto-demo on
+ * page load so the wordmark is discoverable within the first two seconds.
+ *
+ * Served as a static HTML file under public/hero/nebbos-hero.html (own
+ * document context) and embedded via iframe. Middleware exempts /hero/ so
+ * the demo's inline `<script>` blocks and its jsDelivr importmap load
+ * without CSP conflict.
  *
  * Below the hero: the four Nebbos product tiles (Platform / App / MCP /
- * USB) as scene-grounded PageHero primitives — retained from v7.
+ * USB) as scene-grounded PageHero primitives.
  */
 
 const PRODUCTS = [
@@ -51,7 +53,16 @@ const PRODUCTS = [
 export default function HomePage() {
   return (
     <>
-      <HeroFlowerSplit />
+      <h1 className="visually-hidden">Nebbos</h1>
+      <section className="home-hero-wordmark" aria-label="Nebbos wordmark, interactive hero">
+        <iframe
+          src="/hero/nebbos-hero.html"
+          title="Nebbos wordmark — interactive"
+          className="home-hero-wordmark__frame"
+          loading="eager"
+          scrolling="no"
+        />
+      </section>
       {PRODUCTS.map((p) => (
         <PageHero
           key={p.key}
