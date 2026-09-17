@@ -39,6 +39,10 @@
 
 @import "../components/primitives/primitives.css";
 
+/* ── PATTERNS LAYER · shared page-shape sections ─────────────────────── */
+
+@import "../components/patterns/product-page.css";
+
 /* ── 1. RESET · @layer reset ─────────────────────────────────────────── */
 
 *,
