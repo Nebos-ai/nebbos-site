@@ -128,7 +128,7 @@ export const PAGES = {
         kind: "band-overview",
         eyebrow: "02 · The architecture",
         h2: "What&rsquo;s underneath every Pearl you deploy.",
-        deck: "A platform, a tools protocol, a hardware-attested USB. The platform runs the work. The MCP mediates every tool call. The USB carries the keys. Deploy a Pearl on any domain — the same substrate runs underneath.",
+        deck: "A platform, a tools protocol, a hardware-attested Cradle. The platform runs the work. The MCP mediates every tool call. The Cradle carries the keys. Deploy a Pearl on any domain — the same substrate runs underneath.",
       },
       {
         id: "story",
@@ -213,7 +213,7 @@ export const PAGES = {
         kind: "cta-full-bleed",
         eyebrow: "04 · Where we&rsquo;re going",
         h2: "A platform that watches the work.",
-        deck: "Nebbos is a substrate. A platform, a tools protocol, a hardware-attested USB. Owned by the enterprise that runs it, portable to the models it trusts, quiet enough that the humans it serves get their mornings, mid-mornings, and evenings back.",
+        deck: "Nebbos is a substrate. A platform, a tools protocol, a hardware-attested Cradle. Owned by the enterprise that runs it, portable to the models it trusts, quiet enough that the humans it serves get their mornings, mid-mornings, and evenings back.",
         ctaPrimary: { label: "See the products", href: "/products", variant: "solid-light" },
         imagePerspective: 4,
       },
@@ -1778,7 +1778,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "05a · Hardware-attested tier gate",
         h2: "Hardware attestation for every elevated action.",
-        body: "Every action classified as consequential passes through a three-factor tier gate composed of biometric authentication, physical USB presence, and enclave-signed approval — combining into three tiers of authority. L1 Basic gates on biometric only (Touch ID / Face ID / Windows Hello / Android BiometricPrompt), covering dashboard reads and low-risk tool calls. L2 Privileged adds a Nebbos-issued USB in the port, covering client-scope writes, memory registers, and knowledge-graph mutations. L3 Admin adds an enclave-signed approval token derived from a WebAuthn ceremony, covering client create/destroy, substrate mutation, and cross-client operations. The USB substrate is a FIPS 140-3 Level 3 validated cryptographic module — the certificate covers the module boundary; the whole product is not FIPS-scoped. IP68 waterproof, MIL-STD-810G shock-tested, TAA-compliant supply chain, tamper-evident epoxy seal. The MCP binary and per-client key material ship on the encrypted volume; unplug the USB, and elevated capability is cryptographically absent — not policy-disabled. Two-person authorization is enforced in hardware at L3 through Admin-USB plus Developer-USB co-signature via WebAuthn with a 60-second time-to-live. Full hardware detail at /products/usb.",
+        body: "Every action classified as consequential passes through a three-factor tier gate composed of biometric authentication, physical Cradle presence, and enclave-signed approval — combining into three tiers of authority. L1 Basic gates on biometric only (Touch ID / Face ID / Windows Hello / Android BiometricPrompt), covering dashboard reads and low-risk tool calls. L2 Privileged adds a Nebbos-issued Cradle in the port, covering client-scope writes, memory registers, and knowledge-graph mutations. L3 Admin adds an enclave-signed approval token derived from a WebAuthn ceremony, covering client create/destroy, substrate mutation, and cross-client operations. The Cradle substrate is a FIPS 140-3 Level 3 validated cryptographic module — the certificate covers the module boundary; the whole product is not FIPS-scoped. IP68 waterproof, MIL-STD-810G shock-tested, TAA-compliant supply chain, tamper-evident epoxy seal. The MCP binary and per-client key material ship on the encrypted volume; unplug the Cradle, and elevated capability is cryptographically absent — not policy-disabled. Two-person authorization is enforced in hardware at L3 through Admin-Cradle plus Developer-Cradle co-signature via WebAuthn with a 60-second time-to-live. Full hardware detail at /products/cradle.",
       },
       {
         id: "controls-map",
@@ -1788,8 +1788,8 @@ export const PAGES = {
         items: [
           { title: "AC-3(2) · Dual Authorization", body: "The L3 two-person rule enforced in hardware via co-signature of Admin K350 + Developer K350." },
           { title: "AC-5 · Separation of Duties", body: "The tier-gate role model. L1 / L2 / L3 factor composition is a role separation enforced at the substrate." },
-          { title: "IA-11 · Re-authentication", body: "Session re-verify at every tier boundary. Elevation from L1 to L2 requires fresh biometric + USB presence assertion." },
-          { title: "SC-28(1)(2)(3) · Protection at rest, offline, crypto keys", body: "AES-256-GCM at rest for platform-side storage; the USB encrypted volume carries client keys offline, protecting per-client DEKs from any Nebbos-side breach." },
+          { title: "IA-11 · Re-authentication", body: "Session re-verify at every tier boundary. Elevation from L1 to L2 requires fresh biometric + Cradle presence assertion." },
+          { title: "SC-28(1)(2)(3) · Protection at rest, offline, crypto keys", body: "AES-256-GCM at rest for platform-side storage; the Cradle encrypted volume carries client keys offline, protecting per-client DEKs from any Nebbos-side breach." },
           { title: "SC-12 · Cryptographic key establishment", body: "Per-client data-encryption keys wrapped by KMS-hosted master keys. Rotation cadence documented; access logged to Layer 15." },
           { title: "SC-13 · Cryptographic protection", body: "TLS 1.3 in transit. AES-256-GCM at rest. FIPS 140-3 Level 3 on the K350 module." },
           { title: "AU-2 through AU-12(1) · Audit-trail family", body: "Eleven controls in the audit family alone. Every request, every action, every approval hash-chained into Layer 15 · Attestation." },
@@ -2026,14 +2026,14 @@ export const PAGES = {
     slug: "/careers",
     title: "Careers · Building the operator platform",
     metaDescription:
-      "Founding roles at Nebbos — the operator platform, its tools, its MCP, and the USB that gates its authority.",
+      "Founding roles at Nebbos — the operator platform, its tools, its MCP, and the Cradle that gates its authority.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Careers",
         h1: "Building the operator platform.",
-        deck: "Founding roles across engineering, design, and operations. If you want to build the platform your operators live in — its tools, its MCP, its USB — reach out.",
+        deck: "Founding roles across engineering, design, and operations. If you want to build the platform your operators live in — its tools, its MCP, its Cradle — reach out.",
         imageFamily: "concept-pearl",
       },
       {
@@ -2041,7 +2041,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "01 · What we&rsquo;re building",
         h2: "The platform that sits between intent and state.",
-        body: "Every AI call needs a substrate &mdash; metered, isolated, modular, and attested — that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every operator has domains that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing platform. A substrate underneath, tools on top, an MCP surface every caller routes through, and a USB that gates the elevated actions.",
+        body: "Every AI call needs a substrate &mdash; metered, isolated, modular, and attested — that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every operator has domains that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing platform. A substrate underneath, tools on top, an MCP surface every caller routes through, and a Cradle that gates the elevated actions.",
       },
       {
         id: "current-openings",
@@ -2177,7 +2177,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "02 · Cadence",
         h2: "One entry per material substrate change.",
-        body: "The changelog covers material changes to the platform, the MCP, the USB, and the substrate underneath. Cosmetic tweaks and internal refactors do not appear here — they live in each deployment's own release notes. Subscribe to the RSS feed to get every entry as it lands.",
+        body: "The changelog covers material changes to the platform, the MCP, the Cradle, and the substrate underneath. Cosmetic tweaks and internal refactors do not appear here — they live in each deployment's own release notes. Subscribe to the RSS feed to get every entry as it lands.",
       },
     ],
   },
@@ -2185,14 +2185,14 @@ export const PAGES = {
   status: {
     slug: "/status",
     title: "Status · All systems operational",
-    metaDescription: "Live status of the Nebbos platform, MCP, and hardware-attested USB substrate across regions and services.",
+    metaDescription: "Live status of the Nebbos platform, MCP, and hardware-attested Cradle substrate across regions and services.",
     sections: [
       {
         id: "hero",
         kind: "hero-paper",
         eyebrow: "00 · Status",
         h1: "All systems operational.",
-        deck: "Live status of the Nebbos platform, its MCP, and hardware-attested USB substrate across regions and services. Incident history, subscribable notification channels, and the honest empty-state when there is nothing to report.",
+        deck: "Live status of the Nebbos platform, its MCP, and hardware-attested Cradle substrate across regions and services. Incident history, subscribable notification channels, and the honest empty-state when there is nothing to report.",
       },
       {
         id: "surfaces",
@@ -2435,7 +2435,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "01 · Three axes of sovereignty",
         h2: "Three commitments, one architecture.",
-        body: "Sovereignty on Nebbos is not a policy statement. It is a set of substrate guarantees, each enforced by the layer that ships it. Data sovereignty: row-level client isolation at Layer 01 · Data. No application-layer bug can leak your data to another client &mdash; the isolation is enforced at the substrate, not by the application code that sits on top of it. Every request carries an identity checked before the query runs. Model sovereignty: every human decision your team makes trains YOUR Pearl &mdash; not Nebbos&rsquo;s next base model. The tuned Pearl and its memory are your property, exportable in full when you offboard. Portability is a contractual guarantee, not a marketing line. Operational sovereignty: no vendor sits between operator intent and enterprise state. The classifier that decides which tier a request runs at executes on YOUR host, before egress. The MCP binary that mediates every tool call lives on YOUR USB. The audit trail is written to storage YOUR keys unlock.",
+        body: "Sovereignty on Nebbos is not a policy statement. It is a set of substrate guarantees, each enforced by the layer that ships it. Data sovereignty: row-level client isolation at Layer 01 · Data. No application-layer bug can leak your data to another client &mdash; the isolation is enforced at the substrate, not by the application code that sits on top of it. Every request carries an identity checked before the query runs. Model sovereignty: every human decision your team makes trains YOUR Pearl &mdash; not Nebbos&rsquo;s next base model. The tuned Pearl and its memory are your property, exportable in full when you offboard. Portability is a contractual guarantee, not a marketing line. Operational sovereignty: no vendor sits between operator intent and enterprise state. The classifier that decides which tier a request runs at executes on YOUR host, before egress. The MCP binary that mediates every tool call lives on YOUR Cradle. The audit trail is written to storage YOUR keys unlock.",
       },
       {
         id: "tier-model",
@@ -2444,8 +2444,8 @@ export const PAGES = {
         h2: "You decide how much your model gets to see.",
         deck: "Nebbos runs every workload against one of five data-treatment tiers. The tier is decided by the classifier at the MCP call boundary — on your host, client-side, before any data crosses the wire.",
         items: [
-          { title: "Sealed", body: "Journal-grade artifacts stay on your USB. Decryptable only by you, only when you are physically present with the device. Nebbos never sees ciphertext or plaintext." },
-          { title: "Portable", body: "Cross-device personal state &mdash; same operator, multiple laptops. Server-stored, but wrapped with a key only your USB carries. Our operators see ciphertext only." },
+          { title: "Sealed", body: "Journal-grade artifacts stay on your Cradle. Decryptable only by you, only when you are physically present with the device. Nebbos never sees ciphertext or plaintext." },
+          { title: "Portable", body: "Cross-device personal state &mdash; same operator, multiple laptops. Server-stored, but wrapped with a key only your Cradle carries. Our operators see ciphertext only." },
           { title: "Redacted-to-cloud", body: "Full-fidelity model performance without leaking PII. Personal identifiers are stripped on your host before egress; the response is re-materialized locally when it comes back." },
           { title: "Attested-cloud", body: "Full-fidelity model running inside a hardware-attested enclave. Every response comes with a cryptographic receipt binding the output to the enclave that produced it." },
           { title: "Air-gapped", body: "Local open-weights inference. Zero egress. For classified-sensitivity work where even attested-cloud is too much." },
@@ -2456,14 +2456,14 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "03 · The classifier",
         h2: "The tier decision runs on your host. Not on our servers.",
-        body: "Before any query leaves your operator&rsquo;s laptop, the classifier reads the query text, the client policy, and the operator&rsquo;s current authority level. It decides which of the five tiers this specific request runs at, redacts any PII that would otherwise egress, and hands the tier decision to the MCP binary that services the call. The classifier is a binary carried on your USB. Its policy is YAML &mdash; you set the defaults, your admin overrides, your operator can force-downgrade a request to a stricter tier, your regulator can inspect the policy under NDA. The classifier does not run on Nebbos-hosted infrastructure. It cannot be swapped by a Nebbos-side deploy. Its behavior on any request is a fact about what your USB carries &mdash; not a policy Nebbos administers.",
+        body: "Before any query leaves your operator&rsquo;s laptop, the classifier reads the query text, the client policy, and the operator&rsquo;s current authority level. It decides which of the five tiers this specific request runs at, redacts any PII that would otherwise egress, and hands the tier decision to the MCP binary that services the call. The classifier is a binary carried on your Cradle. Its policy is YAML &mdash; you set the defaults, your admin overrides, your operator can force-downgrade a request to a stricter tier, your regulator can inspect the policy under NDA. The classifier does not run on Nebbos-hosted infrastructure. It cannot be swapped by a Nebbos-side deploy. Its behavior on any request is a fact about what your Cradle carries &mdash; not a policy Nebbos administers.",
       },
       {
         id: "recovery",
         kind: "text-block",
         eyebrow: "04 · Recovery custodians",
         h2: "You elect who has break-glass keys.",
-        body: "Vendor break-glass exists. The client chooses whether to use it. Path A &mdash; vendor-mediated recovery (default). If a user loses their USB and needs a fresh device, a Nebbos-side recovery flow re-issues one, with an audit event that lands in the client&rsquo;s own audit trail. Fast, standard, works for most enterprises. Path B &mdash; user-quorum recovery (opt-in). The client elects three-to-five recovery custodians from within its own organization. USB reissue requires a Shamir 3-of-5 quorum of the custodian USBs. Nebbos-side cannot unlock a lost device. The client carries the operational cost; the client carries the sovereignty guarantee. Every enterprise decides which posture it operates under. The two paths are not a technical accident &mdash; they are a designed choice about who holds the last mile of trust.",
+        body: "Vendor break-glass exists. The client chooses whether to use it. Path A &mdash; vendor-mediated recovery (default). If a user loses their Cradle and needs a fresh device, a Nebbos-side recovery flow re-issues one, with an audit event that lands in the client&rsquo;s own audit trail. Fast, standard, works for most enterprises. Path B &mdash; user-quorum recovery (opt-in). The client elects three-to-five recovery custodians from within its own organization. Cradle reissue requires a Shamir 3-of-5 quorum of the custodian Cradles. Nebbos-side cannot unlock a lost device. The client carries the operational cost; the client carries the sovereignty guarantee. Every enterprise decides which posture it operates under. The two paths are not a technical accident &mdash; they are a designed choice about who holds the last mile of trust.",
       },
       {
         id: "portability",
@@ -2475,9 +2475,9 @@ export const PAGES = {
       {
         id: "physical-usb",
         kind: "text-block",
-        eyebrow: "06 · One physical USB per user",
+        eyebrow: "06 · One physical Cradle per user",
         h2: "Sovereignty enforced by the object on your desk.",
-        body: "Every operator authorized above L1 carries one Nebbos-issued USB, tied to their identity, sealed at manufacture. When they are at their desk, the USB is in the port. When they leave, the USB comes with them. Elevated capability follows the physical device, not the network location. This is what makes model, data, and operational sovereignty mechanically enforceable. The tier a request runs at is not a claim we make about our own trustworthiness. It is a fact about what hardware is on your operator&rsquo;s desk.",
+        body: "Every operator authorized above L1 carries one Nebbos-issued Cradle, tied to their identity, sealed at manufacture. When they are at their desk, the Cradle is in the port. When they leave, the Cradle comes with them. Elevated capability follows the physical device, not the network location. This is what makes model, data, and operational sovereignty mechanically enforceable. The tier a request runs at is not a claim we make about our own trustworthiness. It is a fact about what hardware is on your operator&rsquo;s desk.",
       },
       {
         id: "layers",
@@ -2486,7 +2486,7 @@ export const PAGES = {
         h2: "Which architecture layers make sovereignty real.",
         items: [
           { title: "Layer 01 · Data", body: "Row-level client isolation. Structural, not policy. No application bug can leak across clients." },
-          { title: "Layer 02 · Identity", body: "Every request carries an identity. Hardware-attested at L2 (biometric + USB) and L3 (biometric + USB + enclave)." },
+          { title: "Layer 02 · Identity", body: "Every request carries an identity. Hardware-attested at L2 (biometric + Cradle) and L3 (biometric + Cradle + enclave)." },
           { title: "Layer 05 · API + MCP", body: "The classifier runs at this boundary, on the operator&rsquo;s host, before egress." },
           { title: "Layer 07 · Memory", body: "Portability tests run continuously. Export path exercised on every deploy." },
           { title: "Layer 15 · Attestation", body: "Hash-chained audit trail. Portable in machine-readable form. Your inspector-general reads the same records ours do." },

@@ -70,6 +70,11 @@ const nextConfig: NextConfig = {
       { source: "/product/:path*", destination: "/products", permanent: false },
       { source: "/platform", destination: "/products", permanent: false },
       { source: "/platform/:path*", destination: "/products", permanent: false },
+      // /products/usb → /products/cradle: brand rename 2026-09-17.
+      // Founder directive: "USB is too generic" → "Nebbos Cradle" (composes
+      // with existing BRAND.productLine vocabulary). URL preserved via 302
+      // so inbound links from press, PRs, bookmarks continue to work.
+      { source: "/products/usb", destination: "/products/cradle", permanent: false },
     ];
   },
   // Cache headers · rapid-iteration marketing site.

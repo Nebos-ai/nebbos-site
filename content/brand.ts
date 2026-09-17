@@ -45,29 +45,29 @@ export const BRAND = {
   name: "Nebbos",
 
   /** Home-page hero title (canonical, most reused). */
-  taglineShort: "The platform. Its tools. Its MCP. Its USB.",
+  taglineShort: "The platform. Its tools. Its MCP. Its Cradle.",
 
   /** Slightly longer version used in <title> tags. */
   taglineLong:
-    "The platform your operators live in — its tools, its MCP's system abilities, the security of its USB.",
+    "The platform your operators live in — its tools, its MCP's system abilities, the security of its Cradle.",
 
   /** Category the company sits in — market label used in press / SEO only. */
   category: "Operator platform with hardware-attested MCP",
 
   /** Home hero deck under the title. */
   homeDeck:
-    "A platform. The tools it gives operators. The MCP that runs its capabilities. The USB that gates its authority. Four things — one product.",
+    "A platform. The tools it gives operators. The MCP that runs its capabilities. The Cradle that gates its authority. Four things — one product.",
 
   /** Sub-category for AI-first buyers (Wave 3e model-training angle). */
-  categorySecondary: "USB-attested MCP substrate for enterprise operators",
+  categorySecondary: "Cradle-attested MCP substrate for enterprise operators",
 
   /** One-line site description (SEO meta + share previews). */
   descriptionShort:
-    "Nebbos is the operator platform whose tools ship as MCP capabilities and whose privileged actions are gated by the USB you keep with you. Biometric approves; USB attests; MCP executes.",
+    "Nebbos is the operator platform whose tools ship as MCP capabilities and whose privileged actions are gated by the Cradle you keep with you. Biometric approves; Cradle attests; MCP executes.",
 
   /** Long-form site description (for landing-page bodies + doc). */
   descriptionLong:
-    "Nebbos is the platform your operators live in. Its tools are the concrete verbs — Pearls, workflows, memory operations — that the platform gives your team. Its MCP is the capability surface every tool routes through, the same substrate whether the caller is a browser, a native desktop, a mobile app, or a headless orchestrator. Its USB is the hardware-attested credential that gates privileged actions: without it in the port, elevated capabilities are not available; with it in the port, biometric approves per-action and photographic audit-frames prove who approved what.",
+    "Nebbos is the platform your operators live in. Its tools are the concrete verbs — Pearls, workflows, memory operations — that the platform gives your team. Its MCP is the capability surface every tool routes through, the same substrate whether the caller is a browser, a native desktop, a mobile app, or a headless orchestrator. Its Cradle is the hardware-attested credential that gates privileged actions: without it in the port, elevated capabilities are not available; with it in the port, biometric approves per-action and photographic audit-frames prove who approved what.",
 
   /** Positioning one-liner for the two-ecosystem framing. */
   positioningTwoEcosystems:

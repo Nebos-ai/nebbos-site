@@ -123,7 +123,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Dashboard access, personal-scope reads, low-risk automations.",
     sales_description:
-      "Basic-tier Nebbos.ai platform access for a Shell of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No USB required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
+      "Basic-tier Nebbos.ai platform access for a Shell of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No Cradle required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
     prepay_discount_note: null,
   },
   {
@@ -143,11 +143,11 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "additional users beyond commit",
       "additional Pearls beyond quota",
       "additional tool-calls beyond quota",
-      "additional Nebbos USB units",
+      "additional Nebbos Cradle units",
     ],
-    headline: "Privileged operator access with USB physical-presence gate.",
+    headline: "Privileged operator access with Cradle physical-presence gate.",
     sales_description:
-      "Privileged-tier Nebbos.ai platform access. Each operator paired with a Nebbos USB device; elevated operations (Shell writes, memory registers, admin ops within Shell) require both biometric AND physical USB presence. Includes annual attestation renewal per USB. Suitable for operators executing writes on Shell substrate.",
+      "Privileged-tier Nebbos.ai platform access. Each operator paired with a Nebbos Cradle device; elevated operations (Shell writes, memory registers, admin ops within Shell) require both biometric AND physical Cradle presence. Includes annual attestation renewal per Cradle. Suitable for operators executing writes on Shell substrate.",
     prepay_discount_note: null,
   },
   {
@@ -169,7 +169,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Admin-tier access with enclave-signed approval for cross-boundary and quorum operations.",
     sales_description:
-      "Admin-tier Nebbos.ai platform access. Each admin user provisioned with a Nebbos USB plus enclave-signed approval capability (AGSE-attested). Unlocks Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
+      "Admin-tier Nebbos.ai platform access. Each admin user provisioned with a Nebbos Cradle plus enclave-signed approval capability (AGSE-attested). Unlocks Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
     prepay_discount_note: null,
   },
 
@@ -202,14 +202,14 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     contract_term: ["annual"],
     minimum_commit: {
       users: 20,
-      monthly_floor_note: "Bundled with Platform-L2 subscription; requires paired USB per user",
+      monthly_floor_note: "Bundled with Platform-L2 subscription; requires paired Cradle per user",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
     overage_dimensions: [],
-    headline: "Local native client with USB-gated elevated operations.",
+    headline: "Local native client with Cradle-gated elevated operations.",
     sales_description:
-      "The Nebbos app configured for privileged-tier operators. Elevated actions on local resources require both biometric assertion AND paired Nebbos USB physical presence. Bundled with Platform-L2 subscription.",
+      "The Nebbos app configured for privileged-tier operators. Elevated actions on local resources require both biometric assertion AND paired Nebbos Cradle physical presence. Bundled with Platform-L2 subscription.",
     prepay_discount_note: null,
   },
   {
@@ -228,7 +228,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     overage_dimensions: [],
     headline: "Local native client for enclave-attested admin operations.",
     sales_description:
-      "The Nebbos app configured for admin-tier operators. Substrate mutations and cross-boundary actions require biometric + USB + enclave-signed approval token. Bundled with Platform-L3 subscription.",
+      "The Nebbos app configured for admin-tier operators. Substrate mutations and cross-boundary actions require biometric + Cradle + enclave-signed approval token. Bundled with Platform-L3 subscription.",
     prepay_discount_note: null,
   },
 
@@ -265,18 +265,18 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     minimum_commit: {
       Shells: 1,
       devices: 1,
-      monthly_floor_note: "One Shell + at least one Nebbos USB with MCP binary",
+      monthly_floor_note: "One Shell + at least one Nebbos Cradle with MCP binary",
     },
     rate_pending_founder: true,
     rate_amount_minor: null,
     overage_dimensions: [
       "tool-calls beyond monthly quota",
-      "additional MCP-carrier USB units",
+      "additional MCP-carrier Cradle units",
       "outbound-egress-GB beyond monthly quota",
     ],
-    headline: "MCP substrate with USB-attested elevated tool surface for a Shell.",
+    headline: "MCP substrate with Cradle-attested elevated tool surface for a Shell.",
     sales_description:
-      "The Nebbos MCP with L2 tier exposure — Shell writes, memory registers, admin ops within Shell. MCP binary + config + attestation credentials ship on a Nebbos USB; elevated tool calls verify USB physical presence server-side before executing. Includes 99.9% SLA and quarterly cost-follow reconciliation.",
+      "The Nebbos MCP with L2 tier exposure — Shell writes, memory registers, admin ops within Shell. MCP binary + config + attestation credentials ship on a Nebbos Cradle; elevated tool calls verify Cradle physical presence server-side before executing. Includes 99.9% SLA and quarterly cost-follow reconciliation.",
     prepay_discount_note: null,
   },
   {
@@ -304,7 +304,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     prepay_discount_note: null,
   },
 
-  // ─── USB (Nebbos USB — hardware-attested security devices) ────────────
+  // ─── USB (Nebbos Cradle — hardware-attested security devices) ────────────
   {
     sku_id: "usb-l1",
     product: "usb",
@@ -323,9 +323,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "expedited shipping",
       "replacement device (tamper-evident break)",
     ],
-    headline: "Nebbos USB hardware with basic-tier attestation and encrypted personal store.",
+    headline: "Nebbos Cradle hardware with basic-tier attestation and encrypted personal store.",
     sales_description:
-      "One Nebbos USB device (DataLocker K350 substrate, FIPS 140-3 L3, on-device keypad, TAA-compliant) provisioned with L1-tier attestation credentials, personal encrypted store, and MCP-carrier for basic-tier operations. Purchase includes device + one year of attestation renewal.",
+      "One Nebbos Cradle device (DataLocker K350 substrate, FIPS 140-3 L3, on-device keypad, TAA-compliant) provisioned with L1-tier attestation credentials, personal encrypted store, and MCP-carrier for basic-tier operations. Purchase includes device + one year of attestation renewal.",
     prepay_discount_note: null,
   },
   {
@@ -347,9 +347,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "replacement device (tamper-evident break)",
       "tier-upgrade re-provisioning",
     ],
-    headline: "Nebbos USB with privileged-tier attestation, Shell-write authority.",
+    headline: "Nebbos Cradle with privileged-tier attestation, Shell-write authority.",
     sales_description:
-      "One Nebbos USB device provisioned with L2-tier attestation credentials + MCP binary + Shell-write scope. Physical presence gates Shell writes, memory register operations, and admin ops within the operator's Shell. Purchase includes device + one year of attestation renewal.",
+      "One Nebbos Cradle device provisioned with L2-tier attestation credentials + MCP binary + Shell-write scope. Physical presence gates Shell writes, memory register operations, and admin ops within the operator's Shell. Purchase includes device + one year of attestation renewal.",
     prepay_discount_note: null,
   },
   {
@@ -371,9 +371,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "replacement device (tamper-evident break; requires new key ceremony)",
       "key-rotation ceremony (quorum-required)",
     ],
-    headline: "Nebbos USB with admin-tier attestation + enclave-signing authority.",
+    headline: "Nebbos Cradle with admin-tier attestation + enclave-signing authority.",
     sales_description:
-      "One Nebbos USB device provisioned with L3-tier attestation credentials + MCP binary + enclave-signing scope. Physical presence + enclave-signed approval token gate substrate mutations, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Replacement device requires a new key ceremony. Purchase includes device + one year of attestation renewal.",
+      "One Nebbos Cradle device provisioned with L3-tier attestation credentials + MCP binary + enclave-signing scope. Physical presence + enclave-signed approval token gate substrate mutations, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Replacement device requires a new key ceremony. Purchase includes device + one year of attestation renewal.",
     prepay_discount_note: null,
   },
 ];
