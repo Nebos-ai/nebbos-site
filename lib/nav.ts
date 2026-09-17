@@ -199,7 +199,7 @@ export type PrimaryNavItem = {
 };
 
 export const primaryNav: PrimaryNavItem[] = [
-  { label: "Products",  href: "/products",  megaMenu: "products", strap: "The platform. The app. The MCP. The USB." },
+  { label: "Products",  href: "/products",  megaMenu: "products", strap: "The platform. The app. The MCP. The Cradle." },
   { label: "Solutions", href: "/solutions", strap: "Coordination is where the work lives." },
   { label: "Customers", href: "/customers", strap: "Who's building on it." },
   { label: "Trust",     href: "/trust",     strap: "Accountable by architecture." },

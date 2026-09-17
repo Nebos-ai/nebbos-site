@@ -99,14 +99,14 @@ export const PRODUCTS: Product[] = [
     slug: "mcp",
   },
   {
-    key: "usb",
+    key: "usb", // internal key stays for SKU-ID stability; customer-facing name is "Cradle"
     eyebrow: "Hardware",
-    name: "Nebbos USB",
-    tagline: "Hardware-attested security devices.",
+    name: "Nebbos Cradle",
+    tagline: "Hardware-attested memory. Yours.",
     description:
-      "FIPS 140-3 Level 3 encrypted storage with on-device keypad, tamper-evident and epoxy-sealed, IP68 and MIL-STD-810G, TAA-compliant. Carries the Nebbos MCP and gates elevated operations.",
+      "FIPS 140-3 Level 3 encrypted storage with on-device keypad, tamper-evident and epoxy-sealed, IP68 and MIL-STD-810G, TAA-compliant. Carries the Nebbos MCP and your Pearl memory. Gates elevated operations. One Cradle per operator.",
     colorVar: "--product-color-usb",
-    slug: "usb",
+    slug: "cradle",
   },
 ];
 

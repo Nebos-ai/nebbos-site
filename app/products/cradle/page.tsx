@@ -7,25 +7,28 @@ import { Eyebrow } from "@/components/primitives/Eyebrow";
 import { Button } from "@/components/primitives/Button";
 
 /**
- * PAGE · /products/usb · Nebbos USB product page
+ * PAGE · /products/cradle · Nebbos Cradle product page
  *
- * Substrate v3 · migrated 2026-09-17 from legacy FullBleedScene + inline-
- * Tailwind to primitive composition + the shared `.product-page__*`
- * pattern under @layer patterns. Zero page-scoped CSS file.
+ * "Cradle" is the customer-facing brand name for the Nebbos hardware
+ * substrate (DataLocker K350 USB form factor). Renamed 2026-09-17 per
+ * founder directive — "USB is too generic." Cradle composes with the
+ * existing brand vocabulary (BRAND.productLine: "Cradle · customer's owned
+ * memory · portable when you leave"). Internal SKU keys still use "usb"
+ * for stability; customer-facing surfaces say Cradle.
  *
- * Palette: --product-color-usb resolves to Nebbos Obsidian (#1D1C22)
- * pending founder ratification per docs/reference/nebbos-hardware-
- * color-palette-2026-09-14.md.
+ * Substrate v3 · primitive composition + shared .product-page__* pattern.
+ *
+ * Palette: --product-color-usb resolves to Nebbos Obsidian (#1D1C22).
  *
  * No published pricing per feedback_nebbos_no_published_pricing_palantir_model.
  */
 
-const USB_SUBSCRIPTIONS = subscriptionsForProduct("usb");
+const CRADLE_SUBSCRIPTIONS = subscriptionsForProduct("usb");
 
 export const metadata: Metadata = {
-  title: "Nebbos USB · Hardware-attested. FIPS 140-3 L3.",
+  title: "Nebbos Cradle · Hardware-attested. FIPS 140-3 L3.",
   description:
-    "The Nebbos USB carries the MCP and gates elevated permissions with hardware attestation. FIPS 140-3 Level 3 encrypted storage. On-device keypad. Tamper-evident and epoxy-sealed. TAA-compliant.",
+    "The Nebbos Cradle carries the MCP and your Pearl memory, gating elevated permissions with hardware attestation. FIPS 140-3 Level 3 encrypted storage. On-device keypad. Tamper-evident and epoxy-sealed. TAA-compliant.",
 };
 
 const HIGHLIGHTS = [
@@ -58,8 +61,8 @@ const VALUE_CARDS = [
   },
   {
     factor: "Physical presence",
-    headline: "The USB is the second factor.",
-    body: "Elevated tier operations require the Nebbos USB physically plugged in. A remote attacker cannot forge presence — the mount is the assertion.",
+    headline: "The Cradle is the second factor.",
+    body: "Elevated tier operations require the Nebbos Cradle physically plugged in. A remote attacker cannot forge presence — the mount is the assertion.",
   },
   {
     factor: "Enclave-signed",
@@ -68,7 +71,7 @@ const VALUE_CARDS = [
   },
 ];
 
-export default function ProductUsbPage() {
+export default function ProductCradlePage() {
   const others = PRODUCTS.filter((p) => p.key !== "usb");
 
   return (
@@ -76,9 +79,9 @@ export default function ProductUsbPage() {
       <PageHero
         surface="scene"
         align="start"
-        eyebrow="Nebbos USB"
+        eyebrow="Nebbos Cradle"
         chapter="04"
-        chapterLabel="Nebbos USB"
+        chapterLabel="Nebbos Cradle"
         imageFamily="concept-audit-attestation"
         priority
         headline={
@@ -134,7 +137,7 @@ export default function ProductUsbPage() {
             in a cloud you can&rsquo;t see.
           </p>
           <p>
-            On the Nebbos USB, the MCP binary and every credential ship on
+            On the Nebbos Cradle, the MCP binary and every credential ship on
             the encrypted volume. Plug in, authenticate on the keypad, and
             the MCP starts. Unplug, and elevated permissions are no longer
             available. The MCP goes where you go — nowhere else.
@@ -178,13 +181,13 @@ export default function ProductUsbPage() {
           Three tiers. Twelve total SKUs across the four products.
         </h2>
         <p className="product-page__lede">
-          Each Nebbos USB ships in the tier you buy — L1 basic, L2
+          Each Nebbos Cradle ships in the tier you buy — L1 basic, L2
           privileged, L3 admin. Higher tiers unlock more of the MCP surface,
-          gated by the composition of biometric + USB + enclave-signed
+          gated by the composition of biometric + Cradle + enclave-signed
           approval below.
         </p>
         <ul className="product-page__tier-grid">
-          {USB_SUBSCRIPTIONS.map((sub) => {
+          {CRADLE_SUBSCRIPTIONS.map((sub) => {
             const tier = TIERS.find((t) => t.key === sub.tier)!;
             return (
               <li key={sub.sku_id} className="product-page__cell">

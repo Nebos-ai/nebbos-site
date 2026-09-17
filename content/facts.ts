@@ -32,7 +32,7 @@ export const FACTS = {
 
   /** Public product line. */
   productLine: [
-    "Nebbos (operator platform · MCP · USB · biometric-attested)",
+    "Nebbos (operator platform · MCP · Cradle · biometric-attested)",
     "Pearl (per-domain brain — Nebbos General [Domain], tuned by use)",
     "Shell (per-domain container that holds a Pearl)",
     "Cradle (customer&rsquo;s owned memory · portable when you leave)",
