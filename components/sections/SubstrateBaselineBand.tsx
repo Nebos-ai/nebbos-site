@@ -85,9 +85,10 @@ export function SubstrateBaselineBand() {
       <div
         className="container"
         style={{
-          paddingBlock: "clamp(80px, 12vh, 140px)",
+          // Section spacing tokens · standard tier (dark measurement section) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-standard)",
           display: "grid",
-          gap: "clamp(28px, 3.5vw, 48px)",
+          gap: "var(--section-gap-standard)",
           maxWidth: "var(--container-max)",
         }}
       >
@@ -119,7 +120,7 @@ export function SubstrateBaselineBand() {
           }}
         >
           Every fire counted.{" "}
-          <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
+          <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: "inherit" }}>
             Every 30 days.
           </em>
         </h2>

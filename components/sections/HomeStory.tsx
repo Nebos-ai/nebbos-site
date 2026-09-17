@@ -60,7 +60,8 @@ export function HomeStory() {
       {/* Section header — tight, no deck paragraph */}
       <div
         style={{
-          paddingBlock: "clamp(80px, 12vh, 160px) clamp(48px, 6vh, 72px)",
+          // Section spacing tokens · anchor top / compact bottom (heading → scenes) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-anchor) var(--section-y-compact)",
           borderBottom: "1px solid var(--rule)",
           textAlign: "center",
         }}
@@ -82,7 +83,7 @@ export function HomeStory() {
             }}
           >
             One{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 400 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: "inherit" }}>
               platform.
             </em>{" "}
             Three chapters of a working day.

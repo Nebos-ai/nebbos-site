@@ -141,6 +141,28 @@ a:hover {
   --rule-2:     #F0EEE9;  /* softer hairline · sub-dividers */
   --gold:       #9A5D2A;  /* deep · reserved secondary accent (darkened 2026-09-15 to hit WCAG 2.2 AA 4.5:1 against --paper-2 #F7F5F1). Retained for backward compat; new work uses --accent-2 electric orange as the display accent per 2026-09-17 tagline shift. */
   --accent-2:   #FF6B1E;  /* Nebbos electric orange · brand · primary accent (pushed 2026-09-17 from muted #F6A03F to bolder saturated tone per founder direction: "blue and gold is dull, want sharper 2027 feel"). Contrast: #FF6B1E on #FFFFFF paper = 4.62:1 (AA body pass), on #1D1C22 ink = 4.71:1 (AA large pass). */
+
+  /* ─── SECTION SPACING SYSTEM · 3 tiers · ratified 2026-09-18 ────────────
+     Every home + product-page section MUST use one of these three vertical-
+     rhythm tiers. No more one-off clamp() invention per component.
+     Founder critique 2026-09-18: "spacing is terrible, no discipline, no
+     consistency across the site." Fix: canonical scale.
+     Assignment guide:
+       COMPACT  — text bands, dogfood stats, in-production social proof
+       STANDARD — default section (mode bands, metric grids, feature grids)
+       ANCHOR   — cinematic register break, dark inversion, closing hero */
+  --section-y-compact:    clamp(56px, 8vh, 96px);
+  --section-y-standard:   clamp(72px, 10vh, 120px);
+  --section-y-anchor:     clamp(96px, 14vh, 160px);
+
+  /* ─── SECTION INTERNAL GAP · 3 tiers · ratified 2026-09-18 ────────────
+     Vertical gap between section blocks (eyebrow → h2 → body → grid).
+     TIGHT   — packed data grids (inventory, bento)
+     STANDARD — default (mode bands, feature grids)
+     LOOSE   — cinematic breathing room (story, hero, closing) */
+  --section-gap-tight:    clamp(20px, 3vw, 32px);
+  --section-gap-standard: clamp(28px, 4vw, 48px);
+  --section-gap-loose:    clamp(40px, 5vw, 72px);
   --gold-2:     #FDDA88;  /* light gold · dark-mode primary */
 
   /* Product-line colors — CANDIDATE hex values pending founder ratification

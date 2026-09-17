@@ -115,13 +115,14 @@ export function CapabilityBentoGrid() {
       <div
         className="container capability-bento__inner"
         style={{
-          paddingBlock: "clamp(96px, 14vh, 160px)",
+          // Section spacing tokens · anchor tier (dark register-break) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-anchor)",
           display: "grid",
-          gap: "clamp(40px, 5vw, 72px)",
+          gap: "var(--section-gap-loose)",
           maxWidth: "var(--container-max)",
         }}
       >
-        <div style={{ display: "grid", gap: "clamp(16px, 2vw, 28px)", maxWidth: "56ch" }}>
+        <div style={{ display: "grid", gap: "var(--section-gap-tight)", maxWidth: "56ch" }}>
           <p
             style={{
               fontFamily: "var(--font-mono)",
@@ -137,18 +138,19 @@ export function CapabilityBentoGrid() {
           <h2
             id="capability-bento-heading"
             style={{
+              // Canonical section-h2 shape · serif · fontWeight 400 (editorial) · italic-em accent on second phrase inherits parent weight · ratified 2026-09-18
               fontFamily: "var(--font-serif)",
               fontSize: "var(--size-h1)",
-              lineHeight: 1.02,
-              letterSpacing: "-0.032em",
-              fontWeight: 700,
+              lineHeight: 1.04,
+              letterSpacing: "-0.024em",
+              fontWeight: 400,
               color: "var(--paper)",
               margin: 0,
               textWrap: "balance",
             }}
           >
             Everything your AI-native operation{" "}
-            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: 700 }}>
+            <em style={{ fontStyle: "italic", color: "var(--accent-2)", fontWeight: "inherit" }}>
               actually runs on.
             </em>
           </h2>

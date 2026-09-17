@@ -221,12 +221,13 @@ export function NebbosInventoryBand() {
       <div
         className="container"
         style={{
-          paddingBlock: "clamp(64px, 10vh, 128px)",
+          // Section spacing tokens · standard tier (metric grid) — ratified 2026-09-18
+          paddingBlock: "var(--section-y-standard)",
           display: "grid",
-          gap: "clamp(32px, 5vw, 56px)",
+          gap: "var(--section-gap-loose)",
         }}
       >
-        <div style={{ display: "grid", gap: "clamp(16px, 2vw, 24px)" }}>
+        <div style={{ display: "grid", gap: "var(--section-gap-tight)" }}>
           <p
             style={{
               fontFamily: "var(--font-mono)",
@@ -282,7 +283,7 @@ export function NebbosInventoryBand() {
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "clamp(24px, 3vw, 40px)",
+            gap: "var(--section-gap-standard)",
           }}
         >
           {quadrants.map((quadrant) => (
