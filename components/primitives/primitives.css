@@ -279,11 +279,23 @@
     padding-block: clamp(var(--space-8), 12vh, var(--space-11));
     width: 100%;
   }
+  /*
+   * Frame width — split by align, not by a single --measure-title token.
+   * The token (22ch) fits a tight scene hero like "Local. Native. Yours."
+   * but broke every paper/start hero whose headline runs 40+ characters
+   * (empirical: /products headline "The platform, the app, the MCP, and
+   * the USB." wrapped one word per line on live 2026-09-16 because both
+   * the default and the .products__section-heading inherited 22ch).
+   *
+   * Split:
+   *   default (align=start / paper editorial)  → wide, --measure-deck (56ch)
+   *   .page-hero--center (scene tile)          → narrow, 26ch
+   */
   .page-hero__frame {
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
-    max-width: var(--measure-title);
+    max-width: var(--measure-deck);
   }
   .page-hero--center .page-hero__frame {
     margin-inline: auto;
