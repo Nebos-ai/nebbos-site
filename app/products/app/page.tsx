@@ -132,7 +132,7 @@ export default function ProductAppPage() {
             macOS or Windows machine that operator uses.
           </p>
           <p>
-            When an operator pairs a Nebbos USB (L2 or L3), the app enables
+            When an operator pairs a Nebbos Cradle (L2 or L3), the app enables
             the tier-gated operations for the paired device. Same code, same
             binary — the gate is the presence, not a feature flag.
           </p>
@@ -174,7 +174,7 @@ export default function ProductAppPage() {
         <h2 className="app__section-heading">Same app. Tier scope depends on your Platform seat.</h2>
         <p className="app__tier-lede">
           The app itself is one binary. What it lets you do depends on your
-          Platform tier. L2 unlocks paired-USB operations; L3 unlocks
+          Platform tier. L2 unlocks paired-Cradle operations; L3 unlocks
           enclave-attested workstation ops.
         </p>
         <ul className="app__tier-grid">
@@ -222,7 +222,7 @@ export default function ProductAppPage() {
           <p className="app__footer-deck">
             The Nebbos app ships with every Platform subscription. Reach out
             and we&rsquo;ll walk you through onboarding, biometric enrollment,
-            and USB pairing for elevated tiers.
+            and Cradle pairing for elevated tiers.
           </p>
           <div className="app__footer-ctas">
             <Button variant="primary" tone="onPaper" href="/contact">Contact sales</Button>

@@ -25,7 +25,7 @@ import "./products.css";
 export const metadata: Metadata = {
   title: "Products · Four lines. Twelve SKUs.",
   description:
-    "The Nebbos platform, the app, the MCP, and the USB. Four products, three tiers each — twelve SKUs total. Every operator picks along (product, tier).",
+    "The Nebbos platform, the app, the MCP, and the Cradle. Four products, three tiers each — twelve SKUs total. Every operator picks along (product, tier).",
 };
 
 /**
@@ -56,12 +56,12 @@ export default function ProductsPage() {
         surface="paper"
         align="start"
         eyebrow="Products"
-        headline="The platform, the app, the MCP, and the USB."
+        headline="The platform, the app, the MCP, and the Cradle."
         deck={
           <>
             Nebbos.ai runs your Pearls, your fleet, and your governance under
             one platform. It ships with the tools its MCP exposes, and with
-            the security of a hardware-attested USB. Four products, three
+            the security of a hardware-attested Cradle. Four products, three
             tiers each. Twelve SKUs. Every operator picks along{" "}
             <em>(product, tier)</em>.
           </>
@@ -91,7 +91,7 @@ export default function ProductsPage() {
         </h2>
         <p className="products__matrix-lede">
           Each product renders in a distinct flower-of-life color. Each
-          physical Nebbos USB ships in the product&rsquo;s color body with a
+          physical Nebbos Cradle ships in the product&rsquo;s color body with a
           tier-level accent, so a customer holding an &ldquo;MCP-L2&rdquo;
           device sees the MCP color body with the L2 tier finish.
         </p>

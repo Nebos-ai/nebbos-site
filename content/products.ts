@@ -44,13 +44,13 @@ export const TIERS: Tier[] = [
   {
     key: "L2",
     label: "L2 · Privileged",
-    factors: "Biometric + Nebbos USB physical presence",
+    factors: "Biometric + Nebbos Cradle physical presence",
     scope: "Shell writes, memory registers, admin operations within the Shell.",
   },
   {
     key: "L3",
     label: "L3 · Admin",
-    factors: "Biometric + Nebbos USB + enclave-signed approval token",
+    factors: "Biometric + Nebbos Cradle + enclave-signed approval token",
     scope: "Shell creation and destruction, substrate mutation, cross-Shell, quorum-required actions.",
   },
 ];
@@ -92,9 +92,9 @@ export const PRODUCTS: Product[] = [
     key: "mcp",
     eyebrow: "Tooling",
     name: "Nebbos MCP",
-    tagline: "The tool substrate. Ships on the USB device.",
+    tagline: "The tool substrate. Ships on the Cradle.",
     description:
-      "The Model Context Protocol server that mediates every tool call. Binary and configuration ship on the Nebbos USB — physical presence gates elevated permission tiers.",
+      "The Model Context Protocol server that mediates every tool call. Binary and configuration ship on the Nebbos Cradle — physical presence gates elevated permission tiers.",
     colorVar: "--product-color-mcp",
     slug: "mcp",
   },

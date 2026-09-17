@@ -50,7 +50,7 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     key: "security",
     label: "Security",
     blurb:
-      "Every action requires biometric approval and hardware attestation. A breach demands physical possession of your USB, your fingerprint, and an enclave signature. Not policy. Architecture.",
+      "Every action requires biometric approval and hardware attestation. A breach demands physical possession of your Cradle, your fingerprint, and an enclave signature. Not policy. Architecture.",
     learnMoreHref: "/security",
     ringIndex: 0,
   },
@@ -114,7 +114,7 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     key: "approval",
     label: "Approval",
     blurb:
-      "Elevated actions require biometric plus Nebbos USB physical presence. Approval is architectural — the platform refuses to execute without the factors.",
+      "Elevated actions require biometric plus Nebbos Cradle physical presence. Approval is architectural — the platform refuses to execute without the factors.",
     learnMoreHref: "/products/usb",
     ringIndex: 8,
   },
