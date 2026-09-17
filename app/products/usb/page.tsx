@@ -1,30 +1,25 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
-import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { PageHero } from "@/components/primitives/PageHero";
+import { PageSection } from "@/components/primitives/PageSection";
+import { Eyebrow } from "@/components/primitives/Eyebrow";
+import { Button } from "@/components/primitives/Button";
 
 /**
- * PAGE · /products/usb · the Nebbos USB product page
+ * PAGE · /products/usb · Nebbos USB product page
  *
- * Follows the 14-section Apple device-marketing arc named in
- * docs/reference/apple-device-marketing-patterns-2026-09-14.md.
- * Institutional Reserve site chrome (paper ground, hairlines, no cards
- * or shadows) — depth reserved for the hero's cinematic still moment.
- *
- * Consumes:
- *  - content/products.ts (typed 4×3 taxonomy)
- *  - content/subscriptions.ts (per-tier subscription structure)
+ * Substrate v3 · migrated 2026-09-17 from legacy FullBleedScene + inline-
+ * Tailwind to primitive composition + the shared `.product-page__*`
+ * pattern under @layer patterns. Zero page-scoped CSS file.
  *
  * Palette: --product-color-usb resolves to Nebbos Obsidian (#1D1C22)
  * pending founder ratification per docs/reference/nebbos-hardware-
  * color-palette-2026-09-14.md.
  *
- * No published pricing per feedback_marketing_site_pricing_editorial_
- * discipline. Every tier CTA routes to /contact.
+ * No published pricing per feedback_nebbos_no_published_pricing_palantir_model.
  */
 
-const USB_PRODUCT = PRODUCTS.find((p) => p.key === "usb")!;
 const USB_SUBSCRIPTIONS = subscriptionsForProduct("usb");
 
 export const metadata: Metadata = {
@@ -33,240 +28,27 @@ export const metadata: Metadata = {
     "The Nebbos USB carries the MCP and gates elevated permissions with hardware attestation. FIPS 140-3 Level 3 encrypted storage. On-device keypad. Tamper-evident and epoxy-sealed. TAA-compliant.",
 };
 
-// ── Section 1 · Hero ─────────────────────────────────────────────────────
-
-function Hero() {
-  return (
-    <FullBleedScene
-      className="hero-fullbleed"
-      scene={{ imageFamily: "concept-audit-attestation", imageFamilyVariant: 1 }}
-      scrim="bottom"
-      vignetteStrength={0.5}
-      chapter="04"
-      chapterLabel="Nebbos USB"
-      priority
-    >
-      <div className="container hero-fullbleed__inner">
-        <div className="hero-fullbleed__frame">
-          <h1 className="hero-fullbleed__title">
-            Peace of mind <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>you can hold.</em>
-          </h1>
-          <p className="hero-fullbleed__deck">
-            Hardware-attested security for the operators running work that matters.
-            FIPS 140-3 Level 3. On-device keypad. Tamper-evident and
-            epoxy-sealed. The Nebbos MCP ships on the device &mdash; physical
-            presence gates every elevated action.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
-            <Link href="/contact" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper)", borderBottom: "1px solid var(--paper)", paddingBottom: 4, textDecoration: "none" }}>
-              Contact sales &rarr;
-            </Link>
-            <Link href="/demo" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper-2)", textDecoration: "none", opacity: 0.85 }}>
-              Book a demo
-            </Link>
-          </div>
-        </div>
-      </div>
-    </FullBleedScene>
-  );
-}
-
-// ── Section 2 · Get the highlights ───────────────────────────────────────
-
 const HIGHLIGHTS = [
-  {
-    label: "Encryption",
-    value: "FIPS 140-3 L3",
-    note: "Federally-certified encrypted storage volume. AES-256 XTS.",
-  },
-  {
-    label: "Authentication",
-    value: "On-device keypad",
-    note: "PIN entry never traverses the host machine. Physical, isolated.",
-  },
-  {
-    label: "Ruggedness",
-    value: "IP68 · MIL-STD-810G",
-    note: "Waterproof, dust-tight, shock-tested. Field-deployable.",
-  },
-  {
-    label: "Tamper",
-    value: "Epoxy-sealed",
-    note: "Physical break-in required to open; the seal is the evidence.",
-  },
-  {
-    label: "Supply chain",
-    value: "TAA-compliant",
-    note: "No adversarial-jurisdiction components. Procurement-ready.",
-  },
+  { label: "Encryption", value: "FIPS 140-3 L3", note: "Federally-certified encrypted storage volume. AES-256 XTS." },
+  { label: "Authentication", value: "On-device keypad", note: "PIN entry never traverses the host machine. Physical, isolated." },
+  { label: "Ruggedness", value: "IP68 · MIL-STD-810G", note: "Waterproof, dust-tight, shock-tested. Field-deployable." },
+  { label: "Tamper", value: "Epoxy-sealed", note: "Physical break-in required to open; the seal is the evidence." },
+  { label: "Supply chain", value: "TAA-compliant", note: "No adversarial-jurisdiction components. Procurement-ready." },
 ];
-
-function Highlights() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Get the highlights
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Five commitments. One device.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4">
-          {HIGHLIGHTS.map((h) => (
-            <li key={h.label} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">
-                {h.label}
-              </p>
-              <p className="mt-2 font-serif text-2xl font-medium text-ink leading-tight">
-                {h.value}
-              </p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">
-                {h.note}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 3 · Take a closer look (physical tour) ───────────────────────
 
 const MATERIALS = [
-  {
-    heading: "Encrypted volume",
-    body: "AES-256 XTS ciphertext at rest. Federal-tier key management with per-device unique wrapping keys. FIPS 140-3 Level 3 certified.",
-  },
-  {
-    heading: "On-device keypad",
-    body: "PIN entered on the device itself, not on the host. A compromised host cannot capture the PIN. Programmable read-only and self-destruct modes for regulated deployments.",
-  },
-  {
-    heading: "Tamper-evident, epoxy-sealed",
-    body: "Any physical intrusion is visible. The internal electronics are potted in place; extraction breaks the seal and voids attestation. There is no invisible way in.",
-  },
-  {
-    heading: "IP68 waterproof, MIL-STD-810G shock",
-    body: "Full immersion, dust-tight, drop-tested to military-grade standards. Field-deployable in regulated, defense, and disaster-recovery contexts.",
-  },
-  {
-    heading: "TAA-compliant supply chain",
-    body: "No components sourced from adversarial jurisdictions. Meets US federal Trade Agreements Act procurement requirements. Chain-of-custody documented from manufacture to activation.",
-  },
+  { heading: "Encrypted volume", body: "AES-256 XTS ciphertext at rest. Federal-tier key management with per-device unique wrapping keys. FIPS 140-3 Level 3 certified." },
+  { heading: "On-device keypad", body: "PIN entered on the device itself, not on the host. A compromised host cannot capture the PIN. Programmable read-only and self-destruct modes for regulated deployments." },
+  { heading: "Tamper-evident, epoxy-sealed", body: "Any physical intrusion is visible. The internal electronics are potted in place; extraction breaks the seal and voids attestation. There is no invisible way in." },
+  { heading: "IP68 waterproof, MIL-STD-810G shock", body: "Full immersion, dust-tight, drop-tested to military-grade standards. Field-deployable in regulated, defense, and disaster-recovery contexts." },
+  { heading: "TAA-compliant supply chain", body: "No components sourced from adversarial jurisdictions. Meets US federal Trade Agreements Act procurement requirements. Chain-of-custody documented from manufacture to activation." },
 ];
-
-function CloserLook() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-14 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Take a closer look
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Every layer designed to be trusted.
-          </h2>
-        </header>
-        <ul className="space-y-10">
-          {MATERIALS.map((m) => (
-            <li key={m.heading} className="border-t border-rule pt-6">
-              <h3 className="font-serif text-xl md:text-2xl font-medium text-ink tracking-tight">
-                {m.heading}
-              </h3>
-              <p className="mt-3 max-w-2xl text-base text-ink-2 leading-relaxed">
-                {m.body}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4 · The core (MCP substrate) ─────────────────────────────────
-
-function CoreSubstrate() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-8 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            The core
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            The MCP{" "}
-            <em className="font-serif italic text-gold">lives on the device.</em>
-          </h2>
-        </header>
-        <div className="max-w-2xl space-y-6">
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            The Nebbos MCP is the tool substrate that mediates every elevated
-            action across the Nebbos platform. On other systems it would run
-            in a cloud you can&rsquo;t see.
-          </p>
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            On the Nebbos USB, the MCP binary and every credential ship on
-            the encrypted volume. Plug in, authenticate on the keypad, and
-            the MCP starts. Unplug, and elevated permissions are no longer
-            available. The MCP goes where you go &mdash; nowhere else.
-          </p>
-          <p>
-            <Link
-              href="/products/mcp"
-              className="font-mono text-xs uppercase tracking-[0.14em] text-ink underline underline-offset-4 decoration-rule hover:decoration-ink transition-colors"
-            >
-              About the Nebbos MCP &rarr;
-            </Link>
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 5-6 · Performance / Built-for ────────────────────────────────
 
 const BUILT_FOR = [
   { audience: "Governments", scope: "Classified and sensitive workloads." },
   { audience: "Regulated enterprises", scope: "Finance, healthcare, energy, defense contractors." },
   { audience: "Founder operators", scope: "The people building the substrate the rest run on." },
 ];
-
-function BuiltFor() {
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Built for
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            The operators running work that must not{" "}
-            <em className="font-serif italic text-gold">leak.</em>
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {BUILT_FOR.map((b) => (
-            <li key={b.audience} className="border-t border-rule pt-5">
-              <p className="font-serif text-2xl font-medium text-ink tracking-tight">
-                {b.audience}
-              </p>
-              <p className="mt-3 text-base text-ink-2 leading-relaxed">
-                {b.scope}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 12 · Values (security three-card) ────────────────────────────
 
 const VALUE_CARDS = [
   {
@@ -277,7 +59,7 @@ const VALUE_CARDS = [
   {
     factor: "Physical presence",
     headline: "The USB is the second factor.",
-    body: "Elevated tier operations require the Nebbos USB physically plugged in. A remote attacker cannot forge presence &mdash; the mount is the assertion.",
+    body: "Elevated tier operations require the Nebbos USB physically plugged in. A remote attacker cannot forge presence — the mount is the assertion.",
   },
   {
     factor: "Enclave-signed",
@@ -286,183 +68,174 @@ const VALUE_CARDS = [
   },
 ];
 
-function Values() {
+export default function ProductUsbPage() {
+  const others = PRODUCTS.filter((p) => p.key !== "usb");
+
   return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Values
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Three factors. Composed top-down.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {VALUE_CARDS.map((v) => (
-            <li key={v.factor} className="border-t border-rule pt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">
-                {v.factor}
-              </p>
-              <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">
-                {v.headline}
-              </p>
-              <p className="mt-4 text-base text-ink-2 leading-relaxed">
-                {v.body}
-              </p>
+    <>
+      <PageHero
+        surface="scene"
+        align="start"
+        eyebrow="Nebbos USB"
+        chapter="04"
+        chapterLabel="Nebbos USB"
+        imageFamily="concept-audit-attestation"
+        priority
+        headline={
+          <>
+            Peace of mind <em>you can hold.</em>
+          </>
+        }
+        deck="Hardware-attested security for the operators running work that matters. FIPS 140-3 Level 3. On-device keypad. Tamper-evident and epoxy-sealed. The Nebbos MCP ships on the device — physical presence gates every elevated action."
+        ctas={
+          <>
+            <Button variant="ghost" tone="onDark" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onDark" href="/demo">Book a demo</Button>
+          </>
+        }
+      />
+
+      <PageSection ruled>
+        <Eyebrow>Get the highlights</Eyebrow>
+        <h2 className="product-page__section-heading">Five commitments. One device.</h2>
+        <ul className="product-page__highlights-grid">
+          {HIGHLIGHTS.map((h) => (
+            <li key={h.label} className="product-page__cell">
+              <Eyebrow>{h.label}</Eyebrow>
+              <p className="product-page__cell-value">{h.value}</p>
+              <p className="product-page__cell-note">{h.note}</p>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Section 13 · Tier picker (subscription models per tier) ──────────────
+      <PageSection ruled>
+        <Eyebrow>Take a closer look</Eyebrow>
+        <h2 className="product-page__section-heading">Every layer designed to be trusted.</h2>
+        <ul className="product-page__capabilities-list">
+          {MATERIALS.map((m) => (
+            <li key={m.heading} className="product-page__capability-row">
+              <h3 className="product-page__capability-heading">{m.heading}</h3>
+              <p className="product-page__capability-body">{m.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
 
-function TierPicker() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Choose your tier
+      <PageSection ruled>
+        <Eyebrow>The core</Eyebrow>
+        <h2 className="product-page__section-heading">
+          The MCP <em>lives on the device.</em>
+        </h2>
+        <div className="product-page__core-body">
+          <p>
+            The Nebbos MCP is the tool substrate that mediates every elevated
+            action across the Nebbos platform. On other systems it would run
+            in a cloud you can&rsquo;t see.
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Three tiers. Twelve total SKUs across the four products.
-          </h2>
-          <p className="max-w-2xl text-base text-ink-2 leading-relaxed pt-2">
-            Each Nebbos USB ships in the tier you buy &mdash; L1 basic, L2
-            privileged, L3 admin. Higher tiers unlock more of the MCP surface,
-            gated by the composition of biometric + USB + enclave-signed
-            approval below.
+          <p>
+            On the Nebbos USB, the MCP binary and every credential ship on
+            the encrypted volume. Plug in, authenticate on the keypad, and
+            the MCP starts. Unplug, and elevated permissions are no longer
+            available. The MCP goes where you go — nowhere else.
           </p>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Button variant="ghost" tone="onPaper" href="/products/mcp">About the Nebbos MCP</Button>
+        </div>
+      </PageSection>
+
+      <PageSection ruled ground="paper2">
+        <Eyebrow>Built for</Eyebrow>
+        <h2 className="product-page__section-heading">
+          The operators running work that must not <em>leak.</em>
+        </h2>
+        <ul className="product-page__built-for-grid">
+          {BUILT_FOR.map((b) => (
+            <li key={b.audience} className="product-page__cell">
+              <p className="product-page__audience">{b.audience}</p>
+              <p className="product-page__cell-note">{b.scope}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Values</Eyebrow>
+        <h2 className="product-page__section-heading">Three factors. Composed top-down.</h2>
+        <ul className="product-page__values-grid">
+          {VALUE_CARDS.map((v) => (
+            <li key={v.factor} className="product-page__cell">
+              <Eyebrow tone="accent">{v.factor}</Eyebrow>
+              <p className="product-page__cell-headline">{v.headline}</p>
+              <p className="product-page__cell-note">{v.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Choose your tier</Eyebrow>
+        <h2 className="product-page__section-heading">
+          Three tiers. Twelve total SKUs across the four products.
+        </h2>
+        <p className="product-page__lede">
+          Each Nebbos USB ships in the tier you buy — L1 basic, L2
+          privileged, L3 admin. Higher tiers unlock more of the MCP surface,
+          gated by the composition of biometric + USB + enclave-signed
+          approval below.
+        </p>
+        <ul className="product-page__tier-grid">
           {USB_SUBSCRIPTIONS.map((sub) => {
             const tier = TIERS.find((t) => t.key === sub.tier)!;
             return (
-              <li key={sub.sku_id} className="border-t border-rule pt-6 flex flex-col">
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">
-                  {tier.label}
+              <li key={sub.sku_id} className="product-page__cell">
+                <Eyebrow tone="accent">{tier.label}</Eyebrow>
+                <p className="product-page__cell-headline">{sub.headline}</p>
+                <p className="product-page__cell-note">
+                  <strong>Factors</strong> · {tier.factors}
                 </p>
-                <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">
-                  {sub.headline}
+                <p className="product-page__cell-note">
+                  <strong>Includes</strong> · {sub.minimum_commit.monthly_floor_note}
                 </p>
-                <p className="mt-4 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Factors</strong> &middot; {tier.factors}
-                </p>
-                <p className="mt-2 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Includes</strong> &middot;{" "}
-                  {sub.minimum_commit.monthly_floor_note}
-                </p>
-                <p className="mt-6 pt-6 border-t border-rule-2">
-                  <Link
-                    href="/contact"
-                    className="font-mono text-xs uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                  >
-                    Contact sales &rarr;
-                  </Link>
-                </p>
+                <div className="product-page__tier-cta">
+                  <Button variant="ghost" tone="onPaper" href="/contact">Contact sales</Button>
+                </div>
               </li>
             );
           })}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Section 14 · Related products ────────────────────────────────────────
-
-function Related() {
-  const others = PRODUCTS.filter((p) => p.key !== "usb");
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            The other three products
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            One matrix. Four products.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <PageSection ruled ground="paper2">
+        <Eyebrow>The other three products</Eyebrow>
+        <h2 className="product-page__section-heading">One matrix. Four products.</h2>
+        <ul className="product-page__related-grid">
           {others.map((p) => (
-            <li key={p.key} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">
-                {p.eyebrow}
-              </p>
-              <p className="mt-2 font-serif text-xl font-medium text-ink tracking-tight">
-                {p.name}
-              </p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">
-                {p.tagline}
-              </p>
-              <p className="mt-4">
-                <Link
-                  href={`/products/${p.slug}`}
-                  className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                >
-                  Explore &rarr;
-                </Link>
-              </p>
+            <li key={p.key} className="product-page__cell">
+              <Eyebrow>{p.eyebrow}</Eyebrow>
+              <p className="product-page__cell-value">{p.name}</p>
+              <p className="product-page__cell-note">{p.tagline}</p>
+              <Button variant="ghost" tone="onPaper" href={`/products/${p.slug}`}>Explore</Button>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Footer CTA ───────────────────────────────────────────────────────────
-
-function FooterCTA() {
-  return (
-    <section>
-      <div className="container-narrow py-24 md:py-32 text-center">
-        <h2 className="font-serif text-4xl md:text-5xl font-medium tracking-tight text-ink text-balance">
-          Ready to hold the substrate that runs your work?
-        </h2>
-        <p className="mt-6 max-w-xl mx-auto text-lg text-ink-2 leading-relaxed">
-          Enterprise procurement, government agencies, and founder operators:
-          reach out and we&rsquo;ll walk you through provisioning, tiering,
-          and deployment.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+      <PageSection>
+        <div className="product-page__footer-cta">
+          <h2 className="product-page__footer-headline">
+            Ready to hold the substrate that runs your work?
+          </h2>
+          <p className="product-page__footer-deck">
+            Enterprise procurement, government agencies, and founder
+            operators: reach out and we&rsquo;ll walk you through
+            provisioning, tiering, and deployment.
+          </p>
+          <div className="product-page__footer-ctas">
+            <Button variant="primary" tone="onPaper" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onPaper" href="/demo">Book a demo</Button>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Page composition ─────────────────────────────────────────────────────
-
-export default function ProductUsbPage() {
-  return (
-    <main className="min-h-screen bg-paper">
-      <Hero />
-      <Highlights />
-      <CloserLook />
-      <CoreSubstrate />
-      <BuiltFor />
-      <Values />
-      <TierPicker />
-      <Related />
-      <FooterCTA />
-    </main>
+      </PageSection>
+    </>
   );
 }

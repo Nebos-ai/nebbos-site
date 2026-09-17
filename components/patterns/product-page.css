@@ -1,0 +1,280 @@
+/* ============================================================================
+   components/patterns/product-page.css · @layer patterns · shared product page
+
+   The visual contract every product route composes on top of primitives.
+   Loaded once from app/globals.css. All routes under /products/<key>/ can
+   reference `.product-page__*` classes directly — no per-route CSS file
+   required.
+
+   Cascade: reset → tokens → primitives → PATTERNS (here) → page.
+
+   Every declaration references a --token from @layer tokens. Zero literals.
+   Every heading selector explicitly resets `font-variant: normal` +
+   `font-feature-settings: normal` to override the legacy site-wide
+   Institutional Reserve small-caps rule (Space Grotesk has no real
+   small-caps glyphs; browser fakes them by shrinking lowercase, produces
+   an amateur cap-then-tiny letter pattern — retired by substrate v3
+   product-catalog register).
+
+   Semantic vocabulary — six section shapes cover every product page:
+     __hero (via PageHero primitive; not styled here)
+     __highlights-grid  · 5-across responsive commitment cards
+     __capabilities-list  · vertical list, one heading + paragraph per row
+     __core-body  · single-column narrative block + linked callout
+     __built-for-grid  · 3-across responsive audience cards
+     __values-grid  · 3-across responsive value cards
+     __tier-grid  · 3-across responsive tier/SKU cards (with tier-cta base)
+     __related-grid  · 3-across responsive product-cross-link cards
+     __footer-cta  · centered wrap-up with H1 + deck + CTA row
+
+   Every card slot uses `.product-page__cell` for the border-top + padding
+   + flex-col shape; specialized rows layer over it.
+   ============================================================================ */
+
+@layer patterns {
+
+  /* ── Section heading (H2 in flow) ──────────────────────────────────── */
+
+  .product-page__section-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-heading);
+    color: var(--color-ink);
+    margin: var(--space-3) 0 var(--space-7);
+    max-width: var(--measure-deck);
+    text-wrap: balance;
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+  .product-page__section-heading em {
+    font-style: italic;
+    color: var(--color-gold);
+    font-weight: var(--fw-regular);
+  }
+
+  /* ── Section-level lede (paragraph under a heading) ────────────────── */
+
+  .product-page__lede {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: 0 0 var(--space-6);
+  }
+
+  /* ── Shared list reset for every grid/list wrapper below ──────────── */
+
+  ul.product-page__highlights-grid,
+  ul.product-page__capabilities-list,
+  ul.product-page__built-for-grid,
+  ul.product-page__values-grid,
+  ul.product-page__tier-grid,
+  ul.product-page__related-grid {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  /* ── Base cell shape ───────────────────────────────────────────────── */
+
+  .product-page__cell {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  /* Slots inside a cell — each with the small-caps override. */
+
+  .product-page__cell-value {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+  .product-page__cell-headline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-heading);
+    margin: 0;
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+  .product-page__cell-note {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .product-page__cell-note strong {
+    font-weight: var(--fw-medium);
+    color: var(--color-ink);
+  }
+
+  /* ── 1. Highlights grid — 5-across on desktop ─────────────────────── */
+
+  .product-page__highlights-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+  }
+  @media (min-width: 48rem) { .product-page__highlights-grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (min-width: 64rem) { .product-page__highlights-grid { grid-template-columns: repeat(5, 1fr); gap: var(--space-4); } }
+
+  /* ── 2. Capabilities list (vertical, one heading + body per row) ──── */
+
+  .product-page__capabilities-list {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+  }
+  .product-page__capability-row {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-5);
+  }
+  .product-page__capability-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-heading);
+    margin: 0 0 var(--space-3);
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+  .product-page__capability-body {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: 0;
+  }
+
+  /* ── 3. Core body (single-column narrative) ───────────────────────── */
+
+  .product-page__core-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    max-width: var(--measure-deck);
+  }
+  .product-page__core-body p {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .product-page__core-body .btn {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  /* ── 4. Built-for grid — 3-across responsive ──────────────────────── */
+
+  .product-page__built-for-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .product-page__built-for-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* Larger cell value for audience labels — H3-tier weight. */
+  .product-page__audience {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+
+  /* ── 5. Values grid — 3-across responsive ─────────────────────────── */
+
+  .product-page__values-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  @media (min-width: 48rem) { .product-page__values-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* ── 6. Tier grid — 3-across responsive + inline CTA row ──────────── */
+
+  .product-page__tier-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .product-page__tier-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  .product-page__tier-cta {
+    margin-top: var(--space-4);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--color-rule-2);
+  }
+
+  /* ── 7. Related products grid — 3-across responsive ───────────────── */
+
+  .product-page__related-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-7);
+  }
+  @media (min-width: 48rem) { .product-page__related-grid { grid-template-columns: repeat(3, 1fr); } }
+
+  /* ── 8. Footer CTA — centered wrap-up ─────────────────────────────── */
+
+  .product-page__footer-cta {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+  }
+  .product-page__footer-headline {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h1);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    color: var(--color-ink);
+    line-height: var(--lh-tight);
+    margin: 0;
+    text-wrap: balance;
+    max-width: 24ch;
+    font-variant: normal;
+    font-feature-settings: normal;
+  }
+  .product-page__footer-deck {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+    max-width: var(--measure-deck);
+  }
+  .product-page__footer-ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-5);
+    justify-content: center;
+    margin-top: var(--space-3);
+  }
+}

@@ -1,20 +1,28 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { PRODUCTS, TIERS } from "@/content/products";
 import { subscriptionsForProduct } from "@/content/subscriptions";
-import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { PageHero } from "@/components/primitives/PageHero";
+import { PageSection } from "@/components/primitives/PageSection";
+import { Eyebrow } from "@/components/primitives/Eyebrow";
+import { Button } from "@/components/primitives/Button";
 
 /**
- * PAGE · /products/mcp · the Nebbos MCP product page
+ * PAGE · /products/mcp · Nebbos MCP product page
  *
- * Follows the 14-section Apple device-marketing arc adapted for a
- * tool substrate (not a physical device). Sections 3 (physical tour)
- * and 9 (continuity/ecosystem) reframed for the MCP's software+hardware
- * hybrid nature — the MCP binary and credentials LIVE ON the USB device
- * per feedback_nebbos_mcp_lives_on_usb_shared_code_structure_2026_09_14.
+ * Substrate v3 · migrated 2026-09-17 from legacy FullBleedScene + inline-
+ * Tailwind to primitive composition + the shared `.product-page__*`
+ * pattern under @layer patterns. Zero page-scoped CSS file.
+ *
+ * The MCP page composes eight sections on top of the shared shape:
+ *   Hero · Highlights · Architecture · CoreComposition · BuiltFor ·
+ *   Values · TierPicker · Related · FooterCTA
+ *
+ * Doctrine cross-refs:
+ *   - feedback_nebbos_mcp_lives_on_usb_shared_code_structure_2026_09_14
+ *   - feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14
+ *   - feedback_nebbos_no_published_pricing_palantir_model
  */
 
-const MCP_PRODUCT = PRODUCTS.find((p) => p.key === "mcp")!;
 const MCP_SUBSCRIPTIONS = subscriptionsForProduct("mcp");
 
 export const metadata: Metadata = {
@@ -22,45 +30,6 @@ export const metadata: Metadata = {
   description:
     "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos USB — physical presence gates elevated tiers. Server-verified attestation. Shell-scoped isolation.",
 };
-
-// ── Section 1 · Hero ─────────────────────────────────────────────────────
-
-function Hero() {
-  return (
-    <FullBleedScene
-      className="hero-fullbleed"
-      scene={{ imageFamily: "concept-pearl", imageFamilyVariant: 1 }}
-      scrim="bottom"
-      vignetteStrength={0.5}
-      chapter="03"
-      chapterLabel="Nebbos MCP"
-      priority
-    >
-      <div className="container hero-fullbleed__inner">
-        <div className="hero-fullbleed__frame">
-          <h1 className="hero-fullbleed__title">
-            The tool substrate. <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>Attested.</em>
-          </h1>
-          <p className="hero-fullbleed__deck">
-            Every tool your Nebbos platform runs passes through one substrate.
-            The binary lives on your Nebbos USB. Physical presence gates the
-            elevated tiers. Attestation is server-verified, not client-claimed.
-          </p>
-          <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 24, marginTop: 32 }}>
-            <Link href="/contact" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper)", borderBottom: "1px solid var(--paper)", paddingBottom: 4, textDecoration: "none" }}>
-              Contact sales &rarr;
-            </Link>
-            <Link href="/demo" style={{ fontFamily: "var(--font-mono)", fontSize: 12, letterSpacing: "0.16em", textTransform: "uppercase", color: "var(--paper-2)", textDecoration: "none", opacity: 0.85 }}>
-              Book a demo
-            </Link>
-          </div>
-        </div>
-      </div>
-    </FullBleedScene>
-  );
-}
-
-// ── Section 2 · Highlights ───────────────────────────────────────────────
 
 const HIGHLIGHTS = [
   { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
@@ -70,123 +39,12 @@ const HIGHLIGHTS = [
   { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per Shell. Overage billed at cost-follow with quarterly reconciliation." },
 ];
 
-function Highlights() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Get the highlights
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Five commitments. One tool surface.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6 lg:gap-4">
-          {HIGHLIGHTS.map((h) => (
-            <li key={h.label} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">{h.label}</p>
-              <p className="mt-2 font-serif text-2xl font-medium text-ink leading-tight">{h.value}</p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">{h.note}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 3 · Take a closer look (MCP architecture) ────────────────────
-
 const ARCHITECTURE = [
-  {
-    heading: "One substrate, every tool call",
-    body: "Every action that touches Shell state &mdash; reads, writes, mutations, cross-boundary joins &mdash; passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors.",
-  },
-  {
-    heading: "Tier-gate decorator",
-    body: "Every tool declares its required tier (L1 · L2 · L3). The MCP verifies factors before executing. Missing biometric? Refused. Missing USB physical presence for L2? Refused. Missing enclave-signed approval for L3? Refused.",
-  },
-  {
-    heading: "Binary lives on the USB",
-    body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos USB volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations.",
-  },
-  {
-    heading: "Audit chain on every call",
-    body: "Every call writes an audit event with a hash-chained parent reference. Hash-chain verifiable end-to-end. Replay-proof, tamper-evident, discovery-ready.",
-  },
+  { heading: "One substrate, every tool call", body: "Every action that touches Shell state — reads, writes, mutations, cross-boundary joins — passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors." },
+  { heading: "Tier-gate decorator", body: "Every tool declares its required tier (L1 · L2 · L3). The MCP verifies factors before executing. Missing biometric? Refused. Missing USB physical presence for L2? Refused. Missing enclave-signed approval for L3? Refused." },
+  { heading: "Binary lives on the USB", body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos USB volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations." },
+  { heading: "Audit chain on every call", body: "Every call writes an audit event with a hash-chained parent reference. Hash-chain verifiable end-to-end. Replay-proof, tamper-evident, discovery-ready." },
 ];
-
-function Architecture() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-14 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Take a closer look
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            How the substrate holds.
-          </h2>
-        </header>
-        <ul className="space-y-10">
-          {ARCHITECTURE.map((a) => (
-            <li key={a.heading} className="border-t border-rule pt-6">
-              <h3 className="font-serif text-xl md:text-2xl font-medium text-ink tracking-tight">
-                {a.heading}
-              </h3>
-              <p className="mt-3 max-w-2xl text-base text-ink-2 leading-relaxed">
-                {a.body}
-              </p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 4 · Core (composition with USB) ──────────────────────────────
-
-function CoreComposition() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container-narrow py-24 md:py-32">
-        <header className="space-y-3 mb-8 max-w-2xl">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            The core
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            One code tree.{" "}
-            <em className="font-serif italic text-gold">Two surfaces.</em>
-          </h2>
-        </header>
-        <div className="max-w-2xl space-y-6">
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            The Nebbos MCP and the Nebbos USB are one code tree. The binary
-            ships on the encrypted USB volume; physical presence of the
-            device is the hardware factor that gates elevated tiers.
-          </p>
-          <p className="text-base md:text-lg text-ink-2 leading-relaxed">
-            Without the USB plugged in, elevated permissions are not
-            available. There is no cloud-only version of the MCP with the
-            same authority. The device is the contract.
-          </p>
-          <p>
-            <Link
-              href="/products/usb"
-              className="font-mono text-xs uppercase tracking-[0.14em] text-ink underline underline-offset-4 decoration-rule hover:decoration-ink transition-colors"
-            >
-              About the Nebbos USB &rarr;
-            </Link>
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 6 · Built for ────────────────────────────────────────────────
 
 const BUILT_FOR = [
   { audience: "Enterprise operators", scope: "Every tool call authenticated, versioned, and auditable." },
@@ -194,39 +52,11 @@ const BUILT_FOR = [
   { audience: "Platform builders", scope: "Nebbos.ai and your own domain-specific tools, one substrate." },
 ];
 
-function BuiltFor() {
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Built for
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Operators who need their tools to prove{" "}
-            <em className="font-serif italic text-gold">what they did.</em>
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {BUILT_FOR.map((b) => (
-            <li key={b.audience} className="border-t border-rule pt-5">
-              <p className="font-serif text-2xl font-medium text-ink tracking-tight">{b.audience}</p>
-              <p className="mt-3 text-base text-ink-2 leading-relaxed">{b.scope}</p>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  );
-}
-
-// ── Section 12 · Values ──────────────────────────────────────────────────
-
 const VALUE_CARDS = [
   {
     factor: "Attestation",
     headline: "The MCP verifies. You don't claim.",
-    body: "Every elevated call requires factors the server verifies against enrolled credentials. Signature counter, origin, attestation chain, tier gate &mdash; all checked before the tool runs.",
+    body: "Every elevated call requires factors the server verifies against enrolled credentials. Signature counter, origin, attestation chain, tier gate — all checked before the tool runs.",
   },
   {
     factor: "Shell isolation",
@@ -240,171 +70,168 @@ const VALUE_CARDS = [
   },
 ];
 
-function Values() {
+export default function ProductMcpPage() {
+  const others = PRODUCTS.filter((p) => p.key !== "mcp");
+
   return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Values
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            Three commitments. No exceptions.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {VALUE_CARDS.map((v) => (
-            <li key={v.factor} className="border-t border-rule pt-6">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">{v.factor}</p>
-              <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">
-                {v.headline}
-              </p>
-              <p className="mt-4 text-base text-ink-2 leading-relaxed">{v.body}</p>
+    <>
+      <PageHero
+        surface="scene"
+        align="start"
+        eyebrow="Nebbos MCP"
+        chapter="03"
+        chapterLabel="Nebbos MCP"
+        imageFamily="concept-pearl"
+        priority
+        headline={
+          <>
+            The tool substrate. <em>Attested.</em>
+          </>
+        }
+        deck="Every tool your Nebbos platform runs passes through one substrate. The binary lives on your Nebbos USB. Physical presence gates the elevated tiers. Attestation is server-verified, not client-claimed."
+        ctas={
+          <>
+            <Button variant="ghost" tone="onDark" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onDark" href="/demo">Book a demo</Button>
+          </>
+        }
+      />
+
+      <PageSection ruled>
+        <Eyebrow>Get the highlights</Eyebrow>
+        <h2 className="product-page__section-heading">Five commitments. One tool surface.</h2>
+        <ul className="product-page__highlights-grid">
+          {HIGHLIGHTS.map((h) => (
+            <li key={h.label} className="product-page__cell">
+              <Eyebrow>{h.label}</Eyebrow>
+              <p className="product-page__cell-value">{h.value}</p>
+              <p className="product-page__cell-note">{h.note}</p>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Section 13 · Tier picker ─────────────────────────────────────────────
+      <PageSection ruled>
+        <Eyebrow>Take a closer look</Eyebrow>
+        <h2 className="product-page__section-heading">How the substrate holds.</h2>
+        <ul className="product-page__capabilities-list">
+          {ARCHITECTURE.map((a) => (
+            <li key={a.heading} className="product-page__capability-row">
+              <h3 className="product-page__capability-heading">{a.heading}</h3>
+              <p className="product-page__capability-body">{a.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
 
-function TierPicker() {
-  return (
-    <section className="border-b border-rule">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            Choose your tier
+      <PageSection ruled>
+        <Eyebrow>The core</Eyebrow>
+        <h2 className="product-page__section-heading">
+          One code tree. <em>Two surfaces.</em>
+        </h2>
+        <div className="product-page__core-body">
+          <p>
+            The Nebbos MCP and the Nebbos USB are one code tree. The binary
+            ships on the encrypted USB volume; physical presence of the device
+            is the hardware factor that gates elevated tiers.
           </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            One MCP. Three tiers.
-          </h2>
-          <p className="max-w-2xl text-base text-ink-2 leading-relaxed pt-2">
-            Each tier unlocks a different scope of the tool surface. L2 and L3
-            require the Nebbos USB physically plugged in; L3 additionally
-            requires an enclave-signed approval token per admin call.
+          <p>
+            Without the USB plugged in, elevated permissions are not
+            available. There is no cloud-only version of the MCP with the
+            same authority. The device is the contract.
           </p>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <Button variant="ghost" tone="onPaper" href="/products/usb">About the Nebbos USB</Button>
+        </div>
+      </PageSection>
+
+      <PageSection ruled ground="paper2">
+        <Eyebrow>Built for</Eyebrow>
+        <h2 className="product-page__section-heading">
+          Operators who need their tools to prove <em>what they did.</em>
+        </h2>
+        <ul className="product-page__built-for-grid">
+          {BUILT_FOR.map((b) => (
+            <li key={b.audience} className="product-page__cell">
+              <p className="product-page__audience">{b.audience}</p>
+              <p className="product-page__cell-note">{b.scope}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Values</Eyebrow>
+        <h2 className="product-page__section-heading">Three commitments. No exceptions.</h2>
+        <ul className="product-page__values-grid">
+          {VALUE_CARDS.map((v) => (
+            <li key={v.factor} className="product-page__cell">
+              <Eyebrow tone="accent">{v.factor}</Eyebrow>
+              <p className="product-page__cell-headline">{v.headline}</p>
+              <p className="product-page__cell-note">{v.body}</p>
+            </li>
+          ))}
+        </ul>
+      </PageSection>
+
+      <PageSection ruled>
+        <Eyebrow>Choose your tier</Eyebrow>
+        <h2 className="product-page__section-heading">One MCP. Three tiers.</h2>
+        <p className="product-page__lede">
+          Each tier unlocks a different scope of the tool surface. L2 and L3
+          require the Nebbos USB physically plugged in; L3 additionally
+          requires an enclave-signed approval token per admin call.
+        </p>
+        <ul className="product-page__tier-grid">
           {MCP_SUBSCRIPTIONS.map((sub) => {
             const tier = TIERS.find((t) => t.key === sub.tier)!;
             return (
-              <li key={sub.sku_id} className="border-t border-rule pt-6 flex flex-col">
-                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-gold">
-                  {tier.label}
+              <li key={sub.sku_id} className="product-page__cell">
+                <Eyebrow tone="accent">{tier.label}</Eyebrow>
+                <p className="product-page__cell-headline">{sub.headline}</p>
+                <p className="product-page__cell-note">
+                  <strong>Factors</strong> · {tier.factors}
                 </p>
-                <p className="mt-3 font-serif text-xl md:text-2xl font-medium text-ink tracking-tight leading-tight">
-                  {sub.headline}
+                <p className="product-page__cell-note">
+                  <strong>Ops</strong> · {tier.scope}
                 </p>
-                <p className="mt-4 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Factors</strong> &middot; {tier.factors}
-                </p>
-                <p className="mt-2 text-sm text-ink-2 leading-relaxed">
-                  <strong className="text-ink">Ops</strong> &middot; {tier.scope}
-                </p>
-                <p className="mt-6 pt-6 border-t border-rule-2">
-                  <Link
-                    href="/contact"
-                    className="font-mono text-xs uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                  >
-                    Contact sales &rarr;
-                  </Link>
-                </p>
+                <div className="product-page__tier-cta">
+                  <Button variant="ghost" tone="onPaper" href="/contact">Contact sales</Button>
+                </div>
               </li>
             );
           })}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Section 14 · Related ─────────────────────────────────────────────────
-
-function Related() {
-  const others = PRODUCTS.filter((p) => p.key !== "mcp");
-  return (
-    <section className="border-b border-rule bg-paper-2">
-      <div className="container py-24 md:py-32">
-        <header className="max-w-3xl space-y-3 mb-14">
-          <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-ink-3">
-            The other three products
-          </p>
-          <h2 className="font-serif text-3xl md:text-4xl font-medium tracking-tight text-ink">
-            One matrix. Four products.
-          </h2>
-        </header>
-        <ul className="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <PageSection ruled ground="paper2">
+        <Eyebrow>The other three products</Eyebrow>
+        <h2 className="product-page__section-heading">One matrix. Four products.</h2>
+        <ul className="product-page__related-grid">
           {others.map((p) => (
-            <li key={p.key} className="border-t border-rule pt-5">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-ink-3">{p.eyebrow}</p>
-              <p className="mt-2 font-serif text-xl font-medium text-ink tracking-tight">{p.name}</p>
-              <p className="mt-3 text-sm text-ink-2 leading-relaxed">{p.tagline}</p>
-              <p className="mt-4">
-                <Link
-                  href={`/products/${p.slug}`}
-                  className="font-mono text-[11px] uppercase tracking-[0.14em] text-ink hover:text-gold transition-colors underline underline-offset-4 decoration-rule hover:decoration-gold"
-                >
-                  Explore &rarr;
-                </Link>
-              </p>
+            <li key={p.key} className="product-page__cell">
+              <Eyebrow>{p.eyebrow}</Eyebrow>
+              <p className="product-page__cell-value">{p.name}</p>
+              <p className="product-page__cell-note">{p.tagline}</p>
+              <Button variant="ghost" tone="onPaper" href={`/products/${p.slug}`}>Explore</Button>
             </li>
           ))}
         </ul>
-      </div>
-    </section>
-  );
-}
+      </PageSection>
 
-// ── Footer CTA ───────────────────────────────────────────────────────────
-
-function FooterCTA() {
-  return (
-    <section>
-      <div className="container-narrow py-24 md:py-32 text-center">
-        <h2 className="font-serif text-4xl md:text-5xl font-medium tracking-tight text-ink text-balance">
-          Every tool call, attested.
-        </h2>
-        <p className="mt-6 max-w-xl mx-auto text-lg text-ink-2 leading-relaxed">
-          Enterprise procurement and regulated deployments: reach out and
-          we&rsquo;ll walk you through provisioning, tier gates, and audit
-          chain setup.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center justify-center gap-6">
-          <Link
-            href="/contact"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink border-b border-ink pb-1 hover:text-gold hover:border-gold transition-colors"
-          >
-            Contact sales &rarr;
-          </Link>
-          <Link
-            href="/demo"
-            className="font-mono text-sm uppercase tracking-[0.16em] text-ink-2 hover:text-ink transition-colors"
-          >
-            Book a demo
-          </Link>
+      <PageSection>
+        <div className="product-page__footer-cta">
+          <h2 className="product-page__footer-headline">Every tool call, attested.</h2>
+          <p className="product-page__footer-deck">
+            Enterprise procurement and regulated deployments: reach out and
+            we&rsquo;ll walk you through provisioning, tier gates, and audit
+            chain setup.
+          </p>
+          <div className="product-page__footer-ctas">
+            <Button variant="primary" tone="onPaper" href="/contact">Contact sales</Button>
+            <Button variant="ghost" tone="onPaper" href="/demo">Book a demo</Button>
+          </div>
         </div>
-      </div>
-    </section>
-  );
-}
-
-// ── Page composition ─────────────────────────────────────────────────────
-
-export default function ProductMcpPage() {
-  return (
-    <main className="min-h-screen bg-paper">
-      <Hero />
-      <Highlights />
-      <Architecture />
-      <CoreComposition />
-      <BuiltFor />
-      <Values />
-      <TierPicker />
-      <Related />
-      <FooterCTA />
-    </main>
+      </PageSection>
+    </>
   );
 }
