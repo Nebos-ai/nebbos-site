@@ -1,0 +1,165 @@
+/* ============================================================================
+   app/products/products.css · @layer page · /products route styles
+   All values via var(--token). Every color/spacing/typography reference flows
+   through the tokens layer. Class prefix `.products__*` keeps the file scoped.
+   ============================================================================ */
+
+@layer page {
+  .products__flower {
+    width: var(--space-6);
+    height: var(--space-6);
+    flex-shrink: 0;
+  }
+
+  .products__section-heading {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h2);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-heading);
+    color: var(--color-ink);
+    margin: var(--space-3) 0 var(--space-6);
+    max-width: var(--measure-title);
+    text-wrap: balance;
+  }
+
+  .products__tier-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-6);
+    margin-top: var(--space-5);
+  }
+  @media (min-width: 48rem) {
+    .products__tier-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .products__tier-cell {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-4);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+  .products__tier-factors {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .products__tier-scope {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+
+  .products__matrix-lede {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: var(--space-3) 0 var(--space-8);
+  }
+
+  .products__matrix {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-8);
+  }
+
+  .products__row {
+    border-top: 1px solid var(--color-rule);
+    padding-top: var(--space-6);
+  }
+
+  .products__row-header {
+    display: flex;
+    align-items: flex-start;
+    gap: var(--space-4);
+  }
+  .products__row-header > div {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+
+  .products__product-name {
+    font-family: var(--font-sans);
+    font-size: var(--fs-h3);
+    font-weight: var(--fw-medium);
+    letter-spacing: var(--tracking-tight);
+    line-height: var(--lh-heading);
+    color: var(--color-ink);
+    margin: 0;
+  }
+  .products__product-desc {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    max-width: var(--measure-deck);
+    margin: var(--space-1) 0 0;
+  }
+
+  .products__sku-grid {
+    margin-top: var(--space-6);
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+  }
+  @media (min-width: 48rem) {
+    .products__sku-grid {
+      grid-template-columns: repeat(3, 1fr);
+      column-gap: var(--space-6);
+    }
+  }
+
+  .products__sku {
+    border-top: 1px solid var(--color-rule-2);
+    padding-top: var(--space-3);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+  }
+  .products__sku-name {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink);
+    line-height: var(--lh-body);
+    margin: var(--space-2) 0 0;
+  }
+  .products__sku-scope {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-2);
+    line-height: var(--lh-body);
+    margin: 0;
+  }
+  .products__sku .btn {
+    align-self: flex-start;
+    margin-top: var(--space-2);
+  }
+
+  .products__color-note {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body);
+    color: var(--color-ink-3);
+    line-height: var(--lh-body);
+    max-width: var(--measure-prose);
+    margin-top: var(--space-6);
+  }
+  .products__color-note strong {
+    font-weight: var(--fw-medium);
+    color: var(--color-ink-2);
+  }
+  .products__color-note code {
+    font-family: var(--font-mono);
+    font-size: 0.9375em;
+    color: var(--color-ink-2);
+  }
+}
