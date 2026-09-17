@@ -28,21 +28,21 @@ const MCP_SUBSCRIPTIONS = subscriptionsForProduct("mcp");
 export const metadata: Metadata = {
   title: "Nebbos MCP · The tool substrate. Attested.",
   description:
-    "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos USB — physical presence gates elevated tiers. Server-verified attestation. Shell-scoped isolation.",
+    "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos Cradle — physical presence gates elevated tiers. Server-verified attestation. Shell-scoped isolation.",
 };
 
 const HIGHLIGHTS = [
   { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
   { label: "Attestation", value: "Server-verified", note: "The MCP verifies factors before executing. Client claims mean nothing." },
   { label: "Isolation", value: "Shell-scoped", note: "Cross-Shell reads require enclave-signed approval. No accidental crossing." },
-  { label: "Binary", value: "Ships on the USB", note: "Config, credentials, and code live on your Nebbos USB. Unplug removes them." },
+  { label: "Binary", value: "Ships on the Cradle", note: "Config, credentials, and code live on your Nebbos Cradle. Unplug removes them." },
   { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per Shell. Overage billed at cost-follow with quarterly reconciliation." },
 ];
 
 const ARCHITECTURE = [
   { heading: "One substrate, every tool call", body: "Every action that touches Shell state — reads, writes, mutations, cross-boundary joins — passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors." },
-  { heading: "Tier-gate decorator", body: "Every tool declares its required tier (L1 · L2 · L3). The MCP verifies factors before executing. Missing biometric? Refused. Missing USB physical presence for L2? Refused. Missing enclave-signed approval for L3? Refused." },
-  { heading: "Binary lives on the USB", body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos USB volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations." },
+  { heading: "Tier-gate decorator", body: "Every tool declares its required tier (L1 · L2 · L3). The MCP verifies factors before executing. Missing biometric? Refused. Missing Cradle physical presence for L2? Refused. Missing enclave-signed approval for L3? Refused." },
+  { heading: "Binary lives on the Cradle", body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos Cradle volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations." },
   { heading: "Audit chain on every call", body: "Every call writes an audit event with a hash-chained parent reference. Hash-chain verifiable end-to-end. Replay-proof, tamper-evident, discovery-ready." },
 ];
 
@@ -88,7 +88,7 @@ export default function ProductMcpPage() {
             The tool substrate. <em>Attested.</em>
           </>
         }
-        deck="Every tool your Nebbos platform runs passes through one substrate. The binary lives on your Nebbos USB. Physical presence gates the elevated tiers. Attestation is server-verified, not client-claimed."
+        deck="Every tool your Nebbos platform runs passes through one substrate. The binary lives on your Nebbos Cradle. Physical presence gates the elevated tiers. Attestation is server-verified, not client-claimed."
         ctas={
           <>
             <Button variant="ghost" tone="onDark" href="/contact">Contact sales</Button>
@@ -131,16 +131,16 @@ export default function ProductMcpPage() {
         </h2>
         <div className="product-page__core-body">
           <p>
-            The Nebbos MCP and the Nebbos USB are one code tree. The binary
-            ships on the encrypted USB volume; physical presence of the device
+            The Nebbos MCP and the Nebbos Cradle are one code tree. The binary
+            ships on the encrypted Cradle volume; physical presence of the device
             is the hardware factor that gates elevated tiers.
           </p>
           <p>
-            Without the USB plugged in, elevated permissions are not
+            Without the Cradle plugged in, elevated permissions are not
             available. There is no cloud-only version of the MCP with the
             same authority. The device is the contract.
           </p>
-          <Button variant="ghost" tone="onPaper" href="/products/usb">About the Nebbos USB</Button>
+          <Button variant="ghost" tone="onPaper" href="/products/cradle">About the Nebbos Cradle</Button>
         </div>
       </PageSection>
 
@@ -178,7 +178,7 @@ export default function ProductMcpPage() {
         <h2 className="product-page__section-heading">One MCP. Three tiers.</h2>
         <p className="product-page__lede">
           Each tier unlocks a different scope of the tool surface. L2 and L3
-          require the Nebbos USB physically plugged in; L3 additionally
+          require the Nebbos Cradle physically plugged in; L3 additionally
           requires an enclave-signed approval token per admin call.
         </p>
         <ul className="product-page__tier-grid">

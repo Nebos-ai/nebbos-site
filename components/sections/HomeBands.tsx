@@ -99,7 +99,7 @@ export function HomeBands() {
             >
               The platform. The app. The MCP.{" "}
               <em style={{ fontStyle: "italic", color: "var(--gold)", fontWeight: 400 }}>
-                The USB.
+                The Cradle.
               </em>
             </h2>
             <p
