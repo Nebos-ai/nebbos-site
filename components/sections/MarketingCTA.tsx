@@ -20,9 +20,8 @@ export function MarketingCTA() {
           Put a Pearl on your hardest department.
         </h2>
         <p className="mkt-deck">
-          Thirty minutes with the team. We map one department, name the
-          Pearls that would live inside it, and show you the substrate
-          those Pearls run on.
+          Thirty minutes. We map one department. We name the Pearls that
+          would live inside it. You see the substrate they would run on.
         </p>
         <div className="mkt-hero__ctas">
           <Link href="/demo" className="mkt-cta mkt-cta--primary">

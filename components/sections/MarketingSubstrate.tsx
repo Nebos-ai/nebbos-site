@@ -19,32 +19,32 @@ const STAGES = [
   {
     n: "01",
     name: "Signal",
-    caption: "A departmental event fires. Cadence, deadline, threshold, escalation — every trigger a Pearl knows.",
+    caption: "A departmental event fires — a cadence, a deadline, a threshold, an inbound.",
   },
   {
     n: "02",
     name: "Ingest",
-    caption: "Files, calls, mail, tasks, tickets. Every source normalized into a memory row the reasoning layer can hold.",
+    caption: "Files, calls, mail, tasks and tickets normalize into memory rows.",
   },
   {
     n: "03",
     name: "Memory",
-    caption: "Every fact carries its provenance. The audit chain starts here — no memory row without a source cite.",
+    caption: "Every fact stored with its source cite. No row without provenance.",
   },
   {
     n: "04",
     name: "Approval",
-    caption: "Consequential actions block on the human. Biometric, presence, or enclave — the tier is fitted to the risk.",
+    caption: "Consequential actions block on a human. Biometric, Cradle, or enclave — the tier fits the risk.",
   },
   {
     n: "05",
     name: "Action",
-    caption: "The tool call runs, the mail goes out, the task lands. Reversible where the system can guarantee it.",
+    caption: "The tool call runs. The mail sends. The task lands. Reversible where the system can guarantee it.",
   },
   {
     n: "06",
     name: "Attestation",
-    caption: "A hash-chained record. Every action links to the human who approved it and the memory it was based on.",
+    caption: "A hash-chained record links the action to the human who approved it and the memory it read.",
   },
 ];
 
@@ -55,12 +55,12 @@ export function MarketingSubstrate() {
         <header className="mkt-flow__head">
           <p className="mkt-eyebrow">The substrate</p>
           <h2 id="mkt-flow-h" className="mkt-h2">
-            One shift. Every system. One audit trail.
+            Six stages. One hash-chained trail.
           </h2>
           <p className="mkt-deck">
-            Every operator action flows through the same six stages. Every
-            stage adds one link to a hash-chained record your auditor can
-            verify end to end.
+            Signal, ingest, memory, approval, action, attestation. Every
+            operator action flows the same six stages. Each stage links to
+            the next in a record your auditor can verify end to end.
           </p>
         </header>
 

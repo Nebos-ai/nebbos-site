@@ -67,12 +67,12 @@ export function MarketingNumbers() {
         <header className="mkt-numbers__head">
           <p className="mkt-eyebrow">In numbers</p>
           <h2 id="mkt-numbers-h" className="mkt-h2">
-            Every number measured. None estimated.
+            Measured. Sourced. Never estimated.
           </h2>
           <p className="mkt-deck">
-            Nothing hand-waved. Every figure below traces to either a live
-            filesystem count or a dated estate snapshot. Weekly refresh
-            planned; source cites live in the platform-metrics registry.
+            Every figure below traces to a live filesystem count or a dated
+            estate snapshot. No hand-waving. Weekly refresh planned; source
+            cites live in the platform-metrics registry.
           </p>
         </header>
 

@@ -40,11 +40,12 @@ export function MarketingProductsBand() {
         <header className="mkt-products__head">
           <p className="mkt-eyebrow">Products</p>
           <h2 id="mkt-products-h" className="mkt-h2">
-            Four products. One substrate.
+            Four products. Twelve SKUs.
           </h2>
           <p className="mkt-deck">
-            The platform, the app, the MCP, and the Cradle. Every one carries
-            hardware-attested identity; every one composes with the others.
+            The platform runs the Pearls. The app runs local. The MCP
+            carries the tools. The Cradle carries the credentials. Every
+            SKU ships with the same three tiers.
           </p>
         </header>
 

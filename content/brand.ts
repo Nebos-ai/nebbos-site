@@ -60,9 +60,14 @@ export const BRAND = {
   /** Category the company sits in — market label used in press / SEO only. */
   category: "Operator infrastructure",
 
-  /** Home hero deck under the title. */
+  /** Home hero deck under the title.
+   *  Register: runlayer-tier operational — short declarative sentences,
+   *  named artifacts, honest scope. Founder-directed 2026-09-18 after
+   *  runlayer.com/watch reference. Prior deck was poetic-parallel
+   *  ("Every X attested. Every X on hardware..."); the new deck names
+   *  what the product does in imperative-adjacent operational voice. */
   homeDeck:
-    "Every AI action attested. Every credential on hardware you hold. Every substrate portable when you leave.",
+    "See every tool call. Approve what matters. Attest what shipped. Credentials on a FIPS 140-3 Cradle you hold. Memory portable when you leave.",
 
   /** Sub-category for AI-first buyers (Wave 3e model-training angle). */
   categorySecondary: "Hardware-attested infrastructure for the AI-native operator",

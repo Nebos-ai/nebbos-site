@@ -1,25 +1,21 @@
 import type { Metadata } from "next";
-import { PRODUCTS, TIERS } from "@/content/products";
-import { PageHero } from "@/components/primitives/PageHero";
-import { PageSection } from "@/components/primitives/PageSection";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
-import { Button } from "@/components/primitives/Button";
-import "./products.css";
+import Link from "next/link";
+import { PRODUCTS, TIERS, type Product } from "@/content/products";
 
 /**
- * PAGE · /products · four-product × three-tier customer taxonomy
+ * PAGE · /products · v2 · 2026-09-18 · marketing-register rebuild
  *
- * Substrate v3 · migrated 2026-09-16 from inline-Tailwind to primitives.
- * Every font-size / spacing / color flows through `@layer tokens` via the
- * PageHero / PageSection / Eyebrow / Button primitives — zero inline
- * `text-5xl md:text-7xl`, zero hand-clamped padding, zero `font-mono
- * text-[10px] tracking-[0.14em]` sprinkled inline.
+ * Migrated from the v3 substrate primitives (PageHero paper /
+ * PageSection / Eyebrow / Button) to the dark Linear-tier marketing
+ * register (components/patterns/marketing-register.css). Every string
+ * kept verbatim; only the register + shape changed.
  *
- * Doctrine cross-refs:
- *   - reference_nebbos_customer_product_matrix_4_products_3_tiers_12_skus_2026_09_14
- *   - feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14
- *   - feedback_nebbos_identity_mark_flower_of_life_supersedes_swoosh_2026_09_13
- *   - feedback_nebbos_no_published_pricing_palantir_model  (no dollar figures)
+ * Shape:
+ *   1. Hero  — dark; eyebrow · display · deck · CTAs
+ *   2. Tiers — 3-tier composition explainer
+ *   3. Rows  — one per product: colored mark + name + description on
+ *              left; 3 tier cards on right
+ *   4. CTA   — closing "Book a briefing" bookend
  */
 
 export const metadata: Metadata = {
@@ -28,113 +24,148 @@ export const metadata: Metadata = {
     "The Nebbos platform, the app, the MCP, and the Cradle. Four products, three tiers each — twelve SKUs total. Every operator picks along (product, tier).",
 };
 
-/**
- * Inline flower mark — placeholder until @nebbos/brand v2.1.0 ships the
- * four-color variant pack. Component boundary preserved so the swap is a
- * single import change when the package lands.
- */
-function FlowerMark({ color }: { color: string }) {
-  return (
-    <svg viewBox="0 0 40 40" className="products__flower" aria-hidden="true">
-      <g fill="none" stroke={`var(${color}, var(--color-gold))`} strokeWidth="1.4">
-        <circle cx="20" cy="20" r="7" />
-        <circle cx="20" cy="13" r="7" />
-        <circle cx="26" cy="16.5" r="7" />
-        <circle cx="26" cy="23.5" r="7" />
-        <circle cx="20" cy="27" r="7" />
-        <circle cx="14" cy="23.5" r="7" />
-        <circle cx="14" cy="16.5" r="7" />
-      </g>
-    </svg>
-  );
+const PRODUCT_CLASS: Record<Product["key"], string> = {
+  platform: "mkt-productrow--platform",
+  app: "mkt-productrow--app",
+  mcp: "mkt-productrow--mcp",
+  usb: "mkt-productrow--cradle",
+};
+
+function shortName(product: Product): string {
+  return product.name.replace("Nebbos.ai ", "").replace("Nebbos ", "");
 }
 
 export default function ProductsPage() {
   return (
     <>
-      <PageHero
-        surface="paper"
-        align="start"
-        eyebrow="Products"
-        headline="The platform, the app, the MCP, and the Cradle."
-        deck={
-          <>
-            Nebbos.ai runs your Pearls, your fleet, and your governance under
-            one platform. It ships with the tools its MCP exposes, and with
-            the security of a hardware-attested Cradle. Four products, three
-            tiers each. Twelve SKUs. Every operator picks along{" "}
-            <em>(product, tier)</em>.
-          </>
-        }
-      />
-
-      <PageSection ruled compact>
-        <Eyebrow>Tier composition</Eyebrow>
-        <h2 className="products__section-heading">
-          Three tiers. Factors compose top-down.
-        </h2>
-        <div className="products__tier-grid">
-          {TIERS.map((tier) => (
-            <div key={tier.key} className="products__tier-cell">
-              <Eyebrow tone="accent">{tier.label}</Eyebrow>
-              <p className="products__tier-factors">{tier.factors}</p>
-              <p className="products__tier-scope">{tier.scope}</p>
+      {/* HERO */}
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="products-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <p className="mkt-eyebrow">Products</p>
+            <h1 id="products-h" className="mkt-display">
+              Four products. Twelve SKUs.
+            </h1>
+            <p className="mkt-deck">
+              The platform runs the Pearls. The app runs local. The MCP
+              carries the tools. The Cradle carries the credentials. Three
+              tiers per product. Twelve SKUs. Enterprise only.
+            </p>
+            <div className="mkt-hero__ctas">
+              <Link href="/demo" className="mkt-cta mkt-cta--primary">
+                Book a demo
+                <span className="mkt-cta__arrow" aria-hidden>→</span>
+              </Link>
+              <Link href="#matrix" className="mkt-cta mkt-cta--ghost">
+                See the matrix
+              </Link>
             </div>
-          ))}
+          </div>
         </div>
-      </PageSection>
+      </section>
 
-      <PageSection aria-labelledby="product-matrix">
-        <Eyebrow>The matrix</Eyebrow>
-        <h2 id="product-matrix" className="products__section-heading">
-          Four products. Twelve SKUs.
-        </h2>
-        <p className="products__matrix-lede">
-          Each product renders in a distinct flower-of-life color. Each
-          physical Nebbos Cradle ships in the product&rsquo;s color body with a
-          tier-level accent, so a customer holding an &ldquo;MCP-L2&rdquo;
-          device sees the MCP color body with the L2 tier finish.
-        </p>
+      {/* TIER COMPOSITION */}
+      <section className="mkt mkt-section" aria-labelledby="tiers-h">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">Tier composition</p>
+            <h2 id="tiers-h" className="mkt-h2">
+              Three tiers. Each strictly composes the one below.
+            </h2>
+            <p className="mkt-deck">
+              L1 adds device biometric. L2 adds the Cradle in the port.
+              L3 adds an enclave-signed approval token. Higher tiers never
+              relax lower-tier factors.
+            </p>
+          </header>
+          <div className="mkt-productrow__tiers">
+            {TIERS.map((tier) => (
+              <div key={tier.key} className="mkt-tier">
+                <p className="mkt-tier__key">{tier.key}</p>
+                <p className="mkt-tier__label">{tier.label.split(" · ").slice(1).join(" · ") || tier.key}</p>
+                <p className="mkt-tier__scope">{tier.factors}</p>
+                <p className="mkt-tier__scope" style={{ opacity: 0.72 }}>{tier.scope}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
 
-        <div className="products__matrix">
+      {/* PRODUCT MATRIX */}
+      <section className="mkt mkt-section" aria-labelledby="matrix">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">The matrix</p>
+            <h2 id="matrix" className="mkt-h2">
+              Pick along (product, tier).
+            </h2>
+            <p className="mkt-deck">
+              Every SKU carries a product color and a tier finish. A
+              Cradle-L2 device ships in the Cradle color body with the
+              L2 accent. No published pricing. Contact sales.
+            </p>
+          </header>
+
           {PRODUCTS.map((product) => (
-            <article key={product.key} className="products__row">
-              <header className="products__row-header">
-                <FlowerMark color={product.colorVar} />
-                <div>
-                  <Eyebrow>{product.eyebrow}</Eyebrow>
-                  <h3 className="products__product-name">{product.name}</h3>
-                  <p className="products__product-desc">{product.description}</p>
-                </div>
-              </header>
+            <article
+              key={product.key}
+              className={`mkt-productrow ${PRODUCT_CLASS[product.key]}`}
+              aria-labelledby={`prod-${product.key}-h`}
+            >
+              <div className="mkt-productrow__ident">
+                <span className="mkt-productrow__mark" aria-hidden />
+                <p className="mkt-eyebrow">{product.eyebrow}</p>
+                <h3 id={`prod-${product.key}-h`} className="mkt-productrow__name">
+                  {shortName(product)}
+                </h3>
+                <p className="mkt-productrow__desc">{product.description}</p>
+                <Link href={`/products/${product.slug}`} className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start" }}>
+                  Open {shortName(product)}
+                  <span className="mkt-cta__arrow" aria-hidden>→</span>
+                </Link>
+              </div>
 
-              <div className="products__sku-grid">
+              <div className="mkt-productrow__tiers">
                 {TIERS.map((tier) => (
-                  <div key={`${product.key}-${tier.key}`} className="products__sku">
-                    <Eyebrow tone="accent">{tier.label}</Eyebrow>
-                    <p className="products__sku-name">
-                      {product.name.replace("Nebbos.ai ", "").replace("Nebbos ", "")}
-                      {" · "}
-                      {tier.key}
+                  <div key={`${product.key}-${tier.key}`} className="mkt-tier">
+                    <p className="mkt-tier__key">{tier.key}</p>
+                    <p className="mkt-tier__label">
+                      {shortName(product)} · {tier.key}
                     </p>
-                    <p className="products__sku-scope">{tier.scope}</p>
-                    <Button variant="ghost" tone="onPaper" href="/contact">
+                    <p className="mkt-tier__scope">{tier.scope}</p>
+                    <Link href="/contact" className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start", marginTop: 8 }}>
                       Contact sales
-                    </Button>
+                    </Link>
                   </div>
                 ))}
               </div>
             </article>
           ))}
         </div>
+      </section>
 
-        <p className="products__color-note">
-          <strong>A note on colors.</strong> The four-color flower-of-life
-          variant pack lands in <code>@nebbos/brand@2.1.0</code>. Until then
-          this page renders every product mark in Nebbos gold; the swap is a
-          single set of tokens.
-        </p>
-      </PageSection>
+      {/* CLOSING CTA */}
+      <section className="mkt mkt-section mkt-closing" aria-labelledby="products-close">
+        <div className="mkt-closing__inner">
+          <p className="mkt-eyebrow">Book a briefing</p>
+          <h2 id="products-close" className="mkt-display">
+            One SKU. One department. One shift.
+          </h2>
+          <p className="mkt-deck">
+            Name the department you would put a Pearl on first. We map it
+            to a SKU and a tier. You watch one shift run on the Cradle.
+          </p>
+          <div className="mkt-hero__ctas">
+            <Link href="/demo" className="mkt-cta mkt-cta--primary">
+              Book a demo
+              <span className="mkt-cta__arrow" aria-hidden>→</span>
+            </Link>
+            <Link href="/contact" className="mkt-cta mkt-cta--ghost">
+              Contact sales
+            </Link>
+          </div>
+        </div>
+      </section>
     </>
   );
 }
