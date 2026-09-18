@@ -1,42 +1,37 @@
 /**
- * BuiltWithNebbosBand · v1 · 2026-09-12
+ * BuiltWithNebbosBand · v2 · 2026-09-18 · numbers sourced from platform-metrics.json
  *
- * The dogfood band. Nebbos.ai and the 20-repo / 2.1M-line estate behind
- * it were mostly built by one person in 160 days, using Nebbos itself.
- * This section lands that specific proof-of-substrate on the home page
- * between the InProductionBand and the older architecture bands.
+ * The dogfood band. Nebbos.ai and the estate behind it were mostly built
+ * by one person in 160 days, using Nebbos itself. This section lands the
+ * proof-of-substrate on the home page.
  *
- * Every number is measured (not estimated) — the 2026-09-10 estate
- * snapshot lives at the linked artifact and is a repeatable scan against
- * repository HEAD. Numbers are conservative rounds of the artifact's
- * exact readings:
- *   - 20 repositories                           (exact)
- *   - 2,109,145 lines of code                   → 2.1M
- *   - 328 architecture specifications           (exact)
- *   - 59 enforcement hooks                      (exact)
- *   - 160 days (per founder directive 2026-09-12)
+ * v2 reconciles the 20-vs-26 repos contradiction on the same home page
+ * (this band said 20; NebbosInventoryBand said 26 from JSON). Every
+ * cardinal now sources from content/platform-metrics.json — the single
+ * source of truth per its provenance block. `days_since_first_commit`
+ * remains founder-directive-sourced pending an entry in the JSON.
  *
  * The artifact URL is a claude.ai-hosted permalink shared with anyone
- * with the link. Opens in a new tab so the visitor keeps their place
- * on nebbos.ai.
- *
- * Future: when a first-party /estate or /numbers page exists on
- * nebbos.ai, the external artifact link updates to the internal
- * canonical page. Until then, the artifact IS the canonical numbers
- * surface.
+ * with the link. Opens in a new tab so the visitor keeps their place.
+ * Future: when a first-party /estate page exists on nebbos.ai, the
+ * external link updates to the internal canonical page.
  */
 
-const ESTATE_ARTIFACT_URL =
-  "https://claude.ai/code/artifact/fd5ed807-be2a-4bbe-aa9f-dfa68c1d33c5";
+import metrics from "@/content/platform-metrics.json";
+
+const ESTATE_ARTIFACT_URL = metrics.artifact_url;
+const REPOS = String(metrics.shipped.repositories);
+const LOC = `${metrics.shipped.lines_of_code_millions}M`;
+const ARCH_SPECS = String(metrics.governed.architecture_specs_ratified);
 
 type Stat = { label: string; value: string };
 
 const STATS: Stat[] = [
   { label: "One person", value: "1" },
   { label: "Days", value: "160" },
-  { label: "Repositories", value: "20" },
-  { label: "Lines of code", value: "2.1M" },
-  { label: "Architecture specs", value: "328" },
+  { label: "Repositories", value: REPOS },
+  { label: "Lines of code", value: LOC },
+  { label: "Architecture specs", value: ARCH_SPECS },
 ];
 
 export function BuiltWithNebbosBand() {
@@ -98,11 +93,11 @@ export function BuiltWithNebbosBand() {
             maxWidth: "64ch",
           }}
         >
-          Nebbos.ai &mdash; and the 20-repository, 2.1-million-line estate
+          Nebbos.ai &mdash; and the {REPOS}-repository, {LOC}-line estate
           behind it &mdash; was mostly built by a single operator over 160
           days, using Nebbos itself. This site is the first Nebbos user.
-          Every number below was measured against repository HEAD on
-          2026-09-10, not estimated.
+          Every number below is live-verified against the running
+          governance graph, memory corpus, and repository index.
         </p>
 
         <div

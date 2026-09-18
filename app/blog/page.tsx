@@ -7,7 +7,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Notes from Nebbos",
   description:
-    "Longer writing on the platform, its tools, its MCP, the security of its USB, and how operators run their Pearls under the whole system.",
+    "Longer writing on the platform, its tools, its MCP, the security of its Cradle, and how operators run their Pearls under the whole system.",
 };
 
 type PostMeta = {
@@ -58,7 +58,7 @@ export default async function BlogIndexPage() {
         <h1 className="editorial-page__title">Notes from Nebbos.</h1>
         <p className="editorial-page__deck">
           Longer writing on the platform, its tools, its MCP&rsquo;s system
-          abilities, and the security of its USB.
+          abilities, and the security of its Cradle.
         </p>
       </header>
       <ol className="editorial-list">

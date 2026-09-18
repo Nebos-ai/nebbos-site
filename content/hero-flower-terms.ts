@@ -58,7 +58,7 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     key: "compliance",
     label: "Compliance",
     blurb:
-      "Every operation writes a hash-chained audit event. SOC 2, HIPAA, and GDPR fall out of the architecture, not a manual checklist. Discovery-ready from day one.",
+      "Every operation writes a hash-chained audit event. The substrate is designed against SOC 2, ISO 27001, and EU AI Act Annex IV controls — certification is in progress; the audit trail is production. Full status at /compliance.",
     learnMoreHref: "/compliance",
     ringIndex: 1,
   },
@@ -115,7 +115,7 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     label: "Approval",
     blurb:
       "Elevated actions require biometric plus Nebbos Cradle physical presence. Approval is architectural — the platform refuses to execute without the factors.",
-    learnMoreHref: "/products/usb",
+    learnMoreHref: "/products/cradle",
     ringIndex: 8,
   },
   {
@@ -135,10 +135,10 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     ringIndex: 10,
   },
   {
-    key: "departments",
-    label: "Departments",
+    key: "domains",
+    label: "Domains",
     blurb:
-      "Every team runs in an isolated Shell. Cross-boundary reads are a ceremony, not an accident. Your finance data cannot leak into a marketing prompt.",
+      "Every domain runs in an isolated Shell. Cross-boundary reads are a ceremony, not an accident. Your finance data cannot leak into a marketing prompt.",
     learnMoreHref: "/solutions",
     ringIndex: 11,
   },
@@ -194,7 +194,7 @@ export const HERO_FLOWER_TERMS: readonly HeroFlowerTerm[] = [
     key: "collaboration",
     label: "Collaboration",
     blurb:
-      "Multi-tenant by default. Every team member operates at exactly their identity level; delegation flows through the same approval graph as every other decision.",
+      "Every operator works at exactly their identity level. Delegation flows through the same approval graph as every other decision — nothing consequential ships without a named human proving they are the human.",
     learnMoreHref: "/products/platform",
     ringIndex: 18,
   },

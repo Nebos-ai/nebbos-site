@@ -72,7 +72,18 @@
   }
 }
 
-/* ── 1. RESET · @layer reset ─────────────────────────────────────────── */
+/* ============================================================================
+   PAGE LAYER · legacy globals migrating out per-route (Phase 3 sweep)
+   All rules below live in @layer page so v3 primitives + patterns
+   (loaded in @layer primitives / @layer patterns above) win the cascade
+   without needing !important. This fixes the small-caps leak, the .btn
+   duplicate-class fight, the .eyebrow color override, and every other
+   documented cascade inversion. Ratified 2026-09-18.
+   ============================================================================ */
+
+@layer page {
+
+/* ── 1. RESET · lives in @layer page for now; migrating to @layer reset ─ */
 
 *,
 *::before,
@@ -719,7 +730,7 @@ main {
   line-height: 1.08;
   letter-spacing: -0.02em;
   font-weight: 600;
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   color: var(--ink);
   margin-block: var(--space-5) var(--space-6);
@@ -787,7 +798,7 @@ main {
   font-weight: 600;
   /* First letter of each word big-cap, rest small-cap — source text stays
      mixed-case, browser converts lowercase to small-caps glyphs. */
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   color: var(--paper-on-image);
   text-wrap: balance;
@@ -1244,7 +1255,7 @@ main {
   font-size: var(--size-h3);
   line-height: 1.2;
   font-weight: 600;
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   color: var(--ink);
@@ -1390,7 +1401,7 @@ main {
   font-size: var(--size-h3);
   line-height: 1.15;
   font-weight: 600;
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   margin-block-end: var(--space-2);
@@ -1483,7 +1494,7 @@ main {
   font-size: var(--size-h3);
   line-height: 1.2;
   font-weight: 600;
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   letter-spacing: -0.014em;
   color: var(--ink);
@@ -1494,7 +1505,7 @@ main {
   font-size: var(--size-h4);
   line-height: 1.25;
   font-weight: 600;
-  font-variant: small-caps;
+  /* font-variant: small-caps; — retired 2026-09-18: Space Grotesk carries no true smcp OpenType feature, so browsers synthesised fake-tiny-uppercase. Text renders in source case now. */
   font-feature-settings: "smcp", "c2sc";
   color: var(--ink);
   margin-block: var(--space-12) var(--space-4);
@@ -2171,3 +2182,5 @@ main {
     --hero-opacity: 1;
   }
 }
+
+} /* ═══ close @layer page ═══ */

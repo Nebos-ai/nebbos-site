@@ -23,9 +23,9 @@ import "./platform.css";
 const PLATFORM_SUBSCRIPTIONS = subscriptionsForProduct("platform");
 
 export const metadata: Metadata = {
-  title: "Nebbos.ai Platform · The AI operations platform for institutional scale.",
+  title: "Nebbos.ai Platform · Institutional-scale AI operations.",
   description:
-    "Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today.",
+    "Runs your Pearls, your fleet, your governance. Multi-Shell by default. Every action attested. Every substrate yours.",
 };
 
 const HIGHLIGHTS = [
@@ -33,13 +33,13 @@ const HIGHLIGHTS = [
   { label: "Runtime", value: "Pearls at scale", note: "Every Pearl runs metered, isolated, and modular. Fleet-wide governance in one plane." },
   { label: "Auth", value: "Biometric-native", note: "Touch ID · Face ID · Windows Hello. Every session, every operator, every action." },
   { label: "Audit", value: "Hash-chained", note: "Every action writes a hash-chained audit event. Replay-proof, tamper-evident." },
-  { label: "Deploy", value: "Live in production", note: "In use today by government and enterprise customers. Not vaporware." },
+  { label: "Deploy", value: "Live in production", note: "Running in K-12 school districts across multiple U.S. states today. Not vaporware." },
 ];
 
 const CAPABILITIES = [
   { heading: "Pearl orchestration", body: "Run Pearl workflows in isolated Shells. Metered execution, per-Pearl audit trails, and per-Shell policy enforcement out of the box." },
   { heading: "Knowledge graph as memory", body: "Your operational context lives in a queryable graph. Every substrate change writes a settled entry; every query resolves to the same truth." },
-  { heading: "Approval-as-a-mechanism", body: "Every elevated action gates on operator biometric plus the Nebbos USB. Approval is architectural, not a policy paragraph." },
+  { heading: "Approval-as-a-mechanism", body: "Every elevated action gates on operator biometric plus the Nebbos Cradle. Approval is architectural, not a policy paragraph." },
   { heading: "Full-observability from day one", body: "Metrics, logs, traces, and audit shards wired from your first deploy. Not a follow-up quarter." },
 ];
 
@@ -58,7 +58,7 @@ const VALUE_CARDS = [
   {
     factor: "Attestation",
     headline: "Approval is architectural.",
-    body: "Every elevated action gates on biometric + Nebbos USB. No policy document; the platform refuses to execute without valid factors.",
+    body: "Every elevated action gates on biometric + Nebbos Cradle. No policy document; the platform refuses to execute without valid factors.",
   },
   {
     factor: "Cost-transparency",
@@ -85,7 +85,7 @@ export default function ProductPlatformPage() {
             Your operations, <em>at institutional scale.</em>
           </>
         }
-        deck="Runs your Pearls, your fleet, your governance. Multi-Shell by default. Live in production with government and enterprise customers today. Every action attested. Every substrate yours."
+        deck="Runs your Pearls, your fleet, your governance. Multi-Shell by default. Every action attested. Every substrate yours. Running in K-12 school districts across multiple U.S. states today."
         ctas={
           <>
             <Button variant="ghost" tone="onDark" href="/contact">Contact sales</Button>
@@ -129,8 +129,8 @@ export default function ProductPlatformPage() {
         <div className="platform__core-body">
           <p>
             The platform composes with the Nebbos MCP (the tool substrate) and
-            the Nebbos USB (the hardware attestation gate). Every tool call
-            passes through the MCP; the MCP itself lives on your USB.
+            the Nebbos Cradle (the hardware attestation gate). Every tool call
+            passes through the MCP; the MCP itself lives on your Cradle.
           </p>
           <p>You own the ground. Sovereignty isn&rsquo;t marketing — it&rsquo;s the architecture.</p>
           <Button variant="ghost" tone="onPaper" href="/products/mcp">About the Nebbos MCP</Button>
@@ -171,7 +171,7 @@ export default function ProductPlatformPage() {
         <h2 className="platform__section-heading">One platform. Three operator tiers.</h2>
         <p className="platform__tier-lede">
           Every operator seat gates on device biometric. L2 seats add the
-          Nebbos USB physical-presence factor. L3 seats add enclave-signed
+          Nebbos Cradle physical-presence factor. L3 seats add enclave-signed
           approval for cross-boundary and quorum operations.
         </p>
         <ul className="platform__tier-grid">

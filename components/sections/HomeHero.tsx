@@ -2,21 +2,20 @@ import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { BRAND } from "@/content/brand";
 
 /**
- * HomeHero · v7 · 2026-09-11 · cold-visitor deck-line added
+ * HomeHero · v8 · 2026-09-18 · category-claim H1 + manifesto ceremony eyebrow
  *
- * v6 (2026-08-24) fell back to static family-band-intelligence still while
- * the hero video regenerates. Founder feedback on the first cut: Scene A
- * should be a crowd of thousands of visible faces (not 4 close-ups); Scene B
- * should be a much bigger modern bridge with a large crowd, only a few break
- * forward and cross (not people walking opposite directions). Will swap
- * back to FullBleedVideo when new shots land.
+ * v7 (2026-09-11) put the founder-directed manifesto "Remember who you are."
+ * in the H1 slot. On 2026-09-17 the ratified BRAND.taglineShort shifted to
+ * "Infrastructure for AI operators." — a Stripe-shape categorical claim that
+ * lets a CISO decode the category in five seconds. Per
+ * docs/marketing/homepage-first-time-visitor-strategy-2026-09-17.md §5.1
+ * the H1 IS BRAND.taglineShort verbatim.
  *
- * v7 (2026-09-11) adds BRAND.homeDeck as a hero deck line under the H1
- * manifesto. Cold-visitor problem: the H1 "Remember who you are." is brand
- * doctrine (byte-exact, protected) but explains nothing about what Nebbos
- * DOES. The deck sits under it (via existing .hero-fullbleed__deck class in
- * globals.css) and carries the run-layer product story sourced from
- * content/brand.ts. Chapter I / Where it starts eyebrow preserved.
+ * v8 (2026-09-18) reconciles both directives: H1 = taglineShort (category
+ * claim, load-bearing for first-fold decode), manifesto = mono ceremony
+ * line above the eyebrow (byte-exact string preserved, aesthetic emphasis
+ * retained), deck = BRAND.homeDeck (proof/expansion of the H1 claim).
+ * Chapter I / Where it starts eyebrow preserved.
  */
 
 export function HomeHero() {
@@ -33,8 +32,9 @@ export function HomeHero() {
     >
       <div className="container hero-fullbleed__inner">
         <div className="hero-fullbleed__frame">
-          <h1 id="hero-heading" className="hero-fullbleed__title hero-fullbleed__title--manifesto">
-            Remember who you are.
+          <p className="hero-fullbleed__manifesto" aria-hidden>Remember who you are.</p>
+          <h1 id="hero-heading" className="hero-fullbleed__title">
+            {BRAND.taglineShort}
           </h1>
           <p className="hero-fullbleed__deck">{BRAND.homeDeck}</p>
         </div>

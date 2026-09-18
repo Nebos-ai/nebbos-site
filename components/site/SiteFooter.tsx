@@ -119,7 +119,7 @@ export function SiteFooter() {
             alignItems: "flex-start",
           }}
         >
-          <div
+          <address
             style={{
               fontFamily: "var(--font-mono)",
               fontSize: 11,
@@ -127,14 +127,13 @@ export function SiteFooter() {
               color: "var(--ink-3)",
               lineHeight: 1.6,
               maxWidth: "60ch",
+              fontStyle: "normal",
             }}
           >
-            © {new Date().getFullYear()} {BRAND.parentEntity} &middot; {BRAND.parentEntityLocation}
-            <br />
-            {BRAND.aiEntity} &middot; {BRAND.aiEntityLocation}
-            <br />
-            {BRAND.legalEntity} &middot; {BRAND.legalEntityLocation} — All rights reserved
-          </div>
+            <div>© {new Date().getFullYear()} {BRAND.parentEntity} &middot; {BRAND.parentEntityLocation}</div>
+            <div>{BRAND.aiEntity} &middot; {BRAND.aiEntityLocation}</div>
+            <div>{BRAND.legalEntity} &middot; {BRAND.legalEntityLocation} — All rights reserved</div>
+          </address>
           <div style={{ display: "flex", gap: 20, alignItems: "center" }}>
             <Link
               href="/status"
