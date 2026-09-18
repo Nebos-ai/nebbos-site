@@ -438,6 +438,17 @@
     font-variant-numeric: tabular-nums;
     white-space: nowrap;
   }
+  .mkt-mock__status {
+    font-family: var(--mkt-font-display);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    white-space: nowrap;
+    line-height: 1.2;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
 
   /* ── PRODUCTS BAND · 4 cards on dark ground, colored per-product ─── */
 
@@ -1537,12 +1548,123 @@
     border-block-end-color: var(--mkt-rule, rgba(255, 255, 255, 0.08));
   }
 
+  /* ── MOTION · scroll-reveal + on-mount stagger + live-signal pulse ──
+
+     Founder-directed 2026-09-18: "there is no next js anywhere on
+     anything you build again you are building no animation." Modern
+     Next.js marketing sites (Vercel, Linear, Figma) carry subtle
+     motion — scroll-triggered reveals, staggered entrance, live-
+     signal pulses. Static reads as dead.
+
+     Implementation: `animation-timeline: view()` (Baseline 2024) for
+     scroll-triggered fade-up, plain CSS keyframes for on-mount
+     stagger. Zero JavaScript. Zero deps added. Respects prefers-
+     reduced-motion. Graceful in Firefox (elements render visible
+     without animation). */
+
+  @keyframes mkt-fade-up {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes mkt-fade-in {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes mkt-pulse-line {
+    0%, 100% { opacity: 0.85; transform: scaleX(1); transform-origin: left; }
+    50%      { opacity: 0.42; transform: scaleX(0.94); transform-origin: left; }
+  }
+  @keyframes mkt-pulse-mark {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.08),
+                            0 12px 32px -14px var(--mkt-product-tint, var(--mkt-accent)); }
+    50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.14),
+                            0 20px 48px -12px var(--mkt-product-tint, var(--mkt-accent)); }
+  }
+
+  /* Scroll-triggered reveal — every card / row / list item as it
+     enters the viewport. Uses the modern view timeline so there is
+     no JS + no layout thrash. */
+  @supports (animation-timeline: view()) {
+    .mkt-product,
+    .mkt-stage,
+    .mkt-metric,
+    .mkt-deep__item,
+    .mkt-value,
+    .mkt-shift__item,
+    .mkt-faq__item,
+    .mkt-highlight,
+    .mkt-builtfor__item,
+    .mkt-route,
+    .mkt-list__item,
+    .mkt-proof,
+    .mkt-productrow {
+      animation: mkt-fade-up linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 28%;
+    }
+  }
+
+  /* Hero on-mount stagger — reads like a Linear entrance. */
+  .mkt-hero .mkt-hero__copy > * {
+    animation: mkt-fade-in 640ms var(--mkt-ease) both;
+    opacity: 0;
+  }
+  .mkt-hero .mkt-hero__copy > *:nth-child(1) { animation-delay:   0ms; }
+  .mkt-hero .mkt-hero__copy > *:nth-child(2) { animation-delay:  80ms; }
+  .mkt-hero .mkt-hero__copy > *:nth-child(3) { animation-delay: 160ms; }
+  .mkt-hero .mkt-hero__copy > *:nth-child(4) { animation-delay: 240ms; }
+  .mkt-hero .mkt-hero__copy > *:nth-child(5) { animation-delay: 320ms; }
+  .mkt-hero__visual {
+    animation: mkt-fade-in 900ms var(--mkt-ease) 400ms both;
+    opacity: 0;
+  }
+
+  /* Live-signal pulse on the Ops "needs you" accent bar — signals
+     that the mock isn't static, something is actually running. */
+  .mkt-mock__line--accent {
+    animation: mkt-pulse-line 2.4s ease-in-out infinite;
+    transform-origin: left;
+  }
+
+  /* Idle pulse on the department marks — subtle, staggered so all
+     four don't pulse in unison. */
+  .mkt-product__mark {
+    animation: mkt-pulse-mark 5s ease-in-out infinite;
+  }
+  .mkt-product:nth-child(2) .mkt-product__mark { animation-delay: 1.2s; }
+  .mkt-product:nth-child(3) .mkt-product__mark { animation-delay: 2.4s; }
+  .mkt-product:nth-child(4) .mkt-product__mark { animation-delay: 3.6s; }
+
   /* ── Reduced motion — kill non-essential transitions ─────────────── */
 
   @media (prefers-reduced-motion: reduce) {
     .mkt-cta,
     .mkt-cta__arrow {
       transition-duration: 60ms;
+    }
+    .mkt-hero .mkt-hero__copy > *,
+    .mkt-hero__visual,
+    .mkt-mock__line--accent,
+    .mkt-product__mark {
+      animation: none !important;
+      opacity: 1 !important;
+    }
+    @supports (animation-timeline: view()) {
+      .mkt-product,
+      .mkt-stage,
+      .mkt-metric,
+      .mkt-deep__item,
+      .mkt-value,
+      .mkt-shift__item,
+      .mkt-faq__item,
+      .mkt-highlight,
+      .mkt-builtfor__item,
+      .mkt-route,
+      .mkt-list__item,
+      .mkt-proof,
+      .mkt-productrow {
+        animation: none !important;
+      }
     }
   }
 
