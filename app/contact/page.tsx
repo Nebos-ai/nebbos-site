@@ -107,7 +107,7 @@ export default function ContactPage() {
           <header className="mkt-numbers__head">
             <p className="mkt-eyebrow">Offices</p>
             <h2 id="offices-h" className="mkt-h2">
-              Three entities. One company.
+              Three entities. One company.{/* claim-source: corporate-taxonomy-one-company */}
             </h2>
             <p className="mkt-deck">
               US parent for contracting. LA for product. Belgrade for

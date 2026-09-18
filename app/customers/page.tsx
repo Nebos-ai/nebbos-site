@@ -5,27 +5,35 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Nebbos is running today inside school districts across multiple U.S. states. Case studies land here as each district signs off publicly.",
+    "Customer references will appear here when they are ready to be named.",
 };
 
 /**
- * /customers · 2026-09-12 revision 2 · in-production framing
+ * /customers · revision 3 · 2026-09-18 · substantiated-only framing
  *
- * PR #23 (2026-09-12) replaced the fictional customer MDX with a pure
- * coming-soon page. This revision adds the specific true claim the
- * founder confirmed: Nebbos is deployed today inside school districts
- * across multiple U.S. states, running district operations / coverage /
- * compliance.
+ * HISTORY: revision 2 (2026-09-12) asserted "Nebbos is deployed today // claim-source: retraction-history
+ * inside school districts across multiple U.S. states" with named
+ * operations (SIS / HR / substitute / reporting / parent comms), no
+ * customer names but a specific-shape claim. Retracted 2026-09-18 for
+ * the same reason MarketingProof v2 was (PR #107): specific customer /
+ * geo / use-case claims without a `source_of_record` in
+ * `content/claims.ts` are legal-risk, regardless of whether the shape
+ * is claimed to be "true but confidential." Per ratified
+ * `feedback_marketing_site_pricing_editorial_discipline`: marketing
+ * surface = narrow projection of verifiable internal facts; default
+ * OFF when in doubt.
  *
- * No specific district names (client sign-off pending). No specific
- * numbers not yet publicly shareable. Coming-soon still applies to the
- * per-case-study writeups.
+ * This revision is the honest empty state: the page acknowledges the
+ * category (customer references), commits to naming references only
+ * with permission, and does not describe use-cases, geographic reach,
+ * industry, or count. When the first customer is namable, add their
+ * entry to `content/claims.ts` under a `customer-<slug>` id with a
+ * `verifiable-external` source-of-record (linked case study, signed
+ * approval), and this page renders their reference.
  *
- * Prior version's coming-soon framing is superseded by this in-
- * production framing per founder directive 2026-09-12: "We want to say
- * that nebbos is being used by school districts across multiple states."
- * The prior version is preserved via git history on the branch
- * fix/no-fake-customers-coming-soon-2026-09-12 (merged as PR #23).
+ * Prior versions preserved via git history:
+ *   - revision 1 (coming-soon)      : PR #23, 2026-09-12
+ *   - revision 2 (in-production)    : this branch, retracted 2026-09-18
  */
 
 export default function CustomersIndexPage() {
@@ -43,15 +51,13 @@ export default function CustomersIndexPage() {
         <div className="container hero-fullbleed__inner">
           <div className="hero-fullbleed__frame">
             <h1 className="hero-fullbleed__title">
-              Running in school districts across multiple states.
+              Customer references appear here when they are ready to be
+              named.
             </h1>
             <p className="hero-fullbleed__deck">
-              Nebbos is deployed today inside school districts across several
-              U.S. states &mdash; running district operations, coverage,
-              compliance, and superintendent-scoped approval trails. Case
-              studies land here as each district signs off publicly. Until
-              then, the shape of the work is real; the names come with
-              permission.
+              Nebbos does not name customers on this page ahead of their
+              written permission. When a customer is namable, their
+              reference appears here.
             </p>
           </div>
         </div>
@@ -75,7 +81,7 @@ export default function CustomersIndexPage() {
               margin: 0,
             }}
           >
-            01 &middot; The shape today
+            01 &middot; Why this page is quiet
           </p>
           <h2
             style={{
@@ -90,7 +96,7 @@ export default function CustomersIndexPage() {
               textWrap: "balance",
             }}
           >
-            One Pearl per district operations.
+            Named permission, or nothing.
           </h2>
           <p
             style={{
@@ -102,12 +108,11 @@ export default function CustomersIndexPage() {
               maxWidth: "56ch",
             }}
           >
-            A Pearl scoped to district operations, deployed behind the systems
-            each district already runs &mdash; SIS, HR, substitute management,
-            state reporting, parent comms. Every consequential action passes
-            through named-superintendent approval; every action lands as an
-            append-only audit-event. That&rsquo;s the shape running today.
-            Case studies as the districts are ready.
+            Customer counts, geographies, industries, and use-cases are
+            things a competitor could infer from &mdash; and things a
+            regulator could hold us to. Until a customer signs off on
+            being named on this page, we say nothing specific about them
+            here. When they are ready, their reference is what appears.
           </p>
           <div
             style={{

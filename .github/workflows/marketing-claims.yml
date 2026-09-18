@@ -1,0 +1,40 @@
+# Marketing-claim substrate gate.
+#
+# Fails a PR when a component or route asserts a specific customer /
+# deployment / geo / timeline / case-study claim without a corresponding
+# entry in `content/claims.ts`. Companion to `scripts/check-vocab.sh`
+# (vocabulary discipline) — this one enforces claim-substrate discipline.
+#
+# See `content/claims.ts` for the substrate, and
+# `scripts/check-marketing-claims.mjs` for the gate implementation +
+# self-test.
+
+name: marketing-claims
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    name: check-marketing-claims
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Self-test (fixture safety net — makes sure the gate itself works)
+        run: node scripts/check-marketing-claims.mjs --self-test
+
+      - name: Scan components + routes for unsourced claims
+        run: node scripts/check-marketing-claims.mjs
