@@ -23,7 +23,7 @@ const ROUTES = [
   { label: "Engineering", email: CONTACT.engineering, desc: "Developer and integration questions." },
   { label: "Security", email: CONTACT.security, desc: "Vulnerability reports and incident notification." },
   { label: "Privacy", email: CONTACT.privacy, desc: "Data-protection officer, GDPR, DSARs." },
-  { label: "Legal", email: CONTACT.legal, desc: "DPA and policy questions." },
+  { label: "Legal", email: CONTACT.legal, desc: "License, MSA, and policy questions." },
   { label: "Press", email: CONTACT.press, desc: "Journalist and analyst inquiries." },
 ];
 

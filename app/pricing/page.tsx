@@ -39,7 +39,7 @@ const ENTERPRISE_INCLUDES = [
   "Deployment: Managed, Federated, or Air-gapped",
   "Named human approval on every consequential action",
   "Hash-chained audit trail, portable at contract end",
-  "DPA, MSA, security-review artifacts included",
+  "Software license, support terms, hardware warranty",
   "Onboarding with a Nebbos operator, not a form-and-forget",
 ];
 
@@ -124,14 +124,15 @@ export default function PricingPage() {
           <header className="mkt-flow__head">
             <p className="mkt-eyebrow">Why enterprise-only</p>
             <h2 id="why-h" className="mkt-h2">
-              Nebbos ships hardware, contracts, and a compliance package.
+              Nebbos ships hardware. Runs on your infrastructure.
             </h2>
             <p className="mkt-deck">
-              A Cradle is a physical device. A DPA is a legal instrument.
-              A district or agency deployment carries security review.
-              None of that fits a self-serve checkout. Every Nebbos
-              customer signs a contract, receives shipped hardware, and
-              onboards with a Nebbos operator.
+              A Cradle is a physical device that ships to your desk. The
+              MCP and your Pearl memory live on that device — Nebbos
+              never accesses your data. Deployment is on your infra,
+              federated, or air-gapped. None of that fits a self-serve
+              checkout. Every Nebbos customer signs a contract, receives
+              shipped hardware, and onboards with a Nebbos operator.
             </p>
           </header>
         </div>

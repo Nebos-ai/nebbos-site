@@ -58,8 +58,7 @@ const COLS = [
 const LEGAL = [
   { label: "Privacy", href: "/legal/privacy" },
   { label: "Terms", href: "/legal/terms" },
-  { label: "DPA", href: "/legal/dpa" },
-  { label: "Subprocessors", href: "/legal/subprocessors" },
+  { label: "License", href: "/legal/terms" },
   { label: "Cookies", href: "/legal/cookies" },
 ];
 

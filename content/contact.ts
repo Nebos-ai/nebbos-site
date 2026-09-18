@@ -21,7 +21,10 @@ export const CONTACT = {
   /** Enterprise / procurement — SOWs, MSAs, DPAs. */
   enterprise: "enterprise@nebbos.ai",
 
-  /** Legal / DPA / policy questions. */
+  /** Legal / license / MSA / policy questions.
+   *  NOT DPA — Nebbos is infrastructure, not a data processor. Customer
+   *  data lives on their Cradle, their MCP mediates their own tool
+   *  calls, their keys never touch Nebbos. Founder-directed 2026-09-18. */
   legal: "legal@nebbos.ai",
 
   /** Developer + integration questions. */
