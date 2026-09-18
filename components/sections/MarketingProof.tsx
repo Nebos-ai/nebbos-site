@@ -1,6 +1,7 @@
 import Link from "next/link";
 import metrics from "@/content/platform-metrics.json";
 import { SplitWords } from "@/components/patterns/SplitWords";
+import { NumberCounter } from "@/components/patterns/NumberCounter";
 
 /**
  * MarketingProof · sections/MarketingProof.tsx · v2 · 2026-09-18
@@ -43,7 +44,7 @@ export function MarketingProof() {
           {/* Column 1 · External proof */}
           <div className="mkt-proof">
             <p className="mkt-eyebrow">In production</p>
-            <p className="mkt-proof__stat">12</p>
+            <p className="mkt-proof__stat"><NumberCounter value={12} /></p>
             <p className="mkt-proof__body">
               School districts running Nebbos Education Pearls today —
               scheduling, coverage, compliance filings. Across four U.S.
@@ -58,7 +59,9 @@ export function MarketingProof() {
           {/* Column 2 · Dogfood proof */}
           <div className="mkt-proof">
             <p className="mkt-eyebrow">Built with Nebbos, by Nebbos</p>
-            <p className="mkt-proof__stat">{M.shipped.lines_of_code_millions}M</p>
+            <p className="mkt-proof__stat">
+              <NumberCounter value={M.shipped.lines_of_code_millions * 1_000_000} format="millions" />
+            </p>
             <p className="mkt-proof__body">
               Lines of code, across {M.shipped.repositories} repositories,
               {" "}{M.shipped.commits_last_30d} commits in the last thirty

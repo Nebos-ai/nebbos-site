@@ -1,4 +1,5 @@
 import { MarketingHero } from "@/components/sections/MarketingHero";
+import { MarketingMarquee } from "@/components/sections/MarketingMarquee";
 import { MarketingDepartments } from "@/components/sections/MarketingDepartments";
 import { MarketingShift } from "@/components/sections/MarketingShift";
 import { MarketingProof } from "@/components/sections/MarketingProof";
@@ -55,6 +56,7 @@ export default function HomePage() {
   return (
     <>
       <MarketingHero />
+      <MarketingMarquee />
       <MarketingDepartments />
       <MarketingShift />
       <MarketingTrustLine />
