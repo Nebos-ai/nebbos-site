@@ -28,7 +28,7 @@ const MCP_SUBSCRIPTIONS = subscriptionsForProduct("mcp");
 export const metadata: Metadata = {
   title: "Nebbos MCP · The tool substrate. Attested.",
   description:
-    "The Nebbos MCP mediates every tool call across your Nebbos platform. Binary and credentials ship on the Nebbos Cradle — physical presence gates elevated tiers. Server-verified attestation. Shell-scoped isolation.",
+    "The Nebbos MCP mediates every tool call. Binary and credentials ship on the Cradle — physical presence gates elevated tiers. Server-verified attestation.",
 };
 
 const HIGHLIGHTS = [

@@ -28,7 +28,7 @@ const CRADLE_SUBSCRIPTIONS = subscriptionsForProduct("usb");
 export const metadata: Metadata = {
   title: "Nebbos Cradle · Hardware-attested. FIPS 140-3 L3.",
   description:
-    "The Nebbos Cradle carries the MCP and your Pearl memory, gating elevated permissions with hardware attestation. FIPS 140-3 Level 3 encrypted storage. On-device keypad. Tamper-evident and epoxy-sealed. TAA-compliant.",
+    "The Nebbos Cradle carries the MCP and gates elevated permissions with hardware attestation. FIPS 140-3 L3 encrypted storage. On-device keypad. Tamper-evident. TAA.",
 };
 
 const HIGHLIGHTS = [

@@ -303,7 +303,7 @@ export const PAGES = {
     slug: "/solutions/operations",
     title: "Nebbos Operations · The Pearl for handoffs, coverage, incident triage",
     metaDescription:
-      "Nebbos Operations reads the signal your ops team already emits — handoffs, coverage, on-call, escalations — and shows you what breaks next. Operator platform underneath, portable to you.",
+      "Nebbos Operations reads what your ops team already emits — handoffs, coverage, on-call — and surfaces what breaks next.",
     sections: [
       {
         id: "hero",
@@ -1020,7 +1020,7 @@ export const PAGES = {
   "solutions/financial-services": {
     slug: "/solutions/financial-services",
     title: "Nebbos FS · The Pearl for trading ops, risk, audit",
-    metaDescription: "Nebbos Financial Services runs trading-ops — reconciliations, risk gates, audit attestation — so traders and risk teams work at their desk, not their backlog.",
+    metaDescription: "Nebbos Financial Services runs trading-ops — reconciliations, risk gates, audit — so traders work at their desk, not their backlog.",
     sections: [
       {
         id: "hero",
@@ -1301,7 +1301,7 @@ export const PAGES = {
   "solutions/public-sector": {
     slug: "/solutions/public-sector",
     title: "Nebbos Civic · The Pearl for case management, accountability",
-    metaDescription: "Nebbos Civic runs the operational layer of a modern public-sector agency — case management, accountability, citizen response — with an audit trail your inspector-general trusts.",
+    metaDescription: "Nebbos Civic runs a public-sector agency's operational layer — case management, accountability, citizen response — with an audit trail an inspector-general trusts.",
     sections: [
       {
         id: "hero",
@@ -1442,7 +1442,7 @@ export const PAGES = {
   "solutions/model-training": {
     slug: "/solutions/model-training",
     title: "Nebbos Training Substrate · Your operation is the training data",
-    metaDescription: "Your enterprise&rsquo;s operational decisions are the highest-value training data on earth. Nebbos captures every human decision as a preference pair — portable to any model you own.",
+    metaDescription: "Your operational decisions are the highest-value training data on earth. Nebbos captures every decision as a preference pair — portable to any model you own.",
     sections: [
       {
         id: "hero",
@@ -1582,7 +1582,7 @@ export const PAGES = {
     slug: "/trust",
     title: "Trust · Accountable by architecture",
     metaDescription:
-      "Every action a Pearl takes is attested in an audit trail your CISO, your general counsel, and your regulator can read. The governance is the substrate, not a feature.",
+      "Every Pearl action attested in an audit trail your CISO, counsel, and regulator can read. Governance is the substrate, not a feature.",
     sections: [
       {
         id: "hero",
@@ -1728,7 +1728,7 @@ export const PAGES = {
     slug: "/security",
     title: "Security · Substrate controls implemented against institutional targets",
     metaDescription:
-      "Substrate controls implemented against SOC 2 and ISO 27001:2022 targets. SOC 2 Type II certification is in progress; ISO 27001:2022 is not yet held. Full status at /compliance.",
+      "Substrate controls against SOC 2 and ISO 27001:2022 targets. SOC 2 in progress; ISO 27001:2022 not yet held. Full status at /compliance.",
     sections: [
       {
         id: "hero",
@@ -1887,7 +1887,7 @@ export const PAGES = {
     slug: "/compliance",
     title: "Compliance · Status per framework · SOC 2 · ISO 27001 · Annex IV · HIPAA · FERPA · GDPR",
     metaDescription:
-      "Nebbos&rsquo;s compliance posture — status per framework. Some in progress, some not yet held. Every posture stated honestly; formal reports available under NDA when they land.",
+      "Nebbos compliance posture — status per framework, stated honestly. Some in progress, some not yet held. Formal reports available under NDA when they land.",
     sections: [
       {
         id: "hero",
@@ -2268,7 +2268,7 @@ export const PAGES = {
     slug: "/legal/law-enforcement",
     title: "Law-enforcement request procedure",
     metaDescription:
-      "How Nebbos handles subpoenas, warrants, and law-enforcement requests. Route through counsel. Notify the client. Minimum-necessary responsive material.",
+      "How Nebbos handles subpoenas and law-enforcement requests. Route through counsel. Notify the client. Minimum-necessary responsive material.",
     sections: [
       {
         id: "hero",
@@ -2420,7 +2420,7 @@ export const PAGES = {
     slug: "/sovereignty",
     title: "Sovereignty · Your data. Your model. Your keys.",
     metaDescription:
-      "Nebbos is designed so no vendor — not even Nebbos — sits between operator intent and enterprise state. Data sovereignty, model sovereignty, operational sovereignty — enforced by architecture, not policy.",
+      "No vendor — not even Nebbos — sits between operator intent and enterprise state. Data, model, and operational sovereignty enforced by architecture.",
     sections: [
       {
         id: "hero",
