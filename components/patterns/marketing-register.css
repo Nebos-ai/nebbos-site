@@ -1689,6 +1689,7 @@
   .mkt-shift__spine-tile--platform  { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
   .mkt-shift__spine-tile--mcp       { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp) 62%, #9848e0 100%); }
   .mkt-shift__spine-tile--cradle    { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle) 62%, #b02533 100%); }
+  .mkt-shift__spine-tile svg { width: 62%; height: 62%; }
 
   /* State-driven expression — the JS playhead sets data-state on each
      beat as it enters view. Past = muted (day already happened),
@@ -3147,6 +3148,7 @@
   .mkt-tile__mark--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
   .mkt-tile__mark--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
   .mkt-tile__mark--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-tile__mark svg { width: 62%; height: 62%; }
 
   /* Page-hero 4-tile flower mosaic (right side anchor at ≥ 960px) */
   .mkt-hero__row {
@@ -3194,6 +3196,7 @@
   .mkt-hero__tile--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
   .mkt-hero__tile--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
   .mkt-hero__tile--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-hero__tile svg { width: 62%; height: 62%; }
 
   /* Per-section colored side rail (decorative, aria-hidden) */
   .mkt-section--accented {
@@ -3380,6 +3383,7 @@
   .mkt-case__mark--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
   .mkt-case__mark--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
   .mkt-case__mark--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-case__mark svg { width: 62%; height: 62%; }
 
   /* Closing-CTA per-Pearl halo variants */
   .mkt-closing--platform .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(74, 92, 255, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
