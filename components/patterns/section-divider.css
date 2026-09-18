@@ -1,0 +1,111 @@
+/* ============================================================================
+   section-divider.css · @layer patterns · 2026-09-18
+   Load-bearing per docs/design/section-composition.md.
+
+   Every ~third boundary between sections on a page carries a visible
+   `marker`: chapter numeral + orange plus-marker + short editorial strap.
+   The other boundaries stay `hairline` (subtle). Together they compose
+   the visible cadence a first-time visitor uses to parse the page as one
+   piece of work, not a swap-meet of adjacent panels.
+
+   Wins the cascade because it lives in `@layer patterns` — beats every
+   unlayered .section-* rule that might exist in globals.css page-layer.
+   ============================================================================ */
+
+@layer patterns {
+
+  /* ── Common shell ─────────────────────────────────────────────────── */
+
+  /* Divider sits BETWEEN two sections. Adjacent sections already own
+     their own top/bottom hairlines — the divider adds no borders of its
+     own, only ground + content. This prevents the triple-hairline
+     "shipping-container-seam" pathology at every boundary. */
+  .section-divider {
+    display: block;
+    width: 100%;
+  }
+
+  /* ── Variant · hairline (invisible primitive, one-line spacer) ────── */
+
+  .section-divider--hairline {
+    height: 0;
+    padding-block: 0;
+    background: transparent;
+    /* No visible content — the adjacent sections' own borders form the
+       seam. This variant exists so the composition-source-of-truth in
+       page.tsx names every boundary explicitly, even the invisible ones. */
+  }
+
+  /* ── Variant · marker (chapter + plus + strap) ────────────────────── */
+
+  .section-divider--marker {
+    background: var(--color-paper-2, var(--paper-2));
+    padding-block: clamp(24px, 3vh, 40px);
+    /* Slight ground shift signals the boundary; no borders needed because
+       adjacent sections carry their own. */
+  }
+
+  .section-divider__inner {
+    display: flex;
+    align-items: baseline;
+    gap: clamp(16px, 2vw, 24px);
+    flex-wrap: wrap;
+  }
+
+  .section-divider__plus {
+    font-family: var(--font-mono);
+    font-size: clamp(24px, 3vw, 36px);
+    line-height: 1;
+    color: var(--color-accent, var(--accent-2));
+    font-weight: 400;
+  }
+
+  .section-divider__chapter {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-ink-2, var(--ink-2));
+    font-variant-numeric: tabular-nums;
+    align-self: center;
+  }
+
+  .section-divider__chapter::before {
+    content: "Chapter ";
+    color: var(--color-ink-3, var(--ink-3));
+  }
+
+  .section-divider__strap {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink, var(--ink));
+    align-self: center;
+    max-width: 44ch;
+    line-height: 1.4;
+  }
+
+  /* ── Tone · anchor (signals coming register-break to ink ground) ──── */
+
+  .section-divider--tone-anchor {
+    background: var(--color-ink, var(--ink));
+    border-block: 1px solid var(--color-ink-2, #2A2830);
+  }
+
+  .section-divider--tone-anchor .section-divider__chapter {
+    color: var(--color-paper-3, rgba(244, 241, 234, 0.72));
+  }
+
+  .section-divider--tone-anchor .section-divider__chapter::before {
+    color: var(--color-paper-3, rgba(244, 241, 234, 0.44));
+  }
+
+  .section-divider--tone-anchor .section-divider__strap {
+    color: var(--color-paper, var(--paper));
+  }
+
+  /* Reduced-motion: nothing to reduce; the divider is a static primitive.
+     Kept for parity with siblings. */
+
+} /* end @layer patterns */

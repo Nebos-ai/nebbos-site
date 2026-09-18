@@ -43,6 +43,7 @@
 /* ── PATTERNS LAYER · shared page-shape sections ─────────────────────── */
 
 @import "../components/patterns/product-page.css";
+@import "../components/patterns/section-divider.css";
 
 /* ── PAGE LAYER · home wordmark-spray hero iframe ────────────────────── */
 
