@@ -439,6 +439,135 @@
     white-space: nowrap;
   }
 
+  /* ── PRODUCTS BAND · 4 cards on dark ground, colored per-product ─── */
+
+  .mkt-products__head {
+    display: grid;
+    gap: clamp(20px, 3vh, 32px);
+    max-width: 62ch;
+    margin-bottom: clamp(48px, 6vh, 88px);
+  }
+
+  .mkt-products__grid {
+    display: grid;
+    gap: clamp(16px, 1.8vw, 24px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .mkt-products__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1120px) {
+    .mkt-products__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+
+  .mkt-product {
+    position: relative;
+    display: grid;
+    gap: 20px;
+    padding: clamp(28px, 3vw, 40px);
+    background: var(--mkt-ground-2);
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    color: var(--mkt-text);
+    text-decoration: none;
+    transition:
+      transform var(--mkt-dur) var(--mkt-ease),
+      background var(--mkt-dur) var(--mkt-ease),
+      border-color var(--mkt-dur) var(--mkt-ease);
+    isolation: isolate;
+    min-height: 320px;
+    grid-template-rows: auto 1fr auto;
+  }
+  .mkt-product::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(180deg, var(--mkt-product-tint, transparent) 0%, transparent 45%);
+    opacity: 0.22;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-product:hover {
+    transform: translateY(-2px);
+    border-color: var(--mkt-rule-2);
+    background: var(--mkt-ground-3);
+  }
+  .mkt-product:hover::before {
+    opacity: 0.38;
+  }
+  .mkt-product:focus-visible {
+    outline: 2px solid var(--mkt-product-tint, var(--mkt-accent));
+    outline-offset: 3px;
+  }
+
+  .mkt-product--platform { --mkt-product-tint: var(--mkt-product-platform); }
+  .mkt-product--app { --mkt-product-tint: var(--mkt-product-app); }
+  .mkt-product--mcp { --mkt-product-tint: var(--mkt-product-mcp); }
+  .mkt-product--cradle { --mkt-product-tint: var(--mkt-product-cradle); }
+
+  .mkt-product__mark {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--mkt-product-tint);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
+      0 12px 32px -14px var(--mkt-product-tint);
+  }
+
+  .mkt-product__body {
+    display: grid;
+    gap: 12px;
+    align-content: start;
+  }
+
+  .mkt-product__eyebrow {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  .mkt-product__name {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(22px, 1.9vw, 28px);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+  }
+
+  .mkt-product__tagline {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.45;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  .mkt-product__link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-product-tint);
+    font-weight: 600;
+  }
+  .mkt-product__link-arrow {
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-product:hover .mkt-product__link-arrow {
+    transform: translateX(3px);
+  }
+
   /* ── PROOF PULL-QUOTE (bright accent card, Linear-tier moment) ──── */
 
   .mkt-quote {
@@ -471,6 +600,119 @@
     opacity: 0.68;
     margin: 0;
     font-weight: 500;
+  }
+
+  /* ── SUBSTRATE FLOW · 6 stages, hairline connectors, dark ground ─── */
+
+  .mkt-flow__head {
+    display: grid;
+    gap: clamp(20px, 3vh, 32px);
+    max-width: 62ch;
+    margin-bottom: clamp(48px, 6vh, 88px);
+  }
+
+  .mkt-flow__stages {
+    display: grid;
+    gap: clamp(16px, 1.8vw, 24px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .mkt-flow__stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1120px) {
+    .mkt-flow__stages { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+  }
+
+  .mkt-stage {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    padding: clamp(24px, 2.4vw, 32px) clamp(20px, 2vw, 26px);
+    background: var(--mkt-ground-2);
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    grid-template-rows: auto auto 1fr;
+    min-height: 220px;
+  }
+  .mkt-stage__num {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--mkt-text-4);
+    font-weight: 500;
+  }
+  .mkt-stage__name {
+    font-family: var(--mkt-font-display);
+    font-size: 20px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+  }
+  .mkt-stage__caption {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+  .mkt-stage__accent {
+    position: absolute;
+    top: 0;
+    left: clamp(20px, 2vw, 26px);
+    right: clamp(20px, 2vw, 26px);
+    height: 2px;
+    background: var(--mkt-accent);
+    border-radius: 0 0 2px 2px;
+    opacity: 0.9;
+  }
+
+  /* ── NUMBERS GRID · Persona-E metric surface on dark ─────────────── */
+
+  .mkt-numbers__head {
+    display: grid;
+    gap: clamp(20px, 3vh, 32px);
+    max-width: 62ch;
+    margin-bottom: clamp(40px, 5vh, 64px);
+  }
+  .mkt-numbers__grid {
+    display: grid;
+    gap: clamp(20px, 2vw, 32px);
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  }
+  .mkt-metric {
+    display: grid;
+    gap: 6px;
+    padding: clamp(20px, 2vw, 28px) 0;
+    border-top: 1px solid var(--mkt-rule);
+    align-content: start;
+  }
+  .mkt-metric__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    margin: 0;
+    font-weight: 500;
+  }
+  .mkt-metric__value {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(32px, 3.4vw, 48px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 8px 0 0 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-metric__note {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    color: var(--mkt-text-3);
+    margin: 6px 0 0 0;
+    line-height: 1.45;
   }
 
   /* ── CLOSING CTA · centered bold ─────────────────────────────────── */
