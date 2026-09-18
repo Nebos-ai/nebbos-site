@@ -1,0 +1,49 @@
+/* ============================================================================
+   compliance-strip.css · @layer patterns · 2026-09-18
+   The trust-anchor band that lands under the hero. Mono small-caps two-
+   line strip on paper-2 ground with hairline top + bottom. Wins the
+   cascade against any legacy .compliance-* or generic .band rule in
+   @layer page.
+   ============================================================================ */
+
+@layer patterns {
+
+  .compliance-strip {
+    display: block;
+    width: 100%;
+    background: var(--color-paper-2, var(--paper-2));
+    border-block: 1px solid var(--color-rule, var(--rule));
+  }
+
+  .compliance-strip__inner {
+    padding-block: clamp(16px, 2vh, 24px);
+    display: grid;
+    gap: clamp(6px, 0.6vh, 10px);
+  }
+
+  .compliance-strip__line {
+    font-family: var(--font-mono);
+    font-size: clamp(10px, 0.85vw, 12px);
+    letter-spacing: 0.14em;
+    line-height: 1.6;
+    color: var(--color-ink-2, var(--ink-2));
+    margin: 0;
+    /* Wrap gracefully on narrow screens; each · becomes a soft wrap point. */
+    word-spacing: 0.06em;
+  }
+
+  .compliance-strip__line + .compliance-strip__line {
+    color: var(--color-ink-3, var(--ink-3));
+  }
+
+  @media (max-width: 720px) {
+    .compliance-strip__inner {
+      padding-block: 16px;
+    }
+    .compliance-strip__line {
+      font-size: 10px;
+      letter-spacing: 0.12em;
+    }
+  }
+
+} /* end @layer patterns */

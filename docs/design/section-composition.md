@@ -87,24 +87,46 @@ So a page-shape audit reads the composition at a glance.
 
 ## Per-page canonical compositions
 
-### `/` (Home) · v14+ · ratified 2026-09-18
+### `/` (Home) · v16 · ratified 2026-09-18 (coherent-throughline rebuild)
 
-| # | Section | Shape | Ground | Density | Boundary above |
+Founder critique 2026-09-18 caught v15 for "all over the place" — nine
+sections doing nine tonally different jobs (K-12 school-districts trust
+band, Managed/Federated deployment choice, capability grid, product
+accordion, magazine editorial, dogfood metrics, inventory metrics, CTA)
+where the ARRANGEMENT was fine but the SEQUENCE competed for attention
+via overlapping proof shapes.
+
+v16 collapses to 5 sections that answer the first-time visitor's five
+decision-stage questions in order (per
+`docs/marketing/homepage-first-time-visitor-strategy-2026-09-17.md` §5):
+
+| # | Section | Shape | Ground | Answers | Boundary above |
 |---|---|---|---|---|---|
-| 1 | `HomeHero` | `hero-signature` | scene | anchor | — |
-| 2 | `InProductionBand` | `trust-band` | paper-2 | compact | `marker` (II) |
-| 3 | `HomeModesBand` | `editorial-block` | paper | standard | `hairline` |
-| 4 | `CapabilityBentoGrid` | `bento-dark` | ink | anchor | `register-break` (III) |
-| 5 | `HomeBands` | `catalog-grid` | paper | standard | `hairline` |
-| 6 | `HomeStory` | `story-scene` | scene | anchor | `marker` (IV) |
-| 7 | `BuiltWithNebbosBand` | `stat-strip` | paper-2 | compact | `hairline` |
-| 8 | `NebbosInventoryBand` | `catalog-grid` | paper | standard | `marker` (V) |
-| 9 | `HomeCTA` | `cta-anchor` | scene | anchor | `register-break` |
+| 1a | `HomeHero` | `hero-signature` | scene | 5s: what is this? | — |
+| 1b | `ComplianceStrip` | `trust-band` (mini) | paper-2 | 5s: is it serious? (trust anchor in the same viewport as the hero) | `hairline` |
+| 2 | `HomeBands` | `catalog-grid` | paper | 30s: what are the four things? | `hairline` |
+| 3 | `CapabilityBentoGrid` | `bento-dark` | ink | 2min: how deep does the substrate go? | `register-break` (II) |
+| 4 | `NebbosInventoryBand` | `catalog-grid` | paper | 5min: prove it's not a scam | `marker` (III) |
+| 5 | `HomeCTA` | `cta-anchor` | scene | 30min: book a briefing | — (own register-break) |
 
-Rhythm: SCENE → paper-2 → paper → INK → paper → SCENE → paper-2 → paper →
-SCENE. Never three same-ground in a row. One INK register-break at position
-4 (bento) plus one scene closing anchor at position 9. Marker boundaries at
-positions 2, 4, 6, 8.
+Rhythm: SCENE → paper-2 → paper → INK → paper → SCENE. One register-
+break in the middle (bento-dark). One marker divider between substrate
+reveal and numeric proof. Hero + closing scene bookend the paper interior.
+
+**Retired from home** (components stay on disk for reuse elsewhere):
+- `InProductionBand` — K-12 school-districts trust band. Belonged on
+  `/customers`. Redundant with the compliance strip's trust-load, and
+  out-of-audience for the categorical CISO / procurement / program-
+  manager persona the home page targets.
+- `HomeModesBand` — Managed vs Federated deployment-mode choice.
+  Belongs on `/products` where the deployment decision happens, not
+  top-of-home before the visitor knows what the products are.
+- `HomeStory` — 3-chapter magazine editorial arc. Belongs on `/how`
+  or `/about` (Persona-E surface). Competes with the direct product
+  answer for the visitor's attention.
+- `BuiltWithNebbosBand` — 1-person/160-days dogfood. Duplicates
+  `NebbosInventoryBand`'s proof shape with a founder-brag register.
+  Move to `/how` where Persona-E reads it as substrate proof.
 
 ### `/products` · ratified 2026-09-18
 

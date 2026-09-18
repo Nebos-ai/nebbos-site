@@ -1,82 +1,107 @@
 import { HomeHero } from "@/components/sections/HomeHero";
-import { HomeModesBand } from "@/components/sections/HomeModesBand";
-import { CapabilityBentoGrid } from "@/components/sections/CapabilityBentoGrid";
 import { HomeBands } from "@/components/sections/HomeBands";
-import { HomeStory } from "@/components/sections/HomeStory";
-import { HomeCTA } from "@/components/sections/HomeCTA";
-import { InProductionBand } from "@/components/sections/InProductionBand";
-import { BuiltWithNebbosBand } from "@/components/sections/BuiltWithNebbosBand";
+import { CapabilityBentoGrid } from "@/components/sections/CapabilityBentoGrid";
 import { NebbosInventoryBand } from "@/components/sections/NebbosInventoryBand";
+import { HomeCTA } from "@/components/sections/HomeCTA";
+import { ComplianceStrip } from "@/components/patterns/compliance-strip";
 import { SectionDivider } from "@/components/patterns/section-divider";
 
 /**
- * PAGE · / (Home) · v15 · 2026-09-18 · section-composition doctrine applied
+ * PAGE · / (Home) · v16 · 2026-09-18 · coherent-throughline rebuild
  *
- * v14 (2026-09-17) shipped 9 sections in intentional scene/text alternation
- * but the boundaries between sections were monotonous hairlines —
- * the eye couldn't tell one seam from the next, so the composition read
- * as accidental adjacency instead of designed rhythm.
+ * Founder critique 2026-09-18 (verbatim): "the home page is still all
+ * over the place you talk about schools and this and that you are not
+ * really think this thru at the level of detail that you should be."
  *
- * v15 applies docs/design/section-composition.md — each section carries a
- * ratified shape (hero-signature / trust-band / editorial-block / bento-dark
- * / catalog-grid / story-scene / stat-strip / cta-anchor) and every ~third
- * boundary carries a visible SectionDivider (chapter numeral + plus-marker
- * + strap). This gives the eye an intentional cadence to attach to.
+ * v15 shipped 9 sections in a monotonous scene/text alternation with
+ * dividers between them. Nine sections × nine tonally different
+ * stories (school-districts trust band, Managed/Federated deployment
+ * choice, capability grid, product accordion, magazine editorial
+ * arc, 1-person/160-days dogfood, 24-metric inventory grid, closing
+ * CTA) — the ARRANGEMENT was fine but the CONTENT sequence read as
+ * a swap-meet of overlapping proof shapes competing for attention.
+ * The school-districts band in particular was the tonal mismatch:
+ * a K-12 vertical claim inside a categorical-infrastructure hero
+ * page whose target audience is the CISO / procurement lead /
+ * program manager persona at defense, financial services, and
+ * public-sector buyers.
  *
- * Composition sequence (per docs/design/section-composition.md § / (Home)):
+ * v16 rebuilds against docs/marketing/homepage-first-time-visitor-
+ * strategy-2026-09-17.md § 5 — the ratified 5-section coherent
+ * throughline for a first-time visitor at each decision stage:
  *
- *   #  Section                 Shape             Ground     Density   Boundary above
- *   ─  ──────────────────────  ────────────────  ─────────  ────────  ──────────────
- *   1  HomeHero                hero-signature    scene      anchor    — (top of page)
- *   2  InProductionBand        trust-band        paper-2    compact   MARKER · II
- *   3  HomeModesBand           editorial-block   paper      standard  hairline
- *   4  CapabilityBentoGrid     bento-dark        ink        anchor    REGISTER-BREAK · III
- *   5  HomeBands               catalog-grid      paper      standard  hairline
- *   6  HomeStory               story-scene       scene      anchor    MARKER · IV
- *   7  BuiltWithNebbosBand     stat-strip        paper-2    compact   hairline
- *   8  NebbosInventoryBand     catalog-grid      paper      standard  MARKER · V
- *   9  HomeCTA                 cta-anchor        scene      anchor    — (own register-break)
+ *   #  Section              Shape             Answers the visitor's question
+ *   ─  ──────────────────   ────────────────  ────────────────────────────────
+ *   1  HomeHero + strip     hero-signature    5s: What is this? Serious?
+ *      + ComplianceStrip                       (Category claim + trust anchor
+ *                                               in the SAME viewport, not a
+ *                                               separate "schools" section)
+ *   2  HomeBands            catalog-grid      30s: What are the 4 things?
+ *                                               (Platform · App · MCP · Cradle)
+ *   3  CapabilityBentoGrid  bento-dark        2min: How deep does the
+ *                                               substrate go? (9 substrate
+ *                                               capabilities, dark register-
+ *                                               break signals "look under
+ *                                               the hood")
+ *   4  NebbosInventoryBand  catalog-grid      5min: Prove it's not a scam.
+ *                                               (24 live-verified metrics
+ *                                               from platform-metrics.json)
+ *   5  HomeCTA              cta-anchor        30min: Book a briefing.
  *
- * Grounds:  SCENE → paper-2 → paper → INK → paper → SCENE → paper-2 → paper → SCENE.
- * Never three same-ground in a row. Register-break at position 4; closing scene at 9.
- * Marker boundaries at 2, 4, 6, 8. No two consecutive `anchor` density sections.
+ * RETIRED FROM HOME (components stay on disk for reuse elsewhere):
+ *   - InProductionBand · K-12 school-districts trust band — belongs on
+ *     /customers, not on a categorical home. Redundant with the
+ *     compliance strip's trust-load and out-of-audience for the
+ *     home page's CISO/procurement persona.
+ *   - HomeModesBand · Managed vs Federated deployment-mode choice —
+ *     belongs on /products where the deployment decision happens,
+ *     not top-of-home before the visitor knows what the products
+ *     are.
+ *   - HomeStory · 3-chapter magazine editorial arc — belongs on
+ *     /how or /about (persona-E surface), not on a CISO-facing
+ *     home. Competes with the direct product answer for attention.
+ *   - BuiltWithNebbosBand · 1-person/160-days/repos/LoC dogfood —
+ *     duplicates NebbosInventoryBand's proof shape with a
+ *     founder-brag register. Move to /how where Persona-E reads
+ *     it as substrate proof, not marketing.
+ *
+ * Ground rhythm: SCENE → paper-2 (strip) → paper → INK → paper →
+ * SCENE. One register-break in the middle (bento-dark). One
+ * marker divider between substrate reveal and the numeric proof.
+ * Hero + closing scene bookend the paper interior.
+ *
+ * Composition-source-of-truth: this docblock IS the composition
+ * table. Any addition, removal, or reorder that breaks the table
+ * breaks the doctrine — update this comment alongside the code.
  */
 
 export default function HomePage() {
   return (
     <>
-      {/* 1. Signature hero — chapter I */}
+      {/* 1a. Signature hero — chapter I */}
       <HomeHero />
 
-      {/* 2. Trust band · running in K-12 districts */}
-      <SectionDivider chapter="II" strap="Where it starts today" />
-      <InProductionBand />
+      {/* 1b. Trust anchor — sits directly under the hero as the compliance
+              proof-load. Replaces the retired InProductionBand and any need
+              for a "we're serious" text section. Two mono lines: hardware
+              certs, framework certs, honest status suffixes. */}
+      <ComplianceStrip />
 
-      {/* 3. Editorial block · Managed vs Federated shape story */}
-      <SectionDivider variant="hairline" />
-      <HomeModesBand />
-
-      {/* 4. Bento-dark · the ONE register-break */}
-      <SectionDivider chapter="III" strap="The complete substrate" tone="anchor" />
-      <CapabilityBentoGrid />
-
-      {/* 5. Catalog grid · four products accordion */}
+      {/* 2. Four products intro — hairline seam, catalog-grid density */}
       <SectionDivider variant="hairline" />
       <HomeBands />
 
-      {/* 6. Story-scene · three chapters of a working day */}
-      <SectionDivider chapter="IV" strap="Three chapters of a working day" />
-      <HomeStory />
+      {/* 3. Substrate depth — the ONE dark register break, signals depth
+             of the substrate. Chapter II marker with anchor tone above it. */}
+      <SectionDivider chapter="II" strap="The complete substrate" tone="anchor" />
+      <CapabilityBentoGrid />
 
-      {/* 7. Stat strip · built-with-Nebbos dogfood */}
-      <SectionDivider variant="hairline" />
-      <BuiltWithNebbosBand />
-
-      {/* 8. Catalog grid · Nebbos inventory (24-metric quadrant) */}
-      <SectionDivider chapter="V" strap="Every substrate. Every rule. Every tool." />
+      {/* 4. Substrate in numbers — Persona-E diligence surface, live-
+             verified metrics from platform-metrics.json. */}
+      <SectionDivider chapter="III" strap="The substrate, in numbers" />
       <NebbosInventoryBand />
 
-      {/* 9. CTA anchor · closing chapter */}
+      {/* 5. Closing CTA — scene ground bookend, closing chapter. */}
       <HomeCTA />
     </>
   );
