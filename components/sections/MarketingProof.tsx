@@ -23,7 +23,6 @@ import { NumberCounter } from "@/components/patterns/NumberCounter";
  */
 
 const M = metrics;
-const SNAP = M.artifact_snapshot_at;
 
 export function MarketingProof() {
   return (
@@ -47,16 +46,13 @@ export function MarketingProof() {
             <NumberCounter value={M.shipped.lines_of_code_millions * 1_000_000} format="millions" />
           </p>
           <p className="mkt-proof__body">
-            Lines of code, across {M.shipped.repositories} repositories,
-            {" "}{M.shipped.commits_last_30d} commits in the last thirty
-            days. Every letter, every image, every backend, every
-            doctrine: produced by one founder plus a Pearl for every
-            department. This site is a Nebbos deploy. The proof of the
-            platform is the operation that built it.
+            The size of a modern operating system, built by one founder
+            with a Pearl for every department. This website. The
+            platform behind it. The internal tools. The calendar, the
+            mail, the books, the roadmap. All Nebbos-built.
           </p>
-          <p className="mkt-proof__hint">Snapshot · {SNAP}. See{" "}
-            <Link href="/how" style={{ color: "var(--mkt-accent)" }}>/how</Link>
-            {" "}for the full 12-dimension scorecard.
+          <p className="mkt-proof__hint">Measured this month. See{" "}
+            <Link href="/how" style={{ color: "var(--mkt-accent)" }}>how it was built</Link>.
           </p>
         </div>
       </div>
