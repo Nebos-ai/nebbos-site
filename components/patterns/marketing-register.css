@@ -1838,6 +1838,128 @@
   .mkt-product:nth-child(3) .mkt-product__mark { animation-delay: 2.4s; }
   .mkt-product:nth-child(4) .mkt-product__mark { animation-delay: 3.6s; }
 
+  /* ── SCROLL-LINKED ANIMATIONS · big-craft moves for scroll journey ── */
+
+  /* 1. Scroll progress bar — thin accent line at top of page,
+        fills 0→100% as the visitor scrolls the document. */
+  html:has(.mkt) {
+    scroll-behavior: smooth;
+  }
+  html:has(.mkt)::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--mkt-accent, #ff6b1e), var(--mkt-product-mcp, #b96bff));
+    transform-origin: 0 0;
+    transform: scaleX(0);
+    z-index: 100;
+    pointer-events: none;
+  }
+  @supports (animation-timeline: scroll(root)) {
+    html:has(.mkt)::before {
+      animation: mkt-scroll-progress linear both;
+      animation-timeline: scroll(root);
+    }
+  }
+  @keyframes mkt-scroll-progress {
+    from { transform: scaleX(0); }
+    to   { transform: scaleX(1); }
+  }
+
+  /* 2. Parallax on the hero mock — as the visitor scrolls the hero
+        away, the mock lifts slower than the surrounding text.
+        Uses animation-timeline: view() with the hero as the driver
+        so parallax is scoped to that section. */
+  @supports (animation-timeline: view()) {
+    .mkt-hero__visual {
+      animation: mkt-parallax-lift linear both;
+      animation-timeline: view();
+      animation-range: entry 0% exit 100%;
+    }
+    @keyframes mkt-parallax-lift {
+      from { transform: translateY(60px); }
+      to   { transform: translateY(-60px); }
+    }
+  }
+
+  /* 3. Sticky section header · the H2 inside .mkt-products__head,
+        .mkt-flow__head, .mkt-numbers__head, .mkt-faq__head briefly
+        sticks at the top of its section as the cards scroll past.
+        Reads like Linear feature-section stickies. */
+  .mkt-products__head,
+  .mkt-flow__head,
+  .mkt-numbers__head,
+  .mkt-faq__head {
+    /* Not applied globally — opt-in per section, since sticky can
+       fight with vertical rhythm on short sections. Enable via
+       .mkt-section--sticky-head modifier. */
+  }
+  .mkt-section--sticky-head .mkt-products__head,
+  .mkt-section--sticky-head .mkt-flow__head,
+  .mkt-section--sticky-head .mkt-numbers__head {
+    position: sticky;
+    top: 84px;
+    z-index: 2;
+    background:
+      linear-gradient(180deg, rgba(5, 7, 10, 0.92) 0%, rgba(5, 7, 10, 0.7) 60%, transparent 100%);
+    backdrop-filter: blur(8px);
+    padding-block-end: 24px;
+  }
+
+  /* 4. Section-heading word reveal · H2s (and .mkt-display H1s that
+        are inside sections) fade + slide in per word on entry. This
+        needs the words to be wrapped in <span>s at render time — the
+        CSS is here, the wrapping is optional per component. */
+  .mkt-h2 [data-word],
+  .mkt-display [data-word] {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  @supports (animation-timeline: view()) {
+    .mkt-h2 [data-word],
+    .mkt-display [data-word] {
+      animation: mkt-word-in linear both;
+      animation-timeline: view();
+      animation-range: entry 0% cover 20%;
+    }
+  }
+  @keyframes mkt-word-in {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* 5. Aurora backdrop parallax on scroll · the fixed aurora layer
+        already drifts on time; add a scroll-linked hue shift so it
+        subtly changes as the visitor moves through the page. */
+  @supports (animation-timeline: scroll(root)) {
+    body:has(.mkt)::after {
+      animation:
+        mkt-aurora 18s ease-in-out infinite alternate,
+        mkt-aurora-scroll linear both;
+      animation-timeline: auto, scroll(root);
+    }
+    @keyframes mkt-aurora-scroll {
+      from { filter: hue-rotate(0deg); }
+      to   { filter: hue-rotate(30deg); }
+    }
+  }
+
+  /* Reduced-motion guards for all the scroll-craft additions */
+  @media (prefers-reduced-motion: reduce) {
+    html:has(.mkt)::before,
+    .mkt-hero__visual,
+    .mkt-h2 [data-word],
+    .mkt-display [data-word],
+    body:has(.mkt)::after {
+      animation: none !important;
+      transform: none !important;
+      opacity: 1 !important;
+    }
+  }
+
   /* ── Reduced motion — kill non-essential transitions ─────────────── */
 
   @media (prefers-reduced-motion: reduce) {

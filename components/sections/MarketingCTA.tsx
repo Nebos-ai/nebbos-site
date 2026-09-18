@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SplitWords } from "@/components/patterns/SplitWords";
 
 /**
  * MarketingCTA · sections/MarketingCTA.tsx · v1 · 2026-09-18
@@ -17,7 +18,7 @@ export function MarketingCTA() {
       <div className="mkt-closing__inner">
         <p className="mkt-eyebrow">See it on your operation</p>
         <h2 id="mkt-close-h" className="mkt-display">
-          Put a Pearl on your hardest department.
+          <SplitWords>Put a Pearl on your hardest department.</SplitWords>
         </h2>
         <p className="mkt-deck">
           Thirty minutes. Pick one department. We map it, name the Pearl,

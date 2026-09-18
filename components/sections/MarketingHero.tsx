@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BRAND } from "@/content/brand";
+import { SplitWords } from "@/components/patterns/SplitWords";
 
 /**
  * MarketingHero · v2 · 2026-09-18 · outcome-first rewrite
@@ -31,7 +32,7 @@ export function MarketingHero() {
           <div className="mkt-hero__copy">
             <p className="mkt-eyebrow">Nebbos</p>
             <h1 id="mkt-hero-h" className="mkt-display">
-              {BRAND.taglineShort}
+              <SplitWords>{BRAND.taglineShort}</SplitWords>
             </h1>
             <p className="mkt-deck">{BRAND.homeDeck}</p>
             <div className="mkt-hero__ctas">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import metrics from "@/content/platform-metrics.json";
+import { SplitWords } from "@/components/patterns/SplitWords";
 
 /**
  * MarketingProof · sections/MarketingProof.tsx · v2 · 2026-09-18
@@ -29,7 +30,7 @@ export function MarketingProof() {
         <header className="mkt-flow__head">
           <p className="mkt-eyebrow">Proof</p>
           <h2 id="mkt-proof-h" className="mkt-h2">
-            Running quietly. Built with itself.
+            <SplitWords>Running quietly. Built with itself.</SplitWords>
           </h2>
           <p className="mkt-deck">
             Two kinds of proof. Real operators running Nebbos on their

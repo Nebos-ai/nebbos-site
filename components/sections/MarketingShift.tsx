@@ -1,3 +1,5 @@
+import { SplitWords } from "@/components/patterns/SplitWords";
+
 /**
  * MarketingShift · sections/MarketingShift.tsx · v1 · 2026-09-18
  *
@@ -37,7 +39,7 @@ export function MarketingShift() {
         <header className="mkt-flow__head">
           <p className="mkt-eyebrow">What changes on Monday</p>
           <h2 id="mkt-shift-h" className="mkt-h2">
-            One shift, with and without.
+            <SplitWords>One shift, with and without.</SplitWords>
           </h2>
           <p className="mkt-deck">
             Same team. Same signals. Same operators. The only variable is

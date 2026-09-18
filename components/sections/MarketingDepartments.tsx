@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { BRAND } from "@/content/brand";
+import { SplitWords } from "@/components/patterns/SplitWords";
 
 /**
  * MarketingDepartments · sections/MarketingDepartments.tsx · v1 · 2026-09-18
@@ -35,7 +36,7 @@ export function MarketingDepartments() {
         <header className="mkt-products__head">
           <p className="mkt-eyebrow">Departments</p>
           <h2 id="mkt-depts-h" className="mkt-h2">
-            A Pearl for every department.
+            <SplitWords>A Pearl for every department.</SplitWords>
           </h2>
           <p className="mkt-deck">
             One brain per department. It reads the signals your team
