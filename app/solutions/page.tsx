@@ -16,21 +16,21 @@ import { NebbosMark } from "@nebbos/brand/logo";
  */
 
 export const metadata: Metadata = {
-  title: "Solutions · A Pearl for every domain",
+  title: "Solutions · A working brain for every department",
   description:
-    "Nine industry Pearls. Nebbos Operations, Finance, People, Education, Care, FS, Manufacturing, Civic, Training Substrate. Pick the domain closest to yours.",
+    "Nine Pearls — three functions, five industries, one training substrate. Each one is a working brain shaped by the pressure of its domain. Pick the one closest to yours.",
 };
 
 const VERTICALS = [
-  { slug: "operations",          eyebrow: "Function",  name: "Nebbos Operations",         tagline: "Handoffs, coverage, incident triage." },
-  { slug: "finance",             eyebrow: "Function",  name: "Nebbos Finance",            tagline: "Close, forecast, variance." },
-  { slug: "people",              eyebrow: "Function",  name: "Nebbos People",             tagline: "Hiring, onboarding, retention." },
-  { slug: "k12",                 eyebrow: "Industry",  name: "Nebbos Education",          tagline: "The Pearl for district operations." },
-  { slug: "healthcare",          eyebrow: "Industry",  name: "Nebbos Care",               tagline: "Care coordination, compliance." },
-  { slug: "financial-services",  eyebrow: "Industry",  name: "Nebbos FS",                 tagline: "Trading ops, risk, audit." },
-  { slug: "manufacturing",       eyebrow: "Industry",  name: "Nebbos Manufacturing",      tagline: "Production, quality, supply." },
-  { slug: "public-sector",       eyebrow: "Industry",  name: "Nebbos Civic",              tagline: "Case management, accountability." },
-  { slug: "model-training",      eyebrow: "Substrate", name: "Nebbos Training Substrate", tagline: "Your operation is the training data." },
+  { slug: "operations",          eyebrow: "Function",  name: "Nebbos Operations",         tagline: "Stays up when the shift can't. Names the fire before it starts." },
+  { slug: "finance",             eyebrow: "Function",  name: "Nebbos Finance",            tagline: "Closes on the day you said. Finds the variance before the board asks." },
+  { slug: "people",              eyebrow: "Function",  name: "Nebbos People",             tagline: "Reads why people leave two weeks before they say it. Onboards every hire the way your best one was." },
+  { slug: "k12",                 eyebrow: "Industry",  name: "Nebbos Education",          tagline: "Runs the district behind the district. Every classroom accounted for by 8:15." },
+  { slug: "healthcare",          eyebrow: "Industry",  name: "Nebbos Care",               tagline: "Coordinates the care your chart already ordered. Compliance that doesn't cost a nurse a shift." },
+  { slug: "financial-services",  eyebrow: "Industry",  name: "Nebbos FS",                 tagline: "Reads the desk. Names the risk. Signs the audit." },
+  { slug: "manufacturing",       eyebrow: "Industry",  name: "Nebbos Manufacturing",      tagline: "Catches the defect before the line stops. Tracks every part from PO to pallet." },
+  { slug: "public-sector",       eyebrow: "Industry",  name: "Nebbos Civic",              tagline: "Every case timestamped and answerable. Case management a resident could audit." },
+  { slug: "model-training",      eyebrow: "Substrate", name: "Nebbos Training Substrate", tagline: "Every yes and no becomes a preference pair. Six months in, the Pearl talks like your best operator." },
 ];
 
 export default function SolutionsPage() {
@@ -42,13 +42,13 @@ export default function SolutionsPage() {
           <div className="mkt-hero__copy">
             <p className="mkt-eyebrow">Solutions</p>
             <h1 id="solutions-h" className="mkt-display">
-              A Pearl for every domain.
+              Every department gets its own working brain.
             </h1>
             <p className="mkt-deck">
-              Every industry has departments that would run better with a
-              brain. Nebbos ships a Pearl for each — three functions, five
-              industries, one training substrate. Pick the one closest to
-              yours.
+              A Pearl is the intelligence your ops team never had — it
+              watches every handoff, remembers every decision, and shows
+              up before the fire does. Nine of them, pre-shaped for a
+              domain. Pick the one closest to yours.
             </p>
             <div className="mkt-hero__ctas">
               <Link href="/demo" className="mkt-cta mkt-cta--primary">
@@ -72,11 +72,14 @@ export default function SolutionsPage() {
               Three functions. Five industries. One training substrate.
             </h2>
             <p className="mkt-deck">
-              Function Pearls (Operations, Finance, People) work across every
-              industry. Industry Pearls (Education, Care, FS, Manufacturing,
-              Civic) come pre-tuned to that vertical&rsquo;s ops shape. The
-              Training Substrate captures every decision your team makes as
-              a preference pair.
+              Function Pearls (Operations, Finance, People) come with the
+              domain-general intelligence — they slot into any industry.
+              Industry Pearls (Education, Care, FS, Manufacturing, Civic)
+              arrive pre-shaped by the domain — the vocabulary, the
+              regulations, the muscle memory. The Training Substrate is
+              what makes them yours — every decision your team makes,
+              encoded as a preference pair, until the Pearl talks like
+              your best operator.
             </p>
           </header>
 
@@ -115,8 +118,10 @@ export default function SolutionsPage() {
             Name the department. We map the Pearl.
           </h2>
           <p className="mkt-deck">
-            Thirty minutes. Bring one department. We show you which Pearl
-            fits, which signals it reads, and what its first shift looks like.
+            Thirty minutes. One department. We show you which Pearl fits,
+            which signals it reads, what its first shift looks like — and
+            where the pressure it&rsquo;s built for lives in your
+            operation today.
           </p>
           <div className="mkt-hero__ctas">
             <Link href="/demo" className="mkt-cta mkt-cta--primary">
