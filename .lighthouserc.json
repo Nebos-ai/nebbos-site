@@ -9,14 +9,15 @@
         "http://localhost:3000/products/platform",
         "http://localhost:3000/products/app",
         "http://localhost:3000/products/mcp",
-        "http://localhost:3000/products/usb",
-        "http://localhost:3000/platform",
+        "http://localhost:3000/products/cradle",
         "http://localhost:3000/security",
+        "http://localhost:3000/sovereignty",
         "http://localhost:3000/trust",
         "http://localhost:3000/compliance",
         "http://localhost:3000/customers",
         "http://localhost:3000/design",
-        "http://localhost:3000/how"
+        "http://localhost:3000/how",
+        "http://localhost:3000/presentation"
       ],
       "numberOfRuns": 2,
       "settings": {
