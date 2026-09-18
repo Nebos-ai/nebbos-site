@@ -198,12 +198,27 @@ export type PrimaryNavItem = {
   strap?: string;
 };
 
+/**
+ * Migration 2026-09-18: primaryNav shape moved to §3 of
+ * docs/marketing/site-wide-route-revision-plan-2026-09-17.md.
+ * Customers + Docs demoted to footer (Company / Resources columns —
+ * already present there). Security + Sovereignty + Contact promoted
+ * from footer-only to primary. Trust stays. Products + Solutions
+ * unchanged.
+ *
+ * Rationale: institutional-trust surfaces (Security · Sovereignty ·
+ * Trust) are the buying-decision pages for the CISO / procurement
+ * persona. Primary nav should route them there in one click, not
+ * force a Trust → sub-item chase. Customers stays in the footer as
+ * an in-production placeholder until named case studies exist.
+ */
 export const primaryNav: PrimaryNavItem[] = [
-  { label: "Products",  href: "/products",  megaMenu: "products", strap: "The platform. The app. The MCP. The Cradle." },
-  { label: "Solutions", href: "/solutions", strap: "Coordination is where the work lives." },
-  { label: "Customers", href: "/customers", strap: "Who's building on it." },
-  { label: "Trust",     href: "/trust",     strap: "Accountable by architecture." },
-  { label: "Docs",      href: "/docs",      strap: "How to build on it." },
+  { label: "Products",    href: "/products",    megaMenu: "products", strap: "The platform. The app. The MCP. The Cradle." },
+  { label: "Solutions",   href: "/solutions",   strap: "Coordination is where the work lives." },
+  { label: "Security",    href: "/security",    strap: "Engineered to institutional controls." },
+  { label: "Sovereignty", href: "/sovereignty", strap: "Your data. Your model. Your keys." },
+  { label: "Trust",       href: "/trust",       strap: "Accountable by architecture." },
+  { label: "Contact",     href: "/contact",     strap: "Direct routing to every inbox." },
 ];
 
 /* ── Solutions nav (industry verticals · appears in mega-menu + footer) ── */
