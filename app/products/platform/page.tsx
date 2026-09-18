@@ -79,6 +79,7 @@ export default function ProductPlatformPage() {
         chapter="01"
         chapterLabel="Nebbos.ai Platform"
         imageFamily="concept-operator-onboarding"
+        heroAlt="A morning briefing at a wide table, warm ochre-plaster walls in the background — the operator's first hour on the platform."
         priority
         headline={
           <>

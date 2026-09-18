@@ -83,6 +83,7 @@ export default function ProductCradlePage() {
         chapter="04"
         chapterLabel="Nebbos Cradle"
         imageFamily="concept-audit-attestation"
+        heroAlt="Two people at a table in a stately European office, golden-hour light catching a white shirt cuff — the moment a Cradle authenticates an operator for a privileged action."
         priority
         headline={
           <>

@@ -137,6 +137,27 @@ export function SceneStill(props: Props) {
   const { src, alt } = resolveSource(props);
 
   if (shape === "fullBleed") {
+    // When the caller passes a `caption`, treat the fullBleed image as
+    // contentful (descriptive alt, no aria-hidden). When no caption is
+    // passed, the image stays decorative (alt="", aria-hidden="true") —
+    // scrim + copy overlay carries the message. Per WCAG 2.2 SC 1.1.1:
+    // decorative images MUST have empty alt; informative images MUST
+    // have descriptive alt. The audit 2026-09-18 called out the four
+    // product hero photos as informative (product context + place +
+    // atmosphere) — pages pass `caption` on those to flip the semantic.
+    if (props.caption) {
+      return (
+        <Image
+          src={src}
+          alt={props.caption}
+          fill
+          priority={priority}
+          sizes={sizes ?? "100vw"}
+          className={className}
+          style={{ objectFit: "cover" }}
+        />
+      );
+    }
     return (
       <Image
         src={src}

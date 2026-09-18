@@ -62,6 +62,15 @@ export type PageHeroProps = {
   /** Full-bleed image family key (from content/stills.ts). Required when surface="scene". */
   imageFamily?: string;
   imageFamilyVariant?: 1 | 2;
+  /**
+   * Descriptive alt text for the scene image. When provided, the image
+   * is announced by screen readers as informative (product context +
+   * place + atmosphere). When omitted, the image stays decorative
+   * (alt="", aria-hidden). WCAG 2.2 SC 1.1.1. Founder-directed
+   * 2026-09-18 after live-site audit found four product hero photos
+   * carrying meaning but marked decorative.
+   */
+  heroAlt?: string;
   /** Section chapter number rendered top-right as a metadata plate. */
   chapter?: string;
   chapterLabel?: string;
@@ -82,6 +91,7 @@ export function PageHero({
   deck,
   imageFamily,
   imageFamilyVariant = 1,
+  heroAlt,
   chapter,
   chapterLabel,
   ctas,
@@ -107,6 +117,7 @@ export function PageHero({
           familyVariant={imageFamilyVariant}
           shape="fullBleed"
           priority={priority}
+          caption={heroAlt}
         />
       )}
       {isScene && <div aria-hidden className="page-hero__scrim" />}

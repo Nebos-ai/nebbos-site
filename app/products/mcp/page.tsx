@@ -82,6 +82,7 @@ export default function ProductMcpPage() {
         chapter="03"
         chapterLabel="Nebbos MCP"
         imageFamily="concept-pearl"
+        heroAlt="An operator seated at a warm-lit workspace in mid-morning, black jacket against ochre wall — the human on the other side of the MCP tool substrate."
         priority
         headline={
           <>

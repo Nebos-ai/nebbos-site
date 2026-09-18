@@ -78,6 +78,7 @@ export default function ProductAppPage() {
         chapter="02"
         chapterLabel="Nebbos App"
         imageFamily="concept-memory"
+        heroAlt="A quiet library room lit by natural light, dark bookshelves the length of one wall — the local Nebbos app, running on the operator's own device."
         priority
         headline={
           <>
