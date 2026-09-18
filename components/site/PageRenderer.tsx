@@ -405,11 +405,11 @@ function InboxRouter({ s, blockIndex }: { s: SectionBase; blockIndex: number }) 
   const eb = eyebrowParts(s.eyebrow);
   const inboxes = [
     { label: "General",     addr: CONTACT.general,    strap: "Sales, partnerships, misc." },
-    { label: "Enterprise",  addr: CONTACT.enterprise, strap: "SOWs, MSAs, DPAs, procurement." },
+    { label: "Enterprise",  addr: CONTACT.enterprise, strap: "SOWs, MSAs, License, procurement." },
     { label: "Engineering", addr: CONTACT.engineering, strap: "Developer + integration questions." },
     { label: "Security",    addr: CONTACT.security,   strap: "Vulnerability reports + incident notification." },
     { label: "Privacy",     addr: CONTACT.privacy,    strap: "Data-protection officer, GDPR, DSARs." },
-    { label: "Legal",       addr: CONTACT.legal,      strap: "DPA / policy questions." },
+    { label: "Legal",       addr: CONTACT.legal,      strap: "License, MSA, and policy questions." },
     { label: "Press",       addr: CONTACT.press,      strap: "Journalist / analyst inquiries." },
   ];
   return (
