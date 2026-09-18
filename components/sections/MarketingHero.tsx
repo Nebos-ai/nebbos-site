@@ -65,7 +65,7 @@ export function MarketingHero() {
                 </div>
                 <div className="mkt-mock__panel mkt-mock__panel--accent">
                   <span className="mkt-mock__badge">Ops · needs you</span>
-                  <span className="mkt-mock__number">2 to approve</span>
+                  <span className="mkt-mock__number">2 waiting</span>
                   <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--80" />
                   <span className="mkt-mock__line mkt-mock__line--accent mkt-mock__line--80" />
                   <span className="mkt-mock__line mkt-mock__line--60" />
