@@ -1,131 +1,131 @@
-import { FullBleedScene } from "@/components/site/FullBleedScene";
-import { Button } from "@/components/ui/Button";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Nebbos is running today inside school districts across multiple U.S. states. Case studies land here as each district signs off publicly.",
+    "Nebbos is used inside the business that builds it. Case studies land here as external customers sign off publicly.",
 };
 
 /**
- * /customers · 2026-09-12 revision 2 · in-production framing
+ * /customers · 2026-09-18 · v3 · mkt-native rebuild + dogfood-only framing
  *
- * PR #23 (2026-09-12) replaced the fictional customer MDX with a pure
- * coming-soon page. This revision adds the specific true claim the
- * founder confirmed: Nebbos is deployed today inside school districts
- * across multiple U.S. states, running district operations / coverage /
- * compliance.
+ * v2 (2026-09-12) claimed deployment inside U.S. school-district
+ * operations. That was the same class of unverifiable external claim
+ * the home page retracted in 73af932 (2026-09-18) — retracted here
+ * for consistency with the claims-registry doctrine (peer PR #108).
  *
- * No specific district names (client sign-off pending). No specific
- * numbers not yet publicly shareable. Coming-soon still applies to the
- * per-case-study writeups.
+ * v3 replaces:
+ *   - shape: v3 FullBleedScene + section--paper → mkt-hero + mkt-section
+ *   - copy: external-customer claim → dogfood-only framing (the
+ *     business that builds Nebbos is running on it today)
  *
- * Prior version's coming-soon framing is superseded by this in-
- * production framing per founder directive 2026-09-12: "We want to say
- * that nebbos is being used by school districts across multiple states."
- * The prior version is preserved via git history on the branch
- * fix/no-fake-customers-coming-soon-2026-09-12 (merged as PR #23).
+ * When external customers land, this page swaps to per-customer case
+ * study cards. Until then, honesty about the deployment shape.
  */
 
 export default function CustomersIndexPage() {
   return (
-    <div className="mkt-mode">
-      <FullBleedScene
-        className="hero-fullbleed"
-        scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
-        scrim="bottom"
-        vignetteStrength={0.5}
-        chapter="00"
-        chapterLabel="In production"
-        priority
-      >
-        <div className="container hero-fullbleed__inner">
-          <div className="hero-fullbleed__frame">
-            <h1 className="hero-fullbleed__title">
-              Running in school districts across multiple states.
+    <>
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="cus-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <p className="mkt-eyebrow">Customers</p>
+            <h1 id="cus-h" className="mkt-display">
+              Running inside the business that builds it.
             </h1>
-            <p className="hero-fullbleed__deck">
-              Nebbos is deployed today inside school districts across several
-              U.S. states &mdash; running district operations, coverage,
-              compliance, and superintendent-scoped approval trails. Case
-              studies land here as each district signs off publicly. Until
-              then, the shape of the work is real; the names come with
-              permission.
+            <p className="mkt-deck">
+              Nebbos is used every day by the team that builds it. The
+              platform, its Pearls, its Cradle. Case studies from external
+              customers land here as each customer signs off publicly.
+              Until then, the shape of the work is real; the names arrive
+              with permission.
             </p>
-          </div>
-        </div>
-      </FullBleedScene>
-
-      <section
-        className="section section--paper"
-        style={{
-          paddingBlock: "clamp(64px, 10vh, 128px)",
-          borderTop: "1px solid var(--rule)",
-        }}
-      >
-        <div className="container-narrow">
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: "var(--ink-3)",
-              margin: 0,
-            }}
-          >
-            01 &middot; The shape today
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(32px, 4.4vw, 56px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.022em",
-              fontWeight: 400,
-              color: "var(--ink)",
-              margin: "20px 0 0 0",
-              maxWidth: "26ch",
-              textWrap: "balance",
-            }}
-          >
-            One Pearl per district operations.
-          </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.4vw, 18px)",
-              lineHeight: 1.5,
-              color: "var(--ink-2)",
-              margin: "20px 0 0 0",
-              maxWidth: "56ch",
-            }}
-          >
-            A Pearl scoped to district operations, deployed behind the systems
-            each district already runs &mdash; SIS, HR, substitute management,
-            state reporting, parent comms. Every consequential action passes
-            through named-superintendent approval; every action lands as an
-            append-only audit-event. That&rsquo;s the shape running today.
-            Case studies as the districts are ready.
-          </p>
-          <div
-            style={{
-              display: "flex",
-              gap: 16,
-              marginTop: "clamp(32px, 5vh, 56px)",
-              flexWrap: "wrap",
-            }}
-          >
-            <Button href="/solutions/k12" variant="primary" size="lg">
-              See district operations
-            </Button>
-            <Button href="/demo" variant="ghost" size="lg" arrow={false}>
-              Book a demo
-            </Button>
+            <div className="mkt-hero__ctas">
+              <Link href="/how" className="mkt-cta mkt-cta--primary">
+                See how it is built
+                <span className="mkt-cta__arrow" aria-hidden>→</span>
+              </Link>
+              <Link href="/demo" className="mkt-cta mkt-cta--ghost">
+                Book a demo
+              </Link>
+            </div>
           </div>
         </div>
       </section>
-    </div>
+
+      <section className="mkt mkt-section" aria-labelledby="cus-shape">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">The shape today</p>
+            <h2 id="cus-shape" className="mkt-h2">
+              A Pearl per department. Approved from the operator&rsquo;s
+              phone.
+            </h2>
+            <p className="mkt-deck">
+              A Pearl scoped to each department, deployed behind the
+              systems that department already runs. Every consequential
+              action passes through named-operator approval. Every action
+              lands as an append-only audit event. That is the shape
+              running inside the business that builds Nebbos.
+            </p>
+          </header>
+        </div>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="cus-when">
+        <div className="mkt-section__inner">
+          <div className="mkt-case">
+            <aside className="mkt-case__aside">
+              <p className="mkt-eyebrow">Case studies</p>
+              <h3 className="mkt-case__subject">Written when the customer says yes.</h3>
+            </aside>
+            <div className="mkt-case__body">
+              <p>
+                Every case study on this page names a real customer,
+                describes a real deployment, and lands only after the
+                customer has read and approved the language. No composite
+                accounts. No aggregated numbers. If it&rsquo;s on this
+                page, the operator quoted has signed off in writing.
+              </p>
+              <p>
+                Until customers reach that point, this page tells you
+                what the shape of the work is, not who is running it.
+                That is the trade-off. It stays that way.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="mkt mkt-section mkt-closing"
+        aria-labelledby="cus-close"
+      >
+        <div className="mkt-closing__inner">
+          <span aria-hidden style={{ display: "inline-flex", marginBottom: 24 }}>
+            <NebbosMark size={40} />
+          </span>
+          <p className="mkt-eyebrow">Talk to us</p>
+          <h2 id="cus-close" className="mkt-display">
+            See the same shape on your operation.
+          </h2>
+          <p className="mkt-deck">
+            Thirty minutes. Bring one department. We show you a Pearl
+            running against a workload the same shape as yours.
+          </p>
+          <div className="mkt-hero__ctas">
+            <Link href="/demo" className="mkt-cta mkt-cta--primary">
+              Book a demo
+              <span className="mkt-cta__arrow" aria-hidden>→</span>
+            </Link>
+            <Link href="/products" className="mkt-cta mkt-cta--ghost">
+              See the products
+            </Link>
+          </div>
+        </div>
+      </section>
+    </>
   );
 }

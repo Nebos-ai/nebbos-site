@@ -6,6 +6,15 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 
+/**
+ * /blog/[slug] · v3 · 2026-09-18 · mkt-native rebuild
+ *
+ * v2 shape: container-narrow editorial-post + blog-prose (cream paper
+ * serif). v3 shape: mkt-hero + mkt-article + .mkt-prose for the reader
+ * body typography. Content pipeline (gray-matter + marked over
+ * content/blog/*.mdx) is unchanged.
+ */
+
 type Params = { slug: string };
 
 async function readPost(slug: string) {
@@ -71,23 +80,40 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <div className="mkt-mode container-narrow editorial-post">
-      <Link href="/blog" className="editorial-post__backlink">
-        ← Notes
-      </Link>
-      <p className="editorial-post__meta">
-        {formatDate(post.date)} · {post.author}
-      </p>
-      <h1 className="editorial-post__title">{post.title}</h1>
-      <p className="editorial-post__lede">{post.description}</p>
-      <article className="blog-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
-      <footer className="editorial-post__footer">
-        <p>
-          <Link href="/blog">More notes</Link> ·{" "}
-          <Link href="/products">See the products</Link> ·{" "}
-          <Link href="/demo">Book a demo</Link>
-        </p>
-      </footer>
-    </div>
+    <>
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="post-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <Link href="/blog" className="mkt-eyebrow" style={{ textDecoration: "none" }}>
+              ← Notes
+            </Link>
+            <p className="mkt-eyebrow" style={{ marginTop: 12 }}>
+              {formatDate(post.date)} · {post.author}
+            </p>
+            <h1 id="post-h" className="mkt-display">
+              {post.title}
+            </h1>
+            {post.description && (
+              <p className="mkt-deck">{post.description}</p>
+            )}
+          </div>
+        </div>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="post-body">
+        <div className="mkt-section__inner">
+          <h2 id="post-body" className="sr-only">Article body</h2>
+          <article className="mkt-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
+          <footer className="mkt-postfoot">
+            <Link href="/blog" className="mkt-cta mkt-cta--ghost">More notes</Link>
+            <Link href="/products" className="mkt-cta mkt-cta--ghost">See the products</Link>
+            <Link href="/demo" className="mkt-cta mkt-cta--primary">
+              Book a demo
+              <span className="mkt-cta__arrow" aria-hidden>→</span>
+            </Link>
+          </footer>
+        </div>
+      </section>
+    </>
   );
 }
