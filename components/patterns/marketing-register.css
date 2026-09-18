@@ -1438,31 +1438,174 @@
     transform: translateX(3px);
   }
 
-  /* ── SHIFT NARRATIVE · one-day story shape ───────────────────── */
+  /* ── SHIFT NARRATIVE · one-day timeline animation ─────────────────
 
-  .mkt-shift__grid {
+     Founder-directed 2026-09-18: "we should use this animation to show
+     just a day in the life of a nebbos user." The section now scrolls
+     through one operator's Monday as a shared timeline. Each beat is
+     a 3-column row:
+
+        [chaos card · Without]   [spine + flower tile]   [calm card · With]
+
+     A sticky clock playhead at the top ticks through the times as
+     each beat enters the viewport (ShiftPlayhead client component +
+     IntersectionObserver). Active beat lights up its product color;
+     past beats mute; future beats ghost. Scroll-linked reveal uses
+     translate-only keyframes per the axe-safety doctrine — WCAG
+     color-contrast never fails because opacity never animates. */
+
+  section.mkt-shift {
+    position: relative;
+  }
+
+  /* Sticky clock playhead. Sits above the timeline, stays anchored
+     as the reader scrolls the day. */
+  .mkt-shift__playhead {
+    position: sticky;
+    top: 80px;                       /* clear the site header */
+    z-index: 3;
+    margin-block-end: clamp(32px, 5vw, 64px);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .mkt-shift__playhead-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(16px, 2vw, 28px);
+    padding: 14px 22px;
+    background: rgba(23, 27, 38, 0.72);
+    border: 1px solid var(--mkt-rule-2);
+    border-radius: var(--mkt-radius-pill);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      0 12px 32px -8px rgba(0, 0, 0, 0.55),
+      0 2px 6px -1px rgba(0, 0, 0, 0.35);
+  }
+  .mkt-shift__playhead-label {
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+  }
+  .mkt-shift__playhead-clock {
+    font-family: var(--mkt-font-mono);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--mkt-text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 5ch;
+    text-align: center;
+    transition: color 320ms var(--mkt-ease), text-shadow 320ms var(--mkt-ease);
+  }
+  .mkt-shift__playhead-clock--app       { text-shadow: 0 0 18px rgba(255, 138, 61, 0.55); }
+  .mkt-shift__playhead-clock--platform  { text-shadow: 0 0 18px rgba(74, 92, 255, 0.55); }
+  .mkt-shift__playhead-clock--mcp       { text-shadow: 0 0 18px rgba(185, 107, 255, 0.55); }
+  .mkt-shift__playhead-clock--cradle    { text-shadow: 0 0 18px rgba(214, 58, 76, 0.55); }
+
+  .mkt-shift__playhead-rail {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .mkt-shift__playhead-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--mkt-rule-2);
+    transition: background 320ms var(--mkt-ease), transform 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease);
+  }
+  .mkt-shift__playhead-dot[data-state="past"]   { background: var(--mkt-text-3); }
+  .mkt-shift__playhead-dot[data-state="active"] { transform: scale(1.4); }
+  .mkt-shift__playhead-dot--app[data-state="active"]      { background: var(--mkt-product-app);      box-shadow: 0 0 12px rgba(255, 138, 61, 0.75); }
+  .mkt-shift__playhead-dot--platform[data-state="active"] { background: var(--mkt-product-platform); box-shadow: 0 0 12px rgba(74, 92, 255, 0.75); }
+  .mkt-shift__playhead-dot--mcp[data-state="active"]      { background: var(--mkt-product-mcp);      box-shadow: 0 0 12px rgba(185, 107, 255, 0.75); }
+  .mkt-shift__playhead-dot--cradle[data-state="active"]   { background: var(--mkt-product-cradle);   box-shadow: 0 0 12px rgba(214, 58, 76, 0.75); }
+  .mkt-shift__playhead-tick {                 /* SR-only tick label */
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+  }
+
+  /* Timeline shape */
+  .mkt-shift__timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: grid;
-    gap: clamp(48px, 6vw, 96px);
+    gap: clamp(48px, 7vw, 96px);
+  }
+
+  .mkt-shift__beat {
+    display: grid;
     grid-template-columns: 1fr;
-    align-items: start;
+    align-items: stretch;
+    gap: 20px;
+    position: relative;
   }
   @media (min-width: 960px) {
-    .mkt-shift__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .mkt-shift__beat {
+      grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 48px);
+    }
   }
-  .mkt-shift__col {
+
+  /* Card shape — chaos (left) and calm (right) share the base panel
+     shape and diverge on accent color + border treatment. */
+  .mkt-shift__card {
+    position: relative;
+    padding: clamp(20px, 2.4vw, 28px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
     display: grid;
-    gap: 16px;
+    gap: 10px;
     align-content: start;
+    transition:
+      transform 420ms var(--mkt-ease),
+      border-color 420ms var(--mkt-ease),
+      box-shadow 420ms var(--mkt-ease),
+      background 420ms var(--mkt-ease);
   }
-  .mkt-shift__hour {
+  .mkt-shift__card--chaos {
+    /* Faint amber warning wash — reads as friction without failing contrast. */
+    background: linear-gradient(180deg, rgba(38, 20, 12, 0.55), rgba(10, 13, 19, 0.55));
+    border-color: rgba(255, 138, 61, 0.16);
+  }
+  .mkt-shift__card--calm {
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.65), rgba(10, 13, 19, 0.65));
+    border-color: rgba(255, 255, 255, 0.10);
+  }
+
+  .mkt-shift__cardlabel {
     font-family: var(--mkt-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--mkt-accent);
-    font-weight: 600;
+    color: var(--mkt-text-3);
     margin: 0;
   }
+  .mkt-shift__card--chaos .mkt-shift__cardlabel { color: rgba(255, 138, 61, 0.85); }
+
+  .mkt-shift__hour {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-shift__hour--accent { color: var(--mkt-accent); }
+
   .mkt-shift__event {
     font-family: var(--mkt-font-display);
     font-size: clamp(20px, 2vw, 26px);
@@ -1479,30 +1622,111 @@
     color: var(--mkt-text-2);
     margin: 0;
   }
-  .mkt-shift__col--head p {
-    margin: 0;
+
+  /* Spine — the vertical column running between chaos and calm. Holds
+     a flower app-icon tile at the beat and a hairline connector above
+     and below. On narrow widths the spine collapses to a small inline
+     row above the calm card. */
+  .mkt-shift__spine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    order: -1;                       /* narrow: sits above the two cards */
   }
-  .mkt-shift__label {
-    font-family: var(--mkt-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--mkt-text-3);
-    font-weight: 500;
+  @media (min-width: 960px) {
+    .mkt-shift__spine {
+      order: 0;
+      flex-direction: column;
+      align-self: stretch;
+      gap: 0;
+    }
   }
-  .mkt-shift__list {
-    display: grid;
-    gap: 24px;
+  .mkt-shift__spine-line {
+    background: linear-gradient(180deg, var(--mkt-rule) 0%, var(--mkt-rule-2) 50%, var(--mkt-rule) 100%);
+    flex: 1;
+    min-height: 1px;
+    height: 1px;
+    width: 100%;
   }
-  .mkt-shift__item {
-    display: grid;
-    gap: 10px;
-    padding-block: 20px;
-    border-block-start: 1px solid var(--mkt-rule);
+  @media (min-width: 960px) {
+    .mkt-shift__spine-line {
+      width: 1px;
+      height: auto;
+      min-height: 24px;
+      background: linear-gradient(180deg, transparent 0%, var(--mkt-rule-2) 50%, transparent 100%);
+    }
   }
-  .mkt-shift__item:last-child {
-    border-block-end: 1px solid var(--mkt-rule);
+  .mkt-shift__spine-line--above { }
+  .mkt-shift__spine-line--below { }
+  .mkt-shift__beat:first-child .mkt-shift__spine-line--above,
+  .mkt-shift__beat:last-child  .mkt-shift__spine-line--below {
+    opacity: 0;
   }
+
+  /* Spine flower tile — app-icon design (per-product color tile + white
+     flower + elevation shadow) shared with departments/products so the
+     visual language is one system. */
+  .mkt-shift__spine-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    color: #ffffff;                   /* stroke: currentColor on the flower */
+    position: relative;
+    flex: none;
+    transition: transform 420ms var(--mkt-ease), box-shadow 420ms var(--mkt-ease), filter 420ms var(--mkt-ease);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 10px 24px -8px rgba(0, 0, 0, 0.55),
+      0 3px 8px -2px rgba(0, 0, 0, 0.35);
+    filter: saturate(0.85) brightness(0.92);
+  }
+  .mkt-shift__spine-tile--app       { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app) 62%, #d76a24 100%); }
+  .mkt-shift__spine-tile--platform  { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
+  .mkt-shift__spine-tile--mcp       { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp) 62%, #9848e0 100%); }
+  .mkt-shift__spine-tile--cradle    { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle) 62%, #b02533 100%); }
+
+  /* State-driven expression — the JS playhead sets data-state on each
+     beat as it enters view. Past = muted (day already happened),
+     Active = full presence, Future = ghosted (yet to come). */
+  .mkt-shift__beat[data-state="future"] .mkt-shift__card,
+  .mkt-shift__beat[data-state="future"] .mkt-shift__spine-tile {
+    filter: saturate(0.5) brightness(0.72);
+  }
+  .mkt-shift__beat[data-state="future"] .mkt-shift__card {
+    transform: translateY(6px);
+  }
+  .mkt-shift__beat[data-state="past"] .mkt-shift__card {
+    filter: saturate(0.72) brightness(0.88);
+  }
+  .mkt-shift__beat[data-state="past"] .mkt-shift__spine-tile {
+    filter: saturate(0.85) brightness(0.85);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__spine-tile {
+    transform: scale(1.08);
+    filter: saturate(1) brightness(1);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__card--chaos {
+    border-color: rgba(255, 138, 61, 0.42);
+    box-shadow:
+      0 20px 48px -12px rgba(255, 138, 61, 0.28),
+      0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__card--calm {
+    border-color: var(--mkt-rule-2);
+    box-shadow:
+      0 20px 48px -12px rgba(0, 0, 0, 0.55),
+      0 4px 12px -2px rgba(0, 0, 0, 0.35);
+  }
+  /* Active-beat calm card picks up a subtle Pearl-colored halo per product */
+  .mkt-shift__beat--app[data-state="active"]      .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(255, 138, 61, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--platform[data-state="active"] .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(74, 92, 255, 0.32),  0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--mcp[data-state="active"]      .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(185, 107, 255, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--cradle[data-state="active"]   .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(214, 58, 76, 0.32),   0 4px 12px -2px rgba(0, 0, 0, 0.45); }
 
   /* ── PROOF · social-proof / customer band ───────────────────── */
 
@@ -2160,7 +2384,7 @@
     .mkt-metric,
     .mkt-deep__item,
     .mkt-value,
-    .mkt-shift__item,
+    .mkt-shift__beat,
     .mkt-faq__item,
     .mkt-highlight,
     .mkt-builtfor__item,
@@ -2344,13 +2568,31 @@
       animation: none !important;
       opacity: 1 !important;
     }
+    /* Day-in-the-life shift: freeze active/past/future filters so every
+       beat reads at full brightness, and keep the playhead static. */
+    .mkt-shift__card,
+    .mkt-shift__spine-tile,
+    .mkt-shift__playhead-clock,
+    .mkt-shift__playhead-dot {
+      transition-duration: 60ms !important;
+    }
+    .mkt-shift__beat[data-state="future"] .mkt-shift__card,
+    .mkt-shift__beat[data-state="future"] .mkt-shift__spine-tile,
+    .mkt-shift__beat[data-state="past"] .mkt-shift__card,
+    .mkt-shift__beat[data-state="past"] .mkt-shift__spine-tile {
+      filter: none !important;
+      transform: none !important;
+    }
+    .mkt-shift__playhead {
+      position: static !important;
+    }
     @supports (animation-timeline: view()) {
       .mkt-product,
       .mkt-stage,
       .mkt-metric,
       .mkt-deep__item,
       .mkt-value,
-      .mkt-shift__item,
+      .mkt-shift__beat,
       .mkt-faq__item,
       .mkt-highlight,
       .mkt-builtfor__item,
