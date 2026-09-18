@@ -1484,9 +1484,42 @@
      proof is present (external-customer proof retracted per peer PR
      #107 legal-lens review). */
   .mkt-proof--single {
-    max-width: 52rem;
+    max-width: 62rem;
     margin: 0 auto;
     text-align: left;
+  }
+
+  /* Sub-stat strip · secondary numbers below the hero stat. Reads
+     as a horizontal band of 3-4 stats, each with a bright number
+     + a short customer-language label. */
+  .mkt-proof__strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin-top: clamp(32px, 5vh, 56px);
+    padding-top: clamp(28px, 4vh, 40px);
+    border-top: 1px solid var(--mkt-rule);
+  }
+  .mkt-proof__stripstat {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-proof__stripstat-value {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(24px, 2.4vw, 34px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .mkt-proof__stripstat-label {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--mkt-text-2);
+    margin: 0;
   }
   .mkt-proof__stat {
     font-family: var(--mkt-font-display);

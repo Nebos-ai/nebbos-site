@@ -51,7 +51,44 @@ export function MarketingProof() {
             platform behind it. The internal tools. The calendar, the
             mail, the books, the roadmap. All Nebbos-built.
           </p>
-          <p className="mkt-proof__hint">Measured this month. See{" "}
+
+          <div className="mkt-proof__strip">
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.automated_tests} format="thousands" />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Automated checks keeping the system honest.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.commits_last_30d} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Improvements shipped in the last month.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.doctrine_memories} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Institutional lessons the system consults on every decision.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.enforcement_hooks} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Rules the system enforces so mistakes stop before they ship.
+              </p>
+            </div>
+          </div>
+
+          <p className="mkt-proof__hint" style={{ marginTop: "clamp(24px, 3vh, 32px)" }}>
+            Measured this month. See{" "}
             <Link href="/how" style={{ color: "var(--mkt-accent)" }}>how it was built</Link>.
           </p>
         </div>
