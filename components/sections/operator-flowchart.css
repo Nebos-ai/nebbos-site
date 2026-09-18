@@ -1,0 +1,388 @@
+/* ============================================================================
+   operator-flowchart.css · @layer patterns · 2026-09-18
+
+   The substrate-depth section on the home page. GSAP-driven horizontal-
+   pin flowchart adapted from the pen at
+   codepen.io/dermalhealth/pen/GgNrpJx per docs/marketing/homepage-first-
+   time-visitor-strategy-2026-09-17.md §5.3.
+
+   Two layouts share this stylesheet:
+
+     BASE (SSR default; used when JS is off, GSAP fails to load, viewport
+     is narrow, or the user has prefers-reduced-motion) — vertical stack,
+     paths render as short hairline gaps between stacked cards, everything
+     visible at rest, no scroll hijack.
+
+     ENHANCED (.op-flow--enhanced class added by useEffect after GSAP
+     confirms load) — horizontal 2400px canvas that translates left as the
+     user scrolls down. Paths draw progressively on scroll. Nodes scale in
+     as they cross into the horizontal viewport.
+   ============================================================================ */
+
+@layer patterns {
+
+  /* ── SECTION SHELL ─────────────────────────────────────────────────── */
+
+  .op-flow {
+    display: block;
+    width: 100%;
+    background: var(--color-paper, var(--paper));
+    color: var(--color-ink, var(--ink));
+    padding-block: clamp(64px, 9vh, 128px);
+  }
+
+  .op-flow__intro {
+    display: grid;
+    gap: clamp(16px, 2vh, 28px);
+    max-width: 56rem;
+    margin-bottom: clamp(48px, 6vh, 88px);
+  }
+
+  .op-flow__eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-accent, var(--accent-2));
+    margin: 0;
+  }
+
+  .op-flow__heading {
+    font-family: var(--font-serif);
+    font-size: var(--fs-h1, var(--size-h1));
+    line-height: 1.04;
+    letter-spacing: -0.024em;
+    font-weight: 400;
+    color: var(--color-ink, var(--ink));
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .op-flow__heading em {
+    font-style: italic;
+    color: var(--color-accent, var(--accent-2));
+    font-weight: inherit;
+  }
+
+  .op-flow__deck {
+    font-family: var(--font-sans);
+    font-size: var(--fs-body-lg, var(--size-body-lg));
+    line-height: 1.55;
+    color: var(--color-ink-2, var(--ink-2));
+    margin: 0;
+    max-width: 56ch;
+  }
+
+  /* ── OUTRO (anchor claim + CTA) ────────────────────────────────────── */
+
+  .op-flow__outro {
+    display: grid;
+    gap: clamp(20px, 3vh, 40px);
+    max-width: 56rem;
+    margin-top: clamp(48px, 6vh, 88px);
+  }
+
+  .op-flow__anchor {
+    font-family: var(--font-serif);
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.4;
+    letter-spacing: -0.005em;
+    font-weight: 400;
+    color: var(--color-ink, var(--ink));
+    margin: 0;
+    max-width: 44ch;
+    text-wrap: balance;
+  }
+
+  .op-flow__anchor em {
+    font-style: italic;
+    color: var(--color-accent, var(--accent-2));
+    font-weight: inherit;
+  }
+
+  .op-flow__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: clamp(16px, 2vw, 28px);
+  }
+
+  .op-flow__link {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-ink, var(--ink));
+    text-decoration: none;
+    padding-block: 8px;
+    border-bottom: 1px solid var(--color-rule, var(--rule));
+    display: inline-flex;
+    align-items: baseline;
+    gap: 8px;
+    transition:
+      color var(--dur-fast, 120ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+      border-color var(--dur-fast, 120ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+  .op-flow__link:hover,
+  .op-flow__link:focus-visible {
+    color: var(--color-accent, var(--accent-2));
+    border-color: var(--color-accent, var(--accent-2));
+  }
+  .op-flow__link:focus-visible {
+    outline: 2px solid var(--color-accent, var(--accent-2));
+    outline-offset: 4px;
+    border-radius: 2px;
+  }
+
+  /* ── BASE LAYOUT · vertical stack (SSR default) ──────────────────── */
+
+  .op-flow__scroll-wrapper {
+    /* No pin, no overflow-hidden in the base layout — cards flow
+       naturally in the block. */
+    display: block;
+    width: 100%;
+  }
+
+  .op-flow__canvas {
+    /* In base mode the canvas is a plain block; no absolute positioning,
+       no fixed width. The SVG paths are hidden because the vertical stack
+       doesn't need horizontal connectors. */
+    position: relative;
+    width: 100%;
+    max-width: var(--container-max, 77.5rem);
+    margin: 0 auto;
+    padding-inline: clamp(20px, 4vw, 40px);
+  }
+
+  .op-flow__lines {
+    display: none; /* hidden in base — vertical stack draws its own hairline connectors between cards */
+  }
+
+  .op-flow__nodes {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: clamp(32px, 4vh, 56px);
+    max-width: 44rem;
+    margin-inline: auto;
+  }
+
+  .op-flow__node {
+    position: relative;
+  }
+
+  .op-flow__node::before {
+    /* Vertical hairline dropping from each card to the next — the
+       base-layout equivalent of the SVG path in the enhanced layout. */
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    width: 1px;
+    height: clamp(32px, 4vh, 56px);
+    background: var(--color-rule, var(--rule));
+    transform: translateX(-50%);
+  }
+
+  .op-flow__node:last-child::before {
+    display: none;
+  }
+
+  .op-flow__card {
+    background: var(--color-paper, var(--paper));
+    border: 1px solid var(--color-rule, var(--rule));
+    /* Nebbos signature cut-corner top-right (v3 substrate device) */
+    border-radius: 0 var(--radius-cut-corner, 1.875rem) 0 0;
+    padding: clamp(24px, 3vw, 36px);
+    display: grid;
+    gap: clamp(10px, 1.2vh, 16px);
+    transition:
+      transform var(--dur-default, 180ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1)),
+      border-color var(--dur-default, 180ms) var(--ease-out, cubic-bezier(0.22, 1, 0.36, 1));
+  }
+
+  .op-flow__card:hover {
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--color-rule) 40%, var(--color-accent) 60%);
+  }
+
+  .op-flow__card-eyebrow {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 10px;
+    margin: 0;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--color-accent, var(--accent-2));
+  }
+  .op-flow__card-numeral {
+    color: var(--color-accent, var(--accent-2));
+    font-variant-numeric: tabular-nums;
+    font-weight: 500;
+  }
+  .op-flow__card-dot {
+    color: var(--color-ink-3, var(--ink-3));
+    opacity: 0.5;
+  }
+  .op-flow__card-label {
+    color: var(--color-accent, var(--accent-2));
+  }
+
+  .op-flow__card-headline {
+    font-family: var(--font-serif);
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    font-weight: 500;
+    color: var(--color-ink, var(--ink));
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+
+  .op-flow__card-sources {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--color-ink-3, var(--ink-3));
+    margin: 0;
+  }
+
+  .op-flow__card-body {
+    font-family: var(--font-sans);
+    font-size: clamp(14px, 1.1vw, 15px);
+    line-height: 1.5;
+    color: var(--color-ink-2, var(--ink-2));
+    margin: 0;
+    max-width: 42ch;
+  }
+
+  .op-flow__connectors,
+  .op-flow__dot,
+  .op-flow__plus {
+    /* Hidden in the base layout — they're only meaningful when the
+       canvas is horizontal and the SVG paths are visible. */
+    display: none;
+  }
+
+  /* ── ENHANCED LAYOUT · horizontal-pin (JS-driven, GSAP-required) ── */
+
+  .op-flow--enhanced .op-flow__scroll-wrapper {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .op-flow--enhanced .op-flow__canvas {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    width: 2400px;
+    height: 600px;
+    max-width: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .op-flow--enhanced .op-flow__lines {
+    display: block;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+
+  .op-flow--enhanced .op-flow__path {
+    fill: none;
+    stroke: var(--color-rule, var(--rule));
+    stroke-width: 1.5;
+    stroke-linecap: round;
+  }
+
+  .op-flow--enhanced .op-flow__nodes {
+    display: block;
+    max-width: none;
+    margin: 0;
+  }
+
+  .op-flow--enhanced .op-flow__node {
+    position: absolute;
+    left: var(--nx);
+    top: var(--ny);
+    transform: translate(-50%, -50%);
+    width: 300px;
+  }
+
+  .op-flow--enhanced .op-flow__node::before {
+    display: none;
+  }
+
+  .op-flow--enhanced .op-flow__connectors {
+    display: contents;
+  }
+
+  .op-flow--enhanced .op-flow__dot {
+    display: block;
+    position: absolute;
+    left: var(--nx);
+    top: var(--ny);
+    transform: translate(-50%, -50%);
+    width: 12px;
+    height: 12px;
+    background: var(--color-accent, var(--accent-2));
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px var(--color-paper, var(--paper));
+    z-index: 2;
+  }
+
+  .op-flow--enhanced .op-flow__plus {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    left: var(--nx);
+    top: var(--ny);
+    transform: translate(-50%, -50%);
+    width: 32px;
+    height: 32px;
+    background: var(--color-paper, var(--paper));
+    border: 1px solid var(--color-rule, var(--rule));
+    border-radius: 50%;
+    color: var(--color-accent, var(--accent-2));
+    font-family: var(--font-mono);
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1;
+    z-index: 3;
+  }
+
+  /* Reduced motion — kill horizontal-pin behavior; SSR base layout
+     applies. Explicit reset in case JS added the .op-flow--enhanced
+     class before the media query preference was detected. */
+  @media (prefers-reduced-motion: reduce) {
+    .op-flow--enhanced .op-flow__scroll-wrapper,
+    .op-flow--enhanced .op-flow__canvas,
+    .op-flow--enhanced .op-flow__lines,
+    .op-flow--enhanced .op-flow__nodes,
+    .op-flow--enhanced .op-flow__node,
+    .op-flow--enhanced .op-flow__connectors,
+    .op-flow--enhanced .op-flow__dot,
+    .op-flow--enhanced .op-flow__plus {
+      all: revert-layer;
+    }
+    .op-flow--enhanced .op-flow__lines,
+    .op-flow--enhanced .op-flow__connectors,
+    .op-flow--enhanced .op-flow__dot,
+    .op-flow--enhanced .op-flow__plus {
+      display: none;
+    }
+  }
+
+} /* end @layer patterns */

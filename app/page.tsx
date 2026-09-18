@@ -1,6 +1,6 @@
 import { HomeHero } from "@/components/sections/HomeHero";
 import { HomeBands } from "@/components/sections/HomeBands";
-import { CapabilityBentoGrid } from "@/components/sections/CapabilityBentoGrid";
+import { OperatorFlowchart } from "@/components/sections/OperatorFlowchart";
 import { NebbosInventoryBand } from "@/components/sections/NebbosInventoryBand";
 import { HomeCTA } from "@/components/sections/HomeCTA";
 import { ComplianceStrip } from "@/components/patterns/compliance-strip";
@@ -91,10 +91,16 @@ export default function HomePage() {
       <SectionDivider variant="hairline" />
       <HomeBands />
 
-      {/* 3. Substrate depth — the ONE dark register break, signals depth
-             of the substrate. Chapter II marker with anchor tone above it. */}
-      <SectionDivider chapter="II" strap="The complete substrate" tone="anchor" />
-      <CapabilityBentoGrid />
+      {/* 3. Substrate depth — GSAP horizontal-pin flowchart traces one
+             hour of an operator's shift through the six substrate stages
+             (Signal → Ingest → Memory → Approval → Action → Attestation).
+             Founder-directed 2026-09-18 · pattern adapted from the pen
+             codepen.io/dermalhealth/pen/GgNrpJx per docs/marketing/
+             homepage-first-time-visitor-strategy §5.3. Cream paper ground,
+             hairline paths, no register-break here (moved to Wave 2 —
+             see composition doctrine). */}
+      <SectionDivider chapter="II" strap="The complete substrate" />
+      <OperatorFlowchart />
 
       {/* 4. Substrate in numbers — Persona-E diligence surface, live-
              verified metrics from platform-metrics.json. */}
