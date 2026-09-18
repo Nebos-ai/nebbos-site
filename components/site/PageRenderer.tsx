@@ -1,79 +1,95 @@
 import { Fragment } from "react";
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 import type { Page, SectionBase } from "@/content/pages";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
 
 /**
- * PageRenderer · v5 · 2026-09-18 · mkt-native rewrite
+ * PageRenderer · v6 · 2026-09-18 · visual-density pass
  *
- * v3/v4 rendered every section from content/pages.ts using v3 substrate
- * classes (`section--paper`, `container`, `block__title`, `hero-paper`,
- * etc.) that carry a corporate-parent aesthetic — cream paper, serif
- * italic hero decks, editorial Roman numerals. When the marketing
- * register (mkt-*) shipped for the home + product pages, the catchall
- * routes stayed on the v3 shapes with only a color-swap (.mkt-mode
- * wrapper) — which flipped tokens but kept the SHAPE unchanged. Result:
- * /security, /sovereignty, /trust and every /solutions/* + /legal/*
- * route still visually read as the corporate parent's editorial site.
+ * v5 (earlier today) rewrote every section slot to emit mkt-* shapes
+ * — that fixed the register break (colors + typography now match the
+ * home). Founder walked the site 2026-09-18 T15:03 UTC and said:
+ * "we need to have the same level of design style across the entire
+ * website" — the register matched but the DENSITY did not. Home has
+ * flower tiles, card grids, colored accents, animated mockups;
+ * catchalls were text-block-after-text-block with hairline seps only.
  *
- * v5 rewrites every SectionSlot to produce mkt-* shapes. One file
- * change upgrades ~15 catchall routes to look like the same site as
- * the home / products / pricing surfaces. Founder-directed 2026-09-18:
- * "get the rest of the site working and looking like its the same
- * site." Content preserved verbatim; only the JSX + classes change.
+ * v6 lifts the design language, one file:
+ *   1. Every section tracks a Pearl-color index (cycling platform →
+ *      app → mcp → cradle) so accents feel intentional across pages.
+ *   2. ListPlain / ListNumbered render as TILE GRIDS — each item a
+ *      per-Pearl-color card with a flower app-icon, title, body — the
+ *      same visual language the home departments row uses.
+ *   3. Text-blocks get a small colored SIDE RAIL + Pearl chip eyebrow
+ *      so even copy-only sections carry visual identity.
+ *   4. Heroes get a right-side FLOWER MOSAIC anchor (four small tiles)
+ *      so pages open with a designed hero, not a wall of type.
+ *   5. Case-studies pick up a colored quote-mark and full card shape.
+ *   6. Closing CTAs get a per-page Pearl-color halo.
  *
- * Section imagery (SceneStill / FullBleedScene from the v3 stock-photo
- * asset packs) is intentionally dropped from catchall pages — the mkt
- * register uses zero stock imagery on the home; catchalls now follow
- * the same discipline (mkt-panel backgrounds + Nebbos flower + product
- * color tint carry the visual identity). Per-page bespoke visuals are
- * a subsequent wave and land as native route files, not through this
- * renderer.
+ * Content preserved verbatim; every added element is decorative
+ * (aria-hidden) and cannot mask copy. WCAG 2.2 AA color-contrast
+ * holds because all tile chrome sits on --mkt-ground and text tokens
+ * stay at their audited alphas.
  */
+
+const PRODUCT_KEYS = ["platform", "app", "mcp", "cradle"] as const;
+type ProductKey = (typeof PRODUCT_KEYS)[number];
+
+function pearlAt(index: number): ProductKey {
+  return PRODUCT_KEYS[index % PRODUCT_KEYS.length]!;
+}
 
 const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "empty-state"]);
 const CTA_KINDS = new Set(["cta-full-bleed", "cta-band"]);
+const NON_ACCENTED = new Set(["cta-full-bleed", "cta-band", "hero-full-bleed", "hero-paper", "empty-state"]);
 
 export function PageRenderer({ page }: { page: Page }) {
+  let blockCounter = 0;
   return (
     <>
-      {page.sections.map((section) => (
-        <Fragment key={section.id}>
-          <SectionSlot section={section} />
-        </Fragment>
-      ))}
+      {page.sections.map((section) => {
+        const wantsAccent = !NON_ACCENTED.has(section.kind);
+        const pearl = pearlAt(blockCounter);
+        if (wantsAccent) blockCounter += 1;
+        return (
+          <Fragment key={section.id}>
+            <SectionSlot section={section} pearl={pearl} accent={wantsAccent} />
+          </Fragment>
+        );
+      })}
     </>
   );
 }
 
-function SectionSlot({ section }: { section: SectionBase }) {
+type SlotProps = { section: SectionBase; pearl: ProductKey; accent: boolean };
+
+function SectionSlot({ section, pearl, accent }: SlotProps) {
   switch (section.kind) {
     case "hero-full-bleed":
     case "hero-paper":
     case "empty-state":
       return <PageHero s={section} />;
-    case "text-block":     return <TextBlock s={section} />;
-    case "split-columns":  return <SplitColumns s={section} />;
-    case "list-numbered":  return <ListNumbered s={section} />;
-    case "list-plain":     return <ListPlain s={section} />;
-    case "table-rows":     return <TableRows s={section} />;
-    case "case-study":     return <CaseStudy s={section} />;
+    case "text-block":     return <TextBlock s={section} pearl={pearl} accent={accent} />;
+    case "split-columns":  return <SplitColumns s={section} pearl={pearl} accent={accent} />;
+    case "list-numbered":  return <ListNumbered s={section} pearl={pearl} accent={accent} />;
+    case "list-plain":     return <ListPlain s={section} pearl={pearl} accent={accent} />;
+    case "table-rows":     return <TableRows s={section} pearl={pearl} accent={accent} />;
+    case "case-study":     return <CaseStudy s={section} pearl={pearl} />;
     case "cta-band":
-    case "cta-full-bleed": return <ClosingCTA s={section} />;
-    case "inbox-router":   return <InboxRouter s={section} />;
-    case "band-overview":  return null;    // home-only, rendered bespoke
-    case "story-triptych": return null;    // home-only, rendered bespoke
+    case "cta-full-bleed": return <ClosingCTA s={section} pearl={pearl} />;
+    case "inbox-router":   return <InboxRouter s={section} pearl={pearl} accent={accent} />;
+    case "band-overview":  return null;
+    case "story-triptych": return null;
     default:               return null;
   }
 }
 
 /* ── Helpers ──────────────────────────────────────────────────────── */
 
-// Strip the "01 · " numeric prefix from eyebrows — the v3 chapter
-// numerals were part of the editorial register we're retiring. Only
-// the label side survives on the mkt register.
 function cleanEyebrow(eyebrow?: string): string | undefined {
   if (!eyebrow) return undefined;
   const parts = eyebrow.split(" · ");
@@ -81,6 +97,19 @@ function cleanEyebrow(eyebrow?: string): string | undefined {
     return parts.slice(1).join(" · ") || undefined;
   }
   return eyebrow;
+}
+
+function SectionRail({ pearl }: { pearl: ProductKey }) {
+  return <span className={`mkt-section__rail mkt-section__rail--${pearl}`} aria-hidden />;
+}
+
+function EyebrowChip({ pearl, children }: { pearl: ProductKey; children: React.ReactNode }) {
+  return (
+    <p className={`mkt-eyebrow mkt-eyebrow-chip mkt-eyebrow-chip--${pearl}`}>
+      <span className="mkt-eyebrow-chip__dot" aria-hidden />
+      {children}
+    </p>
+  );
 }
 
 function CTAButtons({
@@ -114,13 +143,25 @@ function CTAButtons({
   );
 }
 
-/* ── Hero (all pages: text-only, mkt-hero shape) ─────────────────── */
+/* ── Hero · text + 4-tile flower mosaic anchor ───────────────────── */
+
+function HeroMosaic() {
+  return (
+    <div className="mkt-hero__mosaic" aria-hidden>
+      {PRODUCT_KEYS.map((k) => (
+        <span key={k} className={`mkt-hero__tile mkt-hero__tile--${k}`}>
+          <NebbosMark size={28} />
+        </span>
+      ))}
+    </div>
+  );
+}
 
 function PageHero({ s }: { s: SectionBase }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
     <section className="mkt mkt-section mkt-hero" aria-labelledby={`h-${s.id}`}>
-      <div className="mkt-section__inner">
+      <div className="mkt-section__inner mkt-hero__row">
         <div className="mkt-hero__copy">
           {eb && <p className="mkt-eyebrow">{eb}</p>}
           {s.h1 && (
@@ -135,20 +176,22 @@ function PageHero({ s }: { s: SectionBase }) {
           )}
           <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} />
         </div>
+        <HeroMosaic />
       </div>
     </section>
   );
 }
 
-/* ── Text block · eyebrow + h2 + prose ─────────────────────────── */
+/* ── Text block · eyebrow chip + h2 + body, colored side rail ──── */
 
-function TextBlock({ s }: { s: SectionBase }) {
+function TextBlock({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <header className="mkt-products__head">
-          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {eb && (accent ? <EyebrowChip pearl={pearl}>{eb}</EyebrowChip> : <p className="mkt-eyebrow">{eb}</p>)}
           {s.h2 && (
             <h2
               id={`h-${s.id}`}
@@ -165,16 +208,17 @@ function TextBlock({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Split columns · heading + list ───────────────────────────── */
+/* ── Split columns · heading + list tiles ─────────────────────── */
 
-function SplitColumns({ s }: { s: SectionBase }) {
+function SplitColumns({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <div className="mkt-split">
           <div>
-            {eb && <p className="mkt-eyebrow">{eb}</p>}
+            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
             {s.h2 && (
               <h2
                 id={`h-${s.id}`}
@@ -187,7 +231,7 @@ function SplitColumns({ s }: { s: SectionBase }) {
             )}
           </div>
           <div>
-            <PlainList items={s.items ?? []} />
+            <TileGrid items={s.items ?? []} basePearl={pearl} />
           </div>
         </div>
       </div>
@@ -195,15 +239,50 @@ function SplitColumns({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Numbered list (features, steps) ──────────────────────────── */
+/* ── Tile grid · shared visual card grid for list-plain + split ── */
 
-function ListNumbered({ s }: { s: SectionBase }) {
-  const eb = cleanEyebrow(s.eyebrow);
+function TileGrid({ items, basePearl }: { items: SectionBase["items"]; basePearl: ProductKey }) {
+  if (!items?.length) return null;
+  const baseIdx = PRODUCT_KEYS.indexOf(basePearl);
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <ul className="mkt-tilegrid">
+      {items.map((item, i) => {
+        const pearl = pearlAt(baseIdx + i);
+        return (
+          <li key={item.title} className={`mkt-tile mkt-tile--${pearl}`}>
+            <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
+              <NebbosMark size={24} />
+            </span>
+            <div className="mkt-tile__body">
+              <p
+                className="mkt-tile__title"
+                dangerouslySetInnerHTML={{ __html: item.title }}
+              />
+              {item.body && (
+                <p
+                  className="mkt-tile__desc"
+                  dangerouslySetInnerHTML={{ __html: item.body }}
+                />
+              )}
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/* ── Numbered list · big colored numeral + card ──────────────── */
+
+function ListNumbered({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  const baseIdx = PRODUCT_KEYS.indexOf(pearl);
+  return (
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <header className="mkt-products__head">
-          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
           {s.h2 && (
             <h2
               id={`h-${s.id}`}
@@ -212,69 +291,49 @@ function ListNumbered({ s }: { s: SectionBase }) {
             />
           )}
         </header>
-        <ol className="mkt-numlist">
-          {(s.items ?? []).map((item, i) => (
-            <li key={item.title} className="mkt-numlist__item">
-              <span className="mkt-numlist__index" aria-hidden>
-                {String(i + 1).padStart(2, "0")}
-              </span>
-              <div className="mkt-numlist__body">
-                <div
-                  className="mkt-numlist__title"
-                  dangerouslySetInnerHTML={{ __html: item.title }}
-                />
-                {item.body && (
-                  <p
-                    className="mkt-numlist__desc"
-                    dangerouslySetInnerHTML={{ __html: item.body }}
+        <ol className="mkt-numcards">
+          {(s.items ?? []).map((item, i) => {
+            const p = pearlAt(baseIdx + i);
+            return (
+              <li key={item.title} className={`mkt-numcard mkt-numcard--${p}`}>
+                <span className={`mkt-numcard__index mkt-numcard__index--${p}`} aria-hidden>
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <div className="mkt-numcard__body">
+                  <div
+                    className="mkt-numcard__title"
+                    dangerouslySetInnerHTML={{ __html: item.title }}
                   />
-                )}
-              </div>
-            </li>
-          ))}
+                  {item.body && (
+                    <p
+                      className="mkt-numcard__desc"
+                      dangerouslySetInnerHTML={{ __html: item.body }}
+                    />
+                  )}
+                </div>
+              </li>
+            );
+          })}
         </ol>
       </div>
     </section>
   );
 }
 
-/* ── Plain list (values, ideas) ────────────────────────────────── */
+/* ── Plain list · same tile grid ─────────────────────────────── */
 
-function PlainList({ items }: { items: SectionBase["items"] }) {
-  if (!items?.length) return null;
-  return (
-    <ul className="mkt-plainlist">
-      {items.map((item) => (
-        <li key={item.title} className="mkt-plainlist__item">
-          <span
-            className="mkt-plainlist__title"
-            dangerouslySetInnerHTML={{ __html: item.title }}
-          />
-          {item.body && (
-            <p
-              className="mkt-plainlist__desc"
-              dangerouslySetInnerHTML={{ __html: item.body }}
-            />
-          )}
-        </li>
-      ))}
-    </ul>
-  );
-}
-
-function ListPlain({ s }: { s: SectionBase }) {
+function ListPlain({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
-  // v3 auto-injected FACTS.productLine when items were empty + h2 mentioned
-  // "build" — preserved for content parity on legacy pages that relied on it.
   const items =
     (s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build")
       ? FACTS.productLine.map((title) => ({ title }))
       : (s.items ?? []);
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <header className="mkt-products__head">
-          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
           {s.h2 && (
             <h2
               id={`h-${s.id}`}
@@ -283,15 +342,15 @@ function ListPlain({ s }: { s: SectionBase }) {
             />
           )}
         </header>
-        <PlainList items={items} />
+        <TileGrid items={items} basePearl={pearl} />
       </div>
     </section>
   );
 }
 
-/* ── Table rows · dt/dd pairs (facts / specs) ─────────────────── */
+/* ── Table rows · dt/dd pairs ─────────────────────────────────── */
 
-function TableRows({ s }: { s: SectionBase }) {
+function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
   const rows: Array<[string, string]> = [
     ["Founded", String(FACTS.foundingYear)],
@@ -302,10 +361,11 @@ function TableRows({ s }: { s: SectionBase }) {
     ["Team shape", FACTS.teamShape],
   ];
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <header className="mkt-products__head">
-          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
           {s.h2 && (
             <h2
               id={`h-${s.id}`}
@@ -327,15 +387,18 @@ function TableRows({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Case study · aside + narrative body ───────────────────────── */
+/* ── Case study · aside + body, per-Pearl framed card ─────────── */
 
-function CaseStudy({ s }: { s: SectionBase }) {
+function CaseStudy({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
     <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
       <div className="mkt-section__inner">
-        <div className="mkt-case">
+        <div className={`mkt-case mkt-case--${pearl}`}>
           <aside className="mkt-case__aside">
+            <span className={`mkt-case__mark mkt-case__mark--${pearl}`} aria-hidden>
+              <NebbosMark size={28} />
+            </span>
             <p className="mkt-eyebrow">{eb ?? "Case study"}</p>
             {s.h2 && (
               <h3
@@ -357,16 +420,19 @@ function CaseStudy({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Closing CTA (band + full-bleed use one mkt shape) ──────────── */
+/* ── Closing CTA · per-Pearl haloed closing block ────────────── */
 
-function ClosingCTA({ s }: { s: SectionBase }) {
+function ClosingCTA({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
     <section
-      className="mkt mkt-section mkt-closing"
+      className={`mkt mkt-section mkt-closing mkt-closing--${pearl}`}
       aria-labelledby={`h-${s.id}`}
     >
       <div className="mkt-closing__inner">
+        <span aria-hidden className={`mkt-tile__mark mkt-tile__mark--${pearl}`} style={{ marginBottom: 24 }}>
+          <NebbosMark size={28} />
+        </span>
         {eb && <p className="mkt-eyebrow">{eb}</p>}
         {s.h2 && (
           <h2
@@ -384,9 +450,9 @@ function ClosingCTA({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Inbox router · label → email rows ────────────────────────── */
+/* ── Inbox router · label → email rows (unchanged shape, accent) ── */
 
-function InboxRouter({ s }: { s: SectionBase }) {
+function InboxRouter({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
   const inboxes = [
     { label: "General",     addr: CONTACT.general,     strap: "Sales, partnerships, misc." },
@@ -398,11 +464,12 @@ function InboxRouter({ s }: { s: SectionBase }) {
     { label: "Press",       addr: CONTACT.press,       strap: "Journalist / analyst inquiries." },
   ];
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
+      {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         {(eb || s.h2) && (
           <header className="mkt-products__head">
-            {eb && <p className="mkt-eyebrow">{eb}</p>}
+            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
             {s.h2 && (
               <h2
                 id={`h-${s.id}`}
@@ -437,6 +504,4 @@ function InboxRouter({ s }: { s: SectionBase }) {
   );
 }
 
-/* Referenced only by the switch's HERO_KINDS / CTA_KINDS discriminators —
-   keep these sets exported so a future SectionSlot audit can grep them. */
 export { HERO_KINDS, CTA_KINDS };
