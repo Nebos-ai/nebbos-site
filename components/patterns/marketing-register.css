@@ -804,6 +804,202 @@
     line-height: 1.45;
   }
 
+  /* ── DEMO FORM · text-left, form-right split on dark ────────────── */
+
+  .mkt-demo__grid {
+    display: grid;
+    gap: clamp(48px, 6vw, 96px);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .mkt-demo__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); }
+  }
+  .mkt-demo__copy {
+    display: grid;
+    gap: clamp(20px, 3vh, 32px);
+    max-width: 42ch;
+  }
+  .mkt-demo__form {
+    display: grid;
+    gap: 20px;
+  }
+  .mkt-field {
+    display: grid;
+    gap: 8px;
+  }
+  .mkt-field__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 500;
+  }
+  .mkt-field__input,
+  .mkt-field__textarea {
+    background: var(--mkt-ground-2);
+    color: var(--mkt-text);
+    border: 1px solid var(--mkt-rule);
+    border-radius: 12px;
+    padding: 14px 16px;
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.4;
+    outline: none;
+    transition: border-color var(--mkt-dur) var(--mkt-ease),
+                background var(--mkt-dur) var(--mkt-ease);
+    width: 100%;
+  }
+  .mkt-field__input::placeholder,
+  .mkt-field__textarea::placeholder {
+    color: var(--mkt-text-4);
+  }
+  .mkt-field__input:focus-visible,
+  .mkt-field__textarea:focus-visible {
+    border-color: var(--mkt-accent);
+    background: var(--mkt-ground-3);
+  }
+  .mkt-field__textarea {
+    min-height: 96px;
+    resize: vertical;
+    font-family: var(--mkt-font-body);
+  }
+  .mkt-cta--submit {
+    justify-self: start;
+    border: none;
+    cursor: pointer;
+  }
+  .mkt-demo__hint {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: var(--mkt-text-4);
+    line-height: 1.6;
+    margin: 0;
+  }
+  .mkt-demo__ack {
+    background: var(--mkt-ground-3);
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    padding: clamp(24px, 3vw, 40px);
+    display: grid;
+    gap: 12px;
+  }
+  .mkt-demo__ack-title {
+    font-family: var(--mkt-font-display);
+    font-size: 20px;
+    letter-spacing: -0.015em;
+    color: var(--mkt-text);
+    margin: 0;
+    font-weight: 500;
+  }
+  .mkt-demo__ack-body {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* ── LIST · numbered items with hairline separator ─────────────── */
+
+  .mkt-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    max-width: 84ch;
+  }
+  .mkt-list__item {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 20px;
+    align-items: baseline;
+    padding-block: clamp(20px, 2.5vh, 28px);
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-list__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-list__num {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    color: var(--mkt-accent);
+    font-weight: 600;
+  }
+  .mkt-list__text {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text);
+    margin: 0;
+  }
+
+  /* ── ROUTING LIST · label / email / desc grid ─────────────────── */
+
+  .mkt-routes {
+    display: grid;
+    gap: 0;
+    max-width: 84ch;
+  }
+  .mkt-route {
+    display: grid;
+    grid-template-columns: 100px 1fr auto;
+    gap: 24px;
+    align-items: start;
+    padding-block: clamp(20px, 2.5vh, 28px);
+    border-block-start: 1px solid var(--mkt-rule);
+    text-decoration: none;
+    color: inherit;
+    transition: background var(--mkt-dur) var(--mkt-ease);
+    padding-inline: 4px;
+  }
+  .mkt-route:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-route:hover {
+    background: var(--mkt-ground-2);
+  }
+  .mkt-route__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+    padding-top: 2px;
+  }
+  .mkt-route__body {
+    display: grid;
+    gap: 4px;
+  }
+  .mkt-route__email {
+    font-family: var(--mkt-font-mono);
+    font-size: 15px;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-route__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    color: var(--mkt-text-3);
+    line-height: 1.5;
+    margin: 0;
+  }
+  .mkt-route__arrow {
+    color: var(--mkt-text-3);
+    font-family: var(--mkt-font-mono);
+    transition: transform var(--mkt-dur) var(--mkt-ease),
+                color var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-route:hover .mkt-route__arrow {
+    color: var(--mkt-text);
+    transform: translateX(3px);
+  }
+
   /* ── FAQ · runlayer-style Q/A on dark ──────────────────────────── */
 
   .mkt-faq__head {
