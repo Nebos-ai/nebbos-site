@@ -1,21 +1,24 @@
 import { FullBleedScene } from "@/components/site/FullBleedScene";
+import { Button } from "@/components/primitives/Button";
 import { BRAND } from "@/content/brand";
 
 /**
- * HomeHero · v8 · 2026-09-18 · category-claim H1 + manifesto ceremony eyebrow
+ * HomeHero · v9 · 2026-09-18 · in-fold CTAs + category-claim H1
  *
- * v7 (2026-09-11) put the founder-directed manifesto "Remember who you are."
- * in the H1 slot. On 2026-09-17 the ratified BRAND.taglineShort shifted to
- * "Infrastructure for AI operators." — a Stripe-shape categorical claim that
- * lets a CISO decode the category in five seconds. Per
- * docs/marketing/homepage-first-time-visitor-strategy-2026-09-17.md §5.1
- * the H1 IS BRAND.taglineShort verbatim.
+ * v8 shipped the ratified BRAND.taglineShort as H1 + manifesto ceremony line
+ * but had NO CTAs in the hero fold — a first-time visitor could not take
+ * action from the first viewport without scrolling. Founder-directed
+ * 2026-09-18 after live-site audit surfaced the empty-CTA defect.
  *
- * v8 (2026-09-18) reconciles both directives: H1 = taglineShort (category
- * claim, load-bearing for first-fold decode), manifesto = mono ceremony
- * line above the eyebrow (byte-exact string preserved, aesthetic emphasis
- * retained), deck = BRAND.homeDeck (proof/expansion of the H1 claim).
- * Chapter I / Where it starts eyebrow preserved.
+ * v9 adds two hero-fold CTAs on the ratified 2026-09-17 discipline:
+ *   - Primary: Book a demo → /demo (matches homepage-first-time-visitor-
+ *     strategy §5.1 primary CTA "Request briefing", but landing on /demo
+ *     which is the ratified booking surface today; the label stays "Book
+ *     a demo" for consistency with every other page's primary CTA)
+ *   - Secondary: See the products → /products (spec-read path for the
+ *     Persona-E evaluator who wants to browse before booking)
+ *
+ * Manifesto ceremony line + H1 + deck unchanged from v8.
  */
 
 export function HomeHero() {
@@ -37,6 +40,10 @@ export function HomeHero() {
             {BRAND.taglineShort}
           </h1>
           <p className="hero-fullbleed__deck">{BRAND.homeDeck}</p>
+          <div className="hero-fullbleed__ctas">
+            <Button variant="primary" tone="onDark" href="/demo">Book a demo</Button>
+            <Button variant="ghost" tone="onDark" href="/products">See the products</Button>
+          </div>
         </div>
       </div>
     </FullBleedScene>

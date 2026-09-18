@@ -162,11 +162,17 @@ export function SceneMetadataPlate({ chapter, label, position = "top-right" }: P
       </span>
       <span
         style={{
-          fontFamily: "var(--font-serif)",
-          fontStyle: "italic",
-          fontSize: 20,
-          fontWeight: 400,
-          letterSpacing: "0.02em",
+          /* Fira Code numeral · not italic Space Grotesk (which the
+             --font-serif alias resolves to). Space Grotesk has no true
+             italic — the browser synthesises a slant that makes "I" and
+             "II" visually read as "/" and "//" on scene grounds. Roman
+             upright mono keeps the chapter numeral legible at 20px.
+             Fixed 2026-09-18 after "CHAPTER /" bug on the home hero. */
+          fontFamily: "var(--font-mono)",
+          fontSize: 22,
+          fontWeight: 500,
+          letterSpacing: "0.04em",
+          fontVariantNumeric: "tabular-nums",
           color: "rgba(244, 241, 234, 0.95)",
           textShadow: "0 1px 2px rgba(20, 18, 15, 0.32)",
         }}

@@ -32,6 +32,15 @@ type Capability = {
   span?: "wide" | "tall"; // bento asymmetry
 };
 
+/**
+ * Grid layout note (2026-09-18): span="wide" cells removed. In the 3-col
+ * 3-row grid the asymmetric-wide cells left row-3-col-3 as a visible
+ * empty slot — reads as "missing cell" not intentional whitespace. A
+ * clean 3×3 uniform grid is the correct catalog-grid shape for the
+ * home substrate reveal. Wide-cell asymmetric bento can return on a
+ * dedicated /security or /trust page where fewer cells make the
+ * asymmetry legible.
+ */
 const CAPABILITIES: readonly Capability[] = [
   {
     key: "processor",
@@ -39,7 +48,6 @@ const CAPABILITIES: readonly Capability[] = [
     headline: "Nebbos IS the processor.",
     body: "Payments, invoicing, subscription rails — first-party at the substrate. Not a Stripe wrapper.",
     href: "/products/platform",
-    span: "wide",
   },
   {
     key: "deploy",
@@ -89,7 +97,6 @@ const CAPABILITIES: readonly Capability[] = [
     headline: "Hash-chained. Auditor-ready.",
     body: "Every action attested at Layer 15. SOC 2 evidence writes itself.",
     href: "/trust",
-    span: "wide",
   },
   {
     key: "sovereignty",
@@ -275,15 +282,25 @@ export function CapabilityBentoGrid() {
           transform: translateX(6px);
         }
 
-        /* Scroll-triggered fade-in per cell (CanonicalSection pattern) */
-        @keyframes capabilityBentoFadeIn {
-          from { opacity: 0; transform: translateY(24px); }
-          to   { opacity: 1; transform: translateY(0); }
-        }
-        .capability-bento__cell {
-          animation: capabilityBentoFadeIn linear both;
-          animation-timeline: view();
-          animation-range: entry 0% entry 55%;
+        /* Scroll-triggered fade-in per cell (CanonicalSection pattern).
+           BASE state opacity: 1 so cells are visible without JS, without
+           scroll, without scroll-timeline support, and — critically —
+           in stitched fullPage screenshots. The animation is progressive
+           enhancement wrapped in @supports; if the browser lacks
+           animation-timeline: view(), the base opacity holds and the
+           cells stay legible. Fixes 2026-09-18 "empty gray rectangle"
+           defect where cells sat at opacity 0 in the pre-viewport state. */
+        .capability-bento__cell { opacity: 1; }
+        @supports (animation-timeline: view()) {
+          @keyframes capabilityBentoFadeIn {
+            from { opacity: 0; transform: translateY(24px); }
+            to   { opacity: 1; transform: translateY(0); }
+          }
+          .capability-bento__cell {
+            animation: capabilityBentoFadeIn linear;
+            animation-timeline: view();
+            animation-range: entry 0% entry 55%;
+          }
         }
         @media (prefers-reduced-motion: reduce) {
           .capability-bento__cell,

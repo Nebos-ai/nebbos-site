@@ -2200,6 +2200,18 @@ main {
   line-height: 1;
 }
 
+/* ── HomeHero in-fold CTAs (2026-09-18) ───────────────────────────────
+   Two-button row anchored under the deck. Sits inside the hero-fullbleed
+   frame so it lands in the first viewport for every desktop resolution.
+   Ratified 2026-09-18 after live-site audit surfaced the missing-CTA
+   defect that forced first-time visitors to scroll before they could act. */
+.hero-fullbleed__ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(12px, 1.5vw, 20px);
+  margin-top: clamp(24px, 3vh, 40px);
+}
+
 /* ── Screen-reader-only utility · WCAG 2.2 SC 1.3.1 ───────────────────
    Alias `.sr-only` to `.visually-hidden` so both names resolve. PageHero
    docstring names sr-only in its ariaLabelledby contract; historical
