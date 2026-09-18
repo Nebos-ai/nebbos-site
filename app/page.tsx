@@ -1,9 +1,9 @@
-import { HomeHero } from "@/components/sections/HomeHero";
+import { MarketingHero } from "@/components/sections/MarketingHero";
+import { MarketingComplianceStrip } from "@/components/sections/MarketingComplianceStrip";
 import { HomeBands } from "@/components/sections/HomeBands";
 import { OperatorFlowchart } from "@/components/sections/OperatorFlowchart";
 import { NebbosInventoryBand } from "@/components/sections/NebbosInventoryBand";
 import { HomeCTA } from "@/components/sections/HomeCTA";
-import { ComplianceStrip } from "@/components/patterns/compliance-strip";
 import { SectionDivider } from "@/components/patterns/section-divider";
 
 /**
@@ -78,14 +78,17 @@ import { SectionDivider } from "@/components/patterns/section-divider";
 export default function HomePage() {
   return (
     <>
-      {/* 1a. Signature hero — chapter I */}
-      <HomeHero />
+      {/* 1a. MarketingHero — dark register, text-left / visual-right split.
+              Founder-directed 2026-09-18: nebbos.ai product-marketing register
+              distinct from the v3 substrate (corporate parent). Reference:
+              linear.app + figma.com. Proof-of-concept for whole-site aesthetic
+              reboot — v3 substrate stays load-bearing for the rest of the
+              site until this register is ratified across surfaces. */}
+      <MarketingHero />
 
-      {/* 1b. Trust anchor — sits directly under the hero as the compliance
-              proof-load. Replaces the retired InProductionBand and any need
-              for a "we're serious" text section. Two mono lines: hardware
-              certs, framework certs, honest status suffixes. */}
-      <ComplianceStrip />
+      {/* 1b. Trust anchor on dark — mono compliance strip. Distinct
+              MarketingComplianceStrip variant that sits on dark ground. */}
+      <MarketingComplianceStrip />
 
       {/* 2. Four products intro — hairline seam, catalog-grid density */}
       <SectionDivider variant="hairline" />

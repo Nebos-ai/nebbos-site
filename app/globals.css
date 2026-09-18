@@ -30,6 +30,12 @@
 /* ── LAYER DECLARATION ───────────────────────────────────────────────── */
 
 @layer reset, tokens, primitives, patterns, page;
+/* Layer order (rightmost wins): reset → tokens → primitives → patterns
+   → page. Marketing register (`.mkt-*` rules in
+   components/patterns/marketing-register.css) is UNLAYERED —
+   unlayered CSS wins over every @layer rule per spec, which is what the
+   product-marketing register needs to beat legacy @layer page chrome
+   (h1 color, `*` padding reset). Ratified 2026-09-18. */
 
 /* ── TOKENS LAYER · CSS-side runtime of components/tokens/tokens.ts ─── */
 
@@ -45,6 +51,7 @@
 @import "../components/patterns/product-page.css";
 @import "../components/patterns/section-divider.css";
 @import "../components/patterns/compliance-strip.css";
+@import "../components/patterns/marketing-register.css";
 @import "../components/sections/operator-flowchart.css";
 
 /* ── PAGE LAYER · home wordmark-spray hero iframe ────────────────────── */

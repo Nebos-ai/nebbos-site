@@ -1,0 +1,499 @@
+/* ============================================================================
+   marketing-register.css · @layer patterns · v1 · 2026-09-18
+
+   The nebbos.ai product-marketing register. DISTINCT from the v3 substrate
+   which stays load-bearing for nebbostechnologies.com corporate-parent
+   surfaces (Delta editorial · cream paper · serif hero · institutional
+   trust proof).
+
+   Founder-directed 2026-09-18: "you are using the nebbos technogies
+   astetic on the nebbos.ai product website" + "look at the figma site
+   tell me what part of our site is ever remotely close to this" — the
+   product-marketing site needs its own aesthetic, not the corporate
+   register.
+
+   Reference stack (fetched + snapped 2026-09-18):
+     - figma.com — light playful product-forward
+     - linear.app — dark precision product-forward (closer to Nebbos)
+
+   Direction chosen: Linear-tier dark register with Figma's whitespace
+   discipline + Nebbos orange as the confident accent + Nebbos
+   flower-of-life mark as identity anchor. Fits Nebbos's actual product:
+   FIPS-certified physical Cradle + institutional-security posture +
+   hardware-attested substrate — reads as tactile precision, not as
+   cream editorial.
+
+   Tokens scoped to `.mkt` (never leak globally; the v3 substrate
+   remains authoritative for every non-marketing surface). Composes
+   with — never replaces — `@layer tokens` from components/tokens/.
+   ============================================================================ */
+
+/* Marketing register is UNLAYERED — unlayered CSS wins over ALL @layer
+   rules per CSS spec. This is the ratified way to beat legacy @layer
+   page chrome (h1 color, `*` padding reset) without the fragile
+   layer-order dance across Next.js's CSS-chunking pipeline (2026-09-18
+   attempted @layer marketing; Next split the layer-declaration into a
+   different chunk than the rules, so the order wasn't applied at the
+   browser). The `.mkt-*` prefix keeps every rule scoped — zero risk of
+   collision with corporate-parent register styles that stay in @layer
+   primitives / patterns / page. */
+
+  .mkt {
+    /* Ground */
+    --mkt-ground: #05070a;
+    --mkt-ground-2: #0a0d13;
+    --mkt-ground-3: #12161f;
+    --mkt-panel: #171b26;
+    --mkt-rule: rgba(255, 255, 255, 0.08);
+    --mkt-rule-2: rgba(255, 255, 255, 0.14);
+
+    /* Text on dark */
+    --mkt-text: #f4f2ee;
+    --mkt-text-2: rgba(244, 242, 238, 0.72);
+    --mkt-text-3: rgba(244, 242, 238, 0.48);
+    --mkt-text-4: rgba(244, 242, 238, 0.32);
+
+    /* Accents — one confident orange + one bright cta-yellow moment */
+    --mkt-accent: #ff6b1e;               /* Nebbos electric orange */
+    --mkt-accent-deep: #d84f0a;
+    --mkt-accent-soft: rgba(255, 107, 30, 0.18);
+    --mkt-highlight: #e9f26b;             /* Linear-tier bright pull-quote color */
+
+    /* Product-color tokens (per SKU flower-of-life variant pack) */
+    --mkt-product-platform: #4a5cff;
+    --mkt-product-app: #ff8a3d;
+    --mkt-product-mcp: #b96bff;
+    --mkt-product-cradle: #d63a4c;
+
+    /* Type · same Space Grotesk load, tuned for dark-precision register */
+    --mkt-font-display: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    --mkt-font-body: var(--font-space-grotesk), ui-sans-serif, system-ui, sans-serif;
+    --mkt-font-mono: var(--font-mono), ui-monospace, "SF Mono", monospace;
+
+    /* Spacing · Linear-tier breathing (larger than v3 substrate) */
+    --mkt-gutter: clamp(24px, 5vw, 96px);
+    --mkt-section-y: clamp(120px, 14vh, 240px);
+    --mkt-container: 1280px;
+
+    /* Radii · pill CTAs, rounded panels */
+    --mkt-radius-pill: 999px;
+    --mkt-radius-panel: 24px;
+    --mkt-radius-card: 20px;
+
+    /* Motion */
+    --mkt-dur-fast: 140ms;
+    --mkt-dur: 240ms;
+    --mkt-ease: cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  /* ── SECTION SHELL · dark ground, generous vertical rhythm ────────── */
+
+  .mkt-section {
+    position: relative;
+    background: var(--mkt-ground);
+    color: var(--mkt-text);
+    font-family: var(--mkt-font-body);
+    padding-block: var(--mkt-section-y);
+  }
+
+  .mkt-section--panel {
+    background: var(--mkt-ground-2);
+  }
+
+  .mkt-section--panel-3 {
+    background: var(--mkt-ground-3);
+  }
+
+  .mkt-section__inner {
+    max-width: var(--mkt-container);
+    margin: 0 auto;
+    padding-inline: var(--mkt-gutter);
+  }
+
+  /* ── EYEBROW · mono uppercase, subtle ─────────────────────────────── */
+
+  .mkt-eyebrow {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* ── DISPLAY HEADLINE · big precision sans ───────────────────────── */
+
+  .mkt-display {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(44px, 7vw, 96px);
+    line-height: 0.98;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+    text-wrap: balance;
+    font-feature-settings: "ss01", "ss02";
+  }
+
+  .mkt-h2 {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(32px, 4.6vw, 56px);
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+    text-wrap: balance;
+  }
+
+  .mkt-deck {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(17px, 1.4vw, 20px);
+    line-height: 1.5;
+    letter-spacing: -0.005em;
+    color: var(--mkt-text-2);
+    margin: 0;
+    max-width: 56ch;
+    font-weight: 400;
+  }
+
+  /* ── PILL BUTTONS · Linear/Figma-style ────────────────────────────── */
+
+  .mkt-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    border-radius: var(--mkt-radius-pill);
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1;
+    text-decoration: none;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition:
+      background var(--mkt-dur) var(--mkt-ease),
+      color var(--mkt-dur) var(--mkt-ease),
+      border-color var(--mkt-dur) var(--mkt-ease),
+      transform var(--mkt-dur-fast) var(--mkt-ease);
+  }
+
+  .mkt-cta__arrow {
+    display: inline-block;
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+
+  .mkt-cta:hover .mkt-cta__arrow,
+  .mkt-cta:focus-visible .mkt-cta__arrow {
+    transform: translateX(3px);
+  }
+
+  .mkt-cta:focus-visible {
+    outline: 2px solid var(--mkt-accent);
+    outline-offset: 3px;
+  }
+
+  .mkt-cta--primary {
+    background: var(--mkt-text);
+    color: var(--mkt-ground);
+  }
+  .mkt-cta--primary:hover {
+    background: #fff;
+    transform: translateY(-1px);
+  }
+
+  .mkt-cta--ghost {
+    background: transparent;
+    color: var(--mkt-text);
+    border-color: var(--mkt-rule-2);
+  }
+  .mkt-cta--ghost:hover {
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--mkt-text-3);
+  }
+
+  .mkt-cta--accent {
+    background: var(--mkt-accent);
+    color: var(--mkt-ground);
+  }
+  .mkt-cta--accent:hover {
+    background: #ff7d38;
+    transform: translateY(-1px);
+  }
+
+  /* ── HERO · text-left / visual-right split ────────────────────────── */
+
+  .mkt-hero {
+    /* Overrides shell so hero can go taller and use different rhythm */
+    padding-block: clamp(88px, 12vh, 160px) clamp(64px, 10vh, 128px);
+  }
+
+  .mkt-hero__grid {
+    display: grid;
+    gap: clamp(48px, 6vw, 96px);
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 960px) {
+    .mkt-hero__grid {
+      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+    }
+  }
+
+  .mkt-hero__copy {
+    display: grid;
+    gap: clamp(24px, 3vh, 40px);
+    max-width: 30ch;
+  }
+
+  .mkt-hero__ctas {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    align-items: center;
+    margin-top: clamp(8px, 1vh, 16px);
+  }
+
+  .mkt-hero__visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--mkt-radius-panel);
+    overflow: hidden;
+    background: var(--mkt-ground-2);
+    border: 1px solid var(--mkt-rule);
+    box-shadow:
+      0 40px 80px -30px rgba(0, 0, 0, 0.6),
+      0 20px 40px -20px rgba(0, 0, 0, 0.4);
+  }
+
+  /* ── COMPLIANCE STRIP on dark ──────────────────────────────────── */
+
+  .mkt-strip {
+    background: var(--mkt-ground-2);
+    border-block: 1px solid var(--mkt-rule);
+    padding-block: 20px;
+  }
+  .mkt-strip__inner {
+    max-width: var(--mkt-container);
+    margin: 0 auto;
+    padding-inline: var(--mkt-gutter);
+    display: grid;
+    gap: 8px;
+  }
+  .mkt-strip__line {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    line-height: 1.6;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    margin: 0;
+    font-weight: 500;
+  }
+  .mkt-strip__line--emph {
+    color: var(--mkt-text-2);
+  }
+
+  /* ── LOGO STRIP (customer/partner row) ─────────────────────────── */
+
+  .mkt-logos {
+    background: var(--mkt-ground);
+    padding-block: clamp(48px, 6vh, 88px);
+    border-block: 1px solid var(--mkt-rule);
+  }
+  .mkt-logos__label {
+    text-align: center;
+    color: var(--mkt-text-4);
+    margin: 0 0 24px;
+  }
+  .mkt-logos__row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(24px, 4vw, 64px);
+    max-width: var(--mkt-container);
+    margin: 0 auto;
+    padding-inline: var(--mkt-gutter);
+  }
+  .mkt-logos__item {
+    font-family: var(--mkt-font-mono);
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 500;
+  }
+
+  /* ── FEATURE SPLIT (text-left / visual-right in-section) ─────────── */
+
+  .mkt-feature {
+    padding-block: var(--mkt-section-y);
+  }
+  .mkt-feature__grid {
+    display: grid;
+    gap: clamp(48px, 6vw, 96px);
+    align-items: center;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px) {
+    .mkt-feature__grid {
+      grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    }
+    .mkt-feature--reverse .mkt-feature__grid {
+      grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+    }
+    .mkt-feature--reverse .mkt-feature__copy {
+      order: 2;
+    }
+  }
+  .mkt-feature__copy {
+    display: grid;
+    gap: clamp(16px, 2vh, 24px);
+    max-width: 46ch;
+  }
+  .mkt-feature__visual {
+    position: relative;
+    aspect-ratio: 4 / 3;
+    border-radius: var(--mkt-radius-panel);
+    overflow: hidden;
+    background: var(--mkt-ground-2);
+    border: 1px solid var(--mkt-rule);
+    box-shadow:
+      0 32px 64px -30px rgba(0, 0, 0, 0.55),
+      0 16px 32px -20px rgba(0, 0, 0, 0.35);
+  }
+
+  /* ── PRODUCT MOCK · stacked panels (Figma-style dimensional hero art)  */
+
+  .mkt-mock {
+    position: absolute;
+    inset: 0;
+    padding: clamp(20px, 3vw, 40px);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: clamp(12px, 1.5vw, 20px);
+  }
+  .mkt-mock__chrome {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mkt-mock__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--mkt-rule-2);
+  }
+  .mkt-mock__body {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: clamp(8px, 1vw, 14px);
+  }
+  .mkt-mock__panel {
+    background: var(--mkt-ground-3);
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    padding: clamp(14px, 1.5vw, 22px);
+    display: grid;
+    gap: 8px;
+    grid-auto-rows: min-content;
+  }
+  .mkt-mock__panel--accent {
+    background: linear-gradient(180deg, var(--mkt-accent-soft), transparent 60%),
+      var(--mkt-ground-3);
+  }
+  .mkt-mock__line {
+    height: 8px;
+    background: var(--mkt-rule);
+    border-radius: 4px;
+  }
+  .mkt-mock__line--strong {
+    background: var(--mkt-rule-2);
+  }
+  .mkt-mock__line--accent {
+    background: var(--mkt-accent);
+    opacity: 0.85;
+    height: 10px;
+  }
+  .mkt-mock__line--60 { width: 60%; }
+  .mkt-mock__line--40 { width: 40%; }
+  .mkt-mock__line--80 { width: 80%; }
+  .mkt-mock__badge {
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+  }
+  .mkt-mock__number {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(24px, 2.4vw, 34px);
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── PROOF PULL-QUOTE (bright accent card, Linear-tier moment) ──── */
+
+  .mkt-quote {
+    padding-block: var(--mkt-section-y);
+  }
+  .mkt-quote__card {
+    background: var(--mkt-highlight);
+    color: var(--mkt-ground);
+    border-radius: var(--mkt-radius-panel);
+    padding: clamp(32px, 4vw, 56px);
+    display: grid;
+    gap: clamp(20px, 2.5vh, 32px);
+    max-width: 42rem;
+  }
+  .mkt-quote__body {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 2vw, 28px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    font-weight: 500;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .mkt-quote__attr {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--mkt-ground);
+    opacity: 0.68;
+    margin: 0;
+    font-weight: 500;
+  }
+
+  /* ── CLOSING CTA · centered bold ─────────────────────────────────── */
+
+  .mkt-closing {
+    padding-block: clamp(120px, 16vh, 240px);
+    text-align: center;
+  }
+  .mkt-closing__inner {
+    max-width: 40rem;
+    margin: 0 auto;
+    display: grid;
+    gap: clamp(24px, 3vh, 40px);
+    padding-inline: var(--mkt-gutter);
+    justify-items: center;
+  }
+
+  /* ── Reduced motion — kill non-essential transitions ─────────────── */
+
+  @media (prefers-reduced-motion: reduce) {
+    .mkt-cta,
+    .mkt-cta__arrow {
+      transition-duration: 60ms;
+    }
+  }
+
