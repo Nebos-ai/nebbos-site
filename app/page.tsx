@@ -3,6 +3,7 @@ import { MarketingComplianceStrip } from "@/components/sections/MarketingComplia
 import { MarketingProductsBand } from "@/components/sections/MarketingProductsBand";
 import { MarketingSubstrate } from "@/components/sections/MarketingSubstrate";
 import { MarketingNumbers } from "@/components/sections/MarketingNumbers";
+import { MarketingFAQ } from "@/components/sections/MarketingFAQ";
 import { MarketingCTA } from "@/components/sections/MarketingCTA";
 
 /**
@@ -39,6 +40,7 @@ export default function HomePage() {
       <MarketingProductsBand />
       <MarketingSubstrate />
       <MarketingNumbers />
+      <MarketingFAQ />
       <MarketingCTA />
     </>
   );
