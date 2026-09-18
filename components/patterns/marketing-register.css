@@ -1355,12 +1355,18 @@
     --paper-on-image-soft: rgba(244, 242, 238, 0.92);
   }
 
-  /* Body-level fallback so the browser paints the ground behind any
-     legacy section that forgot to set a background. */
-  .mkt-mode body,
-  body.mkt-mode {
+  /* Body-level fallback: paint the ground on body/html when the tree
+     contains a .mkt-mode wrapper. :has() is Baseline as of 2024. Also
+     paint the wrapper itself so any layout leak still reads as dark. */
+  html:has(.mkt-mode) body,
+  html:has(.mkt-mode),
+  body:has(.mkt-mode) {
     background: #05070a;
     color: #f4f2ee;
+  }
+  .mkt-mode {
+    background: var(--paper);
+    min-height: 100vh;
   }
 
   /* Neutralize v3 SceneStill hero-photo tint so photos don't reintroduce
