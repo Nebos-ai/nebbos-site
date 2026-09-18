@@ -54,7 +54,7 @@ const slides = [
 
 export default function PresentationPage() {
   return (
-    <>
+    <div className="mkt-mode">
       <PageHero
         surface="paper"
         align="start"
@@ -122,6 +122,6 @@ export default function PresentationPage() {
           </div>
         </div>
       </PageSection>
-    </>
+    </div>
   );
 }

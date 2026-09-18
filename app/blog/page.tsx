@@ -52,7 +52,7 @@ function formatDate(iso: string): string {
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
   return (
-    <div className="container-narrow editorial-page">
+    <div className="mkt-mode container-narrow editorial-page">
       <header className="editorial-page__lede">
         <p className="editorial-page__eyebrow">Notes · from Nebbos</p>
         <h1 className="editorial-page__title">Notes from Nebbos.</h1>

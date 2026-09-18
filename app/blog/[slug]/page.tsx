@@ -71,7 +71,7 @@ export default async function BlogPostPage({
   if (!post) notFound();
 
   return (
-    <div className="container-narrow editorial-post">
+    <div className="mkt-mode container-narrow editorial-post">
       <Link href="/blog" className="editorial-post__backlink">
         ← Notes
       </Link>

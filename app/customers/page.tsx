@@ -30,7 +30,7 @@ export const metadata: Metadata = {
 
 export default function CustomersIndexPage() {
   return (
-    <>
+    <div className="mkt-mode">
       <FullBleedScene
         className="hero-fullbleed"
         scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
@@ -126,6 +126,6 @@ export default function CustomersIndexPage() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

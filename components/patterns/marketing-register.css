@@ -1313,6 +1313,64 @@
     box-shadow: 0 0 0 2px rgba(34, 197, 94, 0.18);
   }
 
+  /* ── MODE OVERRIDE · flip v3 tokens to marketing register ──────────
+
+     Wrap a v3-substrate page in `<div class="mkt-mode">` and every
+     v3 token used by descendant components remaps to the marketing
+     register palette. This is the fast-migration path for routes that
+     use PageRenderer + registry-driven sections (catch-all [...slug],
+     /about, /customers, /how) — the SHAPES stay v3 (serif hero /
+     italic accents / SectionDivider chapter plates), only the COLORS
+     flip. Voice and shape re-authoring is a subsequent wave; this
+     removes the register-break at the color layer immediately.
+
+     Unlayered (like the rest of marketing-register.css), so it beats
+     @layer tokens without !important. */
+
+  .mkt-mode {
+    /* Backgrounds */
+    --paper: #05070a;
+    --paper-2: #0a0d13;
+    --paper-3: #12161f;
+
+    /* Text */
+    --ink: #f4f2ee;
+    --ink-2: rgba(244, 242, 238, 0.78);
+    --ink-3: rgba(244, 242, 238, 0.56);
+    --ink-3-inverse: rgba(244, 242, 238, 0.56);
+
+    /* Rules */
+    --rule: rgba(255, 255, 255, 0.08);
+    --rule-2: rgba(255, 255, 255, 0.14);
+
+    /* Accents — orange is orange in both registers, but --gold is dark
+       and unreadable on dark ground so we remap it to accent. */
+    --gold: #ff6b1e;
+    --gold-2: #ff6b1e;
+    --accent-2: #ff6b1e;
+    --accent: #ff6b1e;
+
+    /* Backwards-compat inverse tokens */
+    --paper-on-image: rgba(244, 242, 238, 1);
+    --paper-on-image-soft: rgba(244, 242, 238, 0.92);
+  }
+
+  /* Body-level fallback so the browser paints the ground behind any
+     legacy section that forgot to set a background. */
+  .mkt-mode body,
+  body.mkt-mode {
+    background: #05070a;
+    color: #f4f2ee;
+  }
+
+  /* Neutralize v3 SceneStill hero-photo tint so photos don't reintroduce
+     a cream/gold cast against the register. Composes with the image via
+     screen blend — light tokens fall through to source pixels. */
+  .mkt-mode .scene-still,
+  .mkt-mode [data-scene-still] {
+    filter: brightness(0.6) contrast(1.1);
+  }
+
   /* ── SITE CHROME · align header + footer to marketing ground ─────── */
 
   /* Header/footer live outside the .mkt scope but must match the register

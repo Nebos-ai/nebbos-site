@@ -10,5 +10,9 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  return <PageRenderer page={page} />;
+  return (
+    <div className="mkt-mode">
+      <PageRenderer page={page} />
+    </div>
+  );
 }

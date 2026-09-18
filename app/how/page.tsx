@@ -178,7 +178,7 @@ export default function HowPage() {
   );
 
   return (
-    <>
+    <div className="mkt-mode">
       {/* Hero */}
       <section
         className="section section--paper"
@@ -371,6 +371,6 @@ export default function HowPage() {
           </dl>
         </div>
       </section>
-    </>
+    </div>
   );
 }
