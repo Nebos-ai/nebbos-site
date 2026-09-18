@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { PRODUCTS, TIERS, type Product } from "@/content/products";
 import { PRODUCT_DETAILS } from "@/content/product-detail";
 
@@ -46,7 +47,9 @@ export function MarketingProductDetail({ product }: { product: Product }) {
       >
         <div className="mkt-section__inner">
           <div className="mkt-hero__copy">
-            <span className="mkt-productrow__mark" aria-hidden style={{ marginBottom: 24 }} />
+            <span className="mkt-productrow__mark" aria-hidden style={{ marginBottom: 24 }}>
+              <NebbosMark size={44} />
+            </span>
             <p className="mkt-eyebrow">{product.eyebrow} · Chapter {detail.chapter}</p>
             <h1 id={`prod-${product.key}-h`} className="mkt-display">
               {name}
@@ -187,7 +190,9 @@ export function MarketingProductDetail({ product }: { product: Product }) {
           <div className="mkt-products__grid">
             {others.map((p) => (
               <Link key={p.key} href={`/products/${p.slug}`} className={`mkt-product ${PRODUCT_CLASS[p.key].split(" ")[0]}`}>
-                <span className="mkt-product__mark" aria-hidden />
+                <span className="mkt-product__mark" aria-hidden>
+                  <NebbosMark size={32} />
+                </span>
                 <div className="mkt-product__body">
                   <p className="mkt-product__eyebrow">{p.eyebrow}</p>
                   <h3 className="mkt-product__name">{shortName(p)}</h3>

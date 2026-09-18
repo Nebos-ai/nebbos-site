@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { BRAND } from "@/content/brand";
 import { SplitWords } from "@/components/patterns/SplitWords";
 
@@ -52,7 +53,9 @@ export function MarketingDepartments() {
               href="/solutions"
               className={`mkt-product ${DEPT_CLASS[i]}`}
             >
-              <span className="mkt-product__mark" aria-hidden />
+              <span className="mkt-product__mark" aria-hidden>
+                <NebbosMark size={32} />
+              </span>
               <div className="mkt-product__body">
                 <p className="mkt-product__eyebrow">Pearl</p>
                 <h3 className="mkt-product__name">{dept.name}</h3>

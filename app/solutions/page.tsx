@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 
 /**
  * PAGE · /solutions · v2 · 2026-09-18 · marketing-register rebuild
@@ -87,7 +88,9 @@ export default function SolutionsPage() {
                 : "mkt-product--cradle";
               return (
                 <Link key={v.slug} href={`/solutions/${v.slug}`} className={`mkt-product ${variantClass}`}>
-                  <span className="mkt-product__mark" aria-hidden />
+                  <span className="mkt-product__mark" aria-hidden>
+                    <NebbosMark size={32} />
+                  </span>
                   <div className="mkt-product__body">
                     <p className="mkt-product__eyebrow">{v.eyebrow}</p>
                     <h3 className="mkt-product__name">{v.name.replace("Nebbos ", "")}</h3>

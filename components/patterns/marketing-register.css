@@ -749,13 +749,31 @@
   .mkt-product--mcp { --mkt-product-tint: var(--mkt-product-mcp); }
   .mkt-product--cradle { --mkt-product-tint: var(--mkt-product-cradle); }
 
+  /* App-icon shape: rounded-square tile in the product color +
+     white flower on top + drop shadow. Founder-directed 2026-09-18:
+     "white flower with some drop shadow or app icon design" — this
+     gives both, per-tile color signature via the tile background,
+     brand consistency via the white flower. */
   .mkt-product__mark {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--mkt-product-tint);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
-      0 12px 32px -14px var(--mkt-product-tint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+      var(--mkt-product-tint, var(--mkt-accent));
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+      0 8px 20px -6px var(--mkt-product-tint, var(--mkt-accent)),
+      0 4px 10px -2px rgba(0, 0, 0, 0.4);
+  }
+  .mkt-product__mark svg {
+    width: 62%;
+    height: 62%;
   }
 
   .mkt-product__body {
@@ -1025,12 +1043,25 @@
     align-content: start;
   }
   .mkt-productrow__mark {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--mkt-product-tint);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 16px 40px -18px var(--mkt-product-tint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+      var(--mkt-product-tint, var(--mkt-accent));
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 12px 28px -8px var(--mkt-product-tint, var(--mkt-accent)),
+      0 6px 14px -3px rgba(0, 0, 0, 0.45);
+  }
+  .mkt-productrow__mark svg {
+    width: 62%;
+    height: 62%;
   }
   .mkt-productrow__name {
     font-family: var(--mkt-font-display);
@@ -2110,10 +2141,14 @@
     50%      { opacity: 0.42; transform: scaleX(0.94); transform-origin: left; }
   }
   @keyframes mkt-pulse-mark {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.08),
-                            0 12px 32px -14px var(--mkt-product-tint, var(--mkt-accent)); }
-    50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.14),
-                            0 20px 48px -12px var(--mkt-product-tint, var(--mkt-accent)); }
+    0%, 100% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                            inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+                            0 8px 20px -6px var(--mkt-product-tint, var(--mkt-accent)),
+                            0 4px 10px -2px rgba(0, 0, 0, 0.4); }
+    50%      { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28),
+                            inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+                            0 14px 32px -6px var(--mkt-product-tint, var(--mkt-accent)),
+                            0 6px 14px -2px rgba(0, 0, 0, 0.45); }
   }
 
   /* Scroll-triggered reveal — every card / row / list item as it
