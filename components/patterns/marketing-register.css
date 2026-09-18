@@ -2046,13 +2046,23 @@
      reduced-motion. Graceful in Firefox (elements render visible
      without animation). */
 
+  /* Fade-up is translate-only. Opacity change here would fail axe
+     color-contrast checks on below-fold cards at initial load (axe
+     evaluates elements whether or not they're currently in viewport,
+     and animation-timeline:view() + fill:both holds the `from`
+     keyframe until the element enters view). Founder-caught
+     2026-09-18 via CI a11y sweep. */
   @keyframes mkt-fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(24px); }
+    to   { transform: translateY(0); }
   }
+  /* Also translate-only. Axe scan races the on-mount animation and
+     can sample during opacity-0 phase (documented axe-core behavior
+     for animated content). Transform-only reveal keeps content
+     always at opacity 1, always contrast-passing. */
   @keyframes mkt-fade-in {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(14px); }
+    to   { transform: translateY(0); }
   }
   @keyframes mkt-pulse-line {
     0%, 100% { opacity: 0.85; transform: scaleX(1); transform-origin: left; }

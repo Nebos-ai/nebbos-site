@@ -84,7 +84,7 @@ export default function ProductsPage() {
                 <p className="mkt-tier__key">{tier.key}</p>
                 <p className="mkt-tier__label">{tier.label.split(" · ").slice(1).join(" · ") || tier.key}</p>
                 <p className="mkt-tier__scope">{tier.factors}</p>
-                <p className="mkt-tier__scope" style={{ opacity: 0.72 }}>{tier.scope}</p>
+                <p className="mkt-tier__scope">{tier.scope}</p>
               </div>
             ))}
           </div>
