@@ -1810,7 +1810,6 @@
   /* Hero on-mount stagger — reads like a Linear entrance. */
   .mkt-hero .mkt-hero__copy > * {
     animation: mkt-fade-in 640ms var(--mkt-ease) both;
-    opacity: 0;
   }
   .mkt-hero .mkt-hero__copy > *:nth-child(1) { animation-delay:   0ms; }
   .mkt-hero .mkt-hero__copy > *:nth-child(2) { animation-delay:  80ms; }
@@ -1819,7 +1818,6 @@
   .mkt-hero .mkt-hero__copy > *:nth-child(5) { animation-delay: 320ms; }
   .mkt-hero__visual {
     animation: mkt-fade-in 900ms var(--mkt-ease) 400ms both;
-    opacity: 0;
   }
 
   /* Live-signal pulse on the Ops "needs you" accent bar — signals
@@ -1871,13 +1869,15 @@
 
   /* 2. Parallax on the hero mock — as the visitor scrolls the hero
         away, the mock lifts slower than the surrounding text.
-        Uses animation-timeline: view() with the hero as the driver
-        so parallax is scoped to that section. */
+        Combined with the on-mount fade-in via comma-separated
+        animation shorthand so neither overrides the other. */
   @supports (animation-timeline: view()) {
     .mkt-hero__visual {
-      animation: mkt-parallax-lift linear both;
-      animation-timeline: view();
-      animation-range: entry 0% exit 100%;
+      animation:
+        mkt-fade-in 900ms var(--mkt-ease) 400ms both,
+        mkt-parallax-lift linear both;
+      animation-timeline: auto, view();
+      animation-range: normal, entry 0% exit 100%;
     }
     @keyframes mkt-parallax-lift {
       from { transform: translateY(60px); }
@@ -1909,15 +1909,17 @@
     padding-block-end: 24px;
   }
 
-  /* 4. Section-heading word reveal · H2s (and .mkt-display H1s that
-        are inside sections) fade + slide in per word on entry. This
-        needs the words to be wrapped in <span>s at render time — the
-        CSS is here, the wrapping is optional per component. */
+  /* 4. Section-heading word reveal · translate-only, always visible.
+        Prior version faded opacity 1→0 in `from` keyframe. With
+        animation-timeline: view() + fill both, that HIDES every H2
+        below the fold at initial load (the timeline is at 0% =
+        first keyframe = opacity 0). Founder-caught 2026-09-18:
+        headings ghosted on live deploy.
+        Fix: no opacity change. Words always render at opacity 1.
+        The "reveal" is a subtle translate-in only. Safe below-fold. */
   .mkt-h2 [data-word],
   .mkt-display [data-word] {
     display: inline-block;
-    opacity: 0;
-    transform: translateY(16px);
   }
   @supports (animation-timeline: view()) {
     .mkt-h2 [data-word],
@@ -1928,7 +1930,8 @@
     }
   }
   @keyframes mkt-word-in {
-    to { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(14px); }
+    to   { transform: translateY(0); }
   }
 
   /* 5. Aurora backdrop parallax on scroll · the fixed aurora layer
