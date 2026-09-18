@@ -1,231 +1,190 @@
 import { Fragment } from "react";
 import Link from "next/link";
 import type { Page, SectionBase } from "@/content/pages";
-import { SectionNumeral } from "@/components/ui/SectionNumeral";
-import { FullBleedScene } from "@/components/site/FullBleedScene";
-import { SceneStill } from "@/components/ui/SceneStill";
-import { Button } from "@/components/ui/Button";
-import { SectionDivider } from "@/components/patterns/section-divider";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
 
 /**
- * PageRenderer · v4 · 2026-09-18 · section-composition doctrine applied
+ * PageRenderer · v5 · 2026-09-18 · mkt-native rewrite
  *
- * v3 rendered every section from content/pages.ts using CSS classes with
- * automatic paper/paper-2 background alternation. That fixed ground-monotony
- * (Rule 5) but left the boundary between sections monotonous — every seam
- * a bare hairline, no cadence for the eye.
+ * v3/v4 rendered every section from content/pages.ts using v3 substrate
+ * classes (`section--paper`, `container`, `block__title`, `hero-paper`,
+ * etc.) that carry a corporate-parent aesthetic — cream paper, serif
+ * italic hero decks, editorial Roman numerals. When the marketing
+ * register (mkt-*) shipped for the home + product pages, the catchall
+ * routes stayed on the v3 shapes with only a color-swap (.mkt-mode
+ * wrapper) — which flipped tokens but kept the SHAPE unchanged. Result:
+ * /security, /sovereignty, /trust and every /solutions/* + /legal/*
+ * route still visually read as the corporate parent's editorial site.
  *
- * v4 applies docs/design/section-composition.md:
- *   - Rule 3 · Boundary marker cadence — every ~third boundary between
- *     block sections carries a visible SectionDivider marker (chapter
- *     numeral derived from the section eyebrow + short strap).
- *   - Rule 5 · Ground alternation (already in v3 via bgClass).
+ * v5 rewrites every SectionSlot to produce mkt-* shapes. One file
+ * change upgrades ~15 catchall routes to look like the same site as
+ * the home / products / pricing surfaces. Founder-directed 2026-09-18:
+ * "get the rest of the site working and looking like its the same
+ * site." Content preserved verbatim; only the JSX + classes change.
  *
- * The cadence rule: for block sections at index 0, 3, 6, 9, ... the
- * boundary ABOVE gets a marker (except index 0, which sits directly under
- * the hero and needs no divider). Other block boundaries get a hairline
- * divider — invisible but explicit in the JSX so composition audits can
- * see every seam.
- *
- * Hero sections (hero-full-bleed, hero-paper, cta-full-bleed) still own
- * their own boundaries — no divider between them and adjacent sections.
+ * Section imagery (SceneStill / FullBleedScene from the v3 stock-photo
+ * asset packs) is intentionally dropped from catchall pages — the mkt
+ * register uses zero stock imagery on the home; catchalls now follow
+ * the same discipline (mkt-panel backgrounds + Nebbos flower + product
+ * color tint carry the visual identity). Per-page bespoke visuals are
+ * a subsequent wave and land as native route files, not through this
+ * renderer.
  */
 
-const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "cta-full-bleed"]);
-const CADENCE = 3; // Every 3rd block boundary carries a marker.
-
-function chapterFromEyebrow(eyebrow?: string): string | undefined {
-  if (!eyebrow) return undefined;
-  // Eyebrow shape: "05 · Signals it watches" — take the numeric prefix.
-  const match = eyebrow.match(/^\s*(\d{1,3})\s*·/);
-  return match ? match[1] : undefined;
-}
-
-function strapFromEyebrow(eyebrow?: string): string | undefined {
-  if (!eyebrow) return undefined;
-  const parts = eyebrow.split(" · ");
-  return parts.slice(1).join(" · ") || undefined;
-}
+const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "empty-state"]);
+const CTA_KINDS = new Set(["cta-full-bleed", "cta-band"]);
 
 export function PageRenderer({ page }: { page: Page }) {
-  let blockIdx = 0;
   return (
     <>
-      {page.sections.map((section, i) => {
-        const isBlock = !HERO_KINDS.has(section.kind);
-        const idx = isBlock ? blockIdx : -1;
-        if (isBlock) blockIdx += 1;
-
-        // Cadence divider: emit BEFORE this section when it is a block
-        // section at cadence index (3, 6, 9, …). Skip index 0 (sits directly
-        // under the hero — page-composition doctrine says the hero-to-first-
-        // block seam is silent, not marked). Skip when the previous section
-        // was a hero (self-owned boundary).
-        const prev = page.sections[i - 1];
-        const prevWasHero = prev ? HERO_KINDS.has(prev.kind) : false;
-        const wantsMarker = isBlock && idx > 0 && idx % CADENCE === 0 && !prevWasHero;
-
-        return (
-          <Fragment key={section.id}>
-            {wantsMarker ? (
-              <SectionDivider
-                chapter={chapterFromEyebrow(section.eyebrow)}
-                strap={strapFromEyebrow(section.eyebrow)}
-              />
-            ) : null}
-            <SectionSlot section={section} blockIndex={idx} />
-          </Fragment>
-        );
-      })}
+      {page.sections.map((section) => (
+        <Fragment key={section.id}>
+          <SectionSlot section={section} />
+        </Fragment>
+      ))}
     </>
   );
 }
 
-type SlotProps = { section: SectionBase; blockIndex: number };
-
-function SectionSlot({ section, blockIndex }: SlotProps) {
+function SectionSlot({ section }: { section: SectionBase }) {
   switch (section.kind) {
-    case "hero-full-bleed": return <HeroFullBleed s={section} />;
-    case "hero-paper":      return <HeroPaper s={section} />;
-    case "text-block":      return <TextBlock s={section} blockIndex={blockIndex} />;
-    case "split-columns":   return <SplitColumns s={section} blockIndex={blockIndex} />;
-    case "list-numbered":   return <ListNumbered s={section} blockIndex={blockIndex} />;
-    case "list-plain":      return <ListPlain s={section} blockIndex={blockIndex} />;
-    case "table-rows":      return <TableRows s={section} blockIndex={blockIndex} />;
-    case "case-study":      return <CaseStudy s={section} blockIndex={blockIndex} />;
-    case "cta-band":        return <CTABandInline s={section} blockIndex={blockIndex} />;
-    case "cta-full-bleed":  return <CTAFullBleed s={section} />;
-    case "inbox-router":    return <InboxRouter s={section} blockIndex={blockIndex} />;
-    case "empty-state":     return <HeroPaper s={section} />;
-    case "band-overview":   return null;
-    case "story-triptych":  return null;
-    default:                return null;
+    case "hero-full-bleed":
+    case "hero-paper":
+    case "empty-state":
+      return <PageHero s={section} />;
+    case "text-block":     return <TextBlock s={section} />;
+    case "split-columns":  return <SplitColumns s={section} />;
+    case "list-numbered":  return <ListNumbered s={section} />;
+    case "list-plain":     return <ListPlain s={section} />;
+    case "table-rows":     return <TableRows s={section} />;
+    case "case-study":     return <CaseStudy s={section} />;
+    case "cta-band":
+    case "cta-full-bleed": return <ClosingCTA s={section} />;
+    case "inbox-router":   return <InboxRouter s={section} />;
+    case "band-overview":  return null;    // home-only, rendered bespoke
+    case "story-triptych": return null;    // home-only, rendered bespoke
+    default:               return null;
   }
 }
 
-/* ── Helpers ──────────────────────────────────────────────────────────── */
+/* ── Helpers ──────────────────────────────────────────────────────── */
 
-function bgClass(blockIndex: number): string {
-  return blockIndex % 2 === 0 ? "section--paper" : "section--paper-2";
-}
-
-function eyebrowParts(eyebrow?: string): { n: string; label: string } | null {
-  if (!eyebrow) return null;
+// Strip the "01 · " numeric prefix from eyebrows — the v3 chapter
+// numerals were part of the editorial register we're retiring. Only
+// the label side survives on the mkt register.
+function cleanEyebrow(eyebrow?: string): string | undefined {
+  if (!eyebrow) return undefined;
   const parts = eyebrow.split(" · ");
-  return { n: parts[0] ?? "00", label: parts.slice(1).join(" · ") || eyebrow };
-}
-
-function sectionSceneSource(s: SectionBase) {
-  if (s.imageFamily) return { imageFamily: s.imageFamily, imageFamilyVariant: s.imageFamilyVariant };
-  if (s.imageV3) return { imageV3: s.imageV3 };
-  if (s.imageV2) return { imageV2: s.imageV2 };
-  if (s.imageScene) return { imageScene: s.imageScene, sceneVariant: 1 as const };
-  if (s.imagePerspective) return { imagePerspective: s.imagePerspective };
-  return undefined;
-}
-
-function ctaSceneSource(s: SectionBase) {
-  if (s.imageFamily) return { imageFamily: s.imageFamily, imageFamilyVariant: s.imageFamilyVariant };
-  if (s.imageV2) return { imageV2: s.imageV2 };
-  if (s.imageScene) return { imageScene: s.imageScene, sceneVariant: 4 as const };
-  if (s.imagePerspective) return { imagePerspective: s.imagePerspective };
-  return undefined;
-}
-
-/* ── Hero: full-bleed image + overlaid h1 ─────────────────────────── */
-function HeroFullBleed({ s }: { s: SectionBase }) {
-  return (
-    <FullBleedScene
-      className="hero-fullbleed"
-      scene={sectionSceneSource(s)}
-      scrim="bottom"
-      vignetteStrength={0.5}
-      chapter="I"
-      chapterLabel={s.eyebrow}
-      chapterPosition="top-right"
-      priority
-    >
-      <div className="container hero-fullbleed__inner">
-        <div className="hero-fullbleed__frame">
-          {s.h1 && <h1 className="hero-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h1 }} />}
-          {s.deck && <p className="hero-fullbleed__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
-        </div>
-      </div>
-    </FullBleedScene>
-  );
-}
-
-/* ── Hero: paper (text-only, no image) ─────────────────────────────── */
-function HeroPaper({ s }: { s: SectionBase }) {
-  if (s.imageFamily || s.imageV3 || s.imageV2 || s.imageScene || s.imagePerspective) {
-    return <HeroFullBleed s={s} />;
+  if (parts.length >= 2 && /^\d{1,3}$/.test(parts[0]?.trim() ?? "")) {
+    return parts.slice(1).join(" · ") || undefined;
   }
-  const eb = eyebrowParts(s.eyebrow);
-  return (
-    <section className="hero-paper">
-      <div className="container-narrow">
-        {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-        {s.h1 && <h1 className="hero-paper__title" dangerouslySetInnerHTML={{ __html: s.h1 }} />}
-        {s.deck && <p className="hero-paper__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
-        {s.ctaPrimary && (
-          <div className="hero-paper__cta">
-            <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">
-              {s.ctaPrimary.label}
-            </Button>
-          </div>
-        )}
-      </div>
-    </section>
-  );
+  return eyebrow;
 }
 
-/* ── Text block · numbered section-h2 + body ─────────────────────── */
-function TextBlock({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
-  const hasImage = !!s.imageFamily;
-  const content = (
-    <div className="block-inner">
-      {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-      {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-      {s.body && <p className="block__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
+function CTAButtons({
+  primary,
+  secondary,
+}: {
+  primary?: SectionBase["ctaPrimary"];
+  secondary?: SectionBase["ctaSecondary"];
+}) {
+  if (!primary && !secondary) return null;
+  return (
+    <div className="mkt-hero__ctas">
+      {primary && (
+        <Link
+          href={primary.href}
+          className={`mkt-cta ${primary.variant === "ghost" || primary.variant === "ghost-light" ? "mkt-cta--ghost" : "mkt-cta--primary"}`}
+        >
+          {primary.label}
+          <span className="mkt-cta__arrow" aria-hidden>→</span>
+        </Link>
+      )}
+      {secondary && (
+        <Link
+          href={secondary.href}
+          className={`mkt-cta ${secondary.variant === "primary" || secondary.variant === "solid-light" ? "mkt-cta--primary" : "mkt-cta--ghost"}`}
+        >
+          {secondary.label}
+        </Link>
+      )}
     </div>
   );
+}
+
+/* ── Hero (all pages: text-only, mkt-hero shape) ─────────────────── */
+
+function PageHero({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        {hasImage ? (
-          <div className={`split-frame ${blockIndex % 2 === 1 ? "split-frame--reverse" : ""}`}>
-            <div className="split-frame__image">
-              <SceneStill
-                family={s.imageFamily!}
-                familyVariant={s.imageFamilyVariant ?? 1}
-                shape="fullBleed"
-              />
-            </div>
-            <div className="split-frame__content">{content}</div>
-          </div>
-        ) : (
-          content
-        )}
+    <section className="mkt mkt-section mkt-hero" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <div className="mkt-hero__copy">
+          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {s.h1 && (
+            <h1
+              id={`h-${s.id}`}
+              className="mkt-display"
+              dangerouslySetInnerHTML={{ __html: s.h1 }}
+            />
+          )}
+          {s.deck && (
+            <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
+          )}
+          <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} />
+        </div>
       </div>
     </section>
   );
 }
 
-/* ── Split · two-column with heading + items list ─────────────────── */
-function SplitColumns({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
+/* ── Text block · eyebrow + h2 + prose ─────────────────────────── */
+
+function TextBlock({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        <div className="split">
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <header className="mkt-products__head">
+          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {s.h2 && (
+            <h2
+              id={`h-${s.id}`}
+              className="mkt-h2"
+              dangerouslySetInnerHTML={{ __html: s.h2 }}
+            />
+          )}
+          {s.body && (
+            <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.body }} />
+          )}
+        </header>
+      </div>
+    </section>
+  );
+}
+
+/* ── Split columns · heading + list ───────────────────────────── */
+
+function SplitColumns({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  return (
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <div className="mkt-split">
           <div>
-            {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-            {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-            {s.deck && <p className="block__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
+            {eb && <p className="mkt-eyebrow">{eb}</p>}
+            {s.h2 && (
+              <h2
+                id={`h-${s.id}`}
+                className="mkt-h2"
+                dangerouslySetInnerHTML={{ __html: s.h2 }}
+              />
+            )}
+            {s.deck && (
+              <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
+            )}
           </div>
           <div>
             <PlainList items={s.items ?? []} />
@@ -236,65 +195,104 @@ function SplitColumns({ s, blockIndex }: { s: SectionBase; blockIndex: number })
   );
 }
 
-/* ── List: numbered ──────────────────────────────────────────────── */
-function ListNumbered({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
+/* ── Numbered list (features, steps) ──────────────────────────── */
+
+function ListNumbered({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        <div className="block-inner">
-          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          <ol className="list-numbered">
-            {(s.items ?? []).map((item, i) => (
-              <li key={item.title} className="list-numbered__item">
-                <span className="list-numbered__index">{String(i + 1).padStart(2, "0")}</span>
-                <div>
-                  <div className="list-numbered__title" dangerouslySetInnerHTML={{ __html: item.title }} />
-                  {item.body && <p className="list-numbered__body" dangerouslySetInnerHTML={{ __html: item.body }} />}
-                </div>
-              </li>
-            ))}
-          </ol>
-        </div>
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <header className="mkt-products__head">
+          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {s.h2 && (
+            <h2
+              id={`h-${s.id}`}
+              className="mkt-h2"
+              dangerouslySetInnerHTML={{ __html: s.h2 }}
+            />
+          )}
+        </header>
+        <ol className="mkt-numlist">
+          {(s.items ?? []).map((item, i) => (
+            <li key={item.title} className="mkt-numlist__item">
+              <span className="mkt-numlist__index" aria-hidden>
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <div className="mkt-numlist__body">
+                <div
+                  className="mkt-numlist__title"
+                  dangerouslySetInnerHTML={{ __html: item.title }}
+                />
+                {item.body && (
+                  <p
+                    className="mkt-numlist__desc"
+                    dangerouslySetInnerHTML={{ __html: item.body }}
+                  />
+                )}
+              </div>
+            </li>
+          ))}
+        </ol>
       </div>
     </section>
   );
 }
 
+/* ── Plain list (values, ideas) ────────────────────────────────── */
+
 function PlainList({ items }: { items: SectionBase["items"] }) {
   if (!items?.length) return null;
   return (
-    <ul className="list-plain">
+    <ul className="mkt-plainlist">
       {items.map((item) => (
-        <li key={item.title} className="list-plain__item" dangerouslySetInnerHTML={{ __html: item.title }} />
+        <li key={item.title} className="mkt-plainlist__item">
+          <span
+            className="mkt-plainlist__title"
+            dangerouslySetInnerHTML={{ __html: item.title }}
+          />
+          {item.body && (
+            <p
+              className="mkt-plainlist__desc"
+              dangerouslySetInnerHTML={{ __html: item.body }}
+            />
+          )}
+        </li>
       ))}
     </ul>
   );
 }
 
-/* ── List: plain (no numbers) ─────────────────────────────────────── */
-function ListPlain({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
-  const items = (s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build")
-    ? FACTS.productLine.map((title) => ({ title }))
-    : (s.items ?? []);
+function ListPlain({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  // v3 auto-injected FACTS.productLine when items were empty + h2 mentioned
+  // "build" — preserved for content parity on legacy pages that relied on it.
+  const items =
+    (s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build")
+      ? FACTS.productLine.map((title) => ({ title }))
+      : (s.items ?? []);
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        <div className="block-inner">
-          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          <PlainList items={items} />
-        </div>
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <header className="mkt-products__head">
+          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {s.h2 && (
+            <h2
+              id={`h-${s.id}`}
+              className="mkt-h2"
+              dangerouslySetInnerHTML={{ __html: s.h2 }}
+            />
+          )}
+        </header>
+        <PlainList items={items} />
       </div>
     </section>
   );
 }
 
-/* ── Table rows · label + value pairs (facts, specs) ─────────────── */
-function TableRows({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
+/* ── Table rows · dt/dd pairs (facts / specs) ─────────────────── */
+
+function TableRows({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   const rows: Array<[string, string]> = [
     ["Founded", String(FACTS.foundingYear)],
     ["Category", FACTS.category],
@@ -304,61 +302,54 @@ function TableRows({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
     ["Team shape", FACTS.teamShape],
   ];
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        <div className="block-inner">
-          {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-          {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          <dl className="rows-table">
-            {rows.map(([label, value]) => (
-              <div key={label} className="rows-table__row">
-                <dt className="rows-table__dt">{label}</dt>
-                <dd className="rows-table__dd">{value}</dd>
-              </div>
-            ))}
-          </dl>
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── Case study · aside + quoted-italic narrative ─────────────────── */
-function CaseStudy({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
-  return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
-        <div className="case-study-layout">
-          <aside className="case-study__aside">
-            <div className="case-study__eyebrow">
-              {eb ? `${eb.n} · ${eb.label}` : "Case study"}
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <header className="mkt-products__head">
+          {eb && <p className="mkt-eyebrow">{eb}</p>}
+          {s.h2 && (
+            <h2
+              id={`h-${s.id}`}
+              className="mkt-h2"
+              dangerouslySetInnerHTML={{ __html: s.h2 }}
+            />
+          )}
+        </header>
+        <dl className="mkt-rowstable">
+          {rows.map(([label, value]) => (
+            <div key={label} className="mkt-rowstable__row">
+              <dt className="mkt-rowstable__label">{label}</dt>
+              <dd className="mkt-rowstable__value">{value}</dd>
             </div>
-            {s.h2 && <h3 className="case-study__subject" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}
+
+/* ── Case study · aside + narrative body ───────────────────────── */
+
+function CaseStudy({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  return (
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
+        <div className="mkt-case">
+          <aside className="mkt-case__aside">
+            <p className="mkt-eyebrow">{eb ?? "Case study"}</p>
+            {s.h2 && (
+              <h3
+                id={`h-${s.id}`}
+                className="mkt-case__subject"
+                dangerouslySetInnerHTML={{ __html: s.h2 }}
+              />
+            )}
           </aside>
-          {s.body && <div className="case-study__body" dangerouslySetInnerHTML={{ __html: s.body }} />}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-/* ── CTA band (inline, paper) ─────────────────────────────────────── */
-function CTABandInline({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  return (
-    <section className={`section section--cta ${bgClass(blockIndex)}`}>
-      <div className="container cta-band-inline">
-        {s.h2 && <p className="cta-band-inline__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-        <div className="cta-band-inline__actions">
-          {s.ctaPrimary && (
-            <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "primary"} size="lg">
-              {s.ctaPrimary.label}
-            </Button>
-          )}
-          {s.ctaSecondary && (
-            <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost"} size="lg">
-              {s.ctaSecondary.label}
-            </Button>
+          {s.body && (
+            <div
+              className="mkt-case__body"
+              dangerouslySetInnerHTML={{ __html: s.body }}
+            />
           )}
         </div>
       </div>
@@ -366,72 +357,77 @@ function CTABandInline({ s, blockIndex }: { s: SectionBase; blockIndex: number }
   );
 }
 
-/* ── CTA full-bleed (over an image) ──────────────────────────────── */
-function CTAFullBleed({ s }: { s: SectionBase }) {
+/* ── Closing CTA (band + full-bleed use one mkt shape) ──────────── */
+
+function ClosingCTA({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   return (
-    <FullBleedScene
-      className="cta-fullbleed"
-      scene={ctaSceneSource(s)}
-      scrim="left"
-      vignetteStrength={0.5}
-      chapter="VII"
-      chapterLabel={s.eyebrow}
-      chapterPosition="top-right"
+    <section
+      className="mkt mkt-section mkt-closing"
+      aria-labelledby={`h-${s.id}`}
     >
-      <div className="container cta-fullbleed__inner">
-        <div className="cta-fullbleed__frame">
-          {s.h2 && <h2 className="cta-fullbleed__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-          {s.deck && <p className="cta-fullbleed__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
-          <div className="cta-fullbleed__actions">
-            {s.ctaPrimary && (
-              <Button href={s.ctaPrimary.href} variant={s.ctaPrimary.variant ?? "solid-light"} size="lg">
-                {s.ctaPrimary.label}
-              </Button>
-            )}
-            {s.ctaSecondary && (
-              <Button href={s.ctaSecondary.href} variant={s.ctaSecondary.variant ?? "ghost-light"} size="lg" arrow={false}>
-                {s.ctaSecondary.label}
-              </Button>
-            )}
-          </div>
-        </div>
+      <div className="mkt-closing__inner">
+        {eb && <p className="mkt-eyebrow">{eb}</p>}
+        {s.h2 && (
+          <h2
+            id={`h-${s.id}`}
+            className="mkt-display"
+            dangerouslySetInnerHTML={{ __html: s.h2 }}
+          />
+        )}
+        {s.deck && (
+          <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
+        )}
+        <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} />
       </div>
-    </FullBleedScene>
+    </section>
   );
 }
 
-/* ── Inbox router (contact / demo) ───────────────────────────────── */
-function InboxRouter({ s, blockIndex }: { s: SectionBase; blockIndex: number }) {
-  const eb = eyebrowParts(s.eyebrow);
+/* ── Inbox router · label → email rows ────────────────────────── */
+
+function InboxRouter({ s }: { s: SectionBase }) {
+  const eb = cleanEyebrow(s.eyebrow);
   const inboxes = [
-    { label: "General",     addr: CONTACT.general,    strap: "Sales, partnerships, misc." },
-    { label: "Enterprise",  addr: CONTACT.enterprise, strap: "SOWs, MSAs, DPAs, procurement." },
+    { label: "General",     addr: CONTACT.general,     strap: "Sales, partnerships, misc." },
+    { label: "Enterprise",  addr: CONTACT.enterprise,  strap: "SOWs, MSAs, procurement." },
     { label: "Engineering", addr: CONTACT.engineering, strap: "Developer + integration questions." },
-    { label: "Security",    addr: CONTACT.security,   strap: "Vulnerability reports + incident notification." },
-    { label: "Privacy",     addr: CONTACT.privacy,    strap: "Data-protection officer, GDPR, DSARs." },
-    { label: "Legal",       addr: CONTACT.legal,      strap: "DPA / policy questions." },
-    { label: "Press",       addr: CONTACT.press,      strap: "Journalist / analyst inquiries." },
+    { label: "Security",    addr: CONTACT.security,    strap: "Vulnerability reports + incident notification." },
+    { label: "Privacy",     addr: CONTACT.privacy,     strap: "Data-protection officer, GDPR, DSARs." },
+    { label: "Legal",       addr: CONTACT.legal,       strap: "Policy questions, software-license questions." },
+    { label: "Press",       addr: CONTACT.press,       strap: "Journalist / analyst inquiries." },
   ];
   return (
-    <section className={`section ${bgClass(blockIndex)}`}>
-      <div className="container">
+    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-section__inner">
         {(eb || s.h2) && (
-          <div className="block-inner block-inner--framed">
-            {eb && <SectionNumeral n={eb.n} label={eb.label} />}
-            {s.h2 && <h2 className="block__title" dangerouslySetInnerHTML={{ __html: s.h2 }} />}
-            {s.deck && <p className="block__deck" dangerouslySetInnerHTML={{ __html: s.deck }} />}
-          </div>
+          <header className="mkt-products__head">
+            {eb && <p className="mkt-eyebrow">{eb}</p>}
+            {s.h2 && (
+              <h2
+                id={`h-${s.id}`}
+                className="mkt-h2"
+                dangerouslySetInnerHTML={{ __html: s.h2 }}
+              />
+            )}
+            {s.deck && (
+              <p
+                className="mkt-deck"
+                dangerouslySetInnerHTML={{ __html: s.deck }}
+              />
+            )}
+          </header>
         )}
-        <ul className="inbox-list">
+        <ul className="mkt-inboxlist">
           {inboxes.map((inbox) => (
             <li key={inbox.addr}>
-              <Link href={mailto(inbox.addr)} className="inbox-list__row">
-                <div className="inbox-list__label">{inbox.label}</div>
+              <Link href={mailto(inbox.addr)} className="mkt-inboxlist__row">
+                <div className="mkt-inboxlist__label">{inbox.label}</div>
                 <div>
-                  <div className="inbox-list__addr">{inbox.addr}</div>
-                  <div className="inbox-list__strap">{inbox.strap}</div>
+                  <div className="mkt-inboxlist__addr">{inbox.addr}</div>
+                  <div className="mkt-inboxlist__strap">{inbox.strap}</div>
                 </div>
-                <div aria-hidden className="inbox-list__caret">→</div>
+                <div className="mkt-inboxlist__caret" aria-hidden>→</div>
               </Link>
             </li>
           ))}
@@ -440,3 +436,7 @@ function InboxRouter({ s, blockIndex }: { s: SectionBase; blockIndex: number }) 
     </section>
   );
 }
+
+/* Referenced only by the switch's HERO_KINDS / CTA_KINDS discriminators —
+   keep these sets exported so a future SectionSlot audit can grep them. */
+export { HERO_KINDS, CTA_KINDS };

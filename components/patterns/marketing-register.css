@@ -2605,3 +2605,256 @@
     }
   }
 
+  /* ── CATCHALL-PAGE SHAPES · consumed by PageRenderer v5 ──────────
+     Ratified 2026-09-18: PageRenderer no longer emits v3 substrate
+     classes (section--paper, hero-paper, block__title, list-numbered,
+     rows-table, case-study, inbox-list, hero-fullbleed). Every
+     catchall route (/security, /sovereignty, /trust, /about, all
+     /solutions/*, /careers, /docs, /changelog, /status, /press, all
+     /legal/*, /compliance) now emits these mkt shapes for one-file
+     visual parity with the home / products / pricing surfaces. */
+
+  /* Split · heading + list side-by-side */
+  .mkt-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .mkt-split {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+
+  /* Numbered list · big index numerals + title + body */
+  .mkt-numlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: mkt-num;
+  }
+  .mkt-numlist__item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 20px;
+    align-items: baseline;
+    padding-block: clamp(20px, 2.4vw, 28px);
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-numlist__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-numlist__index {
+    font-family: var(--mkt-font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-numlist__body {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-numlist__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-numlist__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Plain list · title (+ optional body), hairline-separated */
+  .mkt-plainlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-plainlist__item {
+    padding-block: clamp(18px, 2vw, 24px);
+    border-block-start: 1px solid var(--mkt-rule);
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-plainlist__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-plainlist__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-plainlist__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Table rows · dt/dd pairs (facts, specs) */
+  .mkt-rowstable {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-rowstable__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding-block: 18px;
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  @media (min-width: 720px) {
+    .mkt-rowstable__row {
+      grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+      gap: 32px;
+      align-items: baseline;
+    }
+  }
+  .mkt-rowstable__row:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-rowstable__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    margin: 0;
+  }
+  .mkt-rowstable__value {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.4;
+    color: var(--mkt-text);
+    margin: 0;
+  }
+
+  /* Case study · aside + narrative body (2-column at ≥ 960px) */
+  .mkt-case {
+    display: grid;
+    gap: clamp(24px, 3vw, 40px);
+    padding: clamp(24px, 3vw, 36px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+  }
+  @media (min-width: 960px) {
+    .mkt-case {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      align-items: start;
+    }
+  }
+  .mkt-case__aside {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .mkt-case__subject {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+  }
+  .mkt-case__body {
+    font-family: var(--mkt-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--mkt-text-2);
+  }
+  .mkt-case__body p {
+    margin: 0 0 12px 0;
+  }
+  .mkt-case__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Inbox router · label + email address rows (used by /contact + any
+     inbox-router section on catchall pages) */
+  .mkt-inboxlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-inboxlist__row {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) 32px;
+    gap: 20px;
+    align-items: center;
+    padding-block: clamp(18px, 2.2vw, 24px);
+    border-block-start: 1px solid var(--mkt-rule);
+    color: var(--mkt-text);
+    text-decoration: none;
+    transition: background var(--mkt-dur) var(--mkt-ease), transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-inboxlist li:last-child .mkt-inboxlist__row {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-inboxlist__row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .mkt-inboxlist__row:hover .mkt-inboxlist__caret {
+    transform: translateX(3px);
+  }
+  .mkt-inboxlist__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+  }
+  .mkt-inboxlist__addr {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.35;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-inboxlist__strap {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--mkt-text-3);
+    margin-top: 2px;
+  }
+  .mkt-inboxlist__caret {
+    color: var(--mkt-accent);
+    font-size: 18px;
+    text-align: end;
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  @media (max-width: 640px) {
+    .mkt-inboxlist__row {
+      grid-template-columns: 1fr 24px;
+      gap: 6px;
+    }
+    .mkt-inboxlist__label {
+      grid-column: 1 / -1;
+    }
+  }
+
