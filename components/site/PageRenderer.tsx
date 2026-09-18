@@ -1,41 +1,84 @@
+import { Fragment } from "react";
 import Link from "next/link";
 import type { Page, SectionBase } from "@/content/pages";
 import { SectionNumeral } from "@/components/ui/SectionNumeral";
 import { FullBleedScene } from "@/components/site/FullBleedScene";
 import { SceneStill } from "@/components/ui/SceneStill";
 import { Button } from "@/components/ui/Button";
+import { SectionDivider } from "@/components/patterns/section-divider";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
 
 /**
- * PageRenderer · v3 · reads content/pages.ts and renders every section by kind.
+ * PageRenderer · v4 · 2026-09-18 · section-composition doctrine applied
  *
- * Every renderer composes from CSS classes defined in app/globals.css — no
- * inline styles, no hex literals, no magic numbers. Design tokens are the
- * single source of truth; changing a token in globals moves every section on
- * every page in lockstep.
+ * v3 rendered every section from content/pages.ts using CSS classes with
+ * automatic paper/paper-2 background alternation. That fixed ground-monotony
+ * (Rule 5) but left the boundary between sections monotonous — every seam
+ * a bare hairline, no cadence for the eye.
  *
- * Block-level sections (text-block, split-columns, list-numbered, list-plain,
- * table-rows, cta-band, inbox-router) receive a computed `blockIndex` so
- * paper / paper-2 backgrounds alternate per section — no more four-in-a-row
- * paper walls on 14-section vertical pages.
+ * v4 applies docs/design/section-composition.md:
+ *   - Rule 3 · Boundary marker cadence — every ~third boundary between
+ *     block sections carries a visible SectionDivider marker (chapter
+ *     numeral derived from the section eyebrow + short strap).
+ *   - Rule 5 · Ground alternation (already in v3 via bgClass).
  *
- * Hero sections (hero-full-bleed, hero-paper, cta-full-bleed) own their
- * background and do not participate in alternation.
+ * The cadence rule: for block sections at index 0, 3, 6, 9, ... the
+ * boundary ABOVE gets a marker (except index 0, which sits directly under
+ * the hero and needs no divider). Other block boundaries get a hairline
+ * divider — invisible but explicit in the JSX so composition audits can
+ * see every seam.
+ *
+ * Hero sections (hero-full-bleed, hero-paper, cta-full-bleed) still own
+ * their own boundaries — no divider between them and adjacent sections.
  */
 
 const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "cta-full-bleed"]);
+const CADENCE = 3; // Every 3rd block boundary carries a marker.
+
+function chapterFromEyebrow(eyebrow?: string): string | undefined {
+  if (!eyebrow) return undefined;
+  // Eyebrow shape: "05 · Signals it watches" — take the numeric prefix.
+  const match = eyebrow.match(/^\s*(\d{1,3})\s*·/);
+  return match ? match[1] : undefined;
+}
+
+function strapFromEyebrow(eyebrow?: string): string | undefined {
+  if (!eyebrow) return undefined;
+  const parts = eyebrow.split(" · ");
+  return parts.slice(1).join(" · ") || undefined;
+}
 
 export function PageRenderer({ page }: { page: Page }) {
   let blockIdx = 0;
   return (
     <>
-      {page.sections.map((section) => {
+      {page.sections.map((section, i) => {
         const isBlock = !HERO_KINDS.has(section.kind);
         const idx = isBlock ? blockIdx : -1;
         if (isBlock) blockIdx += 1;
-        return <SectionSlot key={section.id} section={section} blockIndex={idx} />;
+
+        // Cadence divider: emit BEFORE this section when it is a block
+        // section at cadence index (3, 6, 9, …). Skip index 0 (sits directly
+        // under the hero — page-composition doctrine says the hero-to-first-
+        // block seam is silent, not marked). Skip when the previous section
+        // was a hero (self-owned boundary).
+        const prev = page.sections[i - 1];
+        const prevWasHero = prev ? HERO_KINDS.has(prev.kind) : false;
+        const wantsMarker = isBlock && idx > 0 && idx % CADENCE === 0 && !prevWasHero;
+
+        return (
+          <Fragment key={section.id}>
+            {wantsMarker ? (
+              <SectionDivider
+                chapter={chapterFromEyebrow(section.eyebrow)}
+                strap={strapFromEyebrow(section.eyebrow)}
+              />
+            ) : null}
+            <SectionSlot section={section} blockIndex={idx} />
+          </Fragment>
+        );
       })}
     </>
   );
