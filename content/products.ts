@@ -72,9 +72,9 @@ export const PRODUCTS: Product[] = [
     key: "platform",
     eyebrow: "Software",
     name: "Nebbos.ai Platform",
-    tagline: "The AI operations platform for institutional scale.",
+    tagline: "The floor your operation runs on.",
     description:
-      "The web platform where operators run their Pearls, view dashboards, and approve actions. Multi-Shell by default, enterprise-grade, live in production.",
+      "Where the Pearls live. Where every dashboard, every approval, every action lands with an identity attached. Multi-Shell by default, one client per row, every request checked before the query runs.",
     colorVar: "--product-color-platform",
     slug: "platform",
   },
@@ -82,9 +82,9 @@ export const PRODUCTS: Product[] = [
     key: "app",
     eyebrow: "Software",
     name: "Nebbos App",
-    tagline: "Local native for macOS and Windows.",
+    tagline: "Your Pearl on the metal in front of you.",
     description:
-      "The local native application. Runs an offline-capable subset of the platform and syncs to the cloud through the MCP when online. First install of every operator's tier ceremony.",
+      "Native for macOS and Windows. Runs the offline half of the platform, keeps the last mile of a decision on your laptop, syncs to the cloud through the MCP the moment you are back on the network. First install of every operator's tier ceremony.",
     colorVar: "--product-color-app",
     slug: "app",
   },
@@ -92,9 +92,9 @@ export const PRODUCTS: Product[] = [
     key: "mcp",
     eyebrow: "Tooling",
     name: "Nebbos MCP",
-    tagline: "The tool substrate. Ships on the Cradle.",
+    tagline: "The line every tool call has to cross.",
     description:
-      "The Model Context Protocol server that mediates every tool call. Binary and configuration ship on the Nebbos Cradle — physical presence gates elevated permission tiers.",
+      "The Model Context Protocol server that mediates every read and every write a Pearl makes. Classifier decides the tier client-side, redacts before egress, hands the call to the substrate. Binary and policy ship on your Cradle — no Nebbos-side deploy can change how your host answers a request.",
     colorVar: "--product-color-mcp",
     slug: "mcp",
   },
@@ -102,9 +102,9 @@ export const PRODUCTS: Product[] = [
     key: "usb", // internal key stays for SKU-ID stability; customer-facing name is "Cradle"
     eyebrow: "Hardware",
     name: "Nebbos Cradle",
-    tagline: "Hardware-attested memory. Yours.",
+    tagline: "Sovereignty you can put in your pocket.",
     description:
-      "FIPS 140-3 Level 3 encrypted storage with on-device keypad, tamper-evident and epoxy-sealed, IP68 and MIL-STD-810G, TAA-compliant. Carries the Nebbos MCP and your Pearl memory. Gates elevated operations. One Cradle per operator.",
+      "FIPS 140-3 Level 3 encrypted storage with an on-device keypad, tamper-evident and epoxy-sealed, IP68 and MIL-STD-810G, TAA-compliant. Carries the MCP binary, your Pearl memory, and the keys that unlock your audit trail. Elevated capability follows the object on the desk — not the network location.",
     colorVar: "--product-color-usb",
     slug: "cradle",
   },
