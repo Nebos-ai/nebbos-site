@@ -79,8 +79,12 @@ PRICING_PATTERNS=(
   'flat per-seat price'
   'flat per-seat rate'
   'one flat rate per seat'
-  '/pricing"'
-  'href="/pricing'
+  # NOTE 2026-09-18: '/pricing' route ban lifted per founder directive
+  # ("there should be enterprise level and that level should be contact
+  # us"). A /pricing page exists with the Enterprise tier showing
+  # "Contact us." only — no dollar figures. The dollar-figure patterns
+  # above still fire if a price ever appears; only the route existence
+  # is now permitted.
 )
 
 VIOLATIONS=0

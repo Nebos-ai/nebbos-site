@@ -30,6 +30,7 @@ const COLS = [
     links: [
       { label: "About", href: "/about" },
       { label: "Customers", href: "/customers" },
+      { label: "Pricing", href: "/pricing" },
       { label: "Contact", href: "/contact" },
       { label: "Book a demo", href: "/demo" },
     ],

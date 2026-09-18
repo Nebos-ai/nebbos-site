@@ -218,6 +218,7 @@ export const primaryNav: PrimaryNavItem[] = [
   { label: "Security",    href: "/security",    strap: "Engineered to institutional controls." },
   { label: "Sovereignty", href: "/sovereignty", strap: "Your data. Your model. Your keys." },
   { label: "Trust",       href: "/trust",       strap: "Accountable by architecture." },
+  { label: "Pricing",     href: "/pricing",     strap: "Enterprise. On a call." },
   { label: "Contact",     href: "/contact",     strap: "Direct routing to every inbox." },
 ];
 
