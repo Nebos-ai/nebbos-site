@@ -81,7 +81,7 @@ export default function PricingPage() {
               <SplitWords>One tier. Enterprise.</SplitWords>
             </h2>
             <p className="mkt-deck">
-              Every scope — pilot, one department, one district, one
+              Every scope — pilot, one department, one district, one{/* claim-source: hypothetical-scope-enumeration */}
               agency — sits under the same enterprise contract. The
               engagement shape varies; the terms don&rsquo;t.
             </p>
