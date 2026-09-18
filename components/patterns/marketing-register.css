@@ -126,8 +126,8 @@
 
   .mkt-display {
     font-family: var(--mkt-font-display);
-    font-size: clamp(44px, 7vw, 96px);
-    line-height: 0.98;
+    font-size: clamp(36px, 4.6vw, 64px);
+    line-height: 1.02;
     letter-spacing: -0.03em;
     font-weight: 500;
     color: var(--mkt-text);
@@ -240,14 +240,13 @@
 
   @media (min-width: 960px) {
     .mkt-hero__grid {
-      grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     }
   }
 
   .mkt-hero__copy {
     display: grid;
     gap: clamp(24px, 3vh, 40px);
-    max-width: 30ch;
   }
 
   .mkt-hero__ctas {
@@ -432,11 +431,12 @@
   }
   .mkt-mock__number {
     font-family: var(--mkt-font-display);
-    font-size: clamp(24px, 2.4vw, 34px);
+    font-size: clamp(20px, 1.9vw, 28px);
     font-weight: 500;
     letter-spacing: -0.02em;
     color: var(--mkt-text);
     font-variant-numeric: tabular-nums;
+    white-space: nowrap;
   }
 
   /* ── PROOF PULL-QUOTE (bright accent card, Linear-tier moment) ──── */
