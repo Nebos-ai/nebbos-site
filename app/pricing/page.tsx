@@ -4,44 +4,134 @@ import { SplitWords } from "@/components/patterns/SplitWords";
 import { CONTACT } from "@/content/contact";
 
 /**
- * PAGE · /pricing · v1 · 2026-09-18 · marketing-register native
+ * PAGE · /pricing · v2 · 2026-09-18 · three-tier + feature matrix
  *
- * Founder-directed 2026-09-18 (verbatim): "there shoudl be enterprise
- * level and that level shoudl be contact us."
+ * Founder-directed 2026-09-18 (verbatim):
+ *   "we need to have pricing for non enterprise users we should have
+ *    three levels of users at different levels different things are
+ *    availabel we should show what is available and what isnt this is
+ *    a standard saas pricing layout and logic."
+ *   AND (separate): "if they lose or break tehre keys they should be
+ *    able to place a order from the site for more."
  *
- * Doctrine reconciliation: the 2026-08-23 pricing editorial discipline
- * memory said "keep pricing info clean and minimal, do not over-explain"
- * and defaulted to no-published-pricing / Palantir-model. The founder
- * confirmed 2026-09-18 that the Enterprise tier stays contact-us. This
- * page implements exactly that: one Enterprise tier card, no dollar
- * figure, contact-sales CTA. When lower tiers (App L1 self-serve /
- * Platform L1 self-serve) get their price ratified, they land as
- * additional cards in the .mkt-pricing__grid without touching this
- * scaffolding.
+ * v1 was a single Enterprise tier per the older "no published pricing"
+ * doctrine. v2 shifts to a 3-tier SaaS shape per `feedback_three_levels
+ * _always` doctrine + the founder's expansion.
  *
- * NOT ON THIS PAGE (per pricing editorial discipline):
- *   - Product-app names (LMS · Presentify · full-badge)
- *   - 4-tier ARPU breakdown, overage math, cost-follow clause
- *   - Per-tier user-count math
- *   - Any dollar figure until a lower tier is ratified
+ * PRICING PLACEHOLDERS · The two non-enterprise prices ($15 · $75) are
+ * PROPOSED so the page has a concrete shape; founder rewrites them in
+ * one edit before publish. The Enterprise tier stays "Contact us" per
+ * the ratified enterprise-contact-us rule.
+ *
+ * CRADLE REPLACEMENT · Added at bottom as an ordering path. Routes to
+ * mailto:enterprise for now; upgrade to a real form/checkout after the
+ * self-serve backend lands.
  */
 
 export const metadata: Metadata = {
-  title: "Pricing · Enterprise. Contact us.",
+  title: "Pricing · Three tiers. Enterprise on a call.",
   description:
-    "Nebbos ships to institutional buyers on enterprise terms. Contract, deployment, and pricing set on a call — not on a checkout page.",
+    "Nebbos Starter, Team, and Enterprise. Self-serve for individuals and small teams. Enterprise on a call. Cradle hardware ships with every tier.",
 };
 
-const ENTERPRISE_INCLUDES = [
-  "The four products — Platform, App, MCP, Cradle",
-  "Three tiers per product — L1, L2, L3",
-  "FIPS 140-3 Level 3 Cradle hardware, shipped",
-  "Deployment: Managed, Federated, or Air-gapped",
-  "Named human approval on every consequential action",
-  "Hash-chained audit trail, portable at contract end",
-  "Software license, support terms, hardware warranty",
-  "Onboarding with a Nebbos operator, not a form-and-forget",
+const TIERS = [
+  {
+    key: "starter",
+    name: "Starter",
+    tier: "L1 · Personal",
+    price: "$15",
+    period: "per month",
+    priceNote: "Placeholder · founder-set at publish",
+    deck:
+      "One operator. Biometric-only. Dashboard, personal-scope reads, low-risk tool calls.",
+    cta: { label: "Start now", href: "/signup?tier=starter" },
+    ctaVariant: "ghost" as const,
+    featured: false,
+  },
+  {
+    key: "team",
+    name: "Team",
+    tier: "L2 · Privileged",
+    price: "$75",
+    period: "per seat, per month",
+    priceNote: "Placeholder · founder-set at publish",
+    deck:
+      "Small team. Biometric + Cradle presence. Shell writes, memory registers, admin ops within your team.",
+    cta: { label: "Start a Team", href: "/signup?tier=team" },
+    ctaVariant: "primary" as const,
+    featured: true,
+  },
+  {
+    key: "enterprise",
+    name: "Enterprise",
+    tier: "L3 · Admin",
+    price: "Contact us",
+    period: "",
+    priceNote: "Scope + deployment set on a call",
+    deck:
+      "Org-wide. Biometric + Cradle + enclave-signed approval. Shell creation, substrate mutation, cross-team, air-gapped or federated.",
+    cta: { label: "Contact sales", href: "/contact" },
+    ctaVariant: "ghost" as const,
+    featured: false,
+  },
 ];
+
+const MATRIX_GROUPS = [
+  {
+    group: "The product",
+    rows: [
+      { feature: "Nebbos App · macOS + Windows",  starter: true,  team: true,  enterprise: true },
+      { feature: "Nebbos Platform · web",          starter: true,  team: true,  enterprise: true },
+      { feature: "Nebbos MCP · tool substrate",    starter: true,  team: true,  enterprise: true },
+      { feature: "Nebbos Cradle · hardware",       starter: "—",   team: true,  enterprise: true },
+    ],
+  },
+  {
+    group: "Approvals",
+    rows: [
+      { feature: "Biometric approval",             starter: true,  team: true,  enterprise: true },
+      { feature: "Cradle physical presence",       starter: "—",   team: true,  enterprise: true },
+      { feature: "Enclave-signed admin token",     starter: "—",   team: "—",   enterprise: true },
+      { feature: "Multi-party quorum",             starter: "—",   team: "—",   enterprise: true },
+    ],
+  },
+  {
+    group: "Scope",
+    rows: [
+      { feature: "Personal-scope reads",           starter: true,  team: true,  enterprise: true },
+      { feature: "Shell writes",                   starter: "—",   team: true,  enterprise: true },
+      { feature: "Cross-shell reads",              starter: "—",   team: "—",   enterprise: true },
+      { feature: "Substrate mutation",             starter: "—",   team: "—",   enterprise: true },
+    ],
+  },
+  {
+    group: "Deployment",
+    rows: [
+      { feature: "Managed (Nebbos-hosted)",        starter: true,  team: true,  enterprise: true },
+      { feature: "Federated (your cloud)",         starter: "—",   team: "—",   enterprise: true },
+      { feature: "Air-gapped (on-prem)",           starter: "—",   team: "—",   enterprise: true },
+    ],
+  },
+  {
+    group: "Support",
+    rows: [
+      { feature: "Docs + community",               starter: true,  team: true,  enterprise: true },
+      { feature: "Email support",                  starter: "—",   team: true,  enterprise: true },
+      { feature: "Named onboarding operator",      starter: "—",   team: "—",   enterprise: true },
+      { feature: "Security-review support",        starter: "—",   team: "—",   enterprise: true },
+    ],
+  },
+];
+
+function Cell({ v, tier }: { v: boolean | string; tier: string }) {
+  if (v === true) {
+    return <p className="mkt-matrix__cell" data-tier={tier}><span className="mkt-matrix__check">✓</span></p>;
+  }
+  if (v === false || v === "—") {
+    return <p className="mkt-matrix__cell" data-tier={tier}><span className="mkt-matrix__dash">—</span></p>;
+  }
+  return <p className="mkt-matrix__cell" data-tier={tier}>{v}</p>;
+}
 
 export default function PricingPage() {
   return (
@@ -52,88 +142,131 @@ export default function PricingPage() {
           <div className="mkt-hero__copy">
             <p className="mkt-eyebrow">Pricing</p>
             <h1 id="pricing-h" className="mkt-display">
-              <SplitWords>Enterprise. On a call.</SplitWords>
+              <SplitWords>Three tiers. Enterprise on a call.</SplitWords>
             </h1>
             <p className="mkt-deck">
-              Nebbos ships to institutional buyers. Every engagement runs
-              through a contract, a deployment plan, and a security
-              review. The price fits the scope — not a checkout page.
+              Solo operators start on Starter. Teams add the Cradle and
+              scale to Team. Organizations sign an Enterprise agreement
+              for cross-team, air-gapped, or federated deployment.
             </p>
             <div className="mkt-hero__ctas">
-              <Link href="/demo" className="mkt-cta mkt-cta--primary">
-                Book a demo
+              <Link href="#tiers" className="mkt-cta mkt-cta--primary">
+                See the tiers
                 <span className="mkt-cta__arrow" aria-hidden>→</span>
               </Link>
-              <Link href="/contact" className="mkt-cta mkt-cta--ghost">
-                Contact sales
+              <Link href="#compare" className="mkt-cta mkt-cta--ghost">
+                Compare features
               </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* TIER CARD */}
-      <section className="mkt mkt-section" aria-labelledby="tier-h">
+      {/* TIER CARDS */}
+      <section className="mkt mkt-section" aria-labelledby="tiers-h" id="tiers">
         <div className="mkt-section__inner">
           <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The tier</p>
-            <h2 id="tier-h" className="mkt-h2">
-              <SplitWords>One tier. Enterprise.</SplitWords>
+            <p className="mkt-eyebrow">The tiers</p>
+            <h2 id="tiers-h" className="mkt-h2">
+              <SplitWords>Pick the tier that fits your shift.</SplitWords>
             </h2>
-            <p className="mkt-deck">
-              Every scope — pilot, one department, one district, one
-              agency — sits under the same enterprise contract. The
-              engagement shape varies; the terms don&rsquo;t.
-            </p>
           </header>
 
           <div className="mkt-pricing__grid">
-            <article className="mkt-price mkt-price--featured" aria-labelledby="enterprise-name">
-              <p className="mkt-price__tier">Enterprise</p>
-              <h3 id="enterprise-name" className="mkt-price__name">
-                Everything Nebbos ships.
-              </h3>
-              <p className="mkt-price__value">Contact us.</p>
-              <p className="mkt-price__deck">
-                Scope, deployment, and pricing set on a call with the
-                team. Typical time from first call to signed pilot: two
-                to four weeks.
-              </p>
-              <ul className="mkt-price__list">
-                {ENTERPRISE_INCLUDES.map((item) => (
-                  <li key={item} className="mkt-price__list-item">
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-              <Link href="/contact" className="mkt-cta mkt-cta--primary mkt-price__cta">
-                Contact sales
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <p style={{ fontFamily: "var(--mkt-font-mono)", fontSize: 11, letterSpacing: "0.14em", color: "var(--mkt-text-4)", margin: 0 }}>
-                Enterprise inbox · {CONTACT.enterprise}
-              </p>
-            </article>
+            {TIERS.map((t) => (
+              <article
+                key={t.key}
+                className={`mkt-price ${t.featured ? "mkt-price--featured" : ""}`}
+                aria-labelledby={`tier-${t.key}-h`}
+              >
+                <p className="mkt-price__tier">{t.tier}</p>
+                <h3 id={`tier-${t.key}-h`} className="mkt-price__name">{t.name}</h3>
+                <p className="mkt-price__value">
+                  {t.price}
+                  {t.period && <span className="mkt-price__period">{t.period}</span>}
+                </p>
+                {t.priceNote && <p className="mkt-price__note">{t.priceNote}</p>}
+                <p className="mkt-price__deck">{t.deck}</p>
+                <Link
+                  href={t.cta.href}
+                  className={`mkt-cta ${t.ctaVariant === "primary" ? "mkt-cta--primary" : "mkt-cta--ghost"} mkt-price__cta`}
+                >
+                  {t.cta.label}
+                  {t.ctaVariant === "primary" && (
+                    <span className="mkt-cta__arrow" aria-hidden>→</span>
+                  )}
+                </Link>
+              </article>
+            ))}
           </div>
         </div>
       </section>
 
-      {/* WHY ENTERPRISE ONLY — quiet justification, one section */}
-      <section className="mkt mkt-section" aria-labelledby="why-h">
+      {/* COMPARISON MATRIX */}
+      <section className="mkt mkt-section" aria-labelledby="compare-h" id="compare">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">What&rsquo;s included</p>
+            <h2 id="compare-h" className="mkt-h2">
+              <SplitWords>Compare tier by tier.</SplitWords>
+            </h2>
+          </header>
+
+          <div className="mkt-matrix" aria-label="Tier feature comparison">
+            <div className="mkt-matrix__row mkt-matrix__row--head">
+              <p className="mkt-matrix__cell">Feature</p>
+              <p className="mkt-matrix__cell">Starter</p>
+              <p className="mkt-matrix__cell">Team</p>
+              <p className="mkt-matrix__cell">Enterprise</p>
+            </div>
+            {MATRIX_GROUPS.map((g) => (
+              <div key={g.group}>
+                <div className="mkt-matrix__row mkt-matrix__row--group">
+                  <p className="mkt-matrix__cell">{g.group}</p>
+                  <p className="mkt-matrix__cell" />
+                  <p className="mkt-matrix__cell" />
+                  <p className="mkt-matrix__cell" />
+                </div>
+                {g.rows.map((r) => (
+                  <div key={r.feature} className="mkt-matrix__row">
+                    <p className="mkt-matrix__cell">{r.feature}</p>
+                    <Cell v={r.starter} tier="Starter" />
+                    <Cell v={r.team} tier="Team" />
+                    <Cell v={r.enterprise} tier="Enterprise" />
+                  </div>
+                ))}
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CRADLE REPLACEMENT ORDER */}
+      <section className="mkt mkt-section" aria-labelledby="cradle-h">
         <div className="mkt-section__inner">
           <header className="mkt-flow__head">
-            <p className="mkt-eyebrow">Why enterprise-only</p>
-            <h2 id="why-h" className="mkt-h2">
-              Nebbos ships hardware. Runs on your infrastructure.
+            <p className="mkt-eyebrow">Lost or damaged Cradle</p>
+            <h2 id="cradle-h" className="mkt-h2">
+              <SplitWords>Order a replacement Cradle.</SplitWords>
             </h2>
             <p className="mkt-deck">
-              A Cradle is a physical device that ships to your desk. The
-              MCP and your Pearl memory live on that device — Nebbos
-              never accesses your data. Deployment is on your infra,
-              federated, or air-gapped. None of that fits a self-serve
-              checkout. Every Nebbos customer signs a contract, receives
-              shipped hardware, and onboards with a Nebbos operator.
+              Team and Enterprise customers can order a replacement Cradle
+              at cost. Ships to the address on file within 3 business
+              days. Old device serial is retired from your organization&rsquo;s
+              attestation chain at replacement issue.
             </p>
+            <div className="mkt-hero__ctas">
+              <Link
+                href={`mailto:${CONTACT.enterprise}?subject=Cradle%20replacement%20request&body=Serial%20of%20lost%2Fdamaged%20device%3A%20%0AShipping%20address%3A%20%0AOrganization%3A%20%0ATier%3A%20%0A`}
+                className="mkt-cta mkt-cta--primary"
+              >
+                Request replacement
+                <span className="mkt-cta__arrow" aria-hidden>→</span>
+              </Link>
+              <Link href="/contact" className="mkt-cta mkt-cta--ghost">
+                Talk to support
+              </Link>
+            </div>
           </header>
         </div>
       </section>
@@ -141,13 +274,13 @@ export default function PricingPage() {
       {/* CLOSING CTA */}
       <section className="mkt mkt-section mkt-closing" aria-labelledby="close-h">
         <div className="mkt-closing__inner">
-          <p className="mkt-eyebrow">Start the conversation</p>
+          <p className="mkt-eyebrow">Not sure which tier</p>
           <h2 id="close-h" className="mkt-display">
-            <SplitWords>Bring one department. We map the pilot.</SplitWords>
+            <SplitWords>Book thirty minutes. We map the fit.</SplitWords>
           </h2>
           <p className="mkt-deck">
-            Thirty minutes on a call. Pick one department. We map the
-            scope, name the Pearl, and quote the pilot in that call.
+            Bring one department. We show you which tier answers the
+            shape of your operation and quote the pilot on the call.
           </p>
           <div className="mkt-hero__ctas">
             <Link href="/demo" className="mkt-cta mkt-cta--primary">

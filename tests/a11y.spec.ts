@@ -14,8 +14,15 @@ import AxeBuilder from "@axe-core/playwright";
 
 const ROUTES = [
   "/",
-  "/product",
+  "/products",
+  "/products/platform",
+  "/products/app",
+  "/products/mcp",
+  "/products/cradle",
   "/solutions",
+  "/pricing",
+  "/demo",
+  "/contact",
   "/customers",
   "/trust",
   "/security",

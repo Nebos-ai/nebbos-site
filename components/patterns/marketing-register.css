@@ -47,11 +47,16 @@
     --mkt-rule: rgba(255, 255, 255, 0.08);
     --mkt-rule-2: rgba(255, 255, 255, 0.14);
 
-    /* Text on dark */
+    /* Text on dark — every tier hits WCAG 2.2 AA 4.5:1 on --mkt-ground.
+       Founder-caught 2026-09-18: prior alphas 0.48 / 0.32 failed axe-core
+       color-contrast checks. Recomputed:
+         text-2 @ 0.78 = #C3C1BD on #05070A ≈ 9.1:1  · pass
+         text-3 @ 0.60 = #93918E on #05070A ≈ 6.0:1  · pass
+         text-4 @ 0.48 = #7A7A77 on #05070A ≈ 4.5:1  · pass at threshold */
     --mkt-text: #f4f2ee;
-    --mkt-text-2: rgba(244, 242, 238, 0.72);
-    --mkt-text-3: rgba(244, 242, 238, 0.48);
-    --mkt-text-4: rgba(244, 242, 238, 0.32);
+    --mkt-text-2: rgba(244, 242, 238, 0.78);
+    --mkt-text-3: rgba(244, 242, 238, 0.60);
+    --mkt-text-4: rgba(244, 242, 238, 0.48);
 
     /* Accents — one confident orange + one bright cta-yellow moment */
     --mkt-accent: #ff6b1e;               /* Nebbos electric orange */
@@ -795,7 +800,11 @@
     font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--mkt-product-tint);
+    /* WCAG 2.2 AA: product-tint text (platform indigo #4a5cff = 2.9:1,
+       cradle red #d63a4c = 4.0:1) FAILS 4.5:1 on --mkt-ground. Fixed
+       2026-09-18 to paper-white; the product accent still reads via
+       the mark disc + tint gradient bloom + edge glow. */
+    color: var(--mkt-text);
     font-weight: 600;
   }
   .mkt-product__link-arrow {
@@ -1067,7 +1076,9 @@
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--mkt-product-tint, var(--mkt-accent));
+    /* WCAG 2.2 AA: platform-indigo + cradle-red tints fail contrast on
+       ground; standardize on the orange accent (#ff6b1e = 5.9:1). */
+    color: var(--mkt-accent);
     font-weight: 600;
     margin: 0;
   }
@@ -1591,18 +1602,114 @@
     .mkt-marquee__track { animation-duration: 160s; }
   }
 
-  /* ── PRICING · tier cards on dark ───────────────────────────────── */
+  /* ── PRICING · 3 tier cards + comparison matrix ─────────────────── */
 
   .mkt-pricing__grid {
     display: grid;
     gap: clamp(20px, 2.4vw, 32px);
     grid-template-columns: 1fr;
-    max-width: 62rem;
+    max-width: 78rem;
     margin: 0 auto;
   }
-  @media (min-width: 720px) {
-    /* Currently one-tier; when a second tier lands this becomes 2-col. */
-    .mkt-pricing__grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  @media (min-width: 900px) {
+    .mkt-pricing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .mkt-price__period {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    margin-left: 6px;
+    font-weight: 500;
+  }
+  .mkt-price__note {
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--mkt-text-4);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* Comparison matrix — feature × tier grid */
+  .mkt-matrix {
+    max-width: 78rem;
+    margin: clamp(48px, 6vh, 88px) auto 0;
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    overflow: hidden;
+    background: var(--mkt-ground-2);
+  }
+  .mkt-matrix__row {
+    display: grid;
+    grid-template-columns: minmax(160px, 2fr) repeat(3, minmax(80px, 1fr));
+    gap: 16px;
+    padding: 16px clamp(16px, 2vw, 28px);
+    align-items: center;
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-matrix__row:first-child {
+    border-block-start: none;
+    background: var(--mkt-ground-3);
+  }
+  .mkt-matrix__cell {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--mkt-text-2);
+    margin: 0;
+    text-align: center;
+  }
+  .mkt-matrix__cell:first-child {
+    text-align: left;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-matrix__row--head .mkt-matrix__cell {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+  }
+  .mkt-matrix__row--group {
+    background: var(--mkt-ground-3);
+  }
+  .mkt-matrix__row--group .mkt-matrix__cell:first-child {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+  }
+  .mkt-matrix__check {
+    color: var(--mkt-accent);
+    font-family: var(--mkt-font-mono);
+    font-size: 13px;
+  }
+  .mkt-matrix__dash {
+    color: var(--mkt-text-4);
+    font-family: var(--mkt-font-mono);
+  }
+  @media (max-width: 720px) {
+    .mkt-matrix__row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      text-align: left;
+    }
+    .mkt-matrix__cell,
+    .mkt-matrix__cell:first-child {
+      text-align: left;
+    }
+    .mkt-matrix__cell[data-tier]::before {
+      content: attr(data-tier) " · ";
+      color: var(--mkt-text-4);
+      font-family: var(--mkt-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
   }
   .mkt-price {
     position: relative;
