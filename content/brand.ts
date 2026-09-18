@@ -45,13 +45,14 @@ export const BRAND = {
   name: "Nebbos",
 
   /** Home-page hero title (canonical, most reused).
-   *  Supersede-log 2026-09-17: "The platform. Its tools. Its MCP. Its Cradle."
-   *  → "Infrastructure for AI operators." Founder-directed shift from
-   *  enumerative-taxonomy tagline to categorical-infrastructure claim
-   *  (Stripe-shape: "Financial infrastructure to grow your revenue" → the
-   *  same 4-word category-defining move). Prior 4-thing enumeration retained
-   *  in `homeDeck` for the cold-visitor explainer under the H1. */
-  taglineShort: "Infrastructure for AI operators.",
+   *  Supersede-log 2026-09-18: "Infrastructure for AI operators." was
+   *  category-defining but sausage — a buyer looking for a sovereign AI
+   *  brain does not want to hear "infrastructure." They want to hear
+   *  what it DOES for their operation. Founder-directed rewrite to
+   *  outcome-first framing: "sovereign brain for your operation."
+   *  Prior supersede-log 2026-09-17: "The platform. Its tools. Its MCP.
+   *  Its Cradle." → "Infrastructure for AI operators." (now retired). */
+  taglineShort: "A sovereign brain for your operation.",
 
   /** Slightly longer version used in <title> tags. */
   taglineLong:
@@ -61,20 +62,45 @@ export const BRAND = {
   category: "Operator infrastructure",
 
   /** Home hero deck under the title.
-   *  Register: runlayer-tier operational — short declarative sentences,
-   *  named artifacts, honest scope. Founder-directed 2026-09-18 after
-   *  runlayer.com/watch reference. Prior deck was poetic-parallel
-   *  ("Every X attested. Every X on hardware..."); the new deck names
-   *  what the product does in imperative-adjacent operational voice. */
+   *  Founder-directed 2026-09-18 (verbatim critique on the substrate/
+   *  cert/hashchain-heavy prior deck): "do you go to the restaurant and
+   *  say what's in the sausage or do you eat it if it looks good taste
+   *  good." Rewrite: outcome-first, department-centric, buyer-scoped.
+   *  Every clause names something the buyer will feel in their week. */
   homeDeck:
-    "See every tool call. Approve what matters. Attest what shipped. Credentials on a FIPS 140-3 Cradle you hold. Memory portable when you leave.",
+    "A Pearl for every department. Finance closes without you chasing. Ops covers the shift without a war room. Care gets to think about care. Runs on hardware you own; ships your memory back when you leave.",
+
+  /** CANONICAL HIGHLIGHTS · v1 · 2026-09-18
+   *  Founder-directed: "the website and the marketing materials all
+   *  need to have the same tone language highlights."
+   *
+   *  These four phrases ARE the brand voice — every website page,
+   *  every deck, every one-pager, every sales email pulls from this
+   *  set. Change one here and every touchpoint changes together.
+   *
+   *  Ordering matters — first phrase leads every material. */
+  highlights: [
+    "A Pearl for every department.",
+    "Finance closes without you chasing. Ops covers the shift without a war room. Care gets to think about care.",
+    "Runs on hardware you own.",
+    "Ships your memory back when you leave.",
+  ],
+
+  /** Named departments Nebbos ships Pearls for (customer-facing).
+   *  Same set used across home, /solutions, decks. */
+  flagshipDepartments: [
+    { name: "Finance",     outcome: "Monthly close without the war room." },
+    { name: "Operations",  outcome: "Coverage, handoffs, on-call — quiet." },
+    { name: "People",      outcome: "Onboarding runs. Retention risks surface early." },
+    { name: "Care",        outcome: "Coordination, compliance, follow-ups." },
+  ],
 
   /** Sub-category for AI-first buyers (Wave 3e model-training angle). */
   categorySecondary: "Hardware-attested infrastructure for the AI-native operator",
 
   /** One-line site description (SEO meta + share previews). */
   descriptionShort:
-    "Nebbos is infrastructure for AI operators. Every action attested. Every credential on hardware. Every substrate portable when you leave.",
+    "A Pearl for every department. Runs on hardware you own. Ships your memory back when you leave.",
 
   /** Long-form site description (for landing-page bodies + doc). */
   descriptionLong:

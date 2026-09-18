@@ -2,23 +2,25 @@ import Link from "next/link";
 import { BRAND } from "@/content/brand";
 
 /**
- * MarketingHero · sections/MarketingHero.tsx · v1 · 2026-09-18
+ * MarketingHero · v2 · 2026-09-18 · outcome-first rewrite
  *
- * The nebbos.ai product-marketing hero. Text-left / visual-right split
- * on the dark marketing register (per components/patterns/marketing-
- * register.css). Distinct from the corporate-parent
- * hero-fullbleed-scene shape.
+ * Founder-directed (verbatim): "why is this on the home page in this
+ * form why is this important to someone looking for a sovereign ai
+ * brain do you go to the restaurant and say what's in the sausage or
+ * do you eat it if it looks good taste good."
  *
- * Founder-directed 2026-09-18: nebbos.ai needs its own product-marketing
- * aesthetic, distinct from nebbostechnologies.com's corporate register.
- * Reference stack: figma.com (light playful) + linear.app (dark precise);
- * Nebbos leans Linear-tier given Cradle hardware + institutional buyer.
+ * AND: "the best marketing sites use human psychology... most people
+ * want to be told and show it's good for them they don't really ever
+ * understand what it is."
  *
- * Visual is a stylized product mock — three-panel dashboard hint with
- * accent orange highlights. Placeholder pending real Cradle photograph
- * OR platform UI capture (founder-directed asset sourcing).
+ * v1 hero: infrastructure framing ("Infrastructure for AI operators.")
+ *          + sausage deck (tool-calls, FIPS 140-3 Cradle, hash-chain).
+ * v2 hero: outcome framing (sovereign brain for your operation) +
+ *          department-scoped concrete gains you feel in the week.
  *
- * Copy sourced from content/brand.ts so hero + meta stay in sync.
+ * The right side of the hero still shows a stylized product hint, but
+ * with department-level chrome (Finance / Ops / Care) instead of
+ * substrate-plumbing chrome (Signals / Approval 04 / Attestation 14 062).
  */
 
 export function MarketingHero() {
@@ -27,7 +29,7 @@ export function MarketingHero() {
       <div className="mkt-section__inner">
         <div className="mkt-hero__grid">
           <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Nebbos · Product</p>
+            <p className="mkt-eyebrow">Nebbos</p>
             <h1 id="mkt-hero-h" className="mkt-display">
               {BRAND.taglineShort}
             </h1>
@@ -37,16 +39,16 @@ export function MarketingHero() {
                 Book a demo
                 <span className="mkt-cta__arrow" aria-hidden>→</span>
               </Link>
-              <Link href="/products" className="mkt-cta mkt-cta--ghost">
-                See the products
+              <Link href="/solutions" className="mkt-cta mkt-cta--ghost">
+                See the Pearls
               </Link>
             </div>
           </div>
 
           <div className="mkt-hero__visual" aria-hidden>
-            {/* Placeholder stylized product mock — dashboard hint.
-                To be replaced with the Cradle device photograph or a
-                Platform UI capture once assets exist. */}
+            {/* Three department Pearls, live-status feel. Visitor reads
+                shape, not the sausage — a screenshot-shaped visual that
+                signals "your team's departments, running." */}
             <div className="mkt-mock">
               <div className="mkt-mock__chrome">
                 <span className="mkt-mock__dot" />
@@ -55,29 +57,25 @@ export function MarketingHero() {
               </div>
               <div className="mkt-mock__body">
                 <div className="mkt-mock__panel">
-                  <span className="mkt-mock__badge">Signals</span>
+                  <span className="mkt-mock__badge">Finance</span>
+                  <span className="mkt-mock__number">Closed</span>
                   <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--80" />
                   <span className="mkt-mock__line mkt-mock__line--60" />
-                  <span className="mkt-mock__line mkt-mock__line--40" />
-                  <span className="mkt-mock__line mkt-mock__line--60" />
-                  <span className="mkt-mock__line mkt-mock__line--80" />
                   <span className="mkt-mock__line mkt-mock__line--40" />
                 </div>
                 <div className="mkt-mock__panel mkt-mock__panel--accent">
-                  <span className="mkt-mock__badge">Approval &middot; 04</span>
-                  <span className="mkt-mock__number">2 of 3</span>
+                  <span className="mkt-mock__badge">Ops · needs you</span>
+                  <span className="mkt-mock__number">2 to approve</span>
                   <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--60" />
                   <span className="mkt-mock__line mkt-mock__line--accent mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--40" />
+                  <span className="mkt-mock__line mkt-mock__line--60" />
                 </div>
                 <div className="mkt-mock__panel">
-                  <span className="mkt-mock__badge">Attestation</span>
-                  <span className="mkt-mock__number">14 062</span>
-                  <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--60" />
+                  <span className="mkt-mock__badge">Care</span>
+                  <span className="mkt-mock__number">Quiet</span>
+                  <span className="mkt-mock__line mkt-mock__line--60" />
                   <span className="mkt-mock__line mkt-mock__line--80" />
                   <span className="mkt-mock__line mkt-mock__line--40" />
-                  <span className="mkt-mock__line mkt-mock__line--60" />
                 </div>
               </div>
             </div>

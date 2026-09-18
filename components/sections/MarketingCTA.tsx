@@ -15,13 +15,13 @@ export function MarketingCTA() {
   return (
     <section className="mkt mkt-section mkt-closing" aria-labelledby="mkt-close-h">
       <div className="mkt-closing__inner">
-        <p className="mkt-eyebrow">Book a briefing</p>
+        <p className="mkt-eyebrow">See it on your operation</p>
         <h2 id="mkt-close-h" className="mkt-display">
           Put a Pearl on your hardest department.
         </h2>
         <p className="mkt-deck">
-          Thirty minutes. We map one department. We name the Pearls that
-          would live inside it. You see the substrate they would run on.
+          Thirty minutes. Pick one department. We map it, name the Pearl,
+          and show you the first Monday it would run.
         </p>
         <div className="mkt-hero__ctas">
           <Link href="/demo" className="mkt-cta mkt-cta--primary">

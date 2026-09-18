@@ -1159,6 +1159,149 @@
     transform: translateX(3px);
   }
 
+  /* ── SHIFT NARRATIVE · one-day story shape ───────────────────── */
+
+  .mkt-shift__grid {
+    display: grid;
+    gap: clamp(48px, 6vw, 96px);
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .mkt-shift__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  }
+  .mkt-shift__col {
+    display: grid;
+    gap: 16px;
+    align-content: start;
+  }
+  .mkt-shift__hour {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+    margin: 0;
+  }
+  .mkt-shift__event {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+  }
+  .mkt-shift__body {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+  .mkt-shift__col--head p {
+    margin: 0;
+  }
+  .mkt-shift__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 500;
+  }
+  .mkt-shift__list {
+    display: grid;
+    gap: 24px;
+  }
+  .mkt-shift__item {
+    display: grid;
+    gap: 10px;
+    padding-block: 20px;
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-shift__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+
+  /* ── PROOF · social-proof / customer band ───────────────────── */
+
+  .mkt-proof {
+    display: grid;
+    gap: 24px;
+    align-content: center;
+  }
+  .mkt-proof__stat {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(48px, 6vw, 88px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .mkt-proof__body {
+    font-family: var(--mkt-font-body);
+    font-size: 18px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    max-width: 42ch;
+    margin: 0;
+  }
+  .mkt-proof__hint {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-4);
+    margin: 0;
+  }
+
+  /* ── TRUST LINE · one quiet trust bar with link ───────────────── */
+
+  .mkt-trustline {
+    background: var(--mkt-ground-2);
+    border-block: 1px solid var(--mkt-rule);
+    padding-block: 32px;
+  }
+  .mkt-trustline__inner {
+    max-width: var(--mkt-container);
+    margin: 0 auto;
+    padding-inline: var(--mkt-gutter);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+  }
+  .mkt-trustline__body {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    color: var(--mkt-text-2);
+    margin: 0;
+    max-width: 68ch;
+  }
+  .mkt-trustline__link {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mkt-trustline__link-arrow {
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-trustline__link:hover .mkt-trustline__link-arrow {
+    transform: translateX(3px);
+  }
+
   /* ── FAQ · runlayer-style Q/A on dark ──────────────────────────── */
 
   .mkt-faq__head {
