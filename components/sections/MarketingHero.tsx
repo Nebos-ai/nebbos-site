@@ -55,27 +55,58 @@ export function MarketingHero() {
                 <span className="mkt-mock__dot" />
                 <span className="mkt-mock__dot" />
               </div>
+              <div className="mkt-mock__filter">
+                <span className="mkt-mock__filter-dot" aria-hidden />
+                Live · Monday 08:12
+              </div>
               <div className="mkt-mock__body">
                 <div className="mkt-mock__panel">
                   <span className="mkt-mock__badge">Finance</span>
                   <span className="mkt-mock__status">Closed</span>
-                  <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--60" />
-                  <span className="mkt-mock__line mkt-mock__line--40" />
+                  <div className="mkt-mock__meta">
+                    <span>Sep</span>
+                    <span className="mkt-mock__meta-pill">Auto</span>
+                  </div>
+                  <div className="mkt-mock__chart" aria-hidden>
+                    <span className="mkt-mock__bar" style={{ height: "40%", animationDelay: "0ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "55%", animationDelay: "40ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "70%", animationDelay: "80ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "60%", animationDelay: "120ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "85%", animationDelay: "160ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "100%", animationDelay: "200ms" }} />
+                  </div>
                 </div>
                 <div className="mkt-mock__panel mkt-mock__panel--accent">
                   <span className="mkt-mock__badge">Ops</span>
                   <span className="mkt-mock__status">2 waiting</span>
-                  <span className="mkt-mock__line mkt-mock__line--strong mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--accent mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--60" />
+                  <div className="mkt-mock__meta">
+                    <span>Approve</span>
+                    <span className="mkt-mock__meta-pill">You</span>
+                  </div>
+                  <div className="mkt-mock__chart" aria-hidden>
+                    <span className="mkt-mock__bar" style={{ height: "50%", animationDelay: "0ms" }} />
+                    <span className="mkt-mock__bar mkt-mock__bar--accent" style={{ height: "90%", animationDelay: "60ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "45%", animationDelay: "120ms" }} />
+                    <span className="mkt-mock__bar mkt-mock__bar--accent" style={{ height: "78%", animationDelay: "180ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "55%", animationDelay: "240ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "62%", animationDelay: "300ms" }} />
+                  </div>
                 </div>
                 <div className="mkt-mock__panel">
                   <span className="mkt-mock__badge">Care</span>
                   <span className="mkt-mock__status">Quiet</span>
-                  <span className="mkt-mock__line mkt-mock__line--60" />
-                  <span className="mkt-mock__line mkt-mock__line--80" />
-                  <span className="mkt-mock__line mkt-mock__line--40" />
+                  <div className="mkt-mock__meta">
+                    <span>0 open</span>
+                    <span className="mkt-mock__meta-pill">Auto</span>
+                  </div>
+                  <div className="mkt-mock__chart" aria-hidden>
+                    <span className="mkt-mock__bar" style={{ height: "30%", animationDelay: "0ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "35%", animationDelay: "50ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "22%", animationDelay: "100ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "40%", animationDelay: "150ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "28%", animationDelay: "200ms" }} />
+                    <span className="mkt-mock__bar" style={{ height: "36%", animationDelay: "250ms" }} />
+                  </div>
                 </div>
               </div>
             </div>

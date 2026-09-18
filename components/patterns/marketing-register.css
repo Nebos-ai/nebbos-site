@@ -86,11 +86,62 @@
     --mkt-ease: cubic-bezier(0.22, 1, 0.36, 1);
   }
 
+  /* ── GLOBAL BACKDROP · subtle dot grid + aurora glows on ground ─────
+
+     Linear-tier depth: the eye reads the ground as SPACE, not paint.
+     Dot grid gives the plane a scale. Aurora blooms give it warmth.
+     Two aurora ellipses positioned around the hero so the visitor
+     lands INTO light, not onto flat black. */
+
+  html:has(.mkt),
+  body:has(.mkt) {
+    background: #05070a;
+  }
+  body:has(.mkt)::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background-image:
+      radial-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: 0 0;
+    pointer-events: none;
+    z-index: 0;
+    mask-image: radial-gradient(ellipse at center, #000 30%, transparent 80%);
+  }
+  body:has(.mkt)::after {
+    content: "";
+    position: fixed;
+    inset: 0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% 12%, rgba(255, 107, 30, 0.14), transparent 62%),
+      radial-gradient(ellipse 720px 420px at 85% 18%, rgba(74, 92, 255, 0.11), transparent 65%),
+      radial-gradient(ellipse 800px 500px at 50% 92%, rgba(185, 107, 255, 0.08), transparent 65%);
+    pointer-events: none;
+    z-index: 0;
+    animation: mkt-aurora 18s ease-in-out infinite alternate;
+  }
+  @keyframes mkt-aurora {
+    from { transform: translate3d(0, 0, 0); opacity: 0.9; }
+    to   { transform: translate3d(-16px, 8px, 0); opacity: 1; }
+  }
+
+  /* Every .mkt-* section sits ABOVE the backdrop layers. */
+  .mkt,
+  .mkt-section,
+  .mkt-footer,
+  .mkt-trustline,
+  .mkt-strip,
+  .site-header {
+    position: relative;
+    z-index: 1;
+  }
+
   /* ── SECTION SHELL · dark ground, generous vertical rhythm ────────── */
 
   .mkt-section {
     position: relative;
-    background: var(--mkt-ground);
+    background: transparent;
     color: var(--mkt-text);
     font-family: var(--mkt-font-body);
     padding-block: var(--mkt-section-y);
@@ -262,11 +313,30 @@
     aspect-ratio: 4 / 3;
     border-radius: var(--mkt-radius-panel);
     overflow: hidden;
-    background: var(--mkt-ground-2);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 40%),
+      var(--mkt-ground-2);
     border: 1px solid var(--mkt-rule);
+    /* Layered elevation: near ambient + far cast + inner top-edge light */
     box-shadow:
-      0 40px 80px -30px rgba(0, 0, 0, 0.6),
-      0 20px 40px -20px rgba(0, 0, 0, 0.4);
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 1px rgba(255, 255, 255, 0.02),
+      0 60px 120px -40px rgba(255, 107, 30, 0.24),
+      0 40px 80px -30px rgba(0, 0, 0, 0.7),
+      0 20px 40px -20px rgba(0, 0, 0, 0.5);
+  }
+  /* Aurora bloom BEHIND the hero visual */
+  .mkt-hero__visual::before {
+    content: "";
+    position: absolute;
+    inset: -30%;
+    background:
+      radial-gradient(ellipse 60% 50% at 30% 30%, rgba(255, 107, 30, 0.28), transparent 60%),
+      radial-gradient(ellipse 50% 60% at 80% 70%, rgba(74, 92, 255, 0.22), transparent 60%);
+    filter: blur(40px);
+    z-index: -1;
+    pointer-events: none;
+    opacity: 0.9;
   }
 
   /* ── COMPLIANCE STRIP on dark ──────────────────────────────────── */
@@ -366,15 +436,20 @@
       0 16px 32px -20px rgba(0, 0, 0, 0.35);
   }
 
-  /* ── PRODUCT MOCK · stacked panels (Figma-style dimensional hero art)  */
+  /* ── PRODUCT MOCK · Linear-tier dashboard shape ────────────────────
+
+     Not just 3 rectangles with placeholder lines — an actual mini
+     dashboard: chrome bar with a fake filter chip and date, three
+     department cards with badge + status + a data row + a mini bar
+     chart. Reads at glance as "this is running." */
 
   .mkt-mock {
     position: absolute;
     inset: 0;
-    padding: clamp(20px, 3vw, 40px);
+    padding: clamp(18px, 2.4vw, 32px);
     display: grid;
-    grid-template-rows: auto 1fr;
-    gap: clamp(12px, 1.5vw, 20px);
+    grid-template-rows: auto auto 1fr;
+    gap: clamp(10px, 1.2vw, 16px);
   }
   .mkt-mock__chrome {
     display: flex;
@@ -386,25 +461,89 @@
     height: 10px;
     border-radius: 50%;
     background: var(--mkt-rule-2);
+    box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.15);
+  }
+  .mkt-mock__dot:nth-child(1) { background: #ff5f57; }
+  .mkt-mock__dot:nth-child(2) { background: #febc2e; }
+  .mkt-mock__dot:nth-child(3) { background: #28c840; }
+  .mkt-mock__filter {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding: 6px 12px;
+    background: var(--mkt-ground);
+    border: 1px solid var(--mkt-rule);
+    border-radius: 999px;
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    text-transform: uppercase;
+    justify-self: start;
+  }
+  .mkt-mock__filter-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: #22c55e;
+    box-shadow: 0 0 8px rgba(34, 197, 94, 0.7);
   }
   .mkt-mock__body {
     display: grid;
-    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 1fr);
-    gap: clamp(8px, 1vw, 14px);
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: clamp(10px, 1vw, 14px);
   }
   .mkt-mock__panel {
-    background: var(--mkt-ground-3);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 30%),
+      var(--mkt-ground-3);
     border: 1px solid var(--mkt-rule);
     border-radius: var(--mkt-radius-card);
-    padding: clamp(14px, 1.5vw, 22px);
+    padding: clamp(12px, 1.3vw, 18px);
     display: grid;
-    gap: 8px;
+    gap: 10px;
     grid-auto-rows: min-content;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.05),
+      0 8px 20px -8px rgba(0, 0, 0, 0.5);
+    min-width: 0;
+    overflow: hidden;
   }
   .mkt-mock__panel--accent {
-    background: linear-gradient(180deg, var(--mkt-accent-soft), transparent 60%),
+    background:
+      linear-gradient(180deg, var(--mkt-accent-soft), transparent 60%),
       var(--mkt-ground-3);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.08),
+      inset 0 0 0 1px rgba(255, 107, 30, 0.25),
+      0 12px 28px -8px rgba(255, 107, 30, 0.35),
+      0 8px 20px -8px rgba(0, 0, 0, 0.5);
   }
+  /* Bar chart under the status number */
+  .mkt-mock__chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 28px;
+    margin-top: 4px;
+  }
+  .mkt-mock__bar {
+    flex: 1;
+    background: var(--mkt-rule-2);
+    border-radius: 2px 2px 0 0;
+    min-width: 0;
+    animation: mkt-bar-grow 900ms var(--mkt-ease) both;
+    transform-origin: bottom;
+  }
+  .mkt-mock__bar--accent {
+    background: var(--mkt-accent);
+    opacity: 0.9;
+  }
+  @keyframes mkt-bar-grow {
+    from { transform: scaleY(0); }
+    to   { transform: scaleY(1); }
+  }
+  /* Legacy line style kept for the value cards on /products */
   .mkt-mock__line {
     height: 8px;
     background: var(--mkt-rule);
@@ -426,8 +565,36 @@
     font-size: 10px;
     letter-spacing: 0.14em;
     text-transform: uppercase;
-    color: var(--mkt-accent);
+    color: var(--mkt-text-3);
     font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .mkt-mock__panel--accent .mkt-mock__badge {
+    color: var(--mkt-accent);
+  }
+  .mkt-mock__meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    font-family: var(--mkt-font-mono);
+    font-size: 9px;
+    letter-spacing: 0.08em;
+    color: var(--mkt-text-4);
+    text-transform: uppercase;
+  }
+  .mkt-mock__meta-pill {
+    background: var(--mkt-ground);
+    border: 1px solid var(--mkt-rule);
+    padding: 2px 8px;
+    border-radius: 999px;
+    color: var(--mkt-text-3);
+  }
+  .mkt-mock__panel--accent .mkt-mock__meta-pill {
+    color: var(--mkt-accent);
+    border-color: rgba(255, 107, 30, 0.3);
   }
   .mkt-mock__number {
     font-family: var(--mkt-font-display);
@@ -476,7 +643,9 @@
     display: grid;
     gap: 20px;
     padding: clamp(28px, 3vw, 40px);
-    background: var(--mkt-ground-2);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.03), transparent 30%),
+      var(--mkt-ground-2);
     border: 1px solid var(--mkt-rule);
     border-radius: var(--mkt-radius-panel);
     color: var(--mkt-text);
@@ -484,11 +653,18 @@
     transition:
       transform var(--mkt-dur) var(--mkt-ease),
       background var(--mkt-dur) var(--mkt-ease),
-      border-color var(--mkt-dur) var(--mkt-ease);
+      border-color var(--mkt-dur) var(--mkt-ease),
+      box-shadow var(--mkt-dur) var(--mkt-ease);
     isolation: isolate;
     min-height: 320px;
     grid-template-rows: auto 1fr auto;
+    /* Elevated resting state — layered shadow gives spatial depth. */
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.06),
+      0 24px 48px -24px rgba(0, 0, 0, 0.6),
+      0 6px 16px -6px rgba(0, 0, 0, 0.3);
   }
+  /* Tint bloom from top of card in the product accent. */
   .mkt-product::before {
     content: "";
     position: absolute;
@@ -500,13 +676,40 @@
     z-index: -1;
     transition: opacity var(--mkt-dur) var(--mkt-ease);
   }
+  /* Cursor-follow radial glow. Coords set from JS via --mkt-mx / --mkt-my. */
+  .mkt-product::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      360px circle at var(--mkt-mx, 50%) var(--mkt-my, 0%),
+      var(--mkt-product-tint, var(--mkt-accent)),
+      transparent 55%
+    );
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: opacity var(--mkt-dur) var(--mkt-ease);
+    mix-blend-mode: screen;
+  }
   .mkt-product:hover {
-    transform: translateY(-2px);
+    transform: translateY(-4px);
     border-color: var(--mkt-rule-2);
-    background: var(--mkt-ground-3);
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.05), transparent 30%),
+      var(--mkt-ground-3);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.1),
+      0 40px 80px -20px rgba(0, 0, 0, 0.7),
+      0 12px 24px -8px rgba(0, 0, 0, 0.4),
+      0 0 0 1px var(--mkt-product-tint, var(--mkt-accent));
   }
   .mkt-product:hover::before {
-    opacity: 0.38;
+    opacity: 0.45;
+  }
+  .mkt-product:hover::after {
+    opacity: 0.28;
   }
   .mkt-product:focus-visible {
     outline: 2px solid var(--mkt-product-tint, var(--mkt-accent));

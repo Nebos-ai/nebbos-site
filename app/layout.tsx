@@ -4,6 +4,7 @@ import { connection } from "next/server";
 import { headers } from "next/headers";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
+import { MarketingCursorGlow } from "@/components/site/MarketingCursorGlow";
 import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
 import { BRAND } from "@/content/brand";
 import { organizationJsonLd } from "@/lib/seo";
@@ -173,6 +174,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SiteHeader />
         <main id="main">{children}</main>
         <MarketingFooter />
+        <MarketingCursorGlow />
         <WebVitalsReporter />
       </body>
     </html>
