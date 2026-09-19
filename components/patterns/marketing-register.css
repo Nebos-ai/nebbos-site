@@ -3486,11 +3486,20 @@
   .mkt-case__mark--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
   .mkt-case__mark svg { width: 62%; height: 62%; }
 
-  /* Closing-CTA per-Pearl halo variants */
-  .mkt-closing--platform .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(74, 92, 255, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
-  .mkt-closing--app      .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(255, 138, 61, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
-  .mkt-closing--mcp      .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(185, 107, 255, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
-  .mkt-closing--cradle   .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(214, 58, 76, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
+  /* Closing-CTA per-Pearl halo variants · RETIRED 2026-09-19.
+     The 40px-offset + 100px-blur shadow rendered as a visible sharp
+     colored line below the CTA buttons instead of a soft halo —
+     founder-caught on /security & /trust ("do you not see the linke
+     under the last sentence"). Pearl accent already carries through
+     the flower tile, the eyebrow, and the section's own aurora
+     backdrop; the halo shadow was decorative and was adding a real
+     visual defect. Left the selectors empty as a no-op so the
+     variant classes on the section wrapper don't break future
+     styling; add different chrome here if needed later. */
+  .mkt-closing--platform .mkt-closing__inner,
+  .mkt-closing--app      .mkt-closing__inner,
+  .mkt-closing--mcp      .mkt-closing__inner,
+  .mkt-closing--cradle   .mkt-closing__inner { box-shadow: none; }
 
   /* ── TEXT-CARD · designed shape for text-block sections ────────────
      Founder-caught 2026-09-19: catchall text-blocks were still
