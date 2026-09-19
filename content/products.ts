@@ -37,19 +37,19 @@ export type Tier = {
 export const TIERS: Tier[] = [
   {
     key: "L1",
-    label: "L1 · Basic",
+    label: "L1 · Guest",
     factors: "Device-native biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt)",
     scope: "Dashboard view, personal-scope reads, low-risk tool calls.",
   },
   {
     key: "L2",
-    label: "L2 · Privileged",
+    label: "L2 · Host",
     factors: "Biometric + Nebbos Cradle physical presence",
-    scope: "Shell writes, memory registers, admin operations within the Shell.",
+    scope: "Shell writes, memory registers, elevated operations within the Shell.",
   },
   {
     key: "L3",
-    label: "L3 · Admin",
+    label: "L3 · Architect",
     factors: "Biometric + Nebbos Cradle + enclave-signed approval token",
     scope: "Shell creation and destruction, substrate mutation, cross-Shell, quorum-required actions.",
   },

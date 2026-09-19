@@ -38,7 +38,7 @@ const TIERS = [
   {
     key: "starter",
     name: "Starter",
-    tier: "L1 · Personal",
+    tier: "L1 · Guest",
     price: "$15",
     period: "per month",
     priceNote: "Placeholder · founder-set at publish",
@@ -51,7 +51,7 @@ const TIERS = [
   {
     key: "team",
     name: "Team",
-    tier: "L2 · Privileged",
+    tier: "L2 · Host",
     price: "$75",
     period: "per seat, per month",
     priceNote: "Placeholder · founder-set at publish",
@@ -64,7 +64,7 @@ const TIERS = [
   {
     key: "enterprise",
     name: "Enterprise",
-    tier: "L3 · Admin",
+    tier: "L3 · Architect",
     price: "Contact us",
     period: "",
     priceNote: "Scope + deployment set on a call",
