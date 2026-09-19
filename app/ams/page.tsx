@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import {
   AMS_ASSETS,
-  amsCategories,
   amsCountByStatus,
   type AmsAsset,
   type AmsStatus,
@@ -69,7 +68,6 @@ export default async function AmsPage({
   });
 
   const counts = amsCountByStatus();
-  const cats = amsCategories();
   const grouped = groupByCategory(filtered);
 
   return (
