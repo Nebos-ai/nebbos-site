@@ -131,6 +131,17 @@ export const PIECES: Piece[] = [
     publishedAt: "2026-08-10",
   },
   {
+    slug: "solution-brief-financial-services",
+    title: "Solution brief · Financial services",
+    oneLiner:
+      "Show the regulator the chain, not the log. A Pearl-produced citation trail on every review; every approval a substrate-verified signature.",
+    audience: ["enterprise", "sales", "financial-services"],
+    register: "delta-brief-editorial",
+    status: "current",
+    surface: "public",
+    publishedAt: "2026-09-19",
+  },
+  {
     slug: "positioning-2026-08",
     title: "Nebbos positioning (2026-08)",
     oneLiner:
