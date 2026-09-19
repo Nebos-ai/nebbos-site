@@ -44,7 +44,7 @@ const TIERS = [
     priceNote: "Placeholder · founder-set at publish",
     deck:
       "One operator. Biometric-only. Dashboard, personal-scope reads, low-risk tool calls.",
-    cta: { label: "Start now", href: "/signup?tier=starter" },
+    cta: { label: "Book a Starter demo", href: "/demo?tier=starter" },
     ctaVariant: "ghost" as const,
     featured: false,
   },
@@ -57,7 +57,7 @@ const TIERS = [
     priceNote: "Placeholder · founder-set at publish",
     deck:
       "Small team. Biometric + Cradle presence. Shell writes, memory registers, admin ops within your team.",
-    cta: { label: "Start a Team", href: "/signup?tier=team" },
+    cta: { label: "Book a Team demo", href: "/demo?tier=team" },
     ctaVariant: "primary" as const,
     featured: true,
   },

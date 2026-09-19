@@ -10,6 +10,7 @@
     "start": "next start -p ${PORT:-3000}",
     "lint": "next lint",
     "check:vocab": "bash scripts/check-vocab.sh",
+    "check:links": "node scripts/check-links.mjs",
     "sync:brand-assets": "cp node_modules/@nebbos/brand/logo/nebbos-mark.svg public/favicon.svg",
     "postinstall": "npm run sync:brand-assets 2>/dev/null || true",
     "build:pdf": "node scripts/build-presentation-pdf.mjs",

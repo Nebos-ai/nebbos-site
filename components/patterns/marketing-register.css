@@ -3473,6 +3473,114 @@
   .mkt-textcard__body em { font-style: italic; color: var(--mkt-text); }
   .mkt-textcard__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
 
+  /* Mirror variant · numeral+flower aside on the RIGHT, body on the
+     LEFT. Breaks the "same card orientation stacked N times" rhythm
+     without changing card shape. Applied to every third text-block
+     via PageRenderer's `index % 3 === 2` rotation. */
+  @media (min-width: 960px) {
+    .mkt-textcard--mirror {
+      grid-template-columns: minmax(0, 8fr) minmax(0, 5fr);
+    }
+    .mkt-textcard--mirror .mkt-textcard__aside {
+      order: 2;
+      text-align: end;
+      justify-items: end;
+    }
+    .mkt-textcard--mirror .mkt-textcard__main {
+      order: 1;
+    }
+    .mkt-textcard--mirror .mkt-eyebrow-chip {
+      margin-inline-start: auto;
+    }
+  }
+
+  /* ── BANNER STATEMENT · full-width Pearl-color chapter break ─────
+     Every third text-block renders as a saturated Pearl-color band
+     with centered display type and no card panel. Acts as a "chapter
+     break" between stacks of cards so pages carry visual rhythm.
+     Founder-directed 2026-09-19 (v8 followup to v7): "still way too
+     many pages are full walls of text" — the text-cards were dense
+     enough but every section had the identical shape, and rhythm
+     matters as much as density. This shape has zero card chrome and
+     radically different visual weight so the eye registers a break. */
+
+  .mkt-banner {
+    position: relative;
+    padding-block: clamp(96px, 14vh, 168px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .mkt-banner__wash {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.9;
+  }
+  .mkt-banner--platform .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(74, 92, 255, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(74, 92, 255, 0.18), transparent 55%); }
+  .mkt-banner--app      .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(255, 138, 61, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(255, 138, 61, 0.18), transparent 55%); }
+  .mkt-banner--mcp      .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(185, 107, 255, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(185, 107, 255, 0.18), transparent 55%); }
+  .mkt-banner--cradle   .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(214, 58, 76, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(214, 58, 76, 0.18), transparent 55%); }
+
+  .mkt-banner::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 2px;
+    z-index: -1;
+  }
+  .mkt-banner--platform::before { background: linear-gradient(90deg, transparent, var(--mkt-product-platform), transparent); }
+  .mkt-banner--app::before      { background: linear-gradient(90deg, transparent, var(--mkt-product-app),      transparent); }
+  .mkt-banner--mcp::before      { background: linear-gradient(90deg, transparent, var(--mkt-product-mcp),      transparent); }
+  .mkt-banner--cradle::before   { background: linear-gradient(90deg, transparent, var(--mkt-product-cradle),   transparent); }
+
+  .mkt-banner__inner {
+    display: grid;
+    gap: 32px;
+    justify-items: center;
+    text-align: center;
+  }
+  .mkt-banner__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mkt-banner__num {
+    font-family: var(--mkt-font-mono);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-banner__num--platform { color: var(--mkt-product-platform); text-shadow: 0 0 20px rgba(74, 92, 255, 0.55); }
+  .mkt-banner__num--app      { color: var(--mkt-product-app);      text-shadow: 0 0 20px rgba(255, 138, 61, 0.55); }
+  .mkt-banner__num--mcp      { color: var(--mkt-product-mcp);      text-shadow: 0 0 20px rgba(185, 107, 255, 0.55); }
+  .mkt-banner__num--cradle   { color: var(--mkt-product-cradle);   text-shadow: 0 0 20px rgba(214, 58, 76, 0.55); }
+  .mkt-banner__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .mkt-banner__body {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.6;
+    color: var(--mkt-text-2);
+    max-width: 62ch;
+    margin: 0;
+  }
+  .mkt-banner__body p { margin: 0 0 1em 0; }
+  .mkt-banner__body p:last-child { margin-bottom: 0; }
+  .mkt-banner__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
+
   /* ── FACT GRID · replaces flat dt/dd table for table-rows sections
      Every row becomes a Pearl-color pill card with label + value.
      3-col at ≥ 1080px, 2-col at ≥ 720px. */

@@ -183,22 +183,77 @@ function PageHero({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Text block · designed 2-col card ─────────────────────────────
-   Left aside: big Pearl-color section numeral + flower tile + eyebrow.
-   Right main: h2 + prose body. Wrapped in a per-Pearl-tinted panel so
-   copy-only sections carry designed visual weight instead of reading
-   as walls of type. Founder-directed 2026-09-19: "still way too many
-   pages are full walls of text not enough design." Numeral pulls from
-   the per-page section index so pages tell you where you are. */
+/* ── Text block · shape-rotating designed section ────────────────
+   Text-blocks are the dominant catchall section kind. If they all
+   render as the same 2-col card, pages read as "same card, different
+   color" — visually monotonous even with Pearl-color cycling.
+   Founder-caught 2026-09-19 (v7 followup): rhythm matters as much as
+   density. v8 rotates through THREE shapes so pages break rhythm
+   every couple of sections:
+
+     index % 3 === 0 → BANNER statement (full-bleed Pearl-color
+                       gradient band, centered big display type, no
+                       card panel — reads as a chapter break)
+     index % 3 === 1 → default card (numeral+flower LEFT, body right)
+     index % 3 === 2 → mirror card (body LEFT, numeral+flower RIGHT)
+
+   The rotation is deterministic per section position so pages
+   always look the same across reloads. */
 
 function TextBlock({ s, pearl, accent, index }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number }) {
+  const shape = index % 3;
+  if (shape === 0) return <TextBlockBanner s={s} pearl={pearl} index={index} />;
+  return <TextBlockCard s={s} pearl={pearl} accent={accent} index={index} mirror={shape === 2} />;
+}
+
+/* Banner statement · full-bleed Pearl-color gradient band, centered
+   display type, no card panel. Used as a "chapter break" every third
+   text-block. Numeral is inline with the eyebrow chip, not oversized,
+   so the STATEMENT does the visual work rather than the metadata. */
+
+function TextBlockBanner({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; index: number }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  const num = String(index + 1).padStart(2, "0");
+  return (
+    <section className={`mkt mkt-section mkt-banner mkt-banner--${pearl}`} aria-labelledby={`h-${s.id}`}>
+      <div className="mkt-banner__wash" aria-hidden />
+      <div className="mkt-section__inner mkt-banner__inner">
+        <div className="mkt-banner__meta">
+          <span className={`mkt-banner__num mkt-banner__num--${pearl}`} aria-hidden>{num}</span>
+          <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
+            <NebbosMark />
+          </span>
+          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
+        </div>
+        {s.h2 && (
+          <h2
+            id={`h-${s.id}`}
+            className="mkt-banner__title"
+            dangerouslySetInnerHTML={{ __html: s.h2 }}
+          />
+        )}
+        {s.body && (
+          <div
+            className="mkt-banner__body"
+            dangerouslySetInnerHTML={{ __html: s.body }}
+          />
+        )}
+      </div>
+    </section>
+  );
+}
+
+/* Card · numeral+flower on left (or right if mirror) + body on the
+   opposite side. Default shape for two of every three text-blocks. */
+
+function TextBlockCard({ s, pearl, accent, index, mirror }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number; mirror: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
   const num = String(index + 1).padStart(2, "0");
   return (
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        <article className={`mkt-textcard mkt-textcard--${pearl}`}>
+        <article className={`mkt-textcard mkt-textcard--${pearl} ${mirror ? "mkt-textcard--mirror" : ""}`}>
           <aside className="mkt-textcard__aside">
             <span className={`mkt-textcard__num mkt-textcard__num--${pearl}`} aria-hidden>
               {num}

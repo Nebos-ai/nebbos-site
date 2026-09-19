@@ -348,8 +348,13 @@ hr {
 }
 
 ::selection {
-  background: var(--accent-2);
-  color: var(--ink);
+  /* Subtle Nebbos-orange highlight (35% alpha) instead of a solid
+     orange block. Was `background: var(--accent-2); color: var(--ink)`
+     which painted a bright orange rectangle behind selected text on
+     dark surfaces — read as a rendering bug (founder-caught 2026-09-19
+     on /trust closing headline). */
+  background: rgba(255, 107, 30, 0.35);
+  color: inherit;
 }
 
 /* ── 4. LAYOUT PRIMITIVES ────────────────────────────────────────────── */
