@@ -31,6 +31,11 @@ SUPERSEDED=(
   "TR3I&nbsp;D.O.O"
 )
 
+# Stale entity name — "Nebbos D.O.O." without "Technologies" prefix.
+# Special case because the correct new name "Nebbos Technologies D.O.O."
+# contains the old name as a substring; a plain grep would false-positive.
+# Serbian operating entity was renamed 2026-09-19 per founder directive.
+
 # Forbidden vocabulary — vendor framing + architecture-internal terms.
 # Mirrors scripts/check-vocab.sh but applied to piece HTML.
 FORBIDDEN=(
@@ -66,6 +71,17 @@ for pattern in "${FORBIDDEN[@]}"; do
     fi
   fi
 done
+
+# Stale entity name check — "Nebbos D.O.O." NOT preceded by "Technologies ".
+# grep for lines containing the old form, exclude lines that contain the new form.
+if stale="$(grep -RnE 'Nebbos D\.O\.O\.' "$TARGETS" 2>/dev/null | grep -vE 'Nebbos Technologies D\.O\.O\.' || true)"; then
+  if [ -n "$stale" ]; then
+    echo ""
+    echo "[check-pieces] STALE ENTITY NAME · 'Nebbos D.O.O.' (missing 'Technologies') — found in:"
+    echo "$stale" | head -10
+    hits=$((hits+1))
+  fi
+fi
 
 if [ "$hits" -gt 0 ]; then
   echo ""

@@ -187,12 +187,11 @@ export const PRODUCTION_CLAIM = {
 /**
  * CORPORATE STRUCTURE · Three-tier taxonomy.
  *
- * Ratified 2026-09-16 per BRAND.parentEntity / aiEntity / legalEntity.
- * On 2026-09-19 the Serbian operating entity name is being amended from
- * "Nebbos D.O.O." to "Nebbos Technologies D.O.O." (per SYSTEM.md §2).
- * That legal-registration flip lives in BRAND.legalEntity and needs
- * verification against the Serbian registry before propagation — do not
- * duplicate the name here.
+ * Serbian operating entity rename chain (founder-ratified):
+ *   TR3I D.O.O. → Nebbos D.O.O. (2026-09-16)
+ *   → Nebbos Technologies D.O.O. (2026-09-19)
+ * The current name lives in BRAND.legalEntity — this file re-exports
+ * via CORPORATE_STRUCTURE.operating.name to stay in sync.
  */
 export const CORPORATE_STRUCTURE = {
   parent: {
@@ -251,8 +250,14 @@ export const SUPERSEDED_FRAMES = [
   {
     phrase: "TR3I / TR3I D.O.O. as active brand",
     supersededAt: "2026-09-16",
-    supersededBy: "Nebbos Technologies Corp · Nebbos AI · Nebbos D.O.O. (operating entity name pending Serbian-registry update to Nebbos Technologies D.O.O. per 2026-09-19 doctrine)",
+    supersededBy: "Nebbos Technologies Corp · Nebbos AI · Nebbos Technologies D.O.O.",
     reason: "Company rename. Any occurrence of TR3I on a customer surface is stale and needs replacement.",
+  },
+  {
+    phrase: "Nebbos D.O.O. as Serbian operating entity name",
+    supersededAt: "2026-09-19",
+    supersededBy: "Nebbos Technologies D.O.O.",
+    reason: "Serbian operating subsidiary renamed to align with parent 'Technologies' branding. Any occurrence of 'Nebbos D.O.O.' (without 'Technologies') on a customer surface is stale.",
   },
   {
     phrase: "run layer as hero framing",
