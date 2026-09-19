@@ -4,7 +4,7 @@ import { SplitWords } from "@/components/patterns/SplitWords";
 import { CONTACT } from "@/content/contact";
 
 /**
- * PAGE · /pricing · v2 · 2026-09-18 · three-tier + feature matrix
+ * PAGE · /pricing · v2.1 · 2026-09-19 · three-tier + feature matrix
  *
  * Founder-directed 2026-09-18 (verbatim):
  *   "we need to have pricing for non enterprise users we should have
@@ -15,13 +15,20 @@ import { CONTACT } from "@/content/contact";
  *    able to place a order from the site for more."
  *
  * v1 was a single Enterprise tier per the older "no published pricing"
- * doctrine. v2 shifts to a 3-tier SaaS shape per `feedback_three_levels
- * _always` doctrine + the founder's expansion.
+ * doctrine. v2 shifts to a 3-tier SaaS shape per the founder's directive
+ * above. Current governing doctrine:
+ * `feedback_nebbos_three_tier_published_pricing_2026_09_18` (supersedes
+ * the 2026-08-24 Palantir/no-published-pricing rule).
  *
- * PRICING PLACEHOLDERS · The two non-enterprise prices ($15 · $75) are
- * PROPOSED so the page has a concrete shape; founder rewrites them in
- * one edit before publish. The Enterprise tier stays "Contact us" per
- * the ratified enterprise-contact-us rule.
+ * PRICING NUMBERS ($50 Starter/user · $200 Team/seat) · Founder-ratified
+ * 2026-09-19 after cost-inventory pass (baseline COGS ~$520-870/mo, per-
+ * seat unit economics at 100 seats ~$8-17/mo, so $50 and $200 both clear
+ * ADR-332's `price ≥ cost × 2.0` hard floor + 80% blended margin target
+ * at realistic seat counts above ~30). NOTE: the per-seat SaaS shape is
+ * a DE-FACTO amendment to ADR-332 §10.2 (which mandates $0 platform fee
+ * + $0 seats + support/SLA ladder). Amendment ADR-PROV needs formal
+ * filing to reconcile the doctrine conflict — flagged in message board
+ * for a governance-authoring session to pick up.
  *
  * CRADLE REPLACEMENT · Added at bottom as an ordering path. Routes to
  * mailto:enterprise for now; upgrade to a real form/checkout after the
@@ -39,9 +46,9 @@ const TIERS = [
     key: "starter",
     name: "Starter",
     tier: "L1 · Guest",
-    price: "$15",
-    period: "per month",
-    priceNote: "Placeholder · founder-set at publish",
+    price: "$50",
+    period: "per user, per month",
+    priceNote: "",
     deck:
       "One operator. Biometric-only. Dashboard, personal-scope reads, low-risk tool calls.",
     cta: { label: "Book a Starter demo", href: "/demo?tier=starter" },
@@ -52,9 +59,9 @@ const TIERS = [
     key: "team",
     name: "Team",
     tier: "L2 · Host",
-    price: "$75",
+    price: "$200",
     period: "per seat, per month",
-    priceNote: "Placeholder · founder-set at publish",
+    priceNote: "",
     deck:
       "Small team. Biometric + Cradle presence. Shell writes, memory registers, admin ops within your team.",
     cta: { label: "Book a Team demo", href: "/demo?tier=team" },
