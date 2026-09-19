@@ -54,10 +54,11 @@ export function PageRenderer({ page }: { page: Page }) {
       {page.sections.map((section) => {
         const wantsAccent = !NON_ACCENTED.has(section.kind);
         const pearl = pearlAt(blockCounter);
+        const idx = blockCounter;
         if (wantsAccent) blockCounter += 1;
         return (
           <Fragment key={section.id}>
-            <SectionSlot section={section} pearl={pearl} accent={wantsAccent} />
+            <SectionSlot section={section} pearl={pearl} accent={wantsAccent} index={idx} />
           </Fragment>
         );
       })}
@@ -65,15 +66,15 @@ export function PageRenderer({ page }: { page: Page }) {
   );
 }
 
-type SlotProps = { section: SectionBase; pearl: ProductKey; accent: boolean };
+type SlotProps = { section: SectionBase; pearl: ProductKey; accent: boolean; index: number };
 
-function SectionSlot({ section, pearl, accent }: SlotProps) {
+function SectionSlot({ section, pearl, accent, index }: SlotProps) {
   switch (section.kind) {
     case "hero-full-bleed":
     case "hero-paper":
     case "empty-state":
       return <PageHero s={section} />;
-    case "text-block":     return <TextBlock s={section} pearl={pearl} accent={accent} />;
+    case "text-block":     return <TextBlock s={section} pearl={pearl} accent={accent} index={index} />;
     case "split-columns":  return <SplitColumns s={section} pearl={pearl} accent={accent} />;
     case "list-numbered":  return <ListNumbered s={section} pearl={pearl} accent={accent} />;
     case "list-plain":     return <ListPlain s={section} pearl={pearl} accent={accent} />;
@@ -182,27 +183,47 @@ function PageHero({ s }: { s: SectionBase }) {
   );
 }
 
-/* ── Text block · eyebrow chip + h2 + body, colored side rail ──── */
+/* ── Text block · designed 2-col card ─────────────────────────────
+   Left aside: big Pearl-color section numeral + flower tile + eyebrow.
+   Right main: h2 + prose body. Wrapped in a per-Pearl-tinted panel so
+   copy-only sections carry designed visual weight instead of reading
+   as walls of type. Founder-directed 2026-09-19: "still way too many
+   pages are full walls of text not enough design." Numeral pulls from
+   the per-page section index so pages tell you where you are. */
 
-function TextBlock({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+function TextBlock({ s, pearl, accent, index }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number }) {
   const eb = cleanEyebrow(s.eyebrow);
+  const num = String(index + 1).padStart(2, "0");
   return (
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        <header className="mkt-products__head">
-          {eb && (accent ? <EyebrowChip pearl={pearl}>{eb}</EyebrowChip> : <p className="mkt-eyebrow">{eb}</p>)}
-          {s.h2 && (
-            <h2
-              id={`h-${s.id}`}
-              className="mkt-h2"
-              dangerouslySetInnerHTML={{ __html: s.h2 }}
-            />
-          )}
-          {s.body && (
-            <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.body }} />
-          )}
-        </header>
+        <article className={`mkt-textcard mkt-textcard--${pearl}`}>
+          <aside className="mkt-textcard__aside">
+            <span className={`mkt-textcard__num mkt-textcard__num--${pearl}`} aria-hidden>
+              {num}
+            </span>
+            <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
+              <NebbosMark />
+            </span>
+            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
+          </aside>
+          <div className="mkt-textcard__main">
+            {s.h2 && (
+              <h2
+                id={`h-${s.id}`}
+                className="mkt-h2"
+                dangerouslySetInnerHTML={{ __html: s.h2 }}
+              />
+            )}
+            {s.body && (
+              <div
+                className="mkt-textcard__body"
+                dangerouslySetInnerHTML={{ __html: s.body }}
+              />
+            )}
+          </div>
+        </article>
       </div>
     </section>
   );
@@ -348,10 +369,11 @@ function ListPlain({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; ac
   );
 }
 
-/* ── Table rows · dt/dd pairs ─────────────────────────────────── */
+/* ── Table rows · fact-card grid (3-col at ≥1080px) ─────────────── */
 
 function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
+  const baseIdx = PRODUCT_KEYS.indexOf(pearl);
   const rows: Array<[string, string]> = [
     ["Founded", String(FACTS.foundingYear)],
     ["Category", FACTS.category],
@@ -374,14 +396,17 @@ function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; ac
             />
           )}
         </header>
-        <dl className="mkt-rowstable">
-          {rows.map(([label, value]) => (
-            <div key={label} className="mkt-rowstable__row">
-              <dt className="mkt-rowstable__label">{label}</dt>
-              <dd className="mkt-rowstable__value">{value}</dd>
-            </div>
-          ))}
-        </dl>
+        <ul className="mkt-factgrid">
+          {rows.map(([label, value], i) => {
+            const p = pearlAt(baseIdx + i);
+            return (
+              <li key={label} className={`mkt-fact mkt-fact--${p}`}>
+                <span className={`mkt-fact__label mkt-fact__label--${p}`}>{label}</span>
+                <p className="mkt-fact__value">{value}</p>
+              </li>
+            );
+          })}
+        </ul>
       </div>
     </section>
   );

@@ -2392,7 +2392,13 @@
     .mkt-route,
     .mkt-list__item,
     .mkt-proof,
-    .mkt-productrow {
+    .mkt-productrow,
+    .mkt-textcard,
+    .mkt-numcard,
+    .mkt-tile,
+    .mkt-fact,
+    .mkt-postlist__item,
+    .mkt-slide {
       animation: mkt-fade-up linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 28%;
@@ -2600,7 +2606,13 @@
       .mkt-route,
       .mkt-list__item,
       .mkt-proof,
-      .mkt-productrow {
+      .mkt-productrow,
+      .mkt-textcard,
+      .mkt-numcard,
+      .mkt-tile,
+      .mkt-fact,
+      .mkt-postlist__item,
+      .mkt-slide {
         animation: none !important;
       }
     }
@@ -3390,4 +3402,128 @@
   .mkt-closing--app      .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(255, 138, 61, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
   .mkt-closing--mcp      .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(185, 107, 255, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
   .mkt-closing--cradle   .mkt-closing__inner { box-shadow: 0 40px 100px -30px rgba(214, 58, 76, 0.32), 0 8px 24px -6px rgba(0, 0, 0, 0.5); }
+
+  /* ── TEXT-CARD · designed shape for text-block sections ────────────
+     Founder-caught 2026-09-19: catchall text-blocks were still
+     one-column walls of type. This card gives every copy-only section
+     a designed 2-column layout — Pearl-color numeral + flower tile +
+     eyebrow chip on the left, headline + prose on the right. Panel
+     background lifts the content off the section ground; per-Pearl
+     border tint on hover matches every other card in the register. */
+
+  .mkt-textcard {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(24px, 3vw, 40px);
+    padding: clamp(28px, 3.5vw, 48px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.6), rgba(10, 13, 19, 0.6));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    transition: border-color 320ms var(--mkt-ease), transform 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease);
+  }
+  @media (min-width: 960px) {
+    .mkt-textcard {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
+      gap: clamp(40px, 5vw, 80px);
+      align-items: start;
+    }
+  }
+  .mkt-textcard:hover { transform: translateY(-2px); }
+  .mkt-textcard--platform:hover { border-color: rgba(74, 92, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(74, 92, 255, 0.22); }
+  .mkt-textcard--app:hover      { border-color: rgba(255, 138, 61, 0.28); box-shadow: 0 22px 48px -14px rgba(255, 138, 61, 0.22); }
+  .mkt-textcard--mcp:hover      { border-color: rgba(185, 107, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(185, 107, 255, 0.22); }
+  .mkt-textcard--cradle:hover   { border-color: rgba(214, 58, 76, 0.28);   box-shadow: 0 22px 48px -14px rgba(214, 58, 76, 0.22); }
+
+  .mkt-textcard__aside {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+  }
+  .mkt-textcard__num {
+    font-family: var(--mkt-font-mono);
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--mkt-text-3);
+    display: block;
+  }
+  .mkt-textcard__num--platform { color: var(--mkt-product-platform); text-shadow: 0 0 42px rgba(74, 92, 255, 0.38); }
+  .mkt-textcard__num--app      { color: var(--mkt-product-app);      text-shadow: 0 0 42px rgba(255, 138, 61, 0.38); }
+  .mkt-textcard__num--mcp      { color: var(--mkt-product-mcp);      text-shadow: 0 0 42px rgba(185, 107, 255, 0.38); }
+  .mkt-textcard__num--cradle   { color: var(--mkt-product-cradle);   text-shadow: 0 0 42px rgba(214, 58, 76, 0.38); }
+
+  .mkt-textcard__main {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+    min-width: 0;
+  }
+  .mkt-textcard__body {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.65;
+    color: var(--mkt-text-2);
+    max-width: 68ch;
+  }
+  .mkt-textcard__body p { margin: 0 0 1em 0; }
+  .mkt-textcard__body p:last-child { margin-bottom: 0; }
+  .mkt-textcard__body strong { color: var(--mkt-text); font-weight: 600; }
+  .mkt-textcard__body em { font-style: italic; color: var(--mkt-text); }
+  .mkt-textcard__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── FACT GRID · replaces flat dt/dd table for table-rows sections
+     Every row becomes a Pearl-color pill card with label + value.
+     3-col at ≥ 1080px, 2-col at ≥ 720px. */
+
+  .mkt-factgrid {
+    list-style: none;
+    padding: 0;
+    margin: 32px 0 0 0;
+    display: grid;
+    gap: 16px;
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 720px) {
+    .mkt-factgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  @media (min-width: 1080px) {
+    .mkt-factgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .mkt-fact {
+    display: grid;
+    gap: 10px;
+    padding: 20px 22px;
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    align-content: start;
+    transition: border-color 320ms var(--mkt-ease), transform 320ms var(--mkt-ease);
+  }
+  .mkt-fact:hover { transform: translateY(-2px); }
+  .mkt-fact--platform:hover { border-color: rgba(74, 92, 255, 0.32); }
+  .mkt-fact--app:hover      { border-color: rgba(255, 138, 61, 0.32); }
+  .mkt-fact--mcp:hover      { border-color: rgba(185, 107, 255, 0.32); }
+  .mkt-fact--cradle:hover   { border-color: rgba(214, 58, 76, 0.32); }
+  .mkt-fact__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--mkt-text-3);
+  }
+  .mkt-fact__label--platform { color: var(--mkt-product-platform); }
+  .mkt-fact__label--app      { color: var(--mkt-product-app); }
+  .mkt-fact__label--mcp      { color: var(--mkt-product-mcp); }
+  .mkt-fact__label--cradle   { color: var(--mkt-product-cradle); }
+  .mkt-fact__value {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.4;
+    color: var(--mkt-text);
+    margin: 0;
+    word-break: break-word;
+  }
 
