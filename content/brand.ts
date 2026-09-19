@@ -123,13 +123,13 @@ export const BRAND = {
    * Structure top-to-bottom:
    *   1. Nebbos Technologies Corp · Wilmington, Delaware (US parent)
    *   2. Nebbos AI · Los Angeles, California (AI product/business unit)
-   *   3. Nebbos D.O.O. · Beograd, Serbia (Serbian operating subsidiary)
+   *   3. Nebbos Technologies D.O.O. · Beograd, Serbia (Serbian operating subsidiary)
    *
    * `legalEntity` remains the Serbian tier name for legacy footer usage
    * (single-line copyright). `parentEntity` remains the US parent. The
    * new `aiEntity` fills the middle tier. Full colophon = all three.
    */
-  legalEntity: "Nebbos D.O.O.",
+  legalEntity: "Nebbos Technologies D.O.O.",
   legalEntityLocation: "Beograd, Serbia",
 
   /** US parent entity (Delaware C-Corp). */
