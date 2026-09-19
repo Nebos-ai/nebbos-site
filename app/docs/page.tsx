@@ -81,20 +81,22 @@ const SECTIONS: DocSection[] = [
       {
         slug: "quickstart",
         title: "Quickstart",
-        lede: "From zero to your first authenticated call. Ten minutes.",
-        status: "planned",
+        lede: "From zero to your first authenticated call. Ten minutes — identity, Cradle, discovery, first call, audit receipt.",
+        status: "current",
+        substrate: "canonical-claims.ts tier gate + audit-chain doctrine",
       },
       {
         slug: "auth",
         title: "Authentication & tiers",
-        lede: "The three-tier gate — biometric, Cradle, enclave. How your integration authenticates on each.",
-        status: "planned",
+        lede: "Guest · Host · Architect. Biometric · Cradle · enclave. Three artefacts, one substrate refusing everything else.",
+        status: "current",
+        substrate: "canonical-claims.ts + Westworld tier naming lexicon",
       },
       {
         slug: "mcp",
         title: "MCP reference",
-        lede: "Every MCP tool the platform exposes — inputs, outputs, tier, HITL gate. The line every tool call has to cross.",
-        status: "in-progress",
+        lede: "Seven capability categories. Discovery is the first tool. Every call carries an identity and lands in the chain.",
+        status: "current",
         substrate: "nebos-backend/nebos_mcp/ + platform-metrics.json mcp_tools",
       },
       {
