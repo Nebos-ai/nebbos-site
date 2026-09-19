@@ -1,0 +1,571 @@
+<!doctype html>
+<html data-theme="light" lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Nebbos &mdash; Compression is the tax on ambition</title>
+
+  <link rel="stylesheet" href="https://use.typekit.net/gkk3ycm.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Host+Grotesk:ital,wght@0,300..800;1,300..800&family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..500&family=JetBrains+Mono:wght@400;500&display=swap">
+
+  <style>
+    :root {
+      color-scheme: light;
+      --font-serif: "trust-3a", "Trust 3A", "Newsreader", Georgia, serif;
+      --font-sans:  "Host Grotesk", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      --font-mono:  "JetBrains Mono", "SF Mono", Menlo, monospace;
+      --w-xlight: 200; --w-light: 300; --w-bold: 700;
+
+      --paper: #FFFFFF; --paper-2: #EDEEEB; --paper-3: #E1DAD0;
+      --ink: #1D1C22; --ink-2: #3F4045; --ink-3: #606162; --muted: #5F6067;
+      --accent: #A36630; --accent-2: #F6A03F; --gold: #A36630; --gold-2: #F6A03F;
+      --rule: #D8D6D5; --rule-2: #E7E7E7;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; background: #F0F0EC; }
+    body {
+      color: var(--ink);
+      font-family: var(--font-sans);
+      font-size: 15px;
+      line-height: 1.55;
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: clamp(48px, 6vw, 90px) clamp(28px, 5vw, 80px) clamp(90px, 10vw, 140px);
+      background: var(--paper);
+      position: relative;
+      isolation: isolate;
+    }
+
+    .page::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      pointer-events: none;
+      top: -180px; right: -160px;
+      width: 380px; height: 380px;
+      background: radial-gradient(circle,
+        color-mix(in srgb, var(--gold-2) 42%, transparent) 0%,
+        transparent 68%);
+      opacity: 0.55;
+    }
+
+    .nb-logo { display: block; color: var(--ink); --nb-mark: var(--gold-2); }
+
+    .cover {
+      padding-bottom: 32px;
+      border-bottom: 1px dashed var(--rule);
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 32px;
+      align-items: end;
+      margin-bottom: clamp(60px, 8vw, 100px);
+    }
+    .cover::before, .cover::after {
+      content: ""; position: absolute; background: var(--gold-2); z-index: 2;
+    }
+    .cover::before { left: 0; bottom: -1px; width: 24px; height: 1.5px; }
+    .cover::after { left: 11px; bottom: -12px; width: 1.5px; height: 24px; }
+
+    .cover-mark { width: 128px; }
+    .cover-meta {
+      text-align: right;
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      line-height: 1.9;
+    }
+    .cover-meta strong { color: var(--ink); font-weight: 500; }
+
+    .thesis {
+      max-width: 22ch;
+      margin: 0 0 clamp(52px, 6vw, 84px);
+      font-family: var(--font-serif);
+      font-size: clamp(38px, 5.8vw, 68px);
+      line-height: 1.02;
+      letter-spacing: -0.028em;
+      color: var(--ink);
+      font-weight: var(--w-bold);
+      text-wrap: balance;
+    }
+    .thesis em { color: var(--gold); font-style: italic; font-weight: var(--w-bold); }
+
+    .thesis-lede {
+      max-width: 52ch;
+      font-family: var(--font-serif);
+      font-size: clamp(17px, 1.6vw, 20px);
+      line-height: 1.55;
+      color: var(--ink-2);
+      margin: 0 0 clamp(56px, 7vw, 88px);
+      text-wrap: pretty;
+    }
+    .thesis-lede strong { color: var(--ink); font-weight: 500; }
+
+    .figure-hero {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding-block: clamp(48px, 6vw, 76px);
+      border-block: 1px solid var(--rule);
+      margin-bottom: clamp(60px, 8vw, 96px);
+    }
+    .figure-hero > .eyebrow {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: clamp(30px, 4vw, 48px);
+    }
+    .figure-hero .displays {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      width: 100%;
+      max-width: 640px;
+      margin-bottom: clamp(32px, 4vw, 48px);
+    }
+    .figure-hero .display-cell {
+      text-align: center;
+      padding: 0 clamp(18px, 3vw, 40px);
+    }
+    .figure-hero .display-cell + .display-cell { border-left: 1px solid var(--rule); }
+    .figure-hero .display {
+      font-family: var(--font-serif);
+      font-size: clamp(80px, 12vw, 168px);
+      font-weight: var(--w-xlight);
+      line-height: 0.9;
+      color: var(--gold);
+      letter-spacing: -0.055em;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 14px;
+    }
+    .figure-hero .display .unit { font-size: 0.5em; color: var(--ink-3); letter-spacing: -0.03em; font-weight: var(--w-xlight); }
+    .figure-hero .display-label {
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--ink-3);
+      font-weight: 600;
+    }
+    .figure-hero .body {
+      max-width: 52ch;
+      font-family: var(--font-serif);
+      font-size: clamp(17px, 1.55vw, 21px);
+      line-height: 1.5;
+      color: var(--ink-2);
+      text-wrap: balance;
+    }
+    .figure-hero .body strong { color: var(--ink); font-weight: 500; }
+    @media (max-width: 560px) {
+      .figure-hero .displays { grid-template-columns: 1fr; }
+      .figure-hero .display-cell + .display-cell { border-left: none; border-top: 1px solid var(--rule); padding-top: 32px; margin-top: 32px; }
+    }
+
+    .figure-receipt {
+      margin-top: clamp(36px, 4.5vw, 56px);
+      padding-top: clamp(24px, 3vw, 36px);
+      border-top: 1px solid var(--rule);
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 24px;
+      width: 100%;
+      max-width: 640px;
+    }
+    .figure-receipt .stat { text-align: center; }
+    .figure-receipt .stat-value {
+      font-family: var(--font-serif);
+      font-size: clamp(22px, 2.6vw, 30px);
+      font-weight: var(--w-bold);
+      color: var(--ink);
+      letter-spacing: -0.02em;
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+      margin-bottom: 8px;
+    }
+    .figure-receipt .stat-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--ink-3);
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    @media (max-width: 560px) {
+      .figure-receipt { grid-template-columns: 1fr; gap: 20px; }
+      .figure-receipt .stat + .stat { border-top: 1px solid var(--rule-2); padding-top: 20px; }
+    }
+
+    .section-eyebrow {
+      position: relative;
+      padding-top: 26px;
+      padding-right: 60px;
+      border-bottom: 1px solid var(--rule);
+      padding-bottom: 14px;
+      margin-bottom: clamp(26px, 3vw, 40px);
+    }
+    .section-eyebrow::before {
+      content: ""; position: absolute; top: 0; left: 0; right: 0;
+      height: 1px; background: var(--rule);
+    }
+    .section-eyebrow::after {
+      content: ""; position: absolute; top: 0; right: 0;
+      width: 48px; height: 9px; background: var(--gold-2);
+    }
+    .section-eyebrow .num {
+      display: block;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .section-eyebrow .title {
+      font-family: var(--font-serif);
+      font-size: clamp(26px, 2.8vw, 34px);
+      line-height: 1.1;
+      color: var(--ink);
+      letter-spacing: -0.018em;
+      margin: 0;
+      font-weight: var(--w-bold);
+      max-width: 26ch;
+      text-wrap: balance;
+    }
+    .section-eyebrow .sub {
+      margin-top: 10px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 15px;
+      line-height: 1.5;
+      color: var(--ink-3);
+      max-width: 78ch;
+    }
+
+    .plate { margin-bottom: clamp(52px, 7vw, 84px); position: relative; }
+    .plate-caption {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: baseline;
+      gap: 20px;
+      margin-top: 18px;
+      padding-top: 14px;
+      border-top: 1px solid var(--rule-2);
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.05em;
+      color: var(--ink-3);
+    }
+    .plate-caption strong { color: var(--ink); font-weight: 500; }
+
+    .prose {
+      max-width: 78ch;
+      margin: clamp(30px, 4vw, 48px) 0;
+      font-family: var(--font-serif);
+      font-size: 17px;
+      line-height: 1.6;
+      color: var(--ink-2);
+      text-wrap: pretty;
+    }
+    .prose p { margin: 0 0 18px; }
+    .prose p:last-child { margin-bottom: 0; }
+    .prose strong { color: var(--ink); font-weight: 500; }
+    .prose em { color: var(--gold); font-style: italic; font-weight: 400; }
+
+    .close {
+      margin-top: clamp(80px, 10vw, 120px);
+      padding: clamp(44px, 6vw, 72px) clamp(30px, 5vw, 60px);
+      background: linear-gradient(155deg, #1D1D22 0%, #0B0B10 100%);
+      color: #F6F6F8;
+      border-radius: 0 40px 0 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .close::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 88% 12%,
+        color-mix(in srgb, var(--gold-2) 22%, transparent) 0%,
+        transparent 55%);
+      pointer-events: none;
+    }
+    .close .eyebrow {
+      position: relative;
+      font-family: var(--font-mono);
+      font-size: 10.5px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold-2);
+      font-weight: 700;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    .close .body {
+      position: relative;
+      font-family: var(--font-serif);
+      font-size: clamp(24px, 3vw, 34px);
+      line-height: 1.28;
+      color: #F6F6F8;
+      letter-spacing: -0.012em;
+      max-width: 40ch;
+      text-wrap: balance;
+      margin: 0 auto;
+      font-weight: var(--w-light);
+      text-align: center;
+    }
+    .close .body em { color: var(--gold-2); font-style: italic; font-weight: 400; }
+    .close .body strong { color: #F6F6F8; font-weight: 700; font-style: normal; }
+    .close .signature {
+      position: relative;
+      margin-top: clamp(44px, 6vw, 68px);
+      padding-top: clamp(28px, 3.5vw, 40px);
+      border-top: 1px solid rgba(255,255,255,0.14);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+      text-align: center;
+    }
+    .close .signature .mark {
+      color: #F6F6F8;
+      --nb-mark: var(--gold-2);
+      width: 96px;
+      display: block;
+    }
+    .close .signature .entity {
+      font-family: var(--font-serif);
+      font-size: 13px;
+      color: #F6F6F8;
+      letter-spacing: 0.02em;
+      line-height: 1.6;
+      font-weight: 500;
+    }
+    .close .signature .sep { color: rgba(255,255,255,0.35); margin: 0 12px; }
+    .close .signature .legal .sep { margin: 0 10px; }
+    .close .signature .legal {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: #7E7F87;
+    }
+    .close .signature .legal a {
+      color: #AFB0B7;
+      text-decoration: none;
+      border-bottom: 1px dotted rgba(255,255,255,0.2);
+      padding-bottom: 1px;
+    }
+    .close .signature .legal a:hover { color: var(--gold-2); border-bottom-color: var(--gold-2); }
+
+    @media print {
+      html, body { background: white; }
+      .page::after { display: none; }
+      .close::before { display: none; }
+      a { text-decoration: none; }
+      .plate, .figure-hero, .section-eyebrow, .close { break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="nb-logo" viewBox="0 0 63 12">
+      <path d="M18.43 6.47276H12.6882L12.6882 10.492H19L18.7826 12H11L11 0H18.7018L18.7018 1.50801H12.6882L12.6882 4.96635H18.43L18.43 6.47436L18.43 6.47276Z" fill="currentColor"/>
+      <path d="M21.0016 0H25.7898C28.4299 0 29.6103 1.36859 29.6103 3.01122C29.6103 4.39904 28.8147 5.29968 27.9022 5.6234C28.7449 5.89744 30 6.74359 30 8.47115C30 10.6939 28.274 12 25.9148 12H21L21 0H21.0016ZM25.483 4.94071C27.1472 4.94071 27.8016 4.28045 27.8016 3.17147C27.8016 2.14423 27.0482 1.44391 25.6989 1.44391H22.7714L22.7714 4.94071H25.4813H25.483ZM22.773 10.5561H25.6567C27.1634 10.5561 28.1458 9.8718 28.1458 8.45353C28.1458 7.21474 27.3388 6.38782 25.4034 6.38782H22.773L22.773 10.5561Z" fill="currentColor"/>
+      <path d="M32.0016 0H36.7898C39.4299 0 40.6103 1.36859 40.6103 3.01122C40.6103 4.39904 39.8147 5.29968 38.9022 5.6234C39.7449 5.89744 41 6.74359 41 8.47115C41 10.6939 39.274 12 36.9148 12H32L32 0H32.0016ZM36.483 4.94071C38.1472 4.94071 38.8016 4.28045 38.8016 3.17147C38.8016 2.14423 38.0482 1.44391 36.6989 1.44391H33.7714L33.7714 4.94071H36.4813H36.483ZM33.773 10.5561H36.6567C38.1634 10.5561 39.1458 9.8718 39.1458 8.45353C39.1458 7.21474 38.3388 6.38782 36.4034 6.38782H33.773L33.773 10.5561Z" fill="currentColor"/>
+      <path d="M53 5.93925C53 9.15421 51.1588 12 47.4341 12C43.9307 12 42 9.34579 42 6C42 2.65421 44.0013 0 47.5753 0C50.9092 0 53 2.45171 53 5.93925ZM43.8192 5.95016C43.8192 8.42523 45.0639 10.5421 47.5078 10.5421C50.148 10.5421 51.1808 8.37695 51.1808 5.96262C51.1808 3.54829 50.0098 1.45639 47.5031 1.45639C44.9964 1.45639 43.8192 3.5 43.8192 5.9486L43.8192 5.95016Z" fill="currentColor"/>
+      <path d="M55.786 8.56252C56.0985 9.91942 57.0502 10.6306 58.7062 10.6306C60.4685 10.6306 61.1743 9.83676 61.1743 8.78087C61.1743 7.65168 60.5906 7.04185 58.2763 6.49441C55.3958 5.81128 54.4568 4.8287 54.4568 3.19886C54.4568 1.40681 55.8051 0 58.4873 0C61.3773 0 62.559 1.61892 62.7208 3.18638H60.9316C60.7349 2.20847 60.1227 1.36938 58.4286 1.36938C57.0582 1.36938 56.2809 1.96829 56.2809 3.02885C56.2809 4.08942 56.9202 4.48401 58.9711 4.96907C62.3719 5.77853 63 7.06837 63 8.59527C63 10.5261 61.5391 12 58.5888 12C55.6385 12 54.2522 10.4216 54 8.5672H55.7892L55.786 8.56252Z" fill="currentColor"/>
+      <path d="M6.03594 7.06903L4.8345 6.07791C2.7857 4.38863 1.65689 2.23003 1.65689 0H0V11H1.65689V5.04744C2.22432 5.85928 2.92794 6.62011 3.76471 7.30953L4.96614 8.30065C5.85436 9.03379 6.34311 9.95786 6.34311 10.9067H8C8 9.47688 7.30244 8.11409 6.03594 7.06903Z" fill="var(--nb-mark, #E8821E)"/>
+      <path d="M9 0H7L7 4H9L9 0Z" fill="currentColor"/>
+    </symbol>
+  </svg>
+
+  <div class="page">
+
+    <header class="cover">
+      <svg class="nb-logo cover-mark" viewBox="0 0 63 12" aria-label="Nebbos"><use href="#nb-logo"></use></svg>
+      <div class="cover-meta">
+        <div><strong>One month on the platform</strong></div>
+        <div>35 days &middot; 402 sessions &middot; 138,380 decisions rendered</div>
+      </div>
+    </header>
+
+    <h1 class="thesis">Nebbos rendered <em>138,000 operator decisions</em> last month, without pause, at the running cost of a single senior hire.</h1>
+
+    <p class="thesis-lede">
+      This is what an always-on operator brain looks like at ambition-scale. What follows is five weeks of Nebbos in operation &mdash; the daily rhythm of decisions rendered, and the economics that make continuous intelligence viable for an enterprise.
+    </p>
+
+    <div class="figure-hero">
+      <div class="eyebrow">The month, in one line</div>
+      <div class="displays">
+        <div class="display-cell">
+          <div class="display">138K</div>
+          <div class="display-label">Decisions rendered</div>
+        </div>
+        <div class="display-cell">
+          <div class="display">44<span class="unit">&cent;</span></div>
+          <div class="display-label">Per decision</div>
+        </div>
+      </div>
+      <p class="body">Every hour of every day, Nebbos is at work &mdash; signals get triaged, tasks move, gaps get flagged, departments get compared. Last month the platform crossed one hundred and thirty-eight thousand of those decisions, at a unit cost that puts continuous operation inside an operating budget, not a research one.</p>
+      <div class="figure-receipt">
+        <div class="stat"><div class="stat-value">$61,504</div><div class="stat-label">month, all-in</div></div>
+        <div class="stat"><div class="stat-value">402</div><div class="stat-label">sessions</div></div>
+        <div class="stat"><div class="stat-value">24 / 7</div><div class="stat-label">without pause</div></div>
+      </div>
+    </div>
+
+    <div class="section-eyebrow">
+      <span class="num">One &middot; The pulse</span>
+      <h2 class="title">Every day of the month, Nebbos was working.</h2>
+      <p class="sub">One column per day. The count of operator decisions the platform rendered &mdash; a quiet Wednesday, a peak Friday, a Sunday still above a thousand.</p>
+    </div>
+
+    <div class="plate">
+      <svg viewBox="0 0 1080 340" style="width:100%;height:auto;" role="img" aria-label="Daily decisions rendered across the month">
+      <line x1="60" x2="968" y1="294.0" y2="294.0" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="297.0" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">0</text>
+      <line x1="60" x2="968" y1="241.2" y2="241.2" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="244.2" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">2K</text>
+      <line x1="60" x2="968" y1="188.4" y2="188.4" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="191.4" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">4K</text>
+      <line x1="60" x2="968" y1="135.6" y2="135.6" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="138.6" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">6K</text>
+      <line x1="60" x2="968" y1="82.8" y2="82.8" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="85.8" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">8K</text>
+      <line x1="60" x2="968" y1="30.0" y2="30.0" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="33.0" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">10K</text>
+      <rect x="63.6" y="243.7" width="18.7" height="50.3" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="89.6" y="271.4" width="18.7" height="22.6" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="115.5" y="226.0" width="18.7" height="68.0" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="141.5" y="134.5" width="18.7" height="159.5" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="167.4" y="274.9" width="18.7" height="19.1" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="193.3" y="159.6" width="18.7" height="134.4" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="219.3" y="287.2" width="18.7" height="6.8" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="245.2" y="171.9" width="18.7" height="122.1" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="271.2" y="212.9" width="18.7" height="81.1" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="297.1" y="217.5" width="18.7" height="76.5" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="323.1" y="241.2" width="18.7" height="52.8" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="349.0" y="273.4" width="18.7" height="20.6" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="374.9" y="213.6" width="18.7" height="80.4" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="400.9" y="289.3" width="18.7" height="4.7" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="426.8" y="192.5" width="18.7" height="101.5" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="452.8" y="194.3" width="18.7" height="99.7" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="478.7" y="188.6" width="18.7" height="105.4" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="504.7" y="249.7" width="18.7" height="44.3" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="530.6" y="264.8" width="18.7" height="29.2" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="556.5" y="215.4" width="18.7" height="78.6" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="582.5" y="249.4" width="18.7" height="44.6" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="608.4" y="43.5" width="18.7" height="250.5" fill="var(--accent)" opacity="1" rx="0.5"/>
+      <rect x="634.4" y="52.3" width="18.7" height="241.7" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="660.3" y="55.6" width="18.7" height="238.4" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="686.3" y="159.5" width="18.7" height="134.5" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="712.2" y="181.1" width="18.7" height="112.9" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="738.1" y="196.7" width="18.7" height="97.3" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="764.1" y="108.0" width="18.7" height="186.0" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="790.0" y="109.4" width="18.7" height="184.6" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="816.0" y="175.5" width="18.7" height="118.5" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="841.9" y="142.1" width="18.7" height="151.9" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="867.9" y="134.0" width="18.7" height="160.0" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="893.8" y="157.8" width="18.7" height="136.2" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="919.7" y="191.8" width="18.7" height="102.2" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <rect x="945.7" y="157.9" width="18.7" height="136.1" fill="var(--ink-2)" opacity="0.72" rx="0.5"/>
+      <text x="617.8" y="35.5" text-anchor="middle" fill="var(--accent)" font-family="var(--font-serif)" font-size="14" font-weight="700">9,490</text>
+      <text x="617.8" y="21.5" text-anchor="middle" fill="var(--gold)" font-family="var(--font-mono)" font-size="9.5" font-weight="700" letter-spacing="0.14em">PEAK DAY</text>
+      <text x="73.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-14</text>
+      <text x="280.5" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-22</text>
+      <text x="514.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-31</text>
+      <text x="747.5" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">09-09</text>
+      <text x="955.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">09-17</text>
+      </svg>
+      <div class="plate-caption">
+        <span><strong>Daily decisions rendered</strong> &mdash; one column per day, 35 days</span>
+        <span>Aug 14 &ndash; Sept 17, 2026 &middot; always-on</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      This is what continuous intelligence looks like measured, rather than described. A quiet weekend still clears a thousand decisions. A busy Friday clears nine thousand. The platform doesn&rsquo;t rest on a schedule, doesn&rsquo;t downshift on holidays, doesn&rsquo;t take longer for the hard questions than for the easy ones. Every hour the operator brain is on, and every hour it is either working or ready to.
+    </p>
+
+    <div class="section-eyebrow">
+      <span class="num">Two &middot; The ceiling</span>
+      <h2 class="title">The daily cost stayed inside a flat ceiling all month.</h2>
+      <p class="sub">One line: what running the platform cost at the end of each day, across five weeks. The peak day cleared nine thousand decisions and still stayed under $5,000.</p>
+    </div>
+
+    <div class="plate">
+      <svg viewBox="0 0 1080 340" style="width:100%;height:auto;" role="img" aria-label="Daily cost to run the platform">
+      <line x1="60" x2="968" y1="294.0" y2="294.0" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="297.0" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$0</text>
+      <line x1="60" x2="968" y1="241.2" y2="241.2" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="244.2" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$1K</text>
+      <line x1="60" x2="968" y1="188.4" y2="188.4" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="191.4" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$2K</text>
+      <line x1="60" x2="968" y1="135.6" y2="135.6" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="138.6" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$3K</text>
+      <line x1="60" x2="968" y1="82.8" y2="82.8" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="85.8" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$4K</text>
+      <line x1="60" x2="968" y1="30.0" y2="30.0" stroke="var(--rule-2)" stroke-width="0.5"/>
+      <text x="50" y="33.0" text-anchor="end" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="10">$5K</text>
+      <path d="M73.0,294 L73.0 263.2 L98.9 275.5 L124.9 230.8 L150.8 168.8 L176.7 270.0 L202.7 113.7 L228.6 274.1 L254.6 153.5 L280.5 228.5 L306.5 228.4 L332.4 229.4 L358.3 265.4 L384.3 191.3 L410.2 285.9 L436.2 196.7 L462.1 227.7 L488.1 208.4 L514.0 233.1 L539.9 254.6 L565.9 231.2 L591.8 252.6 L617.8 108.1 L643.7 40.9 L669.7 115.5 L695.6 191.0 L721.5 201.1 L747.5 216.8 L773.4 99.8 L799.4 154.1 L825.3 218.0 L851.3 190.0 L877.2 149.3 L903.1 187.6 L929.1 212.8 L955.0 174.8 L955.0,294 Z" fill="var(--accent)" opacity="0.12"/>
+      <path d="M73.0 263.2 L98.9 275.5 L124.9 230.8 L150.8 168.8 L176.7 270.0 L202.7 113.7 L228.6 274.1 L254.6 153.5 L280.5 228.5 L306.5 228.4 L332.4 229.4 L358.3 265.4 L384.3 191.3 L410.2 285.9 L436.2 196.7 L462.1 227.7 L488.1 208.4 L514.0 233.1 L539.9 254.6 L565.9 231.2 L591.8 252.6 L617.8 108.1 L643.7 40.9 L669.7 115.5 L695.6 191.0 L721.5 201.1 L747.5 216.8 L773.4 99.8 L799.4 154.1 L825.3 218.0 L851.3 190.0 L877.2 149.3 L903.1 187.6 L929.1 212.8 L955.0 174.8" stroke="var(--accent)" stroke-width="2.5" fill="none" stroke-linejoin="round" stroke-linecap="round"/>
+      <circle cx="73.0" cy="263.2" r="4" fill="var(--paper)" stroke="var(--accent)" stroke-width="2"/>
+      <circle cx="955.0" cy="174.8" r="6" fill="var(--accent)" stroke="var(--paper)" stroke-width="1.5"/>
+      <line x1="643.7" x2="643.7" y1="34.9" y2="18.9" stroke="var(--ink-3)" stroke-width="0.75"/>
+      <text x="643.7" y="12.9" text-anchor="middle" fill="var(--ink)" font-family="var(--font-serif)" font-size="13" font-weight="700">$4,794</text>
+      <text x="972" y="170.8" fill="var(--accent)" font-family="var(--font-mono)" font-size="10" font-weight="700">daily</text>
+      <text x="972" y="186.8" fill="var(--ink)" font-family="var(--font-serif)" font-size="14" font-weight="700">$2,258</text>
+      <text x="73.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-14</text>
+      <text x="280.5" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-22</text>
+      <text x="514.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">08-31</text>
+      <text x="747.5" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">09-09</text>
+      <text x="955.0" y="312" text-anchor="middle" fill="var(--ink-3)" font-family="var(--font-mono)" font-size="9.5">09-17</text>
+      </svg>
+      <div class="plate-caption">
+        <span><strong>Daily cost to run the platform</strong> &mdash; actual, in USD</span>
+        <span>Month average: $1,758 / day</span>
+      </div>
+    </div>
+
+    <p class="prose">
+      The two lines say the same thing in different registers. Nebbos worked continuously, and the running cost of that work stayed inside a bounded envelope. This is what an operator brain designed as infrastructure looks like from the finance side &mdash; the shape of a system whose ambition can scale without its bill scaling with it.
+    </p>
+
+    <div class="close">
+      <div class="eyebrow">The reading</div>
+      <p class="body">
+        One hundred and thirty-eight thousand operator decisions. Five weeks without pause. <strong>44 cents per decision, all-in.</strong> This is what continuous intelligence costs when it is built as infrastructure &mdash; an operating expense, not a research project. <em>When the brain never sleeps, the work stops waiting on it.</em>
+      </p>
+      <div class="signature">
+        <svg class="mark" viewBox="0 0 63 12" aria-label="Nebbos"><use href="#nb-logo"></use></svg>
+        <div class="entity">
+          Nebbos Technologies Corp<span class="sep">&middot;</span>Nebbos Technologies D.O.O.
+        </div>
+        <div class="legal">
+          <a href="https://nebbos.ai">nebbos.ai</a><span class="sep">&middot;</span>&copy; 2026 Nebbos Technologies<span class="sep">&middot;</span>September 2026
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>

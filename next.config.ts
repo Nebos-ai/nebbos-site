@@ -75,6 +75,14 @@ const nextConfig: NextConfig = {
       // with existing BRAND.productLine vocabulary). URL preserved via 302
       // so inbound links from press, PRs, bookmarks continue to work.
       { source: "/products/usb", destination: "/products/cradle", permanent: false },
+      // /docs · /docs/* — public technical documentation moved to its own
+      // repo (Nebos-ai/nebbos-docs) and is served at docs.nebbos.ai. Every
+      // existing link in the marketing site (footer, nav, architecture
+      // resource list, ADR references) continues to resolve via this
+      // redirect — no site-wide link sweep required. 302 leaves room to
+      // re-host under nebbos.ai/docs later if we change deploy target.
+      { source: "/docs", destination: "https://docs.nebbos.ai", permanent: false },
+      { source: "/docs/:path*", destination: "https://docs.nebbos.ai/:path*", permanent: false },
     ];
   },
   // Cache headers · rapid-iteration marketing site.
