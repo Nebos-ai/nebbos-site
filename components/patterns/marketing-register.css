@@ -154,13 +154,17 @@
     to   { transform: translate3d(-16px, 8px, 0); opacity: 1; }
   }
 
-  /* Every .mkt-* section sits ABOVE the backdrop layers. */
+  /* Every .mkt-* section sits ABOVE the backdrop layers. NOTE:
+     .site-header was previously in this list, which overrode its
+     `position: sticky` (from globals.css page-layer) to relative —
+     defeating stickiness site-wide. Founder-caught 2026-09-19:
+     "when i scroll down i cant see it at all." Header keeps its
+     own sticky+z-index rule below (line ~2340). */
   .mkt,
   .mkt-section,
   .mkt-footer,
   .mkt-trustline,
-  .mkt-strip,
-  .site-header {
+  .mkt-strip {
     position: relative;
     z-index: 1;
   }
@@ -2333,13 +2337,50 @@
      they beat the @layer page defaults. Composes with — never removes —
      the header's existing sticky/z-index/border behaviour. */
 
+  /* Sticky header — must stay VISIBLE over the scrolled page content
+     (founder-caught 2026-09-19: "when i scroll down i cant see it at
+     all"). The v3 header was sticky+opaque already but nested inside
+     a body wrapper the mkt aurora paints under, so the header edge
+     could visually merge with the aurora glow. Fix: pin z-index and
+     paint an OPAQUE band with backdrop-filter fallback, so the header
+     always reads as a distinct floating chrome. */
   .site-header {
-    background: var(--mkt-ground, #05070a);
-    border-block-end-color: var(--mkt-rule, rgba(255, 255, 255, 0.08));
+    background: rgba(5, 7, 10, 0.86);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    border-block-end-color: var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    z-index: 60;
   }
+  /* Older browsers without backdrop-filter get a fully opaque header. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .site-header { background: var(--mkt-ground, #05070a); }
+  }
+
+  /* Mega dropdown — was inheriting v3 --ink text tokens (dark) on a
+     mkt-remapped dark background = invisible ("bleeds into the site"
+     founder-caught 2026-09-19). Force light mkt text tokens on every
+     descendant + add solid panel background + a real border + shadow
+     + backdrop-blur so it reads as a distinct floating panel. */
   .site-mega {
-    background: var(--mkt-ground-2, #0a0d13);
-    border-block-end-color: var(--mkt-rule, rgba(255, 255, 255, 0.08));
+    background: rgba(10, 13, 19, 0.98);
+    -webkit-backdrop-filter: saturate(1.4) blur(20px);
+    backdrop-filter: saturate(1.4) blur(20px);
+    border-block-start: 1px solid var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    border-block-end: 1px solid var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    box-shadow: 0 32px 80px -24px rgba(0, 0, 0, 0.75);
+    z-index: 55;
+    color: var(--mkt-text, #f4f2ee);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .site-mega { background: var(--mkt-panel, #171b26); }
+  }
+  .site-mega .site-mega__band-name { color: var(--mkt-text, #f4f2ee); }
+  .site-mega .site-mega__band-strap { color: var(--mkt-text-3, rgba(244, 242, 238, 0.60)); }
+  .site-mega .site-mega__layer-link { color: var(--mkt-text-2, rgba(244, 242, 238, 0.78)); }
+  .site-mega .site-mega__layer-num  { color: var(--mkt-text-3, rgba(244, 242, 238, 0.60)); }
+  .site-mega .site-mega__layer-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--mkt-text, #f4f2ee);
   }
 
   /* ── MOTION · scroll-reveal + on-mount stagger + live-signal pulse ──
