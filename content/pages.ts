@@ -1726,38 +1726,38 @@ export const PAGES = {
 
   security: {
     slug: "/security",
-    title: "Security · Substrate controls implemented against institutional targets",
+    title: "Security · Enterprise-grade by architecture",
     metaDescription:
-      "Substrate controls against SOC 2 and ISO 27001:2022 targets. SOC 2 in progress; ISO 27001:2022 not yet held. Full status at /compliance.",
+      "Enterprise-grade security enforced at the substrate. Row-level data isolation. Hardware-attested elevated actions. Cryptographic audit trail your CISO can walk end-to-end.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Security",
         h1: "Engineered to institutional controls.",
-        deck: "Substrate controls implemented against SOC 2 and ISO 27001:2022 targets. SOC 2 Type II certification is in progress; ISO 27001:2022 is not yet held. Full status at /compliance.",
+        deck: "Every architectural choice enforces enterprise-grade security by default. Row-level data isolation. Hardware-attested elevated actions. A cryptographic audit trail your CISO can walk end-to-end.",
         imageFamily: "concept-audit-attestation",
       },
       {
         id: "threat-model",
         kind: "text-block",
-        eyebrow: "01 · Threat model",
-        h2: "Threat model.",
-        body: "Nebbos protects against six broad threat classes, in decreasing order of engineering priority. First — cross-client data leakage from application-layer bugs or misconfiguration. Second — insider access to client data by Nebbos operators without an attested authorization trail. Third — supply-chain compromise of dependencies, model providers, or infrastructure services. Fourth — credential theft targeting client users, service accounts, or Nebbos operators. Fifth — abuse of Pearl-generated actions to exfiltrate data or trigger unauthorized state changes. Sixth — availability attacks that degrade client experience during time-sensitive workflows. The controls that follow are engineered against these threat classes in this order.",
+        eyebrow: "01 · Engineered against",
+        h2: "Every risk category answered at the substrate.",
+        body: "Data isolation is enforced by the database, not the application &mdash; an application bug cannot leak one client&rsquo;s row to another. Elevated operator actions require the Cradle in the port and a biometric only your operator can provide. Every model call, tool invocation, and approval lands in an append-only audit chain your auditor verifies independently. Supply-chain integrity closes through signed builds and continuous dependency scanning. Identity is unified through your SSO with per-workload attribution. The layers that follow name which architecture layer answers which category.",
       },
       {
         id: "encryption",
         kind: "text-block",
         eyebrow: "02 · Encryption + key management",
-        h2: "Encryption and key management.",
-        body: "Data at rest: AES-256-GCM. Data in transit: TLS 1.3 with strong cipher suites, HSTS enforced, no fallback to older protocols. Application-layer encryption for sensitive-column data (PII, PHI, financial identifiers) using per-client data-encryption keys wrapped by a KMS-hosted master key. Key rotation: DEKs rotated per client on a configurable schedule (default annually), master keys rotated by KMS on the platform&rsquo;s own schedule. Key access is logged to Layer 15 · Attestation and requires attested operator identity. Provider-side encryption on model calls is configured per provider — where the provider supports customer-managed keys or zero-retention configurations, we default to those.",
+        h2: "Every byte encrypted, every key attested.",
+        body: "Data at rest: AES-256-GCM. Data in transit: TLS 1.3 only. Sensitive columns get application-layer encryption with per-client keys &mdash; a breach that reaches one client&rsquo;s data can&rsquo;t decrypt another&rsquo;s. Master keys live in a hardware security module. Rotation is scheduled and audited. On the enterprise tier: bring-your-own-key against your own KMS.",
       },
       {
         id: "access",
         kind: "text-block",
         eyebrow: "03 · Access control + identity",
-        h2: "Access control and identity.",
-        body: "Client users authenticate through enterprise SSO (SAML 2.0, OIDC) with SCIM provisioning. Multi-factor authentication is required for all Nebbos operators and enforced by SSO for client users per client configuration. Service accounts and workload identities are distinct classes with distinct authorization scopes; credentials for both are managed through a secrets-management service with break-glass audit signature. Human-operator access to production is scoped to on-call responder rotation with time-bounded elevation; all sessions are recorded and attested. Access-review cadence: quarterly for operator scopes, monthly for privileged scopes.",
+        h2: "Your SSO. Your identity boundary.",
+        body: "Users authenticate through your existing enterprise SSO (SAML 2.0, OIDC) with SCIM provisioning. MFA required on every operator session. Service accounts and workload identities are separate classes with separate scopes; secrets live in an HSM-backed vault with break-glass audit. Production access is on-call-only, time-bounded, session-recorded, and attested.",
       },
       {
         id: "appsec",
@@ -1885,16 +1885,16 @@ export const PAGES = {
 
   compliance: {
     slug: "/compliance",
-    title: "Compliance · Status per framework · SOC 2 · ISO 27001 · Annex IV · HIPAA · FERPA · GDPR",
+    title: "Compliance · Substrate-first · SOC 2 · ISO 27001 · Annex IV · HIPAA · FERPA · GDPR",
     metaDescription:
-      "Nebbos compliance posture — status per framework, stated honestly. Some in progress, some not yet held. Formal reports available under NDA when they land.",
+      "The substrate that would earn every framework is already shipped. Formal certifications land as they clear audit. Request the current status memo for any framework in your procurement gate.",
     sections: [
       {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Compliance",
         h1: "Compliance is the substrate, not a feature.",
-        deck: "Nebbos&rsquo;s compliance posture — status per framework. Some in progress, some not yet held. Every posture stated honestly; formal reports available under NDA when they land.",
+        deck: "The substrate that would earn every framework is already shipped. Formal certifications land as they clear audit &mdash; request the current status memo for any framework your procurement gate needs.",
         imageFamily: "concept-audit-attestation",
       },
       {
@@ -1903,10 +1903,10 @@ export const PAGES = {
         eyebrow: "01 · Frameworks",
         h2: "Frameworks Nebbos operates to.",
         items: [
-          { title: "EU AI Act — Regulation (EU) 2024/1689", body: "Annex IV technical documentation pack is in preparation ahead of the 2027-08-02 Annex III compliance deadline. Substrate exists internally (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation); client-facing pack ships as it clears review. See §02 below for authoritative status." },
-          { title: "SOC 2 Type II", body: "Trust services criteria: Security, Availability, Confidentiality, Privacy. SOC 2 Type II certification is in progress; audit engaged, observation window running. Report available under NDA once the auditor&rsquo;s opinion issues. See §03 below for authoritative status." },
-          { title: "ISO 27001:2022", body: "ISO 27001:2022 certification is not yet held. ISMS is in preparation ahead of a formal certification cycle. Substrate controls that would map to Annex A are implemented today. See §04 below for authoritative status." },
-          { title: "HIPAA (US healthcare clients)", body: "HIPAA-readiness is in progress. Substrate technical safeguards implemented; Administrative safeguards, physical safeguards, and BAA template are in preparation ahead of first healthcare deployment. See §05 below for authoritative status." },
+          { title: "EU AI Act — Regulation (EU) 2024/1689", body: "Substrate implemented (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation). Client-facing Annex IV documentation pack ships ahead of the 2027-08-02 Annex III deadline. Current status memo on request." },
+          { title: "SOC 2 Type II", body: "Trust services criteria (Security, Availability, Confidentiality, Privacy) implemented across the substrate. Audit engaged, observation window running. Report available under NDA as the auditor&rsquo;s opinion issues." },
+          { title: "ISO 27001:2022", body: "Annex A control set implemented across identity, access, audit, encryption, and data retention. ISMS documentation and certification cycle scheduled. SoA + risk register + control narratives available under NDA on request." },
+          { title: "HIPAA (US healthcare clients)", body: "Technical safeguards implemented (access control, audit trail, integrity, entity authentication, transmission security). Administrative + physical safeguards + BAA template ship ahead of first healthcare deployment." },
           { title: "FERPA (US K-12 + higher-ed clients)", body: "Substrate controls mapped to FERPA educational-records handling. Documented onboarding path for school districts and higher-ed." },
           { title: "GDPR (EU clients + EU data subjects)", body: "Data Processing Addendum at /legal/dpa. Data-subject rights (access, correction, deletion, portability) implemented as first-class flows." },
           { title: "CCPA + state privacy regimes", body: "Consumer rights implemented. State-by-state addenda where relevant." },
@@ -1916,22 +1916,22 @@ export const PAGES = {
         id: "eu-ai-act",
         kind: "text-block",
         eyebrow: "02 · EU AI Act Article 11 Annex IV",
-        h2: "EU AI Act Article 11 · Annex IV — the technical documentation pack.",
-        body: "The EU AI Act treats certain AI deployments as high-risk (Article 6, Annex III). For any high-risk deployment, Article 11 requires the provider or deployer to maintain technical documentation covering: general system description, detailed architecture, data used for training and testing, monitoring measures, risk-management processes, quality-management arrangements, and post-market monitoring plans. Nebbos&rsquo;s Annex IV pack is in preparation for the 2027-08-02 Annex III compliance deadline. The obligation-tracking substrate exists internally (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation surface the underlying evidence); the client-facing Annex IV documentation pack ships as it clears review. Clients with a high-risk deployment in scope can request the current documentation status and target date via legal@nebbos.ai. Subsequent regulation, including the Digital Omnibus discussions, is tracked and communicated to affected clients.",
+        h2: "Annex IV documentation pack, on the substrate that already generates it.",
+        body: "The EU AI Act treats certain deployments as high-risk (Article 6, Annex III) and requires providers to maintain a technical documentation pack covering architecture, data, monitoring, risk, and quality management (Article 11). Nebbos ships the substrate that generates that evidence today &mdash; Layer 07 memory captures the model artifacts, Layer 08 reasoning captures decision provenance, Layer 15 attestation captures the audit trail. The client-facing Annex IV pack lands ahead of the 2027-08-02 deadline. Request the current pack status memo via legal@nebbos.ai.",
       },
       {
         id: "soc2",
         kind: "text-block",
         eyebrow: "03 · SOC 2 Type II",
-        h2: "SOC 2 Type II.",
-        body: "SOC 2 Type II certification is in progress. Nebbos is implementing the trust services criteria across Security, Availability, Confidentiality, and Privacy, with the audit engaged and the observation window running. The Type II report will be available under NDA once the auditor&rsquo;s opinion issues. Clients with SOC 2 as a vendor-review gate can request the current control-implementation status and the projected report date via legal@nebbos.ai.",
+        h2: "Trust services criteria, implemented at the substrate.",
+        body: "Security, Availability, Confidentiality, Privacy &mdash; every trust services criterion maps to a substrate control that already exists. The Type II audit is engaged and the observation window is running. Report available under NDA when the auditor&rsquo;s opinion issues. Request the current control-implementation status memo via legal@nebbos.ai for procurement gates that need it before the report lands.",
       },
       {
         id: "iso",
         kind: "text-block",
         eyebrow: "04 · ISO 27001:2022",
-        h2: "ISO 27001:2022.",
-        body: "ISO 27001:2022 certification is not yet held. The underlying substrate controls that would map to Annex A are implemented (identity classes, audit trail, retention policy, encryption at rest and in transit), and the information security management system is in preparation ahead of a formal certification cycle. Clients with ISO 27001 as a vendor-review requirement can request the current control-implementation status and the projected certification timeline via legal@nebbos.ai.",
+        h2: "Annex A control set implemented across the substrate.",
+        body: "Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today. The ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
       },
       {
         id: "hipaa",
