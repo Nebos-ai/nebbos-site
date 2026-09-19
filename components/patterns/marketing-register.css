@@ -665,6 +665,19 @@
   @media (min-width: 1120px) {
     .mkt-products__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
   }
+  /* 3-item variant · used by cross-nav rows ("The other three products",
+     Solutions verticals with 3 items in a row). Without this modifier,
+     3 items in the 4-col grid fill positions 1/2/3 and leave position
+     4 empty — reads as left-aligned. Founder-caught 2026-09-19 on
+     product-detail cross-nav. This variant centers the row in the
+     container instead. */
+  .mkt-products__grid--3 {
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+  @media (min-width: 1120px) {
+    .mkt-products__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
 
   .mkt-product {
     position: relative;
@@ -3258,20 +3271,21 @@
   .mkt-eyebrow-chip--mcp      .mkt-eyebrow-chip__dot { background: var(--mkt-product-mcp);      box-shadow: 0 0 10px rgba(185, 107, 255, 0.75); }
   .mkt-eyebrow-chip--cradle   .mkt-eyebrow-chip__dot { background: var(--mkt-product-cradle);   box-shadow: 0 0 10px rgba(214, 58, 76, 0.75); }
 
-  /* Tile grid · list-plain + split-columns items become cards */
+  /* Tile grid · list-plain + split-columns items become cards.
+     Uses auto-fit + justify-content: center so partial last rows
+     (a 4-item list in a 3-col layout, an 8-item list in a 3-col,
+     etc.) center within the container instead of left-hanging.
+     Founder-directed 2026-09-19 (alignment sweep): every variable-
+     item grid on the site should center orphan-row items. */
   .mkt-tilegrid {
     list-style: none;
     padding: 0;
-    margin: 32px 0 0 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
     display: grid;
     gap: 20px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 720px) {
-    .mkt-tilegrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (min-width: 1080px) {
-    .mkt-tilegrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+    justify-content: center;
   }
   .mkt-tile {
     display: grid;
@@ -3311,17 +3325,18 @@
     margin: 0;
   }
 
-  /* Numbered cards · big Pearl-color numerals + card body */
+  /* Numbered cards · big Pearl-color numerals + card body.
+     Same auto-fit + center pattern as .mkt-tilegrid so odd-count
+     lists (5 or 7 items in a 2-col layout) center their orphan row. */
   .mkt-numcards {
     list-style: none;
     padding: 0;
-    margin: 32px 0 0 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
     display: grid;
     gap: 16px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 720px) {
-    .mkt-numcards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    grid-template-columns: repeat(auto-fit, minmax(340px, 500px));
+    justify-content: center;
   }
   .mkt-numcard {
     display: grid;
@@ -3585,19 +3600,16 @@
      Every row becomes a Pearl-color pill card with label + value.
      3-col at ≥ 1080px, 2-col at ≥ 720px. */
 
+  /* Fact grid · auto-fit + center so partial rows don't left-hang. */
   .mkt-factgrid {
     list-style: none;
     padding: 0;
-    margin: 32px 0 0 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
     display: grid;
     gap: 16px;
-    grid-template-columns: 1fr;
-  }
-  @media (min-width: 720px) {
-    .mkt-factgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  }
-  @media (min-width: 1080px) {
-    .mkt-factgrid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+    justify-content: center;
   }
   .mkt-fact {
     display: grid;

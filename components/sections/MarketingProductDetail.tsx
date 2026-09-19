@@ -187,7 +187,7 @@ export function MarketingProductDetail({ product }: { product: Product }) {
               The other three products.
             </h2>
           </header>
-          <div className="mkt-products__grid">
+          <div className="mkt-products__grid mkt-products__grid--3">
             {others.map((p) => (
               <Link key={p.key} href={`/products/${p.slug}`} className={`mkt-product ${PRODUCT_CLASS[p.key].split(" ")[0]}`}>
                 <span className="mkt-product__mark" aria-hidden>
