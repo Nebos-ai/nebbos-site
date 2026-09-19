@@ -1176,6 +1176,33 @@
     color: var(--mkt-text-2);
     margin: 4px 0 0 0;
   }
+  /* The whole card is now a Link to /products/<slug>/<tier> — reset
+     the default anchor styling so it doesn't underline body text +
+     add hover elevation cursor for affordance. */
+  .mkt-tier {
+    text-decoration: none;
+    color: inherit;
+  }
+  .mkt-tier:hover {
+    transform: translateY(-2px);
+    border-color: var(--mkt-rule-2);
+  }
+  .mkt-tier__cta {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-tier:hover .mkt-tier__cta {
+    transform: translateX(4px);
+  }
   .mkt-tier__key {
     font-family: var(--mkt-font-mono);
     font-size: 11px;

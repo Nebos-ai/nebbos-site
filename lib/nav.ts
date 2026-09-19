@@ -176,6 +176,13 @@ export type MegaProduct = {
   }>;
 };
 
+// Buyer-facing tier slug matches app/products/[slug]/[tier]/page.tsx.
+const TIER_SLUG_FROM_KEY: Record<TierKey, string> = {
+  L1: "guest",
+  L2: "host",
+  L3: "architect",
+};
+
 export const megaProducts: MegaProduct[] = PRODUCTS.map((product) => ({
   key: product.key,
   name: product.name,
@@ -185,11 +192,11 @@ export const megaProducts: MegaProduct[] = PRODUCTS.map((product) => ({
   tiers: TIERS.map((tier) => ({
     key: tier.key,
     label: tier.label,
-    // Anchor matches the id on each tier card in MarketingProductDetail.
-    // Founder-caught 2026-09-19: previously `#l1` / `#l2` / `#l3` with no
-    // matching id on the page — all three tier links opened the same page
-    // at the top with identical scroll position.
-    href: `/products/${product.slug}#tier-${product.key}-${tier.key.toLowerCase()}`,
+    // Dedicated per-tier subpage — 12 total (4 products × 3 tiers).
+    // Founder-directed 2026-09-19 T10:26 UTC ("lets fix it now"):
+    // dedicated pages replace the same-page anchor scroll so every
+    // tier click opens content that's actually different per tier.
+    href: `/products/${product.slug}/${TIER_SLUG_FROM_KEY[tier.key]}`,
   })),
 }));
 
