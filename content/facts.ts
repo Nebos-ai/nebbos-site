@@ -30,11 +30,16 @@ export const FACTS = {
   complianceStance:
     "Substrate controls implemented against SOC 2 Type II and ISO 27001:2022 targets. SOC 2 certification is in progress; ISO 27001:2022 not yet held. EU AI Act Annex IV pack in preparation ahead of 2027-08-02 Article 6/Annex III deadline. Full authoritative status at /compliance.",
 
-  /** Public product line. */
+  /** Public product line — the four surfaces + one substrate framing per the
+   *  Institutional deck, ratified customer-facing taxonomy 2026-09-19.
+   *  Prior "Cradle · Shell · Pearl" three-tier architecture (2026-08 era)
+   *  is superseded on customer surfaces; retained in the internal register
+   *  as run-layer architecture language. See content/pieces/ for the
+   *  publications that walk this framing. */
   productLine: [
-    "Nebbos (operator platform · MCP · Cradle · biometric-attested)",
-    "Pearl (per-domain brain — Nebbos General [Domain], tuned by use)",
-    "Shell (per-domain container that holds a Pearl)",
-    "Cradle (customer&rsquo;s owned memory · portable when you leave)",
+    "Platform (where the Pearls live — every action attested, every trail portable)",
+    "App (your Pearl on the metal in front of you — native macOS and Windows)",
+    "MCP (the line every tool call has to cross — classifier decides the tier on your host)",
+    "Cradle (sovereignty you can put in your pocket — hardware carrying the MCP binary, the Pearl memory, and the keys)",
   ] as const,
 } as const;

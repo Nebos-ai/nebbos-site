@@ -11,6 +11,10 @@ Founder-directed 2026-09-19: rehost every claude.ai artifact under nebbos.ai URL
 - `app/p/[slug]/page.tsx` — dynamic route. Reads the registry, serves the matching HTML inside an iframe so the piece's own visual language is isolated from the marketing site's design tokens.
 - `app/p/page.tsx` — the publication index.
 
+## Before writing a piece: read the canonical claims
+
+Every publication draws from `content/canonical-claims.ts`. Product framing, data-tier list, governance pillars, compliance posture, corporate structure, superseded frames — all live there. When you author a piece, walk the ten-item checklist at the bottom of that file. If your piece invents a framing or names its own version of the four products, it's drifting.
+
 ## Adding a piece
 
 1. Drop the pre-rendered HTML into `public/pieces/<slug>.html`. The file should be a complete, standalone document — `<!doctype html>`, its own `<head>`, its own `<style>` block, inline SVG. It runs inside an iframe on the piece route.
