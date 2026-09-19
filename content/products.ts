@@ -72,7 +72,7 @@ export const PRODUCTS: Product[] = [
     key: "platform",
     eyebrow: "Software",
     name: "Nebbos.ai Platform",
-    tagline: "The floor your operation runs on.",
+    tagline: "The foundation your operation runs on.",
     description:
       "Where the Pearls live. Where every dashboard, every approval, every action lands with an identity attached. Multi-Shell by default, one client per row, every request checked before the query runs.",
     colorVar: "--product-color-platform",

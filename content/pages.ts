@@ -2024,7 +2024,7 @@ export const PAGES = {
 
   careers: {
     slug: "/careers",
-    title: "Careers · Build the floor every operator lands on",
+    title: "Careers · Build the foundation every operator stands on",
     metaDescription:
       "Founding roles at Nebbos — building the substrate that mediates every action, the MCP every tool call crosses, and the Cradle that gates every elevated capability.",
     sections: [
@@ -2032,7 +2032,7 @@ export const PAGES = {
         id: "hero",
         kind: "hero-full-bleed",
         eyebrow: "00 · Careers",
-        h1: "Build the floor every operator lands on.",
+        h1: "Build the foundation every operator stands on.",
         deck: "Founding roles across engineering, design, and operations. The people who ship the substrate other teams stand on top of — its tools, the MCP every call crosses, the Cradle that carries the last mile of trust.",
         imageFamily: "concept-pearl",
       },
