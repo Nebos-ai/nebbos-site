@@ -1151,6 +1151,30 @@
     display: grid;
     gap: 10px;
     align-content: start;
+    /* Sticky header is ~76px tall; add clearance so a mega-menu tier
+       link like /products/platform#tier-platform-guest scrolls the
+       card ~120px below the top edge instead of hiding behind the
+       header. Founder-caught 2026-09-19: all three tier links opened
+       the same page at the top with no visible distinction. */
+    scroll-margin-top: 120px;
+    transition: border-color 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease), transform 320ms var(--mkt-ease);
+  }
+  /* :target highlight — when the URL fragment matches a tier card id
+     (e.g. #tier-platform-host), that card lifts + halos in the Pearl
+     color so the mega-menu click has a visible landing target. */
+  .mkt-tier:target {
+    transform: translateY(-2px);
+  }
+  .mkt-tier.mkt-product--platform:target { border-color: rgba(74, 92, 255, 0.55);   box-shadow: 0 24px 60px -18px rgba(74, 92, 255, 0.42); }
+  .mkt-tier.mkt-product--app:target      { border-color: rgba(255, 138, 61, 0.55);  box-shadow: 0 24px 60px -18px rgba(255, 138, 61, 0.42); }
+  .mkt-tier.mkt-product--mcp:target      { border-color: rgba(185, 107, 255, 0.55); box-shadow: 0 24px 60px -18px rgba(185, 107, 255, 0.42); }
+  .mkt-tier.mkt-product--cradle:target   { border-color: rgba(214, 58, 76, 0.55);   box-shadow: 0 24px 60px -18px rgba(214, 58, 76, 0.42); }
+  .mkt-tier__factors {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    margin: 4px 0 0 0;
   }
   .mkt-tier__key {
     font-family: var(--mkt-font-mono);

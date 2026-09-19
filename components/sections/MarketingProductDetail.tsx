@@ -164,16 +164,28 @@ export function MarketingProductDetail({ product }: { product: Product }) {
             </p>
           </header>
           <div className="mkt-productrow__tiers">
-            {TIERS.map((tier) => (
-              <div key={tier.key} className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}>
-                <p className="mkt-tier__key">{tier.key}</p>
-                <p className="mkt-tier__label">{name} · {tier.key}</p>
-                <p className="mkt-tier__scope">{tier.scope}</p>
-                <Link href="/contact" className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start", marginTop: 8 }}>
-                  Contact sales
-                </Link>
-              </div>
-            ))}
+            {TIERS.map((tier) => {
+              // Extract the human-readable tier name (Guest/Host/Architect)
+              // from the "L1 · Guest" label — the buyer sees the word, the
+              // engineering L# stays as a small chip.
+              const humanName = tier.label.includes("·") ? tier.label.split("·")[1]!.trim() : tier.key;
+              const factorsLine = tier.factors;
+              return (
+                <div
+                  key={tier.key}
+                  id={`tier-${product.key}-${tier.key.toLowerCase()}`}
+                  className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}
+                >
+                  <p className="mkt-tier__key">{tier.key}</p>
+                  <p className="mkt-tier__label">{name} · {humanName}</p>
+                  <p className="mkt-tier__factors">{factorsLine}</p>
+                  <p className="mkt-tier__scope">{tier.scope}</p>
+                  <Link href="/contact" className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start", marginTop: 8 }}>
+                    Contact sales
+                  </Link>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

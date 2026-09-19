@@ -185,7 +185,11 @@ export const megaProducts: MegaProduct[] = PRODUCTS.map((product) => ({
   tiers: TIERS.map((tier) => ({
     key: tier.key,
     label: tier.label,
-    href: `/products/${product.slug}#${tier.key.toLowerCase()}`,
+    // Anchor matches the id on each tier card in MarketingProductDetail.
+    // Founder-caught 2026-09-19: previously `#l1` / `#l2` / `#l3` with no
+    // matching id on the page — all three tier links opened the same page
+    // at the top with identical scroll position.
+    href: `/products/${product.slug}#tier-${product.key}-${tier.key.toLowerCase()}`,
   })),
 }));
 
