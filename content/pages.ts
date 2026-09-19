@@ -1621,7 +1621,7 @@ export const PAGES = {
       {
         id: "ownership",
         kind: "text-block",
-        eyebrow: "04 · Data ownership + portability",
+        eyebrow: "04 · Data ownership",
         h2: "Data ownership and portability, in detail.",
         body: "You own every byte of data your client produces or ingests. This includes raw inputs (documents, events, transactions), Pearl-generated artifacts (proposals, drafts, plans), memory (accumulated context, preference pairs, tuning), audit records, and any derived intelligence. Nebbos&rsquo;s license to your data is scoped strictly to operating the platform on your behalf — we do not train shared models on your data, we do not aggregate your data with other clients, we do not sell insights derived from your data to any third party. On offboarding, you receive a complete export: raw data + memory + tuned Pearl weights + audit trail + verifier tooling. The export runs on a timeline you control. After confirmed receipt, we execute a documented data-destruction routine and provide the certificate of destruction your legal team needs for retention records.",
       },
@@ -1683,7 +1683,7 @@ export const PAGES = {
       {
         id: "certs",
         kind: "list-numbered",
-        eyebrow: "10 · Attestations + certifications",
+        eyebrow: "10 · Certifications",
         h2: "Attestations and certifications.",
         items: [
           { title: "SOC 2 Type II", body: "Security, Availability, Confidentiality, and Privacy controls ship in the substrate today. The Type II report follows the audit window and is available under NDA when the auditor&rsquo;s opinion issues. Full status at /compliance." },
@@ -1748,28 +1748,28 @@ export const PAGES = {
       {
         id: "encryption",
         kind: "text-block",
-        eyebrow: "02 · Encryption + key management",
+        eyebrow: "02 · Encryption",
         h2: "Every byte encrypted, every key attested.",
         body: "Data at rest: AES-256-GCM. Data in transit: TLS 1.3 only. Sensitive columns get application-layer encryption with per-client keys &mdash; a breach that reaches one client&rsquo;s data can&rsquo;t decrypt another&rsquo;s. Master keys live in a hardware security module. Rotation is scheduled and audited. On the enterprise tier: bring-your-own-key against your own KMS.",
       },
       {
         id: "access",
         kind: "text-block",
-        eyebrow: "03 · Access control + identity",
+        eyebrow: "03 · Identity",
         h2: "Your SSO. Your identity boundary.",
         body: "Users authenticate through your existing enterprise SSO (SAML 2.0, OIDC) with SCIM provisioning. MFA required on every operator session. Service accounts and workload identities are separate classes with separate scopes; secrets live in an HSM-backed vault with break-glass audit. Production access is on-call-only, time-bounded, session-recorded, and attested.",
       },
       {
         id: "appsec",
         kind: "text-block",
-        eyebrow: "04 · Application security + SDLC",
+        eyebrow: "04 · App security",
         h2: "Application security and secure development lifecycle.",
         body: "Source control on managed platform with branch protection, required review, and signed commits for release branches. Dependencies scanned continuously via automated software-composition-analysis; vulnerable dependencies triaged within 24 hours for CRITICAL, 7 days for HIGH. Static analysis on every pull request via language-native tooling. Secret scanning on every commit; leaked secrets trigger immediate rotation. Dynamic analysis via automated fuzzing on API surfaces and adversarial-prompt testing on Pearl action paths. Container images built from minimal base images, scanned for CVEs, signed at publish time, and enforced-signed at deploy.",
       },
       {
         id: "infra",
         kind: "text-block",
-        eyebrow: "05 · Infrastructure + client isolation",
+        eyebrow: "05 · Client isolation",
         h2: "Infrastructure security and client isolation.",
         body: "Deployment on hyperscaler infrastructure with segregated client-data storage per Layer 01 · Data isolation model. Network segmentation: separate VPCs per environment, private subnets for data-plane workloads, egress restricted to allow-listed providers. Row-level client isolation enforced at the database — every table with client scope carries a Postgres RLS policy checking session identity. Object-storage buckets scoped per-client with client-identity-scoped IAM policies. Compute is stateless where possible; stateful workloads live in per-environment isolation with per-client scoping enforced at the query layer.",
       },
@@ -1811,7 +1811,7 @@ export const PAGES = {
       {
         id: "vuln",
         kind: "text-block",
-        eyebrow: "07 · Vulnerability management + pen-testing",
+        eyebrow: "07 · Vulnerability response",
         h2: "Vulnerability management and penetration testing.",
         body: "Responsible-disclosure program at /legal/responsible-disclosure. Reports acknowledged within 24 business hours; triage within 72 business hours; remediation timelines per severity (CRITICAL: 7 days, HIGH: 30 days, MEDIUM: 90 days, LOW: next scheduled release). Bug-bounty program on invitation to security-researcher partners. External penetration testing by an accredited third party annually, with retest after major architectural changes. Continuous internal red-teaming against Pearl action paths and approval-graph edge cases. Every finding closes with a public remediation record (redacted to protect specific technical detail).",
       },
@@ -1861,7 +1861,7 @@ export const PAGES = {
       {
         id: "certs",
         kind: "text-block",
-        eyebrow: "11 · Certifications + reports",
+        eyebrow: "11 · Audit reports",
         h2: "Certifications and reports.",
         body: "SOC 2 Type II certification is in progress; the Type II report will be available under NDA once the auditor&rsquo;s opinion issues. ISO 27001:2022 certification is not yet held; ISMS statement of applicability, risk register, and control narratives are in preparation. HIPAA BAA template is in preparation ahead of first healthcare deployment. FedRAMP path for federal deployments — contact enterprise procurement. All statuses: see /compliance for the authoritative record; contact security@nebbos.ai for scoped attestation requests.",
       },
@@ -1943,14 +1943,14 @@ export const PAGES = {
       {
         id: "ferpa",
         kind: "text-block",
-        eyebrow: "06 · FERPA — K-12 and higher-ed readiness",
+        eyebrow: "06 · FERPA readiness",
         h2: "FERPA — K-12 and higher-ed readiness.",
         body: "For US K-12 school districts and higher-ed institutions, FERPA posture today is deliberately narrow: the Nebbos substrate does not currently process individual-level student education records. The K-12 tables that exist are federal-program reference data explicitly excluded from student PII scope, and preventive controls against future ingestion of student-identifying data are in place per ratified internal architectural decision. When a district deployment scope includes student-identifying education records, Nebbos would operate as a School Official under FERPA (34 CFR &sect; 99.31(a)(1)); the corresponding controls, retention configuration, and School Official documentation are in preparation ahead of first such deployment. Districts evaluating Nebbos can request the current scope map and the School Official onboarding path via legal@nebbos.ai.",
       },
       {
         id: "gdpr",
         kind: "text-block",
-        eyebrow: "07 · GDPR + CCPA + state privacy",
+        eyebrow: "07 · Privacy regimes",
         h2: "GDPR + CCPA + state privacy regimes.",
         body: "For clients with EU data subjects, Nebbos operates as a Processor (or Sub-Processor as scoped) under GDPR Article 28. Data Processing Addendum at /legal/dpa. Standard Contractual Clauses for international transfers where relevant. Data-subject rights (Articles 12-22: access, rectification, erasure, restriction, portability, objection) are implemented as first-class client-admin flows — rights requests do not require a support ticket. For California residents under CCPA + CPRA, consumer rights (know, delete, correct, opt-out of sale/share, limit sensitive-data use) are implemented via the same flows. State-privacy regimes (VA CDPA, CO CPA, CT CTDPA, UT CPA, and subsequent states) are covered under a unified rights-handling architecture.",
       },
