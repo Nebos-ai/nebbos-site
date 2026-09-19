@@ -13,7 +13,7 @@ export const FACTS = {
   /** Team shape descriptor. */
   teamShape: "Founder-led",
 
-  /** Country / jurisdiction — Nebbos D.O.O. is the Serbian operating entity. */
+  /** Country / jurisdiction — Nebbos Technologies D.O.O. is the Serbian operating entity. */
   jurisdiction: "Serbia (RS)",
 
   /** Category positioning (mirrored to content/brand.ts for cross-file consistency). */
@@ -24,7 +24,7 @@ export const FACTS = {
    * amendment (session 3c918563 clarification, adds middle Nebbos AI tier).
    * Ordered outer → inner: Delaware parent, LA AI unit, Serbian subsidiary.
    */
-  legalFooter: "© 2026 Nebbos Technologies Corp · Nebbos AI · Nebbos D.O.O. — All rights reserved.",
+  legalFooter: "© 2026 Nebbos Technologies Corp · Nebbos AI · Nebbos Technologies D.O.O. — All rights reserved.",
 
   /** Compliance stance (retracted 2026-09-14 to match /compliance body §§02-06 authoritative phrasing). */
   complianceStance:

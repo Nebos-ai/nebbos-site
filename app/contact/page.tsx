@@ -42,7 +42,7 @@ const OFFICES = [
   },
   {
     label: "Operating",
-    entity: "Nebbos D.O.O.",
+    entity: "Nebbos Technologies D.O.O.",
     city: "Beograd, Serbia",
     role: "Engineering, operations, and technical delivery.",
   },

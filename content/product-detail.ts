@@ -34,7 +34,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     key: "platform",
     chapter: "I",
     heroDeck:
-      "Multi-Shell by default. Every action attested. Every substrate portable when you leave. Runs in production today.",
+      "Where the Pearls live and the operators approve. Multi-Shell by default — one client per row, one identity per request, one hash chain per action. Portable in full the day you leave. Running in production today, in K-12 districts across four U.S. states.",
     highlights: [
       { label: "Register", value: "Multi-Shell", note: "Shell isolation by default. Cross-Shell is a ceremony, not an accident." },
       { label: "Runtime", value: "Pearls at scale", note: "Every Pearl runs metered, isolated, and modular. Fleet-wide governance in one plane." },
@@ -65,7 +65,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     key: "app",
     chapter: "II",
     heroDeck:
-      "Local native for macOS and Windows. Offline-capable. Syncs through the MCP when online. First install of every operator's tier ceremony.",
+      "Native for macOS and Windows. Keeps the last mile of a decision on the machine in front of you. Works when the network doesn't, reconciles through the MCP the moment it's back. First install of every operator's tier ceremony.",
     highlights: [
       { label: "Platforms", value: "macOS · Windows", note: "Signed installers. Auto-update opt-in. No install wizard, no adware." },
       { label: "Mode", value: "Offline-capable", note: "Local-first workflows continue when the network doesn't." },
@@ -96,7 +96,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     key: "mcp",
     chapter: "III",
     heroDeck:
-      "The tool substrate every action routes through. Ships on the Cradle. Server-verified attestation on every call. No side channels.",
+      "The line every read and every write has to cross. Client-side classifier decides the tier, redacts before the wire, hands the call to the substrate. Ships on your Cradle — the host answers requests the way your hardware says to, not the way our deploy says to.",
     highlights: [
       { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
       { label: "Attestation", value: "Server-verified", note: "The MCP verifies factors before executing. Client claims mean nothing." },
@@ -127,7 +127,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     key: "usb",
     chapter: "IV",
     heroDeck:
-      "FIPS 140-3 Level 3 encrypted storage with an on-device keypad. Tamper-evident, epoxy-sealed, IP68, MIL-STD-810G, TAA-compliant. Carries the MCP and your Pearl memory. Gates elevated operations.",
+      "Sovereignty you can put in your pocket. Carries the MCP that mediates every tool call, the memory that makes your Pearl yours, and the keys that unlock your audit trail. Elevated capability follows the object on the desk — not the network location. FIPS 140-3 Level 3, epoxy-sealed, IP68, MIL-STD-810G, TAA-compliant.",
     highlights: [
       { label: "Encryption",     value: "FIPS 140-3 L3",         note: "Federally-certified encrypted storage volume. AES-256 XTS." },
       { label: "Authentication", value: "On-device keypad",       note: "PIN entry never traverses the host machine. Physical, isolated." },
