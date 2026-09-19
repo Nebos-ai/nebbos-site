@@ -99,7 +99,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
       "The tool substrate every action routes through. Ships on the Cradle. Server-verified attestation on every call. No side channels.",
     highlights: [
       { label: "Transport", value: "JSON-RPC over HTTPS", note: "Every call authenticated, versioned, and auditable." },
-      { label: "Attestation", value: "Server-verified", note: "The MCP verifies factors before executing. Client claims mean nothing." },
+      { label: "Attestation", value: "Server-verified", note: "The MCP verifies every factor server-side against enrolled credentials — hardware, biometric, and approval token — before a tool runs." },
       { label: "Isolation", value: "Shell-scoped", note: "Cross-Shell reads require enclave-signed approval. No accidental crossing." },
       { label: "Binary", value: "Ships on the Cradle", note: "Config, credentials, and code live on your Nebbos Cradle. Unplug removes them." },
       { label: "Quota", value: "Cost-follow overage", note: "Tool-call quotas per Shell. Overage billed at cost-follow with quarterly reconciliation." },
@@ -107,7 +107,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     deepTitle: "Architecture.",
     deep: [
       { heading: "One substrate, every tool call", body: "Every action that touches Shell state — reads, writes, mutations, cross-boundary joins — passes through the Nebbos MCP. There are no side channels, no direct database access, no host-shell backdoors." },
-      { heading: "Tier-gate decorator", body: "Every tool declares its required tier (L1 · L2 · L3). The MCP verifies factors before executing. Missing biometric? Refused. Missing Cradle physical presence for L2? Refused. Missing enclave-signed approval for L3? Refused." },
+      { heading: "Every tool call gated by the tier it needs", body: "A dashboard read passes on a fingerprint. A shell write needs your Cradle plugged in. A substrate change needs an enclave-signed approval token. The MCP verifies the factors server-side against enrolled credentials — nothing elevated moves without the hardware and the human on the other end." },
       { heading: "Binary lives on the Cradle", body: "The MCP binary, the config, the attestation credentials, and the Shell state that seeds a session all ship on the encrypted Nebbos Cradle volume. When the device is mounted, the host reads and executes. Unplug, and the mount is gone; elevated calls cannot produce valid attestations." },
       { heading: "Audit chain on every call", body: "Every call writes an audit event with a hash-chained parent reference. Hash-chain verifiable end-to-end. Replay-proof, tamper-evident, discovery-ready." },
     ],
@@ -139,7 +139,7 @@ export const PRODUCT_DETAILS: Record<ProductKey, ProductDetail> = {
     deep: [
       { heading: "Encrypted volume",              body: "AES-256 XTS ciphertext at rest. Federal-tier key management with per-device unique wrapping keys. FIPS 140-3 Level 3 certified." },
       { heading: "On-device keypad",              body: "PIN entered on the device itself, not on the host. A compromised host cannot capture the PIN. Programmable read-only and self-destruct modes for regulated deployments." },
-      { heading: "Tamper-evident, epoxy-sealed",  body: "Any physical intrusion is visible. The internal electronics are potted in place; extraction breaks the seal and voids attestation. There is no invisible way in." },
+      { heading: "Tamper-evident, sealed at manufacture", body: "The device seals at manufacture and stays sealed for its life on the desk. If it&rsquo;s ever been opened, you and your CISO see it immediately &mdash; the seal itself is the evidence, and the attestation chain retires the serial the moment integrity is broken. Your auditor gets a device they can trust on inspection alone." },
       { heading: "IP68 waterproof, MIL-STD-810G", body: "Full immersion, dust-tight, drop-tested to military-grade standards. Field-deployable in regulated, defense, and disaster-recovery contexts." },
       { heading: "TAA-compliant supply chain",    body: "No components sourced from adversarial jurisdictions. Meets US federal Trade Agreements Act procurement requirements. Chain-of-custody documented from manufacture to activation." },
     ],
