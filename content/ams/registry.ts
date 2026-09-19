@@ -1409,8 +1409,9 @@ export const AMS_ASSETS: AmsAsset[] = [
     tier: "core",
     description: "Complete reference for every feature and setting.",
     publicExample: "Microsoft Learn",
-    status: "need",
+    status: "in-progress",
     nebbosOwner: "Onboarding & Ed + Platform",
+    nebbosSource: "In-platform: /documentation surface (ADR-279, DocfsBrowser + doc-generation worker, BUILT). Public: nebbos.ai/docs entry with architecture · security-model · glossary · compliance-posture assembled from canonical-claims; api / mcp / quickstart / webhooks still planned.",
   },
   {
     category: "Customer Success",
@@ -1554,8 +1555,9 @@ export const AMS_ASSETS: AmsAsset[] = [
     tier: "growth",
     description: "Home for everything developers need: docs, keys, SDKs, community.",
     publicExample: "developer.apple.com",
-    status: "need",
+    status: "in-progress",
     nebbosOwner: "MCP + Platform",
+    nebbosSource: "nebbos.ai/docs — foundations complete (architecture · security-model · glossary · compliance-posture). Integration section (quickstart · auth · MCP · REST API · webhooks) queued.",
   },
   {
     category: "Developer & Technical",
