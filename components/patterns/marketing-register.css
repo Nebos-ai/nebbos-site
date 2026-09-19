@@ -3346,20 +3346,30 @@
   .mkt-eyebrow-chip--cradle   .mkt-eyebrow-chip__dot { background: var(--mkt-product-cradle);   box-shadow: 0 0 10px rgba(214, 58, 76, 0.75); }
 
   /* Tile grid · list-plain + split-columns items become cards.
-     Uses auto-fit + justify-content: center so partial last rows
-     (a 4-item list in a 3-col layout, an 8-item list in a 3-col,
-     etc.) center within the container instead of left-hanging.
-     Founder-directed 2026-09-19 (alignment sweep): every variable-
-     item grid on the site should center orphan-row items. */
+     Uses flex-wrap so partial last rows (4-item list, 5-item list,
+     any n-not-multiple-of-3) NATURALLY center their orphan items.
+     Founder-directed 2026-09-19 audit found the previous
+     `grid-template-columns: repeat(auto-fit, minmax(...))` approach
+     collapsed empty tracks by container width but did NOT re-center
+     items when the last row had fewer cards than columns — orphan
+     items hung LEFT. Flex-wrap + justify-content: center gets the
+     natural centering per row instead. */
   .mkt-tilegrid {
     list-style: none;
     padding: 0;
     margin: 32px auto 0 auto;
     max-width: 1120px;
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 20px;
+  }
+  .mkt-tile {
+    /* flex-grow 0 so a solo card on the last row doesn't stretch to fill
+       the container width (which defeats justify-content: center). */
+    flex: 0 1 320px;
+    min-width: 260px;
+    max-width: 340px;
   }
   .mkt-tile {
     display: grid;
@@ -3400,17 +3410,23 @@
   }
 
   /* Numbered cards · big Pearl-color numerals + card body.
-     Same auto-fit + center pattern as .mkt-tilegrid so odd-count
-     lists (5 or 7 items in a 2-col layout) center their orphan row. */
+     Flex-wrap so odd-count lists (5, 7) center their orphan row on
+     the last row instead of hanging left (auto-fit collapses empty
+     tracks by width, not by orphan-row position). */
   .mkt-numcards {
     list-style: none;
     padding: 0;
     margin: 32px auto 0 auto;
     max-width: 1120px;
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 500px));
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 16px;
+  }
+  .mkt-numcard {
+    flex: 0 1 460px;
+    min-width: 340px;
+    max-width: 500px;
   }
   .mkt-numcard {
     display: grid;
@@ -3683,16 +3699,22 @@
      Every row becomes a Pearl-color pill card with label + value.
      3-col at ≥ 1080px, 2-col at ≥ 720px. */
 
-  /* Fact grid · auto-fit + center so partial rows don't left-hang. */
+  /* Fact grid · flex-wrap so partial rows center per the alignment
+     discipline at top of file. */
   .mkt-factgrid {
     list-style: none;
     padding: 0;
     margin: 32px auto 0 auto;
     max-width: 1120px;
-    display: grid;
-    gap: 16px;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+    display: flex;
+    flex-wrap: wrap;
     justify-content: center;
+    gap: 16px;
+  }
+  .mkt-fact {
+    flex: 0 1 320px;
+    min-width: 260px;
+    max-width: 340px;
   }
   .mkt-fact {
     display: grid;

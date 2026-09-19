@@ -229,18 +229,20 @@ function TextBlock({ s, pearl, accent, index }: { s: SectionBase; pearl: Product
 
 /* Banner statement · full-bleed Pearl-color gradient band, centered
    display type, no card panel. Used as a "chapter break" every third
-   text-block. Numeral is inline with the eyebrow chip, not oversized,
-   so the STATEMENT does the visual work rather than the metadata. */
+   text-block. Founder-directed 2026-09-19: retired the running-count
+   numeral above the banner — "1 2 3 4 and all of that ... just
+   hangingout in the middle of the page ... not just there for no
+   reason." Text-blocks aren't ordered sequences; a position-count
+   numeral read as decoration, not signal. Kept the Pearl-color
+   flower tile + eyebrow chip as the section identity anchor. */
 
-function TextBlockBanner({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; index: number }) {
+function TextBlockBanner({ s, pearl }: { s: SectionBase; pearl: ProductKey; index: number }) {
   const eb = cleanEyebrow(s.eyebrow);
-  const num = String(index + 1).padStart(2, "0");
   return (
     <section className={`mkt mkt-section mkt-banner mkt-banner--${pearl}`} aria-labelledby={`h-${s.id}`}>
       <div className="mkt-banner__wash" aria-hidden />
       <div className="mkt-section__inner mkt-banner__inner">
         <div className="mkt-banner__meta">
-          <span className={`mkt-banner__num mkt-banner__num--${pearl}`} aria-hidden>{num}</span>
           <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
             <NebbosMark />
           </span>
@@ -264,21 +266,21 @@ function TextBlockBanner({ s, pearl, index }: { s: SectionBase; pearl: ProductKe
   );
 }
 
-/* Card · numeral+flower on left (or right if mirror) + body on the
-   opposite side. Default shape for two of every three text-blocks. */
+/* Card · Pearl-color flower tile + eyebrow chip on left (or right
+   if mirror) + h2 + body on the opposite side. Default shape for
+   two of every three text-blocks. Numeral removed 2026-09-19 —
+   text-blocks aren't ordered sequences and the running-count numeral
+   read as decoration hanging in the middle of the page rather than
+   signal. Flower tile + eyebrow chip carry the section identity. */
 
-function TextBlockCard({ s, pearl, accent, index, mirror }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number; mirror: boolean }) {
+function TextBlockCard({ s, pearl, accent, mirror }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number; mirror: boolean }) {
   const eb = cleanEyebrow(s.eyebrow);
-  const num = String(index + 1).padStart(2, "0");
   return (
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
         <article className={`mkt-textcard mkt-textcard--${pearl} ${mirror ? "mkt-textcard--mirror" : ""}`}>
           <aside className="mkt-textcard__aside">
-            <span className={`mkt-textcard__num mkt-textcard__num--${pearl}`} aria-hidden>
-              {num}
-            </span>
             <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
               <NebbosMark />
             </span>
