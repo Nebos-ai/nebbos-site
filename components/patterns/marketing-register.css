@@ -38,6 +38,39 @@
    collision with corporate-parent register styles that stay in @layer
    primitives / patterns / page. */
 
+/* ─────────────────────────────────────────────────────────────────
+   ALIGNMENT DISCIPLINE · standing convention · 2026-09-19
+   ─────────────────────────────────────────────────────────────────
+
+   Every variable-item grid on the site MUST center partial rows.
+   Grids where item count doesn't cleanly divide by column count
+   otherwise left-hang the orphan items — the "3 cards in a 4-col
+   grid" bug founder-caught on /products/mcp cross-nav.
+
+   THE PATTERN (apply to every new variable-item grid):
+     grid-template-columns: repeat(auto-fit, minmax(MIN, MAX));
+     justify-content: center;
+     margin-inline: auto;
+     max-width: <container-cap>;
+
+   auto-fit collapses empty tracks · justify-content centers what
+   remains · margin-inline auto centers the grid itself · max-width
+   keeps cards from stretching oddly on wide viewports.
+
+   FIXED-COUNT GRIDS (exactly N items every time) may use
+   `repeat(N, minmax(0, 1fr))` — but ONLY if a spec pins the count.
+   The /products showcase (4 products) and /departments (4 Pearls)
+   are the two exceptions.
+
+   For 3-item cross-nav rows (product-detail "other three products",
+   solutions verticals with 3 in a row), use `.mkt-products__grid
+   .mkt-products__grid--3` — that modifier centers 3 cards in the
+   grid at ≥ 1120px.
+
+   Every grid in this file already follows the pattern. Any new
+   grid inheriting `.mkt-tilegrid` / `.mkt-numcards` / `.mkt-factgrid`
+   picks up the alignment automatically. */
+
   .mkt {
     /* Ground */
     --mkt-ground: #05070a;

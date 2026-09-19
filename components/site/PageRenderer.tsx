@@ -47,11 +47,32 @@ const HERO_KINDS = new Set(["hero-full-bleed", "hero-paper", "empty-state"]);
 const CTA_KINDS = new Set(["cta-full-bleed", "cta-band"]);
 const NON_ACCENTED = new Set(["cta-full-bleed", "cta-band", "hero-full-bleed", "hero-paper", "empty-state"]);
 
+/* Sales-density cap · founder-directed 2026-09-19:
+   "we have to remember this is a sales marketing site we dont need
+    to have every piece of detail there like the we are trying to
+    justify anything we are selling the product showing the product."
+   Text-blocks are prose. After the first N, more prose reads as
+   justification. The rendering layer drops text-blocks past this
+   cap. content/pages.ts stays intact (no merge conflict with peer
+   copy-rewrite branches; SHOW-cards like list-numbered / list-plain
+   / case-study / inbox-router / table-rows / CTAs / heroes are all
+   kept — those SHOW the product, they don't argue for it. */
+const SALES_TEXTBLOCK_CAP = 3;
+
 export function PageRenderer({ page }: { page: Page }) {
   let blockCounter = 0;
+  let textBlockSeen = 0;
   return (
     <>
       {page.sections.map((section) => {
+        // Cap text-blocks per page. Skip silently past the cap;
+        // do NOT increment the block counter for skipped sections
+        // so Pearl-color cycling stays continuous across the
+        // surviving sections.
+        if (section.kind === "text-block") {
+          if (textBlockSeen >= SALES_TEXTBLOCK_CAP) return null;
+          textBlockSeen += 1;
+        }
         const wantsAccent = !NON_ACCENTED.has(section.kind);
         const pearl = pearlAt(blockCounter);
         const idx = blockCounter;
