@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 900" width="1200" height="900" role="img" aria-label="Code on a dark terminal">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0a0d13"/>
+      <stop offset="1" stop-color="#05070a"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="0.25" cy="0.2" r="0.8">
+      <stop offset="0" stop-color="#ff6b1e" stop-opacity="0.20"/>
+      <stop offset="1" stop-color="#ff6b1e" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="glow2" cx="0.85" cy="0.85" r="0.7">
+      <stop offset="0" stop-color="#4a5cff" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#4a5cff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#bg)"/>
+  <rect width="1200" height="900" fill="url(#glow)"/>
+  <rect width="1200" height="900" fill="url(#glow2)"/>
+
+  <!-- gutter -->
+  <rect x="0" y="0" width="86" height="900" fill="#ffffff" fill-opacity="0.02"/>
+  <line x1="86" y1="0" x2="86" y2="900" stroke="#ffffff" stroke-opacity="0.08"/>
+
+  <g font-family="ui-monospace, SFMono-Regular, Menlo, monospace" font-size="25">
+    <g fill="#ffffff" fill-opacity="0.28" text-anchor="end">
+      <text x="62" y="92">01</text><text x="62" y="134">02</text><text x="62" y="176">03</text>
+      <text x="62" y="218">04</text><text x="62" y="260">05</text><text x="62" y="302">06</text>
+      <text x="62" y="344">07</text><text x="62" y="386">08</text><text x="62" y="428">09</text>
+      <text x="62" y="470">10</text><text x="62" y="512">11</text><text x="62" y="554">12</text>
+      <text x="62" y="596">13</text><text x="62" y="638">14</text><text x="62" y="680">15</text>
+      <text x="62" y="722">16</text><text x="62" y="764">17</text><text x="62" y="806">18</text>
+    </g>
+
+    <text x="120" y="92"><tspan fill="#6b7a8f">// pearl · department runtime</tspan></text>
+    <text x="120" y="134"><tspan fill="#ff6b1e">import</tspan><tspan fill="#c9d3e0"> { </tspan><tspan fill="#7fd1ff">Pearl</tspan><tspan fill="#c9d3e0">, </tspan><tspan fill="#7fd1ff">Signal</tspan><tspan fill="#c9d3e0"> } </tspan><tspan fill="#ff6b1e">from</tspan><tspan fill="#9ae6a0"> "@nebbos/core"</tspan></text>
+    <text x="120" y="218"><tspan fill="#ff6b1e">export async function</tspan><tspan fill="#ffd479"> close</tspan><tspan fill="#c9d3e0">(</tspan><tspan fill="#c9d3e0">dept</tspan><tspan fill="#c9d3e0">) {</tspan></text>
+    <text x="152" y="260"><tspan fill="#ff6b1e">const</tspan><tspan fill="#c9d3e0"> pearl = </tspan><tspan fill="#ff6b1e">await</tspan><tspan fill="#ffd479"> Pearl.attach</tspan><tspan fill="#c9d3e0">(dept)</tspan></text>
+    <text x="152" y="302"><tspan fill="#ff6b1e">const</tspan><tspan fill="#c9d3e0"> open  = </tspan><tspan fill="#ff6b1e">await</tspan><tspan fill="#c9d3e0"> pearl.</tspan><tspan fill="#ffd479">signals</tspan><tspan fill="#c9d3e0">({ state: </tspan><tspan fill="#9ae6a0">"active"</tspan><tspan fill="#c9d3e0"> })</tspan></text>
+    <text x="152" y="386"><tspan fill="#ff6b1e">for</tspan><tspan fill="#c9d3e0"> (</tspan><tspan fill="#ff6b1e">const</tspan><tspan fill="#c9d3e0"> s </tspan><tspan fill="#ff6b1e">of</tspan><tspan fill="#c9d3e0"> open) {</tspan></text>
+    <text x="184" y="428"><tspan fill="#ff6b1e">if</tspan><tspan fill="#c9d3e0"> (s.</tspan><tspan fill="#7fd1ff">needsHuman</tspan><tspan fill="#c9d3e0">) {</tspan></text>
+    <text x="216" y="470"><tspan fill="#ff6b1e">await</tspan><tspan fill="#c9d3e0"> s.</tspan><tspan fill="#ffd479">escalate</tspan><tspan fill="#c9d3e0">({ to: dept.</tspan><tspan fill="#7fd1ff">owner</tspan><tspan fill="#c9d3e0"> })</tspan></text>
+    <text x="216" y="512"><tspan fill="#ff6b1e">continue</tspan></text>
+    <text x="184" y="554"><tspan fill="#c9d3e0">}</tspan></text>
+    <text x="184" y="596"><tspan fill="#ff6b1e">await</tspan><tspan fill="#c9d3e0"> s.</tspan><tspan fill="#ffd479">resolve</tspan><tspan fill="#c9d3e0">()</tspan><tspan fill="#6b7a8f">   // hash-chained</tspan></text>
+    <text x="152" y="638"><tspan fill="#c9d3e0">}</tspan></text>
+    <text x="152" y="722"><tspan fill="#ff6b1e">return</tspan><tspan fill="#c9d3e0"> pearl.</tspan><tspan fill="#ffd479">attest</tspan><tspan fill="#c9d3e0">()</tspan></text>
+    <text x="120" y="764"><tspan fill="#c9d3e0">}</tspan></text>
+  </g>
+
+  <!-- caret -->
+  <rect x="120" y="788" width="14" height="30" fill="#ff6b1e" fill-opacity="0.9"/>
+</svg>
