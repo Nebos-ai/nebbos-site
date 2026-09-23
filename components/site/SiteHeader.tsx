@@ -109,9 +109,15 @@ export function SiteHeader() {
         scheduleClose();
       }}
     >
+      {/* Frosted band behind the whole header strip, so page content never
+          reads through the gap around the pill; fades out below it. */}
+      <div
+        aria-hidden
+        className="glass pointer-events-none absolute inset-x-0 top-0 -bottom-6 -z-10 bg-ground/70 backdrop-blur-2xl backdrop-saturate-150 [mask-image:linear-gradient(to_bottom,#000_70%,transparent)]"
+      />
       <div
         ref={pillRef}
-        className="glass group/pill relative z-50 mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 rounded-pill bg-ground/55 pl-4 pr-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_20px_50px_-30px_rgb(0_0_0/0.9)] ring-1 ring-rule ring-inset backdrop-blur-xl backdrop-saturate-150 transition-[background-color,box-shadow] duration-500 ease-fluid data-[scrolled]:bg-ground-2/80 data-[scrolled]:ring-rule-2"
+        className="glass group/pill relative z-50 mx-auto flex h-16 max-w-[1240px] items-center justify-between gap-4 rounded-pill bg-ground/75 pl-4 pr-2 shadow-[inset_0_1px_0_rgb(255_255_255/0.06),0_20px_50px_-30px_rgb(0_0_0/0.9)] ring-1 ring-rule ring-inset backdrop-blur-2xl backdrop-saturate-150 transition-[background-color,box-shadow] duration-500 ease-fluid data-[scrolled]:bg-ground-2/90 data-[scrolled]:ring-rule-2"
       >
         <Link
           href="/"
