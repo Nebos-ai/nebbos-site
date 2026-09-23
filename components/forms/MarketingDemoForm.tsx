@@ -161,7 +161,7 @@ export function MarketingDemoForm() {
 
                 <button
                   type="submit"
-                  className="group mt-2 inline-flex w-full items-center justify-between gap-3 rounded-pill bg-ink py-1.5 pl-6 pr-1.5 font-display text-[15px] font-medium text-ground shadow-[0_10px_40px_-12px_rgb(255_107_30/0.55),inset_0_-2px_0_rgb(0_0_0/0.12)] transition-[scale] duration-300 ease-fluid active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent sm:w-auto sm:justify-start"
+                  className="group mt-2 flex w-full items-center justify-between gap-3 rounded-pill bg-ink py-1.5 pl-6 pr-1.5 font-display text-[15px] font-medium text-ground shadow-[0_10px_40px_-12px_rgb(255_107_30/0.55),inset_0_-2px_0_rgb(0_0_0/0.12)] transition-[scale] duration-300 ease-fluid active:scale-[0.99] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
                 >
                   Send request
                   <span className={arrowWell} aria-hidden>→</span>
