@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import type { CSSProperties } from "react";
 import { MarketingDemoForm } from "@/components/forms/MarketingDemoForm";
 import { RouteList } from "@/components/marketing/RouteList";
+import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
 import { Eyebrow, Section, deck, headline } from "@/components/marketing/primitives";
 import { RevealWords } from "@/components/motion/RevealWords";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
@@ -70,16 +71,12 @@ export default function DemoPage() {
             <StaggerItem
               key={i}
               as="li"
-              className="spotlight relative flex min-h-[220px] flex-col overflow-hidden rounded-bezel bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+              className="spotlight group relative flex min-h-[220px] flex-col overflow-hidden rounded-bezel bg-ground-2 p-6 ring-1 ring-rule ring-inset"
             >
               <div style={{ "--tint": BEAT_TINT[i], "--spot": BEAT_TINT[i] } as CSSProperties} className="contents">
-                <span
-                  aria-hidden
-                  className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(90%_100%_at_15%_0%,color-mix(in_srgb,var(--tint)_22%,transparent),transparent_70%)]"
-                />
-                <span className="relative font-code text-[28px] font-medium tabular-nums leading-none text-tint">
-                  {String(i + 1).padStart(2, "0")}
-                </span>
+                <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-60" />
+                <HudCorners />
+                <IndexMark index={i} total={AGENDA.length} />
                 <p className="relative m-0 mt-auto pt-10 text-[16px] leading-relaxed text-ink-2">{item}</p>
               </div>
             </StaggerItem>

@@ -200,6 +200,17 @@
     mask-image: radial-gradient(ellipse 70% 60% at 50% 40%, #000 20%, transparent 75%);
   }
 
+  /* Blueprint grid with intersection dots (21st.dev "Card with Grid
+     Ellipsis Pattern" family), faded toward the card's lower edge */
+  .grid-dots {
+    background-image:
+      radial-gradient(circle at 0 0, rgb(255 255 255 / 0.16) 1px, transparent 1.6px),
+      linear-gradient(to right, rgb(255 255 255 / 0.035) 1px, transparent 1px),
+      linear-gradient(to bottom, rgb(255 255 255 / 0.035) 1px, transparent 1px);
+    background-size: 22px 22px;
+    mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  }
+
   /* Film grain · fixed, pointer-events-none, never on scrolling layers */
   .noise {
     position: fixed;

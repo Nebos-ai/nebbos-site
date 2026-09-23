@@ -12,6 +12,8 @@ import { Eyebrow, GhostCta, PrimaryCta, Section, deck as deckClass, headline } f
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { ScrollBeam } from "@/components/motion/ScrollBeam";
 import { cn } from "@/lib/cn";
+import { balancedSpans } from "@/lib/balance";
+import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
 
 /**
  * PageRenderer · v7 · 2026-09-23 · Tailwind + Motion redesign
@@ -30,8 +32,12 @@ import { cn } from "@/lib/cn";
  * v7 shapes:
  *   hero          PageHero + PearlMosaic
  *   text-block    banner (tinted statement panel) · bezel split card · mirror
- *   list-numbered alternates: 2-column numbered cards · single-column
- *                 rail with a scroll-filled beam (so runs of lists vary)
+ *   list-numbered alternates: balanced numbered-card grid · single-column
+ *                 rail with a scroll-filled beam (so runs of lists vary);
+ *                 cards carry IndexMark (mono index + signal + meter) and
+ *                 HUD corners on a blueprint dot grid
+ *   grids         every card grid is row-balanced (lib/balance.ts): no
+ *                 orphan card, every row fills the full width
  *   list-plain    tinted tile grid
  *   split-columns sticky heading + tile grid
  *   table-rows    fact cards
@@ -305,34 +311,45 @@ function TextBlockCard({ s, pearl, mirror }: { s: SectionBase; pearl: ProductKey
 function TileGrid({ items, basePearl, cols = 3 }: { items: SectionBase["items"]; basePearl: ProductKey; cols?: 2 | 3 }) {
   if (!items?.length) return null;
   const baseIdx = PRODUCT_KEYS.indexOf(basePearl);
+  const spans = balancedSpans(items.length, { lg: cols, sm: 2 });
+  const compact = items.every((it) => !it.body);
   return (
-    <Stagger
-      as="ul"
-      className={cn("m-0 grid list-none gap-4 p-0 sm:grid-cols-2", cols === 3 && "lg:grid-cols-3")}
-      step={0.06}
-    >
+    <Stagger as="ul" className="m-0 grid list-none grid-cols-12 gap-4 p-0" step={0.06}>
       {items.map((item, i) => {
         const pearl = pearlAt(baseIdx + i);
         return (
           <StaggerItem
             key={item.title}
             as="li"
-            className="spotlight relative flex flex-col gap-4 overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+            className={cn(
+              "spotlight group relative overflow-hidden rounded-[1.4rem] bg-ground-2 ring-1 ring-rule ring-inset transition-[translate] duration-700 ease-out-expo hover:-translate-y-0.5",
+              spans[i],
+            )}
           >
             <div style={tintStyle(pearl)} className="contents">
+              <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-70" />
               <span
                 aria-hidden
                 className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(90%_100%_at_15%_0%,color-mix(in_srgb,var(--tint)_20%,transparent),transparent_70%)]"
               />
-              <span className="relative">
-                <MarkTile size="sm" />
-              </span>
-              <div className="relative flex flex-col gap-2">
-                <p className="m-0 font-display text-lg font-medium tracking-tight text-ink" dangerouslySetInnerHTML={{ __html: item.title }} />
-                {item.body && (
-                  <p className="m-0 text-[14px] leading-relaxed text-ink-3" dangerouslySetInnerHTML={{ __html: item.body }} />
-                )}
-              </div>
+              <HudCorners />
+              {compact ? (
+                <div className="relative flex min-h-[112px] items-center gap-4 p-6">
+                  <MarkTile size="sm" />
+                  <p className="m-0 flex-1 font-display text-[17px] font-medium leading-snug tracking-tight text-ink" dangerouslySetInnerHTML={{ __html: item.title }} />
+                  <span aria-hidden className="h-px w-8 shrink-0 bg-gradient-to-r from-[var(--tint)] to-transparent transition-[width] duration-700 ease-out-expo group-hover:w-14" />
+                </div>
+              ) : (
+                <div className="relative flex h-full flex-col gap-4 p-6">
+                  <MarkTile size="sm" />
+                  <div className="flex flex-col gap-2">
+                    <p className="m-0 font-display text-lg font-medium tracking-tight text-ink" dangerouslySetInnerHTML={{ __html: item.title }} />
+                    {item.body && (
+                      <p className="m-0 text-[14px] leading-relaxed text-ink-3" dangerouslySetInnerHTML={{ __html: item.body }} />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
           </StaggerItem>
         );
@@ -371,6 +388,8 @@ function ListNumbered({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; 
   const eb = cleanEyebrow(s.eyebrow);
   const baseIdx = PRODUCT_KEYS.indexOf(pearl);
   const rail = index % 2 === 1;
+  const items = s.items ?? [];
+  const spans = balancedSpans(items.length, { lg: 3, sm: 2, mid: "md" });
   return (
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)} className={cn(rail && "grid gap-12 lg:grid-cols-12 lg:gap-10")}>
@@ -378,29 +397,34 @@ function ListNumbered({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; 
           <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
         </div>
         <div className={cn("relative", rail ? "lg:col-span-7" : "mt-14")}>
-          {rail && <ScrollBeam className="left-[27px]" />}
+          {rail && <ScrollBeam className="left-[7px]" />}
           <Stagger
             as="ol"
-            className={cn("relative m-0 grid list-none gap-4 p-0", !rail && "lg:grid-cols-2 lg:gap-x-5")}
+            className={cn("relative m-0 grid list-none gap-4 p-0", rail ? "pl-8" : "grid-cols-12 lg:gap-5")}
             step={0.06}
           >
-            {(s.items ?? []).map((item, i) => {
+            {items.map((item, i) => {
               const p = pearlAt(baseIdx + i);
               return (
-                <StaggerItem key={item.title} as="li" className="relative grid grid-cols-[56px_1fr] gap-4">
-                  <span
+                <StaggerItem key={item.title} as="li" className={cn("relative", !rail && spans[i])}>
+                  {rail && (
+                    <span
+                      aria-hidden
+                      style={tintStyle(p)}
+                      className="absolute -left-8 top-8 grid size-[15px] place-items-center rounded-full bg-ground ring-1 ring-[var(--tint)] shadow-[0_0_12px_var(--tint)]"
+                    >
+                      <span className="size-[5px] rounded-full bg-[var(--tint)]" />
+                    </span>
+                  )}
+                  <div
                     style={tintStyle(p)}
-                    className={cn(
-                      "relative z-10 grid size-14 place-items-center rounded-[1.1rem] bg-ground-3 font-code text-[15px] font-medium tabular-nums text-tint ring-1 ring-[color-mix(in_srgb,var(--tint)_40%,transparent)] ring-inset",
-                      rail && "shadow-[0_0_0_6px_var(--color-ground)]",
-                    )}
-                    aria-hidden
+                    className="spotlight group relative flex h-full flex-col overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset md:p-7"
                   >
-                    {String(i + 1).padStart(2, "0")}
-                  </span>
-                  <div style={tintStyle(p)} className="spotlight relative rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset">
+                    <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-60" />
+                    <HudCorners />
+                    <IndexMark index={i} total={items.length} />
                     <div
-                      className="relative font-display text-lg font-medium tracking-tight text-ink"
+                      className="relative mt-6 font-display text-lg font-medium tracking-tight text-ink"
                       dangerouslySetInnerHTML={{ __html: item.title }}
                     />
                     {item.body && (
@@ -453,19 +477,24 @@ function TableRows({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
     ["Serbian subsidiary", `${BRAND.legalEntity} · ${BRAND.legalEntityLocation}`],
     ["Team shape", FACTS.teamShape],
   ];
+  const factSpans = balancedSpans(rows.length, { lg: 3, sm: 2 });
   return (
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)}>
         <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
-        <Stagger as="ul" className="m-0 mt-14 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3" step={0.06}>
+        <Stagger as="ul" className="m-0 mt-14 grid list-none grid-cols-12 gap-4 p-0" step={0.06}>
           {rows.map(([label, value], i) => {
             const p = pearlAt(baseIdx + i);
             return (
               <StaggerItem
                 key={label}
                 as="li"
-                className="spotlight relative flex min-h-[150px] flex-col justify-between gap-6 rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+                className={cn(
+                  "spotlight relative flex min-h-[150px] flex-col justify-between gap-6 overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset",
+                  factSpans[i],
+                )}
               >
+                <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-50" />
                 <span style={tintStyle(p)} className="relative font-code text-[11px] font-medium uppercase tracking-label text-tint">
                   {label}
                 </span>

@@ -13,6 +13,7 @@ import { Eyebrow, GhostCta, PrimaryCta, Section, headline } from "@/components/m
 import { RevealWords } from "@/components/motion/RevealWords";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { ScrollBeam } from "@/components/motion/ScrollBeam";
+import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
 import { cn } from "@/lib/cn";
 
 /**
@@ -145,18 +146,21 @@ export default async function ProductTierPage({ params }: { params: Promise<Para
             <TierMeter tier={tier.key} tint={tint} />
           </Reveal>
           <div className="relative lg:col-span-7">
-            <ScrollBeam className="left-[27px]" />
-            <Stagger as="ol" className="relative m-0 grid list-none gap-4 p-0" step={0.08}>
+            <ScrollBeam className="left-[7px]" />
+            <Stagger as="ol" className="relative m-0 grid list-none gap-4 p-0 pl-8" step={0.08}>
               {detail.capabilities.map((c, i) => (
-                <StaggerItem key={c.title} as="li" className="relative grid grid-cols-[56px_1fr] gap-5">
+                <StaggerItem key={c.title} as="li" className="relative">
                   <span
-                    className="relative z-10 grid size-14 place-items-center rounded-[1.1rem] bg-ground-3 font-code text-[15px] font-medium tabular-nums text-tint ring-1 ring-[color-mix(in_srgb,var(--tint)_40%,transparent)] ring-inset shadow-[0_0_0_6px_var(--color-ground)]"
                     aria-hidden
+                    className="absolute -left-8 top-8 grid size-[15px] place-items-center rounded-full bg-ground ring-1 ring-[var(--tint)] shadow-[0_0_12px_var(--tint)]"
                   >
-                    {String(i + 1).padStart(2, "0")}
+                    <span className="size-[5px] rounded-full bg-[var(--tint)]" />
                   </span>
-                  <div className="spotlight relative rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset">
-                    <div className="relative font-display text-xl font-medium tracking-tight text-ink">{c.title}</div>
+                  <div className="spotlight group relative overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset md:p-7">
+                    <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-60" />
+                    <HudCorners />
+                    <IndexMark index={i} total={detail.capabilities.length} />
+                    <div className="relative mt-6 font-display text-xl font-medium tracking-tight text-ink">{c.title}</div>
                     <p className="relative m-0 mt-2 text-[15px] leading-relaxed text-ink-2">{c.body}</p>
                   </div>
                 </StaggerItem>

@@ -6,6 +6,7 @@ import { Eyebrow, Section, headline } from "@/components/marketing/primitives";
 import { RevealWords } from "@/components/motion/RevealWords";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
+import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
 
 export const metadata: Metadata = {
   title: "How this was built",
@@ -129,14 +130,12 @@ export default function HowPage() {
             <StaggerItem
               key={d.n}
               as="li"
-              className="spotlight relative flex flex-col gap-3 rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset md:p-7"
+              className="spotlight group relative flex flex-col gap-3 overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset md:p-7"
             >
-              <div className="relative flex items-center gap-4">
-                <span className="font-code text-[13px] tabular-nums text-ink-3" aria-hidden>
-                  {d.n.toString().padStart(2, "0")}
-                </span>
-                <div className="font-display text-xl font-medium tracking-tight text-ink">{d.name}</div>
-              </div>
+              <span aria-hidden className="grid-dots pointer-events-none absolute inset-0 opacity-50" />
+              <HudCorners />
+              <IndexMark index={d.n - 1} total={DIMENSIONS.length} />
+              <div className="relative mt-3 font-display text-xl font-medium tracking-tight text-ink">{d.name}</div>
               <p className="relative m-0 font-code text-[12.5px] leading-relaxed tracking-[0.02em] text-ink-3">{d.bar}</p>
               <p className="relative m-0 text-[15px] leading-relaxed text-ink-2">{d.note}</p>
               <p

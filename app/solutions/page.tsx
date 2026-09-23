@@ -7,6 +7,7 @@ import { Eyebrow, GhostCta, PrimaryCta, Section, deck, headline } from "@/compon
 import { RevealWords } from "@/components/motion/RevealWords";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { cn } from "@/lib/cn";
+import { balancedSpans } from "@/lib/balance";
 
 /**
  * PAGE · /solutions · v2 · 2026-09-18 · marketing-register rebuild
@@ -42,6 +43,9 @@ const VERTICALS = [
   { slug: "public-sector",       eyebrow: "Industry",  name: "Nebbos Civic",              tagline: "Case management, accountability." },
   { slug: "model-training",      eyebrow: "Substrate", name: "Nebbos Training Substrate", tagline: "Your operation is the training data." },
 ];
+
+// Row-balanced: 3 × 3 on desktop, 2-2-2-2 + a full-width substrate card on tablet.
+const SPANS = balancedSpans(VERTICALS.length, { lg: 3, sm: 2 });
 
 const TINTS = ["var(--color-platform)", "var(--color-app)", "var(--color-mcp)", "var(--color-cradle)"];
 
@@ -85,9 +89,9 @@ export default function SolutionsPage() {
           </p>
         </Reveal>
 
-        <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5" step={0.06}>
+        <Stagger className="mt-14 grid grid-cols-12 gap-4 lg:gap-5" step={0.06}>
           {VERTICALS.map((v, i) => (
-            <StaggerItem key={v.slug}>
+            <StaggerItem key={v.slug} className={SPANS[i]}>
               <PearlCard
                 href={`/solutions/${v.slug}`}
                 tint={TINTS[i % 4]!}
