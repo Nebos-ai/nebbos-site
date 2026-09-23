@@ -1,117 +1,77 @@
-import Link from "next/link";
+import type { CSSProperties } from "react";
 import { BRAND } from "@/content/brand";
 import { SplitWords } from "@/components/patterns/SplitWords";
+import { BackgroundBeams } from "@/components/motion/BackgroundBeams";
+import { BrainCore } from "@/components/sections/hero/BrainCore";
+import {
+  Eyebrow,
+  GhostCta,
+  PrimaryCta,
+  deck,
+  headline,
+} from "@/components/marketing/primitives";
+import { cn } from "@/lib/cn";
 
 /**
- * MarketingHero · v2 · 2026-09-18 · outcome-first rewrite
+ * MarketingHero · v4 · 2026-09-23 · brain-core redesign
  *
- * Founder-directed (verbatim): "why is this on the home page in this
- * form why is this important to someone looking for a sovereign ai
- * brain do you go to the restaurant and say what's in the sausage or
- * do you eat it if it looks good taste good."
+ * Copy unchanged from v2 (2026-09-18 outcome-first rewrite: sovereign
+ * brain for your operation, department-scoped gains).
  *
- * AND: "the best marketing sites use human psychology... most people
- * want to be told and show it's good for them they don't really ever
- * understand what it is."
- *
- * v1 hero: infrastructure framing ("Infrastructure for AI operators.")
- *          + sausage deck (tool-calls, FIPS 140-3 Cradle, hash-chain).
- * v2 hero: outcome framing (sovereign brain for your operation) +
- *          department-scoped concrete gains you feel in the week.
- *
- * The right side of the hero still shows a stylized product hint, but
- * with department-level chrome (Finance / Ops / Care) instead of
- * substrate-plumbing chrome (Signals / Approval 04 / Attestation 14 062).
+ *   - Accent light beams (adapted from 21st.dev Background Beams) over a
+ *     masked engineering grid, lit from the top-left.
+ *   - Headline words rise out of blur on first paint via pure CSS, so the
+ *     LCP element is painted at t=0 and never waits for hydration.
+ *   - v4 replaces the three-panel dashboard mock with BrainCore: the
+ *     sovereign brain drawn as a core with one Pearl per department
+ *     wired into it. Founder-directed: no pointer-following motion.
  */
+
+const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
 export function MarketingHero() {
   return (
-    <section className="mkt mkt-section mkt-hero" aria-labelledby="mkt-hero-h">
-      <div className="mkt-section__inner">
-        <div className="mkt-hero__grid">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Nebbos</p>
-            <h1 id="mkt-hero-h" className="mkt-display">
-              <SplitWords>{BRAND.taglineShort}</SplitWords>
-            </h1>
-            <p className="mkt-deck">{BRAND.homeDeck}</p>
-            <div className="mkt-hero__ctas">
-              <Link href="/demo" className="mkt-cta mkt-cta--primary">
-                Book a demo
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href="/solutions" className="mkt-cta mkt-cta--ghost">
-                See the Pearls
-              </Link>
-            </div>
-          </div>
+    <section
+      className="mkt relative isolate -mt-[76px] overflow-hidden px-4 pt-[76px] sm:px-6"
+      aria-labelledby="mkt-hero-h"
+    >
+      {/* Ground lighting */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10">
+        <div className="grid-field absolute inset-0" />
+        <BackgroundBeams className="opacity-70 [mask-image:radial-gradient(ellipse_80%_70%_at_30%_30%,#000_30%,transparent_80%)]" />
+        <div className="absolute -left-40 -top-40 size-[720px] rounded-full bg-accent/20 blur-[140px]" />
+        <div className="absolute -right-32 top-24 size-[520px] rounded-full bg-platform/15 blur-[140px]" />
+        <div className="absolute inset-x-0 bottom-0 h-40 bg-gradient-to-b from-transparent to-ground" />
+      </div>
 
-          <div className="mkt-hero__visual" aria-hidden>
-            {/* Three department Pearls, live-status feel. Visitor reads
-                shape, not the sausage — a screenshot-shaped visual that
-                signals "your team's departments, running." */}
-            <div className="mkt-mock">
-              <div className="mkt-mock__chrome">
-                <span className="mkt-mock__dot" />
-                <span className="mkt-mock__dot" />
-                <span className="mkt-mock__dot" />
-              </div>
-              <div className="mkt-mock__filter">
-                <span className="mkt-mock__filter-dot" aria-hidden />
-                Live · Monday 08:12
-              </div>
-              <div className="mkt-mock__body">
-                <div className="mkt-mock__panel">
-                  <span className="mkt-mock__badge">Finance</span>
-                  <span className="mkt-mock__status">Closed</span>
-                  <div className="mkt-mock__meta">
-                    <span>Sep</span>
-                    <span className="mkt-mock__meta-pill">Auto</span>
-                  </div>
-                  <div className="mkt-mock__chart" aria-hidden>
-                    <span className="mkt-mock__bar" style={{ height: "40%", animationDelay: "0ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "55%", animationDelay: "40ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "70%", animationDelay: "80ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "60%", animationDelay: "120ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "85%", animationDelay: "160ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "100%", animationDelay: "200ms" }} />
-                  </div>
-                </div>
-                <div className="mkt-mock__panel mkt-mock__panel--accent">
-                  <span className="mkt-mock__badge">Ops</span>
-                  <span className="mkt-mock__status">2 waiting</span>
-                  <div className="mkt-mock__meta">
-                    <span>Approve</span>
-                    <span className="mkt-mock__meta-pill">You</span>
-                  </div>
-                  <div className="mkt-mock__chart" aria-hidden>
-                    <span className="mkt-mock__bar" style={{ height: "50%", animationDelay: "0ms" }} />
-                    <span className="mkt-mock__bar mkt-mock__bar--accent" style={{ height: "90%", animationDelay: "60ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "45%", animationDelay: "120ms" }} />
-                    <span className="mkt-mock__bar mkt-mock__bar--accent" style={{ height: "78%", animationDelay: "180ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "55%", animationDelay: "240ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "62%", animationDelay: "300ms" }} />
-                  </div>
-                </div>
-                <div className="mkt-mock__panel">
-                  <span className="mkt-mock__badge">Care</span>
-                  <span className="mkt-mock__status">Quiet</span>
-                  <div className="mkt-mock__meta">
-                    <span>0 open</span>
-                    <span className="mkt-mock__meta-pill">Auto</span>
-                  </div>
-                  <div className="mkt-mock__chart" aria-hidden>
-                    <span className="mkt-mock__bar" style={{ height: "30%", animationDelay: "0ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "35%", animationDelay: "50ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "22%", animationDelay: "100ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "40%", animationDelay: "150ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "28%", animationDelay: "200ms" }} />
-                    <span className="mkt-mock__bar" style={{ height: "36%", animationDelay: "250ms" }} />
-                  </div>
-                </div>
-              </div>
-            </div>
+      <div className="mx-auto grid min-h-[min(calc(100dvh-76px),840px)] w-full max-w-[1240px] items-center gap-14 pb-20 pt-16 md:pt-20 lg:grid-cols-[1.2fr_1fr] lg:gap-12 lg:pb-24">
+        <div className="flex flex-col items-start gap-7">
+          <div className="rise-in" style={d(0)}>
+            <Eyebrow>Nebbos</Eyebrow>
           </div>
+          <h1
+            id="mkt-hero-h"
+            className={cn(
+              headline,
+              "rise-words text-[clamp(2.75rem,5vw,4.25rem)] leading-[1]",
+            )}
+          >
+            <SplitWords step={0.07}>{BRAND.taglineShort}</SplitWords>
+          </h1>
+          <p className={cn(deck, "rise-in max-w-[52ch]")} style={d(260)}>
+            {BRAND.homeDeck}
+          </p>
+          <div
+            className="rise-in flex flex-wrap items-center gap-3 pt-1"
+            style={d(380)}
+          >
+            <PrimaryCta href="/demo">Book a demo</PrimaryCta>
+            <GhostCta href="/solutions">See the Pearls</GhostCta>
+          </div>
+        </div>
+
+        <div className="rise-in-far relative" style={d(300)}>
+          <BrainCore />
         </div>
       </div>
     </section>

@@ -6,10 +6,13 @@ import { SiteHeader } from "@/components/site/SiteHeader";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { MarketingCursorGlow } from "@/components/site/MarketingCursorGlow";
 import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 import { BRAND } from "@/content/brand";
 import { organizationJsonLd } from "@/lib/seo";
 
 import "./globals.css";
+// Tailwind v4 register · imported second so its layers append after the legacy ones.
+import "./tailwind.css";
 
 /**
  * Root layout · Nebbos site v3 · font stack 2026-08-24 revision
@@ -171,9 +174,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         <a href="#main" className="skip-link">Skip to content</a>
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <MarketingFooter />
+        <MotionProvider>
+          <SiteHeader />
+          <main id="main">{children}</main>
+          <MarketingFooter />
+        </MotionProvider>
+        <div className="noise" aria-hidden />
         <MarketingCursorGlow />
         <WebVitalsReporter />
       </body>
