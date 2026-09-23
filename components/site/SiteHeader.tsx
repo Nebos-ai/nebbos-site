@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect, useRef, type CSSProperties } from "react";
 import { AnimatePresence, m, useMotionValueEvent, useScroll } from "motion/react";
@@ -18,8 +19,9 @@ import { arrowWell } from "@/components/marketing/primitives";
  * layoutId highlight; the Products mega-menu and mobile drawer animate
  * in and out with AnimatePresence.
  *
- * The flower-of-life mark still stands alone as the identity (no
- * wordmark on nebbos.ai).
+ * 2026-09-23: the NEBBOS wordmark (public/nebbos-logo.svg) sits beside
+ * the flower-of-life mark, founder-directed. Only the mark scales on
+ * hover; neither ever rotates.
  */
 
 const PRODUCT_TINT: Record<string, string> = {
@@ -114,9 +116,12 @@ export function SiteHeader() {
         <Link
           href="/"
           aria-label="Nebbos home"
-          className="grid size-10 place-items-center rounded-pill text-ink transition-transform duration-500 ease-fluid hover:scale-110 focus-visible:outline-2 focus-visible:outline-accent"
+          className="group/logo flex items-center gap-3 rounded-pill pr-2 text-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         >
-          <NebbosMark size={34} />
+          <span className="grid size-10 place-items-center transition-transform duration-500 ease-fluid group-hover/logo:scale-110">
+            <NebbosMark size={34} />
+          </span>
+          <Image src="/nebbos-logo.svg" alt="" width={96} height={18} unoptimized priority className="h-[18px] w-auto" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center lg:flex">
