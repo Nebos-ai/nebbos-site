@@ -1,13 +1,13 @@
 import { Fragment, type CSSProperties, type ReactNode } from "react";
-import Link from "next/link";
 import { NebbosMark } from "@nebbos/brand/logo";
 import type { Page, SectionBase } from "@/content/pages";
-import { CONTACT, mailto } from "@/content/contact";
+import { CONTACT } from "@/content/contact";
 import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
 import { PageHero as Hero } from "@/components/marketing/PageHero";
 import { PearlMosaic } from "@/components/marketing/PearlMosaic";
 import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { RouteList } from "@/components/marketing/RouteList";
 import { Eyebrow, GhostCta, PrimaryCta, Section, deck as deckClass, headline } from "@/components/marketing/primitives";
 import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
 import { ScrollBeam } from "@/components/motion/ScrollBeam";
@@ -546,27 +546,10 @@ function InboxRouter({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
         <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2}>
           {s.deck && <p className={deckClass} dangerouslySetInnerHTML={{ __html: s.deck }} />}
         </SectionHead>
-        <Reveal className="bezel mt-14" amount={0.1}>
-          <ul className="bezel-core m-0 grid list-none gap-1 p-2 md:p-3">
-            {inboxes.map((inbox) => (
-              <li key={inbox.addr}>
-                <Link
-                  href={mailto(inbox.addr)}
-                  className="group grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-1 rounded-chip px-4 py-4 transition-colors duration-300 hover:bg-white/[0.05] focus-visible:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-accent md:grid-cols-[180px_1fr_auto] md:px-5"
-                >
-                  <div className="font-code text-[11px] font-medium uppercase tracking-label text-ink-3">{inbox.label}</div>
-                  <div className="col-span-2 row-start-2 md:col-span-1 md:row-start-auto">
-                    <div className="font-display text-[16px] font-medium text-ink">{inbox.addr}</div>
-                    <div className="mt-0.5 text-[14px] text-ink-3">{inbox.strap}</div>
-                  </div>
-                  <div className="row-start-1 text-ink-3 transition-colors group-hover:text-accent md:row-start-auto" aria-hidden>
-                    →
-                  </div>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </Reveal>
+        <RouteList
+          className="mt-14"
+          routes={inboxes.map((i) => ({ label: i.label, addr: i.addr, desc: i.strap }))}
+        />
       </div>
     </Section>
   );

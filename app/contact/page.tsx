@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import type { CSSProperties } from "react";
 import { CONTACT } from "@/content/contact";
+import { PageHero } from "@/components/marketing/PageHero";
+import { RouteList } from "@/components/marketing/RouteList";
+import { Eyebrow, GhostCta, PrimaryCta, Section, deck, headline } from "@/components/marketing/primitives";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 
 /**
  * PAGE · /contact · v2 · 2026-09-18 · marketing-register rebuild
@@ -48,86 +54,76 @@ const OFFICES = [
   },
 ];
 
+const h2 = cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]");
+const OFFICE_TINT = ["var(--color-platform)", "var(--color-app)", "var(--color-mcp)"];
+
 export default function ContactPage() {
   return (
     <>
-      {/* HERO */}
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="contact-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Contact</p>
-            <h1 id="contact-h" className="mkt-display">
-              Route direct to the right inbox.
-            </h1>
-            <p className="mkt-deck">
-              Seven addresses. Reply within one business day. Procurement,
-              security, engineering — each has its own path so nothing waits
-              behind a triage queue.
-            </p>
-            <div className="mkt-hero__ctas">
-              <Link href="/demo" className="mkt-cta mkt-cta--primary">
-                Book a demo
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href={`mailto:${CONTACT.general}`} className="mkt-cta mkt-cta--ghost">
-                Email general
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        id="contact-h"
+        eyebrow="Contact"
+        title="Route direct to the right inbox."
+        deck={
+          <>
+            Seven addresses. Reply within one business day. Procurement,
+            security, engineering — each has its own path so nothing waits
+            behind a triage queue.
+          </>
+        }
+        ctas={
+          <>
+            <PrimaryCta href="/demo">Book a demo</PrimaryCta>
+            <GhostCta href={`mailto:${CONTACT.general}`}>Email general</GhostCta>
+          </>
+        }
+      />
 
       {/* ROUTES */}
-      <section className="mkt mkt-section" aria-labelledby="routes-h">
-        <div className="mkt-section__inner">
-          <header className="mkt-numbers__head">
-            <p className="mkt-eyebrow">Direct routing</p>
-            <h2 id="routes-h" className="mkt-h2">
-              Every address, its own path.
-            </h2>
-          </header>
-          <div className="mkt-routes">
-            {ROUTES.map((r) => (
-              <Link key={r.email} href={`mailto:${r.email}`} className="mkt-route">
-                <span className="mkt-route__label">{r.label}</span>
-                <div className="mkt-route__body">
-                  <span className="mkt-route__email">{r.email}</span>
-                  <p className="mkt-route__desc">{r.desc}</p>
-                </div>
-                <span className="mkt-route__arrow" aria-hidden>→</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section labelledBy="routes-h">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>Direct routing</Eyebrow>
+          <h2 id="routes-h" className={h2}>
+            <RevealWords>Every address, its own path.</RevealWords>
+          </h2>
+        </Reveal>
+        <RouteList className="mt-14" routes={ROUTES.map((r) => ({ label: r.label, addr: r.email, desc: r.desc }))} />
+      </Section>
 
       {/* OFFICES */}
-      <section className="mkt mkt-section" aria-labelledby="offices-h">
-        <div className="mkt-section__inner">
-          <header className="mkt-numbers__head">
-            <p className="mkt-eyebrow">Offices</p>
-            <h2 id="offices-h" className="mkt-h2">
-              Three entities. One company.
-            </h2>
-            <p className="mkt-deck">
-              US parent for contracting. LA for product. Belgrade for
-              engineering. Every entity signs and delivers.
-            </p>
-          </header>
-          <div className="mkt-builtfor">
-            {OFFICES.map((o) => (
-              <div key={o.label} className="mkt-builtfor__item">
-                <div>
-                  <p className="mkt-eyebrow" style={{ marginBottom: 6 }}>{o.label}</p>
-                  <p className="mkt-builtfor__audience">{o.entity}</p>
-                  <p className="mkt-highlight__note" style={{ marginTop: 2 }}>{o.city}</p>
+      <Section labelledBy="offices-h">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>Offices</Eyebrow>
+          <h2 id="offices-h" className={h2}>
+            <RevealWords>Three entities. One company.</RevealWords>
+          </h2>
+          <p className={deck}>
+            US parent for contracting. LA for product. Belgrade for
+            engineering. Every entity signs and delivers.
+          </p>
+        </Reveal>
+        <Stagger className="mt-14 grid gap-4 md:grid-cols-3 lg:gap-5" step={0.1}>
+          {OFFICES.map((o, i) => (
+            <StaggerItem
+              key={o.label}
+              className="spotlight relative flex min-h-[260px] flex-col overflow-hidden rounded-bezel bg-ground-2 p-7 ring-1 ring-rule ring-inset"
+            >
+              <div style={{ "--tint": OFFICE_TINT[i], "--spot": OFFICE_TINT[i] } as CSSProperties} className="contents">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-2/3 bg-[radial-gradient(120%_80%_at_20%_0%,color-mix(in_srgb,var(--tint)_22%,transparent),transparent_70%)]"
+                />
+                <div className="relative">
+                  <p className="m-0 font-code text-[11px] font-medium uppercase tracking-label text-tint">{o.label}</p>
+                  <p className="m-0 mt-4 font-display text-2xl font-medium tracking-tight text-ink">{o.entity}</p>
+                  <p className="m-0 mt-1 text-[14px] text-ink-3">{o.city}</p>
                 </div>
-                <p className="mkt-builtfor__scope">{o.role}</p>
+                <p className="relative m-0 mt-auto pt-10 text-[15px] leading-relaxed text-ink-2">{o.role}</p>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
     </>
   );
 }

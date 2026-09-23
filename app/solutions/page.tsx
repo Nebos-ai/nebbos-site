@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { NebbosMark } from "@nebbos/brand/logo";
+import { PageHero } from "@/components/marketing/PageHero";
+import { PearlMosaic } from "@/components/marketing/PearlMosaic";
+import { PearlCard } from "@/components/marketing/PearlCard";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { Eyebrow, GhostCta, PrimaryCta, Section, deck, headline } from "@/components/marketing/primitives";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 
 /**
  * PAGE · /solutions · v2 · 2026-09-18 · marketing-register rebuild
+ *
+ * 2026-09-23 redesign (visual only, copy frozen): shared PageHero +
+ * PearlMosaic, the nine verticals as tinted PearlCards in a 3 × 3 grid
+ * (the substrate card carries a grid field), shared ClosingCta.
  *
  * Migrates from PAGES.solutions (single-hero stub with "Vertical cards
  * rendered inline" comment) to a native dark-register directory: 9
@@ -33,102 +43,77 @@ const VERTICALS = [
   { slug: "model-training",      eyebrow: "Substrate", name: "Nebbos Training Substrate", tagline: "Your operation is the training data." },
 ];
 
+const TINTS = ["var(--color-platform)", "var(--color-app)", "var(--color-mcp)", "var(--color-cradle)"];
+
 export default function SolutionsPage() {
   return (
     <>
-      {/* HERO */}
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="solutions-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Solutions</p>
-            <h1 id="solutions-h" className="mkt-display">
-              A Pearl for every domain.
-            </h1>
-            <p className="mkt-deck">
-              Every industry has departments that would run better with a
-              brain. Nebbos ships eight Pearls tuned to those departments,
-              plus a training substrate that turns your operation into
-              your own preference data. Pick the one closest to yours.
-            </p>
-            <div className="mkt-hero__ctas">
-              <Link href="/demo" className="mkt-cta mkt-cta--primary">
-                Book a demo
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href="#verticals" className="mkt-cta mkt-cta--ghost">
-                See the catalog
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        id="solutions-h"
+        eyebrow="Solutions"
+        title="A Pearl for every domain."
+        deck={
+          <>
+            Every industry has departments that would run better with a
+            brain. Nebbos ships eight Pearls tuned to those departments,
+            plus a training substrate that turns your operation into
+            your own preference data. Pick the one closest to yours.
+          </>
+        }
+        ctas={
+          <>
+            <PrimaryCta href="/demo">Book a demo</PrimaryCta>
+            <GhostCta href="#verticals">See the catalog</GhostCta>
+          </>
+        }
+        visual={<PearlMosaic />}
+      />
 
-      {/* VERTICALS DIRECTORY */}
-      <section className="mkt mkt-section" aria-labelledby="verticals">
-        <div className="mkt-section__inner">
-          <header className="mkt-products__head">
-            <p className="mkt-eyebrow">Eight Pearls + one substrate</p>
-            <h2 id="verticals" className="mkt-h2">
-              Three functions. Five industries. One training substrate.
-            </h2>
-            <p className="mkt-deck">
-              Function Pearls (Operations, Finance, People) work across every
-              industry. Industry Pearls (Education, Care, FS, Manufacturing,
-              Civic) come pre-tuned to that vertical&rsquo;s ops shape.
-              Underneath them, the Training Substrate captures every
-              decision your team makes as a preference pair.
-            </p>
-          </header>
-
-          <div className="mkt-products__grid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))" }}>
-            {VERTICALS.map((v, i) => {
-              const variantClass = i % 4 === 0 ? "mkt-product--platform"
-                : i % 4 === 1 ? "mkt-product--app"
-                : i % 4 === 2 ? "mkt-product--mcp"
-                : "mkt-product--cradle";
-              return (
-                <Link key={v.slug} href={`/solutions/${v.slug}`} className={`mkt-product ${variantClass}`}>
-                  <span className="mkt-product__mark" aria-hidden>
-                    <NebbosMark size={32} />
-                  </span>
-                  <div className="mkt-product__body">
-                    <p className="mkt-product__eyebrow">{v.eyebrow}</p>
-                    <h3 className="mkt-product__name">{v.name.replace("Nebbos ", "")}</h3>
-                    <p className="mkt-product__tagline">{v.tagline}</p>
-                  </div>
-                  <span className="mkt-product__link">
-                    Open
-                    <span className="mkt-product__link-arrow" aria-hidden>→</span>
-                  </span>
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* CTA */}
-      <section className="mkt mkt-section mkt-closing" aria-labelledby="solutions-close">
-        <div className="mkt-closing__inner">
-          <p className="mkt-eyebrow">Which one first?</p>
-          <h2 id="solutions-close" className="mkt-display">
-            Name the department. We map the Pearl.
+      {/* VERTICALS DIRECTORY · 3 functions, 5 industries, 1 substrate = 3 × 3 */}
+      <Section labelledBy="verticals">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>Eight Pearls + one substrate</Eyebrow>
+          <h2 id="verticals" className={cn(headline, "scroll-mt-32 text-[clamp(2.25rem,4.8vw,4rem)]")}>
+            <RevealWords>Three functions. Five industries. One training substrate.</RevealWords>
           </h2>
-          <p className="mkt-deck">
+          <p className={deck}>
+            Function Pearls (Operations, Finance, People) work across every
+            industry. Industry Pearls (Education, Care, FS, Manufacturing,
+            Civic) come pre-tuned to that vertical&rsquo;s ops shape.
+            Underneath them, the Training Substrate captures every
+            decision your team makes as a preference pair.
+          </p>
+        </Reveal>
+
+        <Stagger className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-5" step={0.06}>
+          {VERTICALS.map((v, i) => (
+            <StaggerItem key={v.slug}>
+              <PearlCard
+                href={`/solutions/${v.slug}`}
+                tint={TINTS[i % 4]!}
+                eyebrow={v.eyebrow}
+                name={v.name.replace("Nebbos ", "")}
+                tagline={v.tagline}
+                featured={v.eyebrow === "Substrate"}
+              />
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
+
+      <ClosingCta
+        id="solutions-close"
+        eyebrow="Which one first?"
+        title="Name the department. We map the Pearl."
+        deck={
+          <>
             Thirty minutes. Bring one department. We show you which Pearl
             fits, which signals it reads, and what its first shift looks like.
-          </p>
-          <div className="mkt-hero__ctas">
-            <Link href="/demo" className="mkt-cta mkt-cta--primary">
-              Book a demo
-              <span className="mkt-cta__arrow" aria-hidden>→</span>
-            </Link>
-            <Link href="/contact" className="mkt-cta mkt-cta--ghost">
-              Contact sales
-            </Link>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+        primary={{ href: "/demo", label: "Book a demo" }}
+        secondary={{ href: "/contact", label: "Contact sales" }}
+      />
     </>
   );
 }

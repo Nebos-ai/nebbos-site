@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import type { CSSProperties } from "react";
 import { MarketingDemoForm } from "@/components/forms/MarketingDemoForm";
+import { RouteList } from "@/components/marketing/RouteList";
+import { Eyebrow, Section, deck, headline } from "@/components/marketing/primitives";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 import { CONTACT } from "@/content/contact";
 
 /**
@@ -40,62 +45,62 @@ const ROUTES = [
   { label: "Press", email: CONTACT.press, desc: "Journalist and analyst inquiries." },
 ];
 
+const h2 = cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]");
+const BEAT_TINT = ["var(--color-platform)", "var(--color-app)", "var(--color-mcp)", "var(--color-cradle)"];
+
 export default function DemoPage() {
   return (
     <>
       <MarketingDemoForm />
 
       {/* What we'll cover */}
-      <section className="mkt mkt-section" aria-labelledby="agenda-h">
-        <div className="mkt-section__inner">
-          <header className="mkt-numbers__head">
-            <p className="mkt-eyebrow">The thirty minutes</p>
-            <h2 id="agenda-h" className="mkt-h2">
-              What we cover.
-            </h2>
-            <p className="mkt-deck">
-              Four beats. No slide-deck. We open the platform and walk one
-              department end to end.
-            </p>
-          </header>
-          <ol className="mkt-list">
-            {AGENDA.map((item, i) => (
-              <li key={i} className="mkt-list__item">
-                <span className="mkt-list__num">{String(i + 1).padStart(2, "0")}</span>
-                <p className="mkt-list__text">{item}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      <Section labelledBy="agenda-h">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>The thirty minutes</Eyebrow>
+          <h2 id="agenda-h" className={h2}>
+            <RevealWords>What we cover.</RevealWords>
+          </h2>
+          <p className={deck}>
+            Four beats. No slide-deck. We open the platform and walk one
+            department end to end.
+          </p>
+        </Reveal>
+        <Stagger as="ol" className="m-0 mt-14 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-4 lg:gap-5" step={0.08}>
+          {AGENDA.map((item, i) => (
+            <StaggerItem
+              key={i}
+              as="li"
+              className="spotlight relative flex min-h-[220px] flex-col overflow-hidden rounded-bezel bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+            >
+              <div style={{ "--tint": BEAT_TINT[i], "--spot": BEAT_TINT[i] } as CSSProperties} className="contents">
+                <span
+                  aria-hidden
+                  className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(90%_100%_at_15%_0%,color-mix(in_srgb,var(--tint)_22%,transparent),transparent_70%)]"
+                />
+                <span className="relative font-code text-[28px] font-medium tabular-nums leading-none text-tint">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <p className="relative m-0 mt-auto pt-10 text-[16px] leading-relaxed text-ink-2">{item}</p>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
 
       {/* Direct routing */}
-      <section className="mkt mkt-section" aria-labelledby="routes-h">
-        <div className="mkt-section__inner">
-          <header className="mkt-numbers__head">
-            <p className="mkt-eyebrow">Not a demo?</p>
-            <h2 id="routes-h" className="mkt-h2">
-              Route direct to the right inbox.
-            </h2>
-            <p className="mkt-deck">
-              Reply within one business day. Procurement, security,
-              engineering — each has its own address.
-            </p>
-          </header>
-          <div className="mkt-routes">
-            {ROUTES.map((r) => (
-              <Link key={r.email} href={`mailto:${r.email}`} className="mkt-route">
-                <span className="mkt-route__label">{r.label}</span>
-                <div className="mkt-route__body">
-                  <span className="mkt-route__email">{r.email}</span>
-                  <p className="mkt-route__desc">{r.desc}</p>
-                </div>
-                <span className="mkt-route__arrow" aria-hidden>→</span>
-              </Link>
-            ))}
-          </div>
-        </div>
-      </section>
+      <Section labelledBy="routes-h">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>Not a demo?</Eyebrow>
+          <h2 id="routes-h" className={h2}>
+            <RevealWords>Route direct to the right inbox.</RevealWords>
+          </h2>
+          <p className={deck}>
+            Reply within one business day. Procurement, security,
+            engineering — each has its own address.
+          </p>
+        </Reveal>
+        <RouteList className="mt-14" routes={ROUTES.map((r) => ({ label: r.label, addr: r.email, desc: r.desc }))} />
+      </Section>
     </>
   );
 }
