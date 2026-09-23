@@ -20,7 +20,7 @@ import { arrowWell } from "@/components/marketing/primitives";
  * in and out with AnimatePresence.
  *
  * 2026-09-23: the NEBBOS wordmark (public/nebbos-logo.svg) sits beside
- * the flower-of-life mark, founder-directed. Only the mark scales on
+ * the flower-of-life mark at 14.4px, founder-directed. Only the mark scales on
  * hover; neither ever rotates.
  */
 
@@ -121,7 +121,7 @@ export function SiteHeader() {
           <span className="grid size-10 place-items-center transition-transform duration-500 ease-fluid group-hover/logo:scale-110">
             <NebbosMark size={34} />
           </span>
-          <Image src="/nebbos-logo.svg" alt="" width={96} height={18} unoptimized priority className="h-[18px] w-auto" />
+          <Image src="/nebbos-logo.svg" alt="" width={77} height={14} unoptimized priority className="h-[14.4px] w-auto" />
         </Link>
 
         <nav aria-label="Primary" className="hidden items-center lg:flex">
