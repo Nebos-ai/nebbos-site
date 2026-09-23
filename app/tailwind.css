@@ -210,6 +210,23 @@
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
   }
 
+  /* Body copy injected as CMS HTML (content/pages.ts) */
+  .prose-mkt {
+    color: var(--color-ink-2);
+    font-size: 16px;
+    line-height: 1.7;
+    text-wrap: pretty;
+  }
+  .prose-mkt p { margin: 0; max-width: 68ch; }
+  .prose-mkt p + p { margin-top: 1em; }
+  .prose-mkt strong { color: var(--color-ink); font-weight: 500; }
+  .prose-mkt a {
+    color: var(--color-accent);
+    font-weight: 500;
+    transition: color 200ms var(--ease-fluid);
+  }
+  .prose-mkt a:hover { font-weight: 700; color: #ff8a4a; }
+
   .text-balance { text-wrap: balance; }
   .text-pretty { text-wrap: pretty; }
 }

@@ -67,23 +67,31 @@ export function Eyebrow({
 export const arrowWell =
   "grid size-9 place-items-center rounded-pill bg-ground text-ink transition-colors duration-300 ease-fluid group-hover:bg-accent group-hover:text-ground group-focus-visible:bg-accent group-focus-visible:text-ground";
 
-/** Primary pill CTA with the arrow nested in its own well. */
+/** Primary pill CTA with the arrow nested in its own well (`arrow={false}`
+ *  for a plain primary pill). */
 export function PrimaryCta({
   href,
   children,
+  arrow = true,
 }: {
   href: string;
   children: ReactNode;
+  arrow?: boolean;
 }) {
   return (
     <Link
       href={href}
-      className="group inline-flex items-center gap-3 whitespace-nowrap rounded-pill bg-ink py-1.5 pl-6 pr-1.5 font-display text-[15px] font-medium text-ground shadow-[0_10px_40px_-12px_rgb(255_107_30/0.55),inset_0_-2px_0_rgb(0_0_0/0.12)] transition-[scale,box-shadow] duration-300 ease-fluid active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      className={cn(
+        "group inline-flex items-center gap-3 whitespace-nowrap rounded-pill bg-ink font-display text-[15px] font-medium text-ground shadow-[0_10px_40px_-12px_rgb(255_107_30/0.55),inset_0_-2px_0_rgb(0_0_0/0.12)] transition-[scale,box-shadow] duration-300 ease-fluid active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+        arrow ? "py-1.5 pl-6 pr-1.5" : "h-12 px-6",
+      )}
     >
       {children}
-      <span className={arrowWell} aria-hidden>
-        →
-      </span>
+      {arrow && (
+        <span className={arrowWell} aria-hidden>
+          →
+        </span>
+      )}
     </Link>
   );
 }

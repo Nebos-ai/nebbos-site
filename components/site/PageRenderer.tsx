@@ -1,43 +1,54 @@
-import { Fragment } from "react";
+import { Fragment, type CSSProperties, type ReactNode } from "react";
 import Link from "next/link";
 import { NebbosMark } from "@nebbos/brand/logo";
 import type { Page, SectionBase } from "@/content/pages";
 import { CONTACT, mailto } from "@/content/contact";
 import { FACTS } from "@/content/facts";
 import { BRAND } from "@/content/brand";
+import { PageHero as Hero } from "@/components/marketing/PageHero";
+import { PearlMosaic } from "@/components/marketing/PearlMosaic";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { Eyebrow, GhostCta, PrimaryCta, Section, deck as deckClass, headline } from "@/components/marketing/primitives";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { ScrollBeam } from "@/components/motion/ScrollBeam";
+import { cn } from "@/lib/cn";
 
 /**
- * PageRenderer · v6 · 2026-09-18 · visual-density pass
+ * PageRenderer · v7 · 2026-09-23 · Tailwind + Motion redesign
  *
- * v5 (earlier today) rewrote every section slot to emit mkt-* shapes
- * — that fixed the register break (colors + typography now match the
- * home). Founder walked the site 2026-09-18 T15:03 UTC and said:
- * "we need to have the same level of design style across the entire
- * website" — the register matched but the DENSITY did not. Home has
- * flower tiles, card grids, colored accents, animated mockups;
- * catchalls were text-block-after-text-block with hairline seps only.
+ * Renders every content/pages.ts page (solutions verticals, trust,
+ * security, compliance, sovereignty, about, careers, docs, changelog,
+ * status, press, legal) in the same language as the home and product
+ * pages. Visual only: copy, section order and the sales-density cap are
+ * unchanged; every string (including trusted CMS HTML) renders verbatim.
  *
- * v6 lifts the design language, one file:
- *   1. Every section tracks a Pearl-color index (cycling platform →
- *      app → mcp → cradle) so accents feel intentional across pages.
- *   2. ListPlain / ListNumbered render as TILE GRIDS — each item a
- *      per-Pearl-color card with a flower app-icon, title, body — the
- *      same visual language the home departments row uses.
- *   3. Text-blocks get a small colored SIDE RAIL + Pearl chip eyebrow
- *      so even copy-only sections carry visual identity.
- *   4. Heroes get a right-side FLOWER MOSAIC anchor (four small tiles)
- *      so pages open with a designed hero, not a wall of type.
- *   5. Case-studies pick up a colored quote-mark and full card shape.
- *   6. Closing CTAs get a per-page Pearl-color halo.
+ * Kept from v6: the Pearl-colour cycle per accented section, the three
+ * rotating text-block shapes (banner / card / mirror card) so copy-only
+ * runs never read as the same block twice, and the mark + chip anchor on
+ * every section header.
  *
- * Content preserved verbatim; every added element is decorative
- * (aria-hidden) and cannot mask copy. WCAG 2.2 AA color-contrast
- * holds because all tile chrome sits on --mkt-ground and text tokens
- * stay at their audited alphas.
+ * v7 shapes:
+ *   hero          PageHero + PearlMosaic
+ *   text-block    banner (tinted statement panel) · bezel split card · mirror
+ *   list-numbered alternates: 2-column numbered cards · single-column
+ *                 rail with a scroll-filled beam (so runs of lists vary)
+ *   list-plain    tinted tile grid
+ *   split-columns sticky heading + tile grid
+ *   table-rows    fact cards
+ *   case-study    split bezel card
+ *   inbox-router  header-style menu rows
+ *   cta           shared ClosingCta with the section's Pearl tile
  */
 
 const PRODUCT_KEYS = ["platform", "app", "mcp", "cradle"] as const;
 type ProductKey = (typeof PRODUCT_KEYS)[number];
+
+const TINT: Record<ProductKey, string> = {
+  platform: "var(--color-platform)",
+  app: "var(--color-app)",
+  mcp: "var(--color-mcp)",
+  cradle: "var(--color-cradle)",
+};
 
 function pearlAt(index: number): ProductKey {
   return PRODUCT_KEYS[index % PRODUCT_KEYS.length]!;
@@ -79,7 +90,7 @@ export function PageRenderer({ page }: { page: Page }) {
         if (wantsAccent) blockCounter += 1;
         return (
           <Fragment key={section.id}>
-            <SectionSlot section={section} pearl={pearl} accent={wantsAccent} index={idx} />
+            <SectionSlot section={section} pearl={pearl} index={idx} />
           </Fragment>
         );
       })}
@@ -87,23 +98,23 @@ export function PageRenderer({ page }: { page: Page }) {
   );
 }
 
-type SlotProps = { section: SectionBase; pearl: ProductKey; accent: boolean; index: number };
+type SlotProps = { section: SectionBase; pearl: ProductKey; index: number };
 
-function SectionSlot({ section, pearl, accent, index }: SlotProps) {
+function SectionSlot({ section, pearl, index }: SlotProps) {
   switch (section.kind) {
     case "hero-full-bleed":
     case "hero-paper":
     case "empty-state":
       return <PageHero s={section} />;
-    case "text-block":     return <TextBlock s={section} pearl={pearl} accent={accent} index={index} />;
-    case "split-columns":  return <SplitColumns s={section} pearl={pearl} accent={accent} />;
-    case "list-numbered":  return <ListNumbered s={section} pearl={pearl} accent={accent} />;
-    case "list-plain":     return <ListPlain s={section} pearl={pearl} accent={accent} />;
-    case "table-rows":     return <TableRows s={section} pearl={pearl} accent={accent} />;
+    case "text-block":     return <TextBlock s={section} pearl={pearl} index={index} />;
+    case "split-columns":  return <SplitColumns s={section} pearl={pearl} />;
+    case "list-numbered":  return <ListNumbered s={section} pearl={pearl} index={index} />;
+    case "list-plain":     return <ListPlain s={section} pearl={pearl} />;
+    case "table-rows":     return <TableRows s={section} pearl={pearl} />;
     case "case-study":     return <CaseStudy s={section} pearl={pearl} />;
     case "cta-band":
     case "cta-full-bleed": return <ClosingCTA s={section} pearl={pearl} />;
-    case "inbox-router":   return <InboxRouter s={section} pearl={pearl} accent={accent} />;
+    case "inbox-router":   return <InboxRouter s={section} pearl={pearl} />;
     case "band-overview":  return null;
     case "story-triptych": return null;
     default:               return null;
@@ -121,58 +132,49 @@ function cleanEyebrow(eyebrow?: string): string | undefined {
   return eyebrow;
 }
 
-function SectionRail({ pearl }: { pearl: ProductKey }) {
-  return <span className={`mkt-section__rail mkt-section__rail--${pearl}`} aria-hidden />;
-}
+const tintStyle = (pearl: ProductKey) => ({ "--tint": TINT[pearl], "--spot": TINT[pearl] }) as CSSProperties;
+const h2Class = cn(headline, "text-[clamp(2rem,4.2vw,3.5rem)]");
 
-function EyebrowChip({ pearl, children }: { pearl: ProductKey; children: React.ReactNode }) {
+function MarkTile({ size = "md" }: { size?: "sm" | "md" }) {
   return (
-    <p className={`mkt-eyebrow mkt-eyebrow-chip mkt-eyebrow-chip--${pearl}`}>
-      <span className="mkt-eyebrow-chip__dot" aria-hidden />
-      {children}
-    </p>
+    <span
+      className={cn(
+        "grid shrink-0 place-items-center bg-[var(--tint)] text-white shadow-[0_12px_30px_-8px_var(--tint),inset_0_1px_0_rgb(255_255_255/0.35)]",
+        size === "md" ? "size-11 rounded-[0.85rem]" : "size-9 rounded-[0.7rem]",
+      )}
+      aria-hidden
+    >
+      <NebbosMark size={size === "md" ? 24 : 20} />
+    </span>
   );
 }
 
 /* Shared section header · mark tile + eyebrow chip meta row + h2.
-   Founder-caught 2026-09-19 T11:38 UTC: text-block sections carried
-   a mark tile with the chip; list-numbered / list-plain / split-cols
-   / table-rows / inbox-router headers had only the chip. That
-   inconsistency read as sloppy — some sections felt anchored, others
-   floated. SectionHead enforces the same [mark] + [chip] meta row on
-   every section header so pages feel like every pixel is intentional
-   and thought about. `align` is 'start' by default; use 'center' for
-   pages/heroes that want centered composition. */
+   Founder-caught 2026-09-19 T11:38 UTC: every section header carries the
+   same [mark] + [chip] meta row so pages feel anchored everywhere. */
 function SectionHead({
   id,
-  pearl,
   eyebrow,
   title,
   align = "start",
+  children,
 }: {
   id: string;
-  pearl: ProductKey;
   eyebrow?: string;
   title?: string;
   align?: "start" | "center";
+  children?: ReactNode;
 }) {
   if (!eyebrow && !title) return null;
   return (
-    <header className={`mkt-section__head mkt-section__head--${align}`}>
-      <div className="mkt-section__head-meta">
-        <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
-          <NebbosMark />
-        </span>
-        {eyebrow && <EyebrowChip pearl={pearl}>{eyebrow}</EyebrowChip>}
+    <Reveal as="header" className={cn("flex max-w-3xl flex-col gap-6", align === "center" ? "mx-auto items-center text-center" : "items-start")}>
+      <div className="flex items-center gap-3">
+        <MarkTile size="sm" />
+        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
       </div>
-      {title && (
-        <h2
-          id={id}
-          className="mkt-h2"
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
-      )}
-    </header>
+      {title && <h2 id={id} className={h2Class} dangerouslySetInnerHTML={{ __html: title }} />}
+      {children}
+    </Reveal>
   );
 }
 
@@ -185,288 +187,262 @@ function CTAButtons({
 }) {
   if (!primary && !secondary) return null;
   return (
-    <div className="mkt-hero__ctas">
-      {primary && (
-        <Link
-          href={primary.href}
-          className={`mkt-cta ${primary.variant === "ghost" || primary.variant === "ghost-light" ? "mkt-cta--ghost" : "mkt-cta--primary"}`}
-        >
-          {primary.label}
-          <span className="mkt-cta__arrow" aria-hidden>→</span>
-        </Link>
-      )}
-      {secondary && (
-        <Link
-          href={secondary.href}
-          className={`mkt-cta ${secondary.variant === "primary" || secondary.variant === "solid-light" ? "mkt-cta--primary" : "mkt-cta--ghost"}`}
-        >
-          {secondary.label}
-        </Link>
-      )}
-    </div>
+    <>
+      {primary &&
+        (primary.variant === "ghost" || primary.variant === "ghost-light" ? (
+          <GhostCta href={primary.href} arrow>
+            {primary.label}
+          </GhostCta>
+        ) : (
+          <PrimaryCta href={primary.href}>{primary.label}</PrimaryCta>
+        ))}
+      {secondary &&
+        (secondary.variant === "primary" || secondary.variant === "solid-light" ? (
+          <PrimaryCta href={secondary.href} arrow={false}>
+            {secondary.label}
+          </PrimaryCta>
+        ) : (
+          <GhostCta href={secondary.href}>{secondary.label}</GhostCta>
+        ))}
+    </>
   );
 }
 
-/* ── Hero · text + 4-tile flower mosaic anchor ───────────────────── */
-
-function HeroMosaic() {
-  return (
-    <div className="mkt-hero__mosaic" aria-hidden>
-      {PRODUCT_KEYS.map((k) => (
-        <span key={k} className={`mkt-hero__tile mkt-hero__tile--${k}`}>
-          <NebbosMark size={28} />
-        </span>
-      ))}
-    </div>
-  );
-}
+/* ── Hero · PageHero + Pearl mosaic ──────────────────────────────── */
 
 function PageHero({ s }: { s: SectionBase }) {
   const eb = cleanEyebrow(s.eyebrow);
+  const hasCtas = !!(s.ctaPrimary || s.ctaSecondary);
   return (
-    <section className="mkt mkt-section mkt-hero" aria-labelledby={`h-${s.id}`}>
-      <div className="mkt-section__inner mkt-hero__row">
-        <div className="mkt-hero__copy">
-          {eb && <p className="mkt-eyebrow">{eb}</p>}
-          {s.h1 && (
-            <h1
-              id={`h-${s.id}`}
-              className="mkt-display"
-              dangerouslySetInnerHTML={{ __html: s.h1 }}
-            />
-          )}
-          {s.deck && (
-            <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
-          )}
-          <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} />
-        </div>
-        <HeroMosaic />
-      </div>
-    </section>
+    <Hero
+      id={`h-${s.id}`}
+      eyebrow={eb}
+      titleHtml={s.h1}
+      deckHtml={s.deck}
+      ctas={hasCtas ? <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} /> : undefined}
+      visual={<PearlMosaic />}
+    />
   );
 }
 
-/* ── Text block · shape-rotating designed section ────────────────
-   Text-blocks are the dominant catchall section kind. If they all
-   render as the same 2-col card, pages read as "same card, different
-   color" — visually monotonous even with Pearl-color cycling.
-   Founder-caught 2026-09-19 (v7 followup): rhythm matters as much as
-   density. v8 rotates through THREE shapes so pages break rhythm
-   every couple of sections:
+/* ── Text block · three rotating shapes ───────────────────────────
+     index % 3 === 0 → banner statement (tinted panel, centred display)
+     index % 3 === 1 → split card (anchor LEFT, copy right)
+     index % 3 === 2 → mirror card (copy LEFT, anchor right)
+   Deterministic per section position so pages look the same on reload. */
 
-     index % 3 === 0 → BANNER statement (full-bleed Pearl-color
-                       gradient band, centered big display type, no
-                       card panel — reads as a chapter break)
-     index % 3 === 1 → default card (numeral+flower LEFT, body right)
-     index % 3 === 2 → mirror card (body LEFT, numeral+flower RIGHT)
-
-   The rotation is deterministic per section position so pages
-   always look the same across reloads. */
-
-function TextBlock({ s, pearl, accent, index }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number }) {
+function TextBlock({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; index: number }) {
   const shape = index % 3;
-  if (shape === 0) return <TextBlockBanner s={s} pearl={pearl} index={index} />;
-  return <TextBlockCard s={s} pearl={pearl} accent={accent} index={index} mirror={shape === 2} />;
+  if (shape === 0) return <TextBlockBanner s={s} pearl={pearl} />;
+  return <TextBlockCard s={s} pearl={pearl} mirror={shape === 2} />;
 }
 
-/* Banner statement · full-bleed Pearl-color gradient band, centered
-   display type, no card panel. Used as a "chapter break" every third
-   text-block. Founder-directed 2026-09-19: retired the running-count
-   numeral above the banner — "1 2 3 4 and all of that ... just
-   hangingout in the middle of the page ... not just there for no
-   reason." Text-blocks aren't ordered sequences; a position-count
-   numeral read as decoration, not signal. Kept the Pearl-color
-   flower tile + eyebrow chip as the section identity anchor. */
-
-function TextBlockBanner({ s, pearl }: { s: SectionBase; pearl: ProductKey; index: number }) {
+function TextBlockBanner({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className={`mkt mkt-section mkt-banner mkt-banner--${pearl}`} aria-labelledby={`h-${s.id}`}>
-      <div className="mkt-banner__wash" aria-hidden />
-      <div className="mkt-section__inner mkt-banner__inner">
-        <div className="mkt-banner__meta">
-          <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
-            <NebbosMark />
-          </span>
-          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-        </div>
-        {s.h2 && (
-          <h2
-            id={`h-${s.id}`}
-            className="mkt-banner__title"
-            dangerouslySetInnerHTML={{ __html: s.h2 }}
+    <section className="mkt relative px-4 py-16 sm:px-6 md:py-24" aria-labelledby={`h-${s.id}`} style={tintStyle(pearl)}>
+      <Reveal className="mx-auto max-w-[1240px]">
+        <div className="relative isolate overflow-hidden rounded-[2rem] bg-ground-2 px-6 py-16 text-center ring-1 ring-rule ring-inset md:px-16 md:py-24">
+          <span aria-hidden className="grid-field pointer-events-none absolute inset-0 -z-10 opacity-70" />
+          <span
+            aria-hidden
+            className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_50%_0%,color-mix(in_srgb,var(--tint)_24%,transparent),transparent_70%)]"
           />
-        )}
-        {s.body && (
-          <div
-            className="mkt-banner__body"
-            dangerouslySetInnerHTML={{ __html: s.body }}
-          />
-        )}
-      </div>
-    </section>
-  );
-}
-
-/* Card · Pearl-color flower tile + eyebrow chip on left (or right
-   if mirror) + h2 + body on the opposite side. Default shape for
-   two of every three text-blocks. Numeral removed 2026-09-19 —
-   text-blocks aren't ordered sequences and the running-count numeral
-   read as decoration hanging in the middle of the page rather than
-   signal. Flower tile + eyebrow chip carry the section identity. */
-
-function TextBlockCard({ s, pearl, accent, mirror }: { s: SectionBase; pearl: ProductKey; accent: boolean; index: number; mirror: boolean }) {
-  const eb = cleanEyebrow(s.eyebrow);
-  return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <article className={`mkt-textcard mkt-textcard--${pearl} ${mirror ? "mkt-textcard--mirror" : ""}`}>
-          <aside className="mkt-textcard__aside">
-            <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
-              <NebbosMark />
-            </span>
-            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-          </aside>
-          <div className="mkt-textcard__main">
+          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
+            <div className="flex items-center gap-3">
+              <MarkTile size="sm" />
+              {eb && <Eyebrow>{eb}</Eyebrow>}
+            </div>
             {s.h2 && (
               <h2
                 id={`h-${s.id}`}
-                className="mkt-h2"
+                className={cn(headline, "text-[clamp(2.25rem,5vw,4rem)] leading-[1.02]")}
                 dangerouslySetInnerHTML={{ __html: s.h2 }}
               />
             )}
             {s.body && (
-              <div
-                className="mkt-textcard__body"
-                dangerouslySetInnerHTML={{ __html: s.body }}
-              />
+              <div className="prose-mkt mx-auto text-[17px] [&_p]:mx-auto" dangerouslySetInnerHTML={{ __html: s.body }} />
             )}
-          </div>
-        </article>
-      </div>
-    </section>
-  );
-}
-
-/* ── Split columns · heading + list tiles ─────────────────────── */
-
-function SplitColumns({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
-  const eb = cleanEyebrow(s.eyebrow);
-  return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <div className="mkt-split">
-          <div>
-            <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
-            {s.deck && (
-              <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
-            )}
-          </div>
-          <div>
-            <TileGrid items={s.items ?? []} basePearl={pearl} />
           </div>
         </div>
-      </div>
+      </Reveal>
     </section>
   );
 }
 
-/* ── Tile grid · shared visual card grid for list-plain + split ── */
+function TextBlockCard({ s, pearl, mirror }: { s: SectionBase; pearl: ProductKey; mirror: boolean }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  return (
+    <Section labelledBy={`h-${s.id}`} className="py-16 md:py-24 lg:py-24">
+      <Reveal className="bezel" amount={0.2}>
+        <article
+          className="bezel-core grid gap-8 overflow-hidden p-7 md:grid-cols-12 md:gap-10 md:p-12"
+          style={tintStyle(pearl)}
+        >
+          <span
+            aria-hidden
+            className={cn(
+              "pointer-events-none absolute size-80 rounded-full bg-[var(--tint)] opacity-[0.16] blur-[100px]",
+              mirror ? "-right-24 -top-24" : "-left-24 -top-24",
+            )}
+          />
+          <aside className={cn("relative flex flex-col items-start gap-4 md:col-span-4", mirror && "md:order-2 md:items-end md:text-right")}>
+            <MarkTile />
+            {eb && <Eyebrow>{eb}</Eyebrow>}
+          </aside>
+          <div className={cn("relative flex flex-col gap-5 md:col-span-8", mirror && "md:order-1")}>
+            {s.h2 && <h2 id={`h-${s.id}`} className={h2Class} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
+            {s.body && <div className="prose-mkt" dangerouslySetInnerHTML={{ __html: s.body }} />}
+          </div>
+        </article>
+      </Reveal>
+    </Section>
+  );
+}
 
-function TileGrid({ items, basePearl }: { items: SectionBase["items"]; basePearl: ProductKey }) {
+/* ── Tile grid · shared tinted card grid for list-plain + split ────── */
+
+function TileGrid({ items, basePearl, cols = 3 }: { items: SectionBase["items"]; basePearl: ProductKey; cols?: 2 | 3 }) {
   if (!items?.length) return null;
   const baseIdx = PRODUCT_KEYS.indexOf(basePearl);
   return (
-    <ul className="mkt-tilegrid">
+    <Stagger
+      as="ul"
+      className={cn("m-0 grid list-none gap-4 p-0 sm:grid-cols-2", cols === 3 && "lg:grid-cols-3")}
+      step={0.06}
+    >
       {items.map((item, i) => {
         const pearl = pearlAt(baseIdx + i);
         return (
-          <li key={item.title} className={`mkt-tile mkt-tile--${pearl}`}>
-            <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
-              <NebbosMark size={24} />
-            </span>
-            <div className="mkt-tile__body">
-              <p
-                className="mkt-tile__title"
-                dangerouslySetInnerHTML={{ __html: item.title }}
+          <StaggerItem
+            key={item.title}
+            as="li"
+            className="spotlight relative flex flex-col gap-4 overflow-hidden rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+          >
+            <div style={tintStyle(pearl)} className="contents">
+              <span
+                aria-hidden
+                className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-[radial-gradient(90%_100%_at_15%_0%,color-mix(in_srgb,var(--tint)_20%,transparent),transparent_70%)]"
               />
-              {item.body && (
-                <p
-                  className="mkt-tile__desc"
-                  dangerouslySetInnerHTML={{ __html: item.body }}
-                />
-              )}
+              <span className="relative">
+                <MarkTile size="sm" />
+              </span>
+              <div className="relative flex flex-col gap-2">
+                <p className="m-0 font-display text-lg font-medium tracking-tight text-ink" dangerouslySetInnerHTML={{ __html: item.title }} />
+                {item.body && (
+                  <p className="m-0 text-[14px] leading-relaxed text-ink-3" dangerouslySetInnerHTML={{ __html: item.body }} />
+                )}
+              </div>
             </div>
-          </li>
+          </StaggerItem>
         );
       })}
-    </ul>
+    </Stagger>
   );
 }
 
-/* ── Numbered list · big colored numeral + card ──────────────── */
+/* ── Split columns · sticky heading + tile grid ─────────────────── */
 
-function ListNumbered({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+function SplitColumns({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
+  const eb = cleanEyebrow(s.eyebrow);
+  return (
+    <Section labelledBy={`h-${s.id}`}>
+      <div className="grid gap-12 lg:grid-cols-12 lg:gap-10" style={tintStyle(pearl)}>
+        <div className="lg:sticky lg:top-32 lg:col-span-5 lg:self-start">
+          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2}>
+            {s.deck && <p className={deckClass} dangerouslySetInnerHTML={{ __html: s.deck }} />}
+          </SectionHead>
+        </div>
+        <div className="lg:col-span-7">
+          <TileGrid items={s.items ?? []} basePearl={pearl} cols={2} />
+        </div>
+      </div>
+    </Section>
+  );
+}
+
+/* ── Numbered list · alternating shapes ──────────────────────────
+     even accent index → 2-column numbered cards
+     odd accent index  → single-column rail with a scroll-filled beam
+   Solution pages carry four or five numbered lists in a row; alternating
+   keeps consecutive lists from reading as the same block. */
+
+function ListNumbered({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; index: number }) {
   const eb = cleanEyebrow(s.eyebrow);
   const baseIdx = PRODUCT_KEYS.indexOf(pearl);
+  const rail = index % 2 === 1;
   return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
-        <ol className="mkt-numcards">
-          {(s.items ?? []).map((item, i) => {
-            const p = pearlAt(baseIdx + i);
-            return (
-              <li key={item.title} className={`mkt-numcard mkt-numcard--${p}`}>
-                <span className={`mkt-numcard__index mkt-numcard__index--${p}`} aria-hidden>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <div className="mkt-numcard__body">
-                  <div
-                    className="mkt-numcard__title"
-                    dangerouslySetInnerHTML={{ __html: item.title }}
-                  />
-                  {item.body && (
-                    <p
-                      className="mkt-numcard__desc"
-                      dangerouslySetInnerHTML={{ __html: item.body }}
+    <Section labelledBy={`h-${s.id}`}>
+      <div style={tintStyle(pearl)} className={cn(rail && "grid gap-12 lg:grid-cols-12 lg:gap-10")}>
+        <div className={cn(rail && "lg:sticky lg:top-32 lg:col-span-5 lg:self-start")}>
+          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+        </div>
+        <div className={cn("relative", rail ? "lg:col-span-7" : "mt-14")}>
+          {rail && <ScrollBeam className="left-[27px]" />}
+          <Stagger
+            as="ol"
+            className={cn("relative m-0 grid list-none gap-4 p-0", !rail && "lg:grid-cols-2 lg:gap-x-5")}
+            step={0.06}
+          >
+            {(s.items ?? []).map((item, i) => {
+              const p = pearlAt(baseIdx + i);
+              return (
+                <StaggerItem key={item.title} as="li" className="relative grid grid-cols-[56px_1fr] gap-4">
+                  <span
+                    style={tintStyle(p)}
+                    className={cn(
+                      "relative z-10 grid size-14 place-items-center rounded-[1.1rem] bg-ground-3 font-code text-[15px] font-medium tabular-nums text-tint ring-1 ring-[color-mix(in_srgb,var(--tint)_40%,transparent)] ring-inset",
+                      rail && "shadow-[0_0_0_6px_var(--color-ground)]",
+                    )}
+                    aria-hidden
+                  >
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <div style={tintStyle(p)} className="spotlight relative rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset">
+                    <div
+                      className="relative font-display text-lg font-medium tracking-tight text-ink"
+                      dangerouslySetInnerHTML={{ __html: item.title }}
                     />
-                  )}
-                </div>
-              </li>
-            );
-          })}
-        </ol>
+                    {item.body && (
+                      <p
+                        className="relative m-0 mt-2 text-[15px] leading-relaxed text-ink-2"
+                        dangerouslySetInnerHTML={{ __html: item.body }}
+                      />
+                    )}
+                  </div>
+                </StaggerItem>
+              );
+            })}
+          </Stagger>
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/* ── Plain list · same tile grid ─────────────────────────────── */
+/* ── Plain list · tinted tile grid ───────────────────────────────── */
 
-function ListPlain({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+function ListPlain({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   const items =
     (s.items ?? []).length === 0 && s.h2?.toLowerCase().includes("build")
       ? FACTS.productLine.map((title) => ({ title }))
       : (s.items ?? []);
   return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
-        <TileGrid items={items} basePearl={pearl} />
+    <Section labelledBy={`h-${s.id}`}>
+      <div style={tintStyle(pearl)}>
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+        <div className="mt-14">
+          <TileGrid items={items} basePearl={pearl} />
+        </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/* ── Table rows · fact-card grid (3-col at ≥1080px) ─────────────── */
+/* ── Table rows · fact cards ─────────────────────────────────────── */
 
-function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+function TableRows({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   const baseIdx = PRODUCT_KEYS.indexOf(pearl);
   const rows: Array<[string, string]> = [
@@ -478,92 +454,82 @@ function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; ac
     ["Team shape", FACTS.teamShape],
   ];
   return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
-        <ul className="mkt-factgrid">
+    <Section labelledBy={`h-${s.id}`}>
+      <div style={tintStyle(pearl)}>
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+        <Stagger as="ul" className="m-0 mt-14 grid list-none gap-4 p-0 sm:grid-cols-2 lg:grid-cols-3" step={0.06}>
           {rows.map(([label, value], i) => {
             const p = pearlAt(baseIdx + i);
             return (
-              <li key={label} className={`mkt-fact mkt-fact--${p}`}>
-                <span className={`mkt-fact__label mkt-fact__label--${p}`}>{label}</span>
-                <p className="mkt-fact__value">{value}</p>
-              </li>
+              <StaggerItem
+                key={label}
+                as="li"
+                className="spotlight relative flex min-h-[150px] flex-col justify-between gap-6 rounded-[1.4rem] bg-ground-2 p-6 ring-1 ring-rule ring-inset"
+              >
+                <span style={tintStyle(p)} className="relative font-code text-[11px] font-medium uppercase tracking-label text-tint">
+                  {label}
+                </span>
+                <p className="relative m-0 font-display text-xl font-medium leading-snug tracking-tight text-ink">{value}</p>
+              </StaggerItem>
             );
           })}
-        </ul>
+        </Stagger>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/* ── Case study · aside + body, per-Pearl framed card ─────────── */
+/* ── Case study · split bezel card ───────────────────────────────── */
 
 function CaseStudy({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section className="mkt mkt-section" aria-labelledby={`h-${s.id}`}>
-      <div className="mkt-section__inner">
-        <div className={`mkt-case mkt-case--${pearl}`}>
-          <aside className="mkt-case__aside">
-            <span className={`mkt-case__mark mkt-case__mark--${pearl}`} aria-hidden>
-              <NebbosMark size={28} />
-            </span>
-            <p className="mkt-eyebrow">{eb ?? "Case study"}</p>
+    <Section labelledBy={`h-${s.id}`} className="py-16 md:py-24 lg:py-24">
+      <Reveal className="bezel" amount={0.2}>
+        <div className="bezel-core grid gap-8 overflow-hidden p-7 md:grid-cols-[1fr_1.6fr] md:gap-12 md:p-12" style={tintStyle(pearl)}>
+          <span
+            aria-hidden
+            className="pointer-events-none absolute -left-24 -bottom-24 size-80 rounded-full bg-[var(--tint)] opacity-[0.18] blur-[100px]"
+          />
+          <aside className="relative flex flex-col items-start gap-4">
+            <MarkTile />
+            <Eyebrow>{eb ?? "Case study"}</Eyebrow>
             {s.h2 && (
               <h3
                 id={`h-${s.id}`}
-                className="mkt-case__subject"
+                className="m-0 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-medium leading-[1.1] tracking-tight text-ink"
                 dangerouslySetInnerHTML={{ __html: s.h2 }}
               />
             )}
           </aside>
-          {s.body && (
-            <div
-              className="mkt-case__body"
-              dangerouslySetInnerHTML={{ __html: s.body }}
-            />
-          )}
+          {s.body && <div className="prose-mkt relative" dangerouslySetInnerHTML={{ __html: s.body }} />}
         </div>
-      </div>
-    </section>
+      </Reveal>
+    </Section>
   );
 }
 
-/* ── Closing CTA · per-Pearl haloed closing block ────────────── */
+/* ── Closing CTA · shared panel with the section's Pearl tile ─────── */
 
 function ClosingCTA({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   return (
-    <section
-      className={`mkt mkt-section mkt-closing mkt-closing--${pearl}`}
-      aria-labelledby={`h-${s.id}`}
-    >
-      <div className="mkt-closing__inner">
-        <span aria-hidden className={`mkt-tile__mark mkt-tile__mark--${pearl}`} style={{ marginBottom: 24 }}>
-          <NebbosMark size={28} />
-        </span>
-        {eb && <p className="mkt-eyebrow">{eb}</p>}
-        {s.h2 && (
-          <h2
-            id={`h-${s.id}`}
-            className="mkt-display"
-            dangerouslySetInnerHTML={{ __html: s.h2 }}
-          />
-        )}
-        {s.deck && (
-          <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
-        )}
-        <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} />
-      </div>
-    </section>
+    <div style={tintStyle(pearl)}>
+      <ClosingCta
+        id={`h-${s.id}`}
+        lead={<MarkTile />}
+        eyebrow={eb}
+        titleHtml={s.h2}
+        deckHtml={s.deck}
+        ctas={s.ctaPrimary || s.ctaSecondary ? <CTAButtons primary={s.ctaPrimary} secondary={s.ctaSecondary} /> : undefined}
+      />
+    </div>
   );
 }
 
-/* ── Inbox router · label → email rows (unchanged shape, accent) ── */
+/* ── Inbox router · header-style menu rows ───────────────────────── */
 
-function InboxRouter({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; accent: boolean }) {
+function InboxRouter({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   const eb = cleanEyebrow(s.eyebrow);
   const inboxes = [
     { label: "General",     addr: CONTACT.general,     strap: "Sales, partnerships, misc." },
@@ -575,32 +541,34 @@ function InboxRouter({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; 
     { label: "Press",       addr: CONTACT.press,       strap: "Journalist / analyst inquiries." },
   ];
   return (
-    <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
-      {accent && <SectionRail pearl={pearl} />}
-      <div className="mkt-section__inner">
-        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
-        {s.deck && (
-          <p
-            className="mkt-deck"
-            dangerouslySetInnerHTML={{ __html: s.deck }}
-          />
-        )}
-        <ul className="mkt-inboxlist">
-          {inboxes.map((inbox) => (
-            <li key={inbox.addr}>
-              <Link href={mailto(inbox.addr)} className="mkt-inboxlist__row">
-                <div className="mkt-inboxlist__label">{inbox.label}</div>
-                <div>
-                  <div className="mkt-inboxlist__addr">{inbox.addr}</div>
-                  <div className="mkt-inboxlist__strap">{inbox.strap}</div>
-                </div>
-                <div className="mkt-inboxlist__caret" aria-hidden>→</div>
-              </Link>
-            </li>
-          ))}
-        </ul>
+    <Section labelledBy={`h-${s.id}`}>
+      <div style={tintStyle(pearl)}>
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2}>
+          {s.deck && <p className={deckClass} dangerouslySetInnerHTML={{ __html: s.deck }} />}
+        </SectionHead>
+        <Reveal className="bezel mt-14" amount={0.1}>
+          <ul className="bezel-core m-0 grid list-none gap-1 p-2 md:p-3">
+            {inboxes.map((inbox) => (
+              <li key={inbox.addr}>
+                <Link
+                  href={mailto(inbox.addr)}
+                  className="group grid grid-cols-[1fr_auto] items-center gap-x-6 gap-y-1 rounded-chip px-4 py-4 transition-colors duration-300 hover:bg-white/[0.05] focus-visible:bg-white/[0.05] focus-visible:outline-2 focus-visible:outline-accent md:grid-cols-[180px_1fr_auto] md:px-5"
+                >
+                  <div className="font-code text-[11px] font-medium uppercase tracking-label text-ink-3">{inbox.label}</div>
+                  <div className="col-span-2 row-start-2 md:col-span-1 md:row-start-auto">
+                    <div className="font-display text-[16px] font-medium text-ink">{inbox.addr}</div>
+                    <div className="mt-0.5 text-[14px] text-ink-3">{inbox.strap}</div>
+                  </div>
+                  <div className="row-start-1 text-ink-3 transition-colors group-hover:text-accent md:row-start-auto" aria-hidden>
+                    →
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </Reveal>
       </div>
-    </section>
+    </Section>
   );
 }
 

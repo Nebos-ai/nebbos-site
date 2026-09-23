@@ -20,7 +20,9 @@ export function PageHero({
   id,
   eyebrow,
   title,
+  titleHtml,
   deck,
+  deckHtml,
   deck2,
   ctas,
   lead,
@@ -28,9 +30,14 @@ export function PageHero({
   tint = "var(--color-accent)",
 }: {
   id: string;
-  eyebrow: ReactNode;
-  title: string;
+  eyebrow?: ReactNode;
+  /** Plain-text title (words rise individually). */
+  title?: string;
+  /** Trusted CMS HTML title (content/pages.ts); rises as one line. */
+  titleHtml?: string;
   deck?: ReactNode;
+  /** Trusted CMS HTML deck. */
+  deckHtml?: string;
   /** Optional second deck paragraph (e.g. tagline + deck on tier pages). */
   deck2?: ReactNode;
   ctas?: ReactNode;
@@ -64,16 +71,35 @@ export function PageHero({
               {lead}
             </div>
           )}
-          <div className="rise-in" style={d(0)}>
-            <Eyebrow>{eyebrow}</Eyebrow>
-          </div>
-          <h1 id={id} className={cn(headline, "rise-words max-w-[18ch] text-[clamp(2.75rem,5.6vw,4.75rem)] leading-[1]")}>
-            <SplitWords step={0.06}>{title}</SplitWords>
-          </h1>
+          {eyebrow && (
+            <div className="rise-in" style={d(0)}>
+              <Eyebrow>{eyebrow}</Eyebrow>
+            </div>
+          )}
+          {title !== undefined && (
+            <h1 id={id} className={cn(headline, "rise-words max-w-[18ch] text-[clamp(2.75rem,5.6vw,4.75rem)] leading-[1]")}>
+              <SplitWords step={0.06}>{title}</SplitWords>
+            </h1>
+          )}
+          {titleHtml !== undefined && (
+            <h1
+              id={id}
+              className={cn(headline, "rise-in max-w-[20ch] text-[clamp(2.5rem,5.2vw,4.5rem)] leading-[1.02]")}
+              style={d(60)}
+              dangerouslySetInnerHTML={{ __html: titleHtml }}
+            />
+          )}
           {deck && (
             <p className={cn(deckClass, "rise-in max-w-[58ch]")} style={d(240)}>
               {deck}
             </p>
+          )}
+          {deckHtml && (
+            <p
+              className={cn(deckClass, "rise-in max-w-[58ch]")}
+              style={d(240)}
+              dangerouslySetInnerHTML={{ __html: deckHtml }}
+            />
           )}
           {deck2 && (
             <p className={cn(deckClass, "rise-in -mt-3 max-w-[58ch]")} style={d(300)}>

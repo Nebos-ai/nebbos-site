@@ -14,16 +14,24 @@ export function ClosingCta({
   id,
   eyebrow,
   title,
+  titleHtml,
   deck,
+  deckHtml,
+  ctas,
   primary,
   secondary,
   lead,
 }: {
   id: string;
   eyebrow: ReactNode;
-  title: string;
+  title?: string;
+  /** Trusted CMS HTML title / deck (content/pages.ts). */
+  titleHtml?: string;
   deck?: ReactNode;
-  primary: { href: string; label: ReactNode };
+  deckHtml?: string;
+  /** Overrides primary/secondary with custom CTA elements. */
+  ctas?: ReactNode;
+  primary?: { href: string; label: ReactNode };
   secondary?: { href: string; label: ReactNode };
   /** Optional element above the eyebrow (e.g. a product mark tile). */
   lead?: ReactNode;
@@ -47,15 +55,31 @@ export function ClosingCta({
 
             <div className="mx-auto flex max-w-3xl flex-col items-center gap-7">
               {lead}
-              <Eyebrow>{eyebrow}</Eyebrow>
-              <h2 id={id} className={cn(headline, "text-[clamp(2.5rem,6vw,5rem)] leading-[0.98]")}>
-                <RevealWords>{title}</RevealWords>
-              </h2>
+              {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
+              {title !== undefined && (
+                <h2 id={id} className={cn(headline, "text-[clamp(2.5rem,6vw,5rem)] leading-[0.98]")}>
+                  <RevealWords>{title}</RevealWords>
+                </h2>
+              )}
+              {titleHtml !== undefined && (
+                <h2
+                  id={id}
+                  className={cn(headline, "text-[clamp(2.25rem,5.4vw,4.5rem)] leading-[1]")}
+                  dangerouslySetInnerHTML={{ __html: titleHtml }}
+                />
+              )}
               {deck && <p className={cn(deckClass, "max-w-[46ch]")}>{deck}</p>}
-              <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
-                <PrimaryCta href={primary.href}>{primary.label}</PrimaryCta>
-                {secondary && <GhostCta href={secondary.href}>{secondary.label}</GhostCta>}
-              </div>
+              {deckHtml && <p className={cn(deckClass, "max-w-[46ch]")} dangerouslySetInnerHTML={{ __html: deckHtml }} />}
+              {(ctas || primary || secondary) && (
+                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                  {ctas ?? (
+                    <>
+                      {primary && <PrimaryCta href={primary.href}>{primary.label}</PrimaryCta>}
+                      {secondary && <GhostCta href={secondary.href}>{secondary.label}</GhostCta>}
+                    </>
+                  )}
+                </div>
+              )}
             </div>
           </div>
         </div>
