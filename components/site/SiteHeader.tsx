@@ -281,7 +281,7 @@ export function SiteHeader() {
                             onClick={() => setOpenMega(null)}
                             className="flex items-center gap-3 rounded-chip px-2 py-1.5 text-[13px] text-ink-2 transition-colors hover:bg-white/[0.05] hover:text-ink"
                           >
-                            <span className="font-code text-[11px] text-[var(--tint)]">{tierNum}</span>
+                            <span className="font-code text-[11px] text-tint">{tierNum}</span>
                             <span>{tierName}</span>
                           </Link>
                         </li>

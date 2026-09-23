@@ -92,13 +92,16 @@ function diff(beforePath, afterPath) {
     }
     const problems = [];
     if (x.title !== y.title) problems.push(`title: "${x.title}" -> "${y.title}"`);
-    const tx = x.text.join(" ");
-    const ty = y.text.join(" ");
+    // Compare the character stream with all whitespace removed: any added,
+    // removed or reworded character fails, but re-wrapping text into
+    // different elements (e.g. per-word spans) does not.
+    const tx = x.text.join("");
+    const ty = y.text.join("");
     if (tx !== ty) {
       let i = 0;
-      while (i < x.text.length && x.text[i] === y.text[i]) i++;
+      while (i < tx.length && tx[i] === ty[i]) i++;
       problems.push(
-        `text diverges at word ${i}:\n    before: …${x.text.slice(Math.max(0, i - 6), i + 12).join(" ")}\n    after:  …${y.text.slice(Math.max(0, i - 6), i + 12).join(" ")}`,
+        `text diverges at char ${i}:\n    before: …${tx.slice(Math.max(0, i - 60), i + 80)}\n    after:  …${ty.slice(Math.max(0, i - 60), i + 80)}`,
       );
     }
     const ax = [...x.attrs].sort().join("\n");

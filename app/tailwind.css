@@ -90,6 +90,13 @@
   }
 }
 
+/* Pearl-coloured text: the tint lifted toward white so every product colour
+   (the deep blue and red included) clears WCAG AA on dark panels. A real
+   utility, so variants like group-hover:text-tint work. */
+@utility text-tint {
+  color: color-mix(in srgb, var(--tint, var(--color-accent)) 62%, #fff);
+}
+
 /* Animatable angle for the conic border beam */
 @property --beam-angle {
   syntax: "<angle>";

@@ -89,20 +89,36 @@ export function PrimaryCta({
 }
 
 /** Secondary pill CTA · hairline ring; on hover it fills faintly, the ring
- *  warms to the accent and a soft orange glow lifts it off the ground. */
+ *  warms to the accent and a soft orange glow lifts it off the ground.
+ *  `arrow` appends a static trailing arrow; `size="sm"` for in-card use. */
 export function GhostCta({
   href,
   children,
+  arrow = false,
+  size = "md",
+  className,
 }: {
   href: string;
   children: ReactNode;
+  arrow?: boolean;
+  size?: "md" | "sm";
+  className?: string;
 }) {
   return (
     <Link
       href={href}
-      className="inline-flex h-12 items-center whitespace-nowrap rounded-pill px-6 font-display text-[15px] font-medium text-ink ring-1 ring-rule-2 ring-inset transition-[background-color,box-shadow,scale] duration-300 ease-fluid hover:bg-white/[0.06] hover:shadow-[0_10px_36px_-14px_rgb(255_107_30/0.55)] hover:ring-accent/45 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
+      className={cn(
+        "inline-flex items-center gap-2 whitespace-nowrap rounded-pill font-display font-medium text-ink ring-1 ring-rule-2 ring-inset transition-[background-color,box-shadow,scale] duration-300 ease-fluid hover:bg-white/[0.06] hover:shadow-[0_10px_36px_-14px_rgb(255_107_30/0.55)] hover:ring-accent/45 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+        size === "md" ? "h-12 px-6 text-[15px]" : "h-9 px-4 text-[13px]",
+        className,
+      )}
     >
       {children}
+      {arrow && (
+        <span className="text-ink-3" aria-hidden>
+          →
+        </span>
+      )}
     </Link>
   );
 }
