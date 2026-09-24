@@ -40,7 +40,7 @@ export function ClosingCta({
     <section className="mkt relative px-4 py-20 sm:px-6 md:py-28" aria-labelledby={id}>
       <Reveal className="mx-auto max-w-[1240px]">
         <div className="beam-border rounded-[2.25rem]">
-          <div className="relative isolate overflow-hidden rounded-[2.25rem] bg-ground-2 px-6 py-20 text-center ring-1 ring-rule ring-inset md:px-16 md:py-28">
+          <div className="relative isolate overflow-hidden rounded-[2.25rem] bg-ground-2 px-6 py-20 text-left ring-1 ring-rule ring-inset md:px-16 md:py-28 md:text-center">
             <div aria-hidden className="grid-field pointer-events-none absolute inset-0 -z-10" />
             <div
               aria-hidden
@@ -53,7 +53,7 @@ export function ClosingCta({
               <NebbosMark size={560} />
             </div>
 
-            <div className="mx-auto flex max-w-3xl flex-col items-center gap-7">
+            <div className="mx-auto flex max-w-3xl flex-col items-start gap-7 md:items-center">
               {lead}
               {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
               {title !== undefined && (

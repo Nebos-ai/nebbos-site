@@ -249,13 +249,13 @@ function TextBlockBanner({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   return (
     <section className="mkt relative px-4 py-16 sm:px-6 md:py-24" aria-labelledby={`h-${s.id}`} style={tintStyle(pearl)}>
       <Reveal className="mx-auto max-w-[1240px]">
-        <div className="relative isolate overflow-hidden rounded-[2rem] bg-ground-2 px-6 py-16 text-center ring-1 ring-rule ring-inset md:px-16 md:py-24">
+        <div className="relative isolate overflow-hidden rounded-[2rem] bg-ground-2 px-6 py-16 text-left ring-1 ring-rule ring-inset md:px-16 md:py-24 md:text-center">
           <span aria-hidden className="grid-field pointer-events-none absolute inset-0 -z-10 opacity-70" />
           <span
             aria-hidden
             className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_50%_0%,color-mix(in_srgb,var(--tint)_24%,transparent),transparent_70%)]"
           />
-          <div className="mx-auto flex max-w-3xl flex-col items-center gap-6">
+          <div className="mx-auto flex max-w-3xl flex-col items-start gap-6 md:items-center">
             <div className="flex items-center gap-3">
               <MarkTile size="sm" />
               {eb && <Eyebrow>{eb}</Eyebrow>}
