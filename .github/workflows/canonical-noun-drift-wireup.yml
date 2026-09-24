@@ -66,6 +66,15 @@ jobs:
         run: git fetch origin main --depth=50
 
       - name: Run canonical-noun-drift check
+        # NON-STRICT / warn-first — script exits 1 when drift is found (per its
+        # documented contract), which GitHub Actions treats as step failure.
+        # continue-on-error keeps the overall job green so the check surfaces
+        # as an informational annotation on PRs, not a merge-blocker. The
+        # ::warning:: prefixed report still lands in the run logs. Flip
+        # continue-on-error to false the same PR that flips --strict, after
+        # the 30-day soak (or 3+ empirical catches) per the convention doc's
+        # ratification path.
+        continue-on-error: true
         run: |
           python3 .nebos-governance/scripts/check_canonical_noun_drift.py \
             --registry-root .nebos-governance/docs/governance/conventions/entity-models \
