@@ -14,7 +14,7 @@ import { ScrollBeam } from "@/components/motion/ScrollBeam";
 import { cn } from "@/lib/cn";
 import { balancedSpans } from "@/lib/balance";
 import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
-import { SecurityArt } from "@/components/marketing/SecurityArt";
+import { SectionArt, type SectionArtKind } from "@/components/marketing/SectionArt";
 
 /**
  * PageRenderer · v7 · 2026-09-23 · Tailwind + Motion redesign
@@ -156,32 +156,52 @@ function MarkTile({ size = "md" }: { size?: "sm" | "md" }) {
   );
 }
 
-/* Shared section header · mark tile + eyebrow chip meta row + h2.
+/* Shared section header · eyebrow chip + h2.
    Founder-caught 2026-09-19 T11:38 UTC: every section header carries the
-   same [mark] + [chip] meta row so pages feel anchored everywhere. */
+   chip meta row so pages feel anchored everywhere. 2026-09-24: the big
+   mark tile beside the chip read as clutter (the chip already carries the
+   mark), so it is gone; a section with `art` gets its illustration on the
+   right from md up instead, or below the heading when `stacked` (the
+   narrow sticky column beside a rail or split layout). */
 function SectionHead({
   id,
   eyebrow,
   title,
   align = "start",
+  art,
+  stacked = false,
   children,
 }: {
   id: string;
   eyebrow?: string;
   title?: string;
   align?: "start" | "center";
+  art?: SectionArtKind;
+  stacked?: boolean;
   children?: ReactNode;
 }) {
   if (!eyebrow && !title) return null;
-  return (
+  const head = (
     <Reveal as="header" className={cn("flex max-w-3xl flex-col gap-6", align === "center" ? "mx-auto items-center text-center" : "items-start")}>
-      <div className="flex items-center gap-3">
-        <MarkTile size="sm" />
-        {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
-      </div>
+      {eyebrow && <Eyebrow>{eyebrow}</Eyebrow>}
       {title && <h2 id={id} className={h2Class} dangerouslySetInnerHTML={{ __html: title }} />}
       {children}
     </Reveal>
+  );
+  if (!art) return head;
+  if (stacked) {
+    return (
+      <div className="flex flex-col gap-10">
+        {head}
+        <SectionArt kind={art} className="hidden max-w-[280px] md:block" />
+      </div>
+    );
+  }
+  return (
+    <div className="flex items-center justify-between gap-10">
+      {head}
+      <SectionArt kind={art} className="hidden max-w-[280px] shrink-0 md:block lg:max-w-[300px]" />
+    </div>
   );
 }
 
@@ -256,10 +276,8 @@ function TextBlockBanner({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
             className="pointer-events-none absolute inset-0 -z-10 bg-[radial-gradient(70%_80%_at_50%_0%,color-mix(in_srgb,var(--tint)_24%,transparent),transparent_70%)]"
           />
           <div className="mx-auto flex max-w-3xl flex-col items-start gap-6 md:items-center">
-            <div className="flex items-center gap-3">
-              <MarkTile size="sm" />
-              {eb && <Eyebrow>{eb}</Eyebrow>}
-            </div>
+            {s.art && <SectionArt kind={s.art} className="max-w-[240px] md:max-w-[280px]" />}
+            {eb && <Eyebrow>{eb}</Eyebrow>}
             {s.h2 && (
               <h2
                 id={`h-${s.id}`}
@@ -294,17 +312,8 @@ function TextBlockCard({ s, pearl, mirror }: { s: SectionBase; pearl: ProductKey
             )}
           />
           <aside className={cn("relative flex flex-col items-start gap-4 md:col-span-4", mirror && "md:order-2 md:items-end md:text-right")}>
-            {s.art ? (
-              <>
-                {eb && <Eyebrow>{eb}</Eyebrow>}
-                <SecurityArt kind={s.art} className="mt-2 max-w-[260px] md:mt-6 md:max-w-[320px]" />
-              </>
-            ) : (
-              <>
-                <MarkTile />
-                {eb && <Eyebrow>{eb}</Eyebrow>}
-              </>
-            )}
+            {eb && <Eyebrow>{eb}</Eyebrow>}
+            {s.art && <SectionArt kind={s.art} className="mt-2 max-w-[260px] md:mt-6 md:max-w-[320px]" />}
           </aside>
           <div className={cn("relative flex flex-col gap-5 md:col-span-8", mirror && "md:order-1")}>
             {s.h2 && <h2 id={`h-${s.id}`} className={h2Class} dangerouslySetInnerHTML={{ __html: s.h2 }} />}
@@ -376,7 +385,7 @@ function SplitColumns({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
     <Section labelledBy={`h-${s.id}`}>
       <div className="grid gap-12 lg:grid-cols-12 lg:gap-10" style={tintStyle(pearl)}>
         <div className="lg:sticky lg:top-32 lg:col-span-5 lg:self-start">
-          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2}>
+          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} art={s.art} stacked>
             {s.deck && <p className={deckClass} dangerouslySetInnerHTML={{ __html: s.deck }} />}
           </SectionHead>
         </div>
@@ -404,7 +413,7 @@ function ListNumbered({ s, pearl, index }: { s: SectionBase; pearl: ProductKey; 
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)} className={cn(rail && "grid gap-12 lg:grid-cols-12 lg:gap-10")}>
         <div className={cn(rail && "lg:sticky lg:top-32 lg:col-span-5 lg:self-start")}>
-          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+          <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} art={s.art} stacked={rail} />
         </div>
         <div className={cn("relative", rail ? "lg:col-span-7" : "mt-14")}>
           {rail && <ScrollBeam className="left-[7px]" />}
@@ -465,7 +474,7 @@ function ListPlain({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   return (
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)}>
-        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} art={s.art} />
         <div className="mt-14">
           <TileGrid items={items} basePearl={pearl} />
         </div>
@@ -491,7 +500,7 @@ function TableRows({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   return (
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)}>
-        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} />
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} art={s.art} />
         <Stagger as="ul" className="m-0 mt-14 grid list-none grid-cols-12 gap-4 p-0" step={0.06}>
           {rows.map(([label, value], i) => {
             const p = pearlAt(baseIdx + i);
@@ -531,7 +540,6 @@ function CaseStudy({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
             className="pointer-events-none absolute -left-24 -bottom-24 size-80 rounded-full bg-[var(--tint)] opacity-[0.18] blur-[100px]"
           />
           <aside className="relative flex flex-col items-start gap-4">
-            <MarkTile />
             <Eyebrow>{eb ?? "Case study"}</Eyebrow>
             {s.h2 && (
               <h3
@@ -582,7 +590,7 @@ function InboxRouter({ s, pearl }: { s: SectionBase; pearl: ProductKey }) {
   return (
     <Section labelledBy={`h-${s.id}`}>
       <div style={tintStyle(pearl)}>
-        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2}>
+        <SectionHead id={`h-${s.id}`} eyebrow={eb} title={s.h2} art={s.art}>
           {s.deck && <p className={deckClass} dangerouslySetInnerHTML={{ __html: s.deck }} />}
         </SectionHead>
         <RouteList

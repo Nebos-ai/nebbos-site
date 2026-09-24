@@ -40,6 +40,8 @@
  * top layer of the site. Every visitor sees words from this file first.
  */
 
+import type { SectionArtKind } from "@/components/marketing/SectionArt";
+
 /* ── Section kinds ────────────────────────────────────────────────────
  * A page is a stack of sections. Each section has a `kind` that selects
  * the renderer. Adding a new page kind means (1) adding it to this union
@@ -88,7 +90,7 @@ export type SectionBase = {
   imageV3?: number;                           // v3 concept-mapped batch
   imageFamily?: string;                       // v4 · concept family key (e.g. "band-substrate")
   imageFamilyVariant?: 1 | 2;                 // 1 (default) or 2
-  art?: "encryption" | "identity";            // text-block card illustration in place of the mark tile
+  art?: SectionArtKind;                       // section illustration (components/marketing/SectionArt)
 };
 
 export type Page = {
@@ -2458,6 +2460,7 @@ export const PAGES = {
         id: "three-axes",
         kind: "text-block",
         eyebrow: "01 · Three axes of sovereignty",
+        art: "axes",
         h2: "Three commitments, one architecture.",
         body: "<p><strong>Data.</strong> Your data lives isolated at the database, not by convention. Every query proves identity before it runs. A bug in application code can&rsquo;t leak your rows to another client because the database refuses to serve the read.</p><p><strong>Model.</strong> Every decision your team makes tunes YOUR Pearl. The tuned weights, the memory, and the routing policy are your property, exportable in full any day you ask. No cross-client aggregation.</p><p><strong>Operational.</strong> The classifier that decides how sensitive a request is runs on your Cradle, before egress. The MCP that mediates every tool call lives on hardware you hold. The audit trail is written to storage your keys unlock.</p>",
       },
@@ -2465,6 +2468,7 @@ export const PAGES = {
         id: "tier-model",
         kind: "list-numbered",
         eyebrow: "02 · Five treatment tiers for your data",
+        art: "tiers",
         h2: "You decide how much your model gets to see.",
         deck: "Nebbos runs every workload against one of five data-treatment tiers. The tier is decided by the classifier at the MCP call boundary — on your host, client-side, before any data crosses the wire.",
         items: [
@@ -2479,6 +2483,7 @@ export const PAGES = {
         id: "classifier",
         kind: "text-block",
         eyebrow: "03 · The classifier",
+        art: "classifier",
         h2: "The tier decision runs on your host. Not on our servers.",
         body: "Before any query leaves your operator&rsquo;s laptop, the classifier reads the query, the client policy, and the operator&rsquo;s current authority level, decides which of the five tiers this specific request runs at, and hands that decision to the MCP that services the call. Any PII that would otherwise egress is redacted on-host before the wire. The classifier lives on your Cradle. You control the policy file, your admin sets the defaults, your operators can force a stricter tier, your regulator inspects it under NDA. What runs is a fact about the hardware you hold &mdash; attested and reviewable, one file.",
       },
@@ -2486,6 +2491,7 @@ export const PAGES = {
         id: "recovery",
         kind: "text-block",
         eyebrow: "04 · Recovery custodians",
+        art: "custodians",
         h2: "You elect who has break-glass keys.",
         body: "Vendor break-glass exists. The client chooses whether to use it. Path A &mdash; vendor-mediated recovery (default). If a user loses their Cradle and needs a fresh device, a Nebbos-side recovery flow re-issues one, with an audit event that lands in the client&rsquo;s own audit trail. Fast, standard, works for most enterprises. Path B &mdash; user-quorum recovery (opt-in). The client elects three-to-five recovery custodians from within its own organization. Cradle reissue requires a Shamir 3-of-5 quorum of the custodian Cradles. Nebbos-side cannot unlock a lost device. The client carries the operational cost; the client carries the sovereignty guarantee. Every enterprise decides which posture it operates under. The two paths are not a technical accident &mdash; they are a designed choice about who holds the last mile of trust.",
       },
@@ -2507,6 +2513,7 @@ export const PAGES = {
         id: "layers",
         kind: "list-numbered",
         eyebrow: "07 · Which architecture layers make sovereignty real",
+        art: "layers",
         h2: "Which architecture layers make sovereignty real.",
         items: [
           { title: "Client isolation at the database", body: "Structural, not policy. A bug in application code can&rsquo;t leak your rows across clients &mdash; the database refuses to serve the read." },
