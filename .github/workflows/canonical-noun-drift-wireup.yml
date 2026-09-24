@@ -30,7 +30,6 @@ permissions:
 jobs:
   check:
     uses: Nebos-ai/nebos-governance/.github/workflows/canonical-noun-drift.yml@main
-    secrets: inherit
     with:
       strict: false
       diff-range: origin/main..HEAD
