@@ -1,22 +1,32 @@
-# Canonical Concept-Model drift check — consumer wire-up.
+# Canonical Concept-Model drift check — consumer wire-up (INLINE variant).
 #
-# Delegates to the reusable workflow shipped in nebos-governance PR #2630
-# (canonical-concept-model.md convention + entity-models/people.yaml registry).
-# The reusable workflow checks out nebos-governance in CI, reads the family
-# registry, and greps this repo's PR diff for unregistered person-family
-# synonyms (subscriber, buyer, prospect, end-user, staffer, staff-member,
-# patron, clientele, customer_base, user_base). Legit terms extend the
-# registry in a same-PR nebos-governance commit; escape-trailer bypass
-# available inline per convention.
+# Wave B pilot: applies the canonical-noun-drift check shipped in Wave A on
+# nebos-governance (docs/governance/conventions/canonical-concept-model.md +
+# entity-models/people.yaml + scripts/check_canonical_noun_drift.py) against
+# every PR in this repo.
+#
+# History: the initial attempt (2026-09-24) used the reusable-workflow pattern
+# `uses: Nebos-ai/nebos-governance/.github/workflows/canonical-noun-drift.yml@main`.
+# That failed to resolve at parse-time on this repo with a 0-second workflow-file
+# issue on three consecutive runs (36012930970 / 36046548109 / 36054651875 /
+# 36056703752), despite:
+#   - the reusable file existing at that ref (verified via GitHub contents API)
+#   - nebos-governance Actions access_level == "organization"
+#   - the caller filename being disambiguated from the reusable target
+#   - `secrets: inherit` removed to test parse-time secrets validation
+# `referenced_workflows: []` on every attempt — GitHub was not resolving the
+# cross-repo call, cause not surfaced in any log endpoint (annotations 404,
+# logs 404). Time-boxed the debug and pivoted to this inline variant to unblock
+# the pilot. Reusable pattern debug tracked separately as a follow-up.
 #
 # Posture (initial): NON-STRICT / warn-first. Marketing content in this repo
 # has known drift (client=141× vs customer=49× per Wave A empirical scan on
 # 2026-09-24); the drift is expected to fire on many existing paths until
-# either terms are registered as views or copy is migrated. Flip to strict:
-# true after 30-day soak.
+# either terms are registered as views or copy is migrated. Flip strict=true
+# after 30-day soak.
 #
 # Grounding: docs/governance/conventions/canonical-concept-model.md in
-# nebos-governance (via reusable workflow uses: line below).
+# nebos-governance (checked out below at runtime).
 
 name: canonical-noun-drift
 
@@ -29,7 +39,34 @@ permissions:
 
 jobs:
   check:
-    uses: Nebos-ai/nebos-governance/.github/workflows/canonical-noun-drift.yml@main
-    with:
-      strict: false
-      diff-range: origin/main..HEAD
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout caller repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout nebos-governance (registry + script)
+        uses: actions/checkout@v4
+        with:
+          repository: Nebos-ai/nebos-governance
+          path: .nebos-governance
+          fetch-depth: 1
+          # nebos-governance is same-org; github.token has read access.
+          # If access ever tightens, set NEBOS_GOVERNANCE_READ_TOKEN as a
+          # fine-grained PAT with contents:read on that repo.
+          token: ${{ secrets.NEBOS_GOVERNANCE_READ_TOKEN || github.token }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Fetch main for diff base
+        run: git fetch origin main --depth=50
+
+      - name: Run canonical-noun-drift check
+        run: |
+          python3 .nebos-governance/scripts/check_canonical_noun_drift.py \
+            --registry-root .nebos-governance/docs/governance/conventions/entity-models \
+            --diff-range origin/main..HEAD
