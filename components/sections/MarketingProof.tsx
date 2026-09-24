@@ -83,9 +83,10 @@ export function MarketingProof() {
           <Reveal>
             <p className="m-0 w-full max-w-none rounded-[1.25rem] bg-white/[0.03] px-5 py-3.5 font-code text-[11px] uppercase leading-relaxed tracking-[0.14em] text-ink-3 ring-1 ring-rule ring-inset sm:rounded-pill">
               Measured this month. See{" "}
+              <br className="sm:hidden" />
               <Link
                 href="/how"
-                className="font-medium text-accent transition-[font-weight,color] duration-200 hover:font-bold hover:text-[#ff8a4a] focus-visible:font-bold"
+                className="whitespace-nowrap font-medium text-accent transition-[font-weight,color] duration-200 hover:font-bold hover:text-[#ff8a4a] focus-visible:font-bold"
               >
                 how it was built
               </Link>
