@@ -1,0 +1,36 @@
+# Canonical Concept-Model drift check — consumer wire-up.
+#
+# Delegates to the reusable workflow shipped in nebos-governance PR #2630
+# (canonical-concept-model.md convention + entity-models/people.yaml registry).
+# The reusable workflow checks out nebos-governance in CI, reads the family
+# registry, and greps this repo's PR diff for unregistered person-family
+# synonyms (subscriber, buyer, prospect, end-user, staffer, staff-member,
+# patron, clientele, customer_base, user_base). Legit terms extend the
+# registry in a same-PR nebos-governance commit; escape-trailer bypass
+# available inline per convention.
+#
+# Posture (initial): NON-STRICT / warn-first. Marketing content in this repo
+# has known drift (client=141× vs customer=49× per Wave A empirical scan on
+# 2026-09-24); the drift is expected to fire on many existing paths until
+# either terms are registered as views or copy is migrated. Flip to strict:
+# true after 30-day soak.
+#
+# Grounding: docs/governance/conventions/canonical-concept-model.md in
+# nebos-governance (via reusable workflow uses: line below).
+
+name: canonical-noun-drift
+
+on:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    uses: Nebos-ai/nebos-governance/.github/workflows/canonical-noun-drift.yml@main
+    secrets: inherit
+    with:
+      strict: false
+      diff-range: origin/main..HEAD
