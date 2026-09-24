@@ -200,6 +200,7 @@ export const PAGES = {
       {
         id: "product-line",
         kind: "list-plain",
+        art: "integrate",
         eyebrow: "02 · Product line",
         h2: "What we build.",
         // Rendered from content/facts.ts productLine
@@ -207,6 +208,7 @@ export const PAGES = {
       {
         id: "compliance",
         kind: "text-block",
+        art: "audit",
         eyebrow: "03 · Compliance",
         h2: "Engineered to institutional controls.",
         // Rendered from content/facts.ts complianceStance
@@ -239,6 +241,7 @@ export const PAGES = {
       {
         id: "agenda",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "01 · What we&rsquo;ll cover",
         h2: "The thirty minutes.",
         items: [
@@ -320,6 +323,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "solution-operations",
         imageFamilyVariant: 2,
@@ -330,6 +334,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What Nebbos Operations does",
         h2: "One Pearl that runs alongside your ops team.",
         body: "Nebbos Operations is a per-domain Pearl deployed to your operations Shell. It reads from every system your ops team already emits signal into — messaging, calendaring, on-call scheduling, ticketing, source-control, HR — and reasons across all of them at once. When a pattern emerges that historically precedes an incident, it surfaces the pattern with the specific evidence, the affected owners, and a proposed action. Your ops lead approves the action (or edits it, or rejects it with a reason that trains the Pearl). Every action taken lands in an attested audit trail your CISO and your compliance officer can verify. The Pearl gets better every week — at month twenty-four your Nebbos Operations is measurably better than at month one, because it has twenty-three months of your team&rsquo;s specific decisions in its memory.",
@@ -338,6 +343,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits your workflow",
         h2: "Deploys without disrupting.",
         body: "Nebbos Operations sits behind your existing systems, not in front of them. Your team continues using Slack, PagerDuty, Jira, Linear, Google Calendar, Workday — nothing changes about how they work today. The Pearl reads events from those systems (via named connectors for the tools that matter and OAuth adapters for the long-tail), reasons across them in its memory graph, and surfaces attention through a per-domain dashboard plus the messaging channel your team already uses. Approval requests land in Slack, not a new UI. Handoff summaries post to the on-call channel, not a portal nobody checks. The rule is: your team&rsquo;s workflow stays. Only the noise-to-signal ratio changes.",
@@ -354,6 +360,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What Nebbos Operations reads from your existing systems.",
         items: [
@@ -370,6 +377,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers Nebbos Operations to act",
         h2: "The pattern that becomes an action.",
         items: [
@@ -385,6 +393,7 @@ export const PAGES = {
       {
         id: "layers-that-matter",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers your operations Pearl leans on hardest.",
         items: [
@@ -407,6 +416,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What ops leaders ask first.",
         items: [
@@ -436,6 +446,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -473,6 +484,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "solution-finance",
         imageFamilyVariant: 2,
@@ -482,6 +494,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your close.",
         body: "Nebbos Finance is a per-domain Pearl deployed to your finance Shell. It reads from your general ledger, your ERP, your bank feeds, your expense system, your payroll, and your subscription-management stack — and reasons across all of them in memory. During close week, it surfaces reconciliation breaks with the specific transactions that don&rsquo;t match and a proposed resolution. Between close cycles, it watches variance patterns and flags the vendors, cost centers, or accrual buckets that are drifting from forecast. Every consequential action (a manual journal, an accrual adjustment, a bank rec sign-off) passes through your approval graph with a named human&rsquo;s attested yes. Every action lands in an audit trail your external auditor can verify.",
@@ -489,6 +502,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing finance stack.",
         body: "Nebbos Finance sits behind NetSuite, Sage Intacct, QuickBooks, Workday Financials, or whatever ERP your team runs — the Pearl reads through named connectors, not screen-scraping. Reconciliation surfaces land in the tool your team already uses for close (Blackline, FloQast, or a shared spreadsheet if that&rsquo;s where you actually work). Approvals land in Slack or Teams, not a new UI. Nothing about your CFO&rsquo;s monthly rhythm changes. Only what happens between close cycles changes — the Pearl fills the attention gap.",
@@ -503,6 +517,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -518,6 +533,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -532,6 +548,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -552,6 +569,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -578,6 +596,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -614,6 +633,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "solution-people-hr",
         imageFamilyVariant: 2,
@@ -623,6 +643,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your HR team.",
         body: "Nebbos People is a per-domain Pearl deployed to your people Shell. It reads from your ATS (Greenhouse, Lever, Ashby), your HRIS (Workday, BambooHR, Rippling), your engagement platform (Culture Amp, Lattice, 15Five), your calendar tool, and Slack — and reasons across all of them. It surfaces the hiring pipeline stages that are drifting, the onboarding steps that correlate with early exits, the manager teams with the fastest-declining engagement, and the tenure patterns that precede resignation. Every action (a follow-up nudge to a candidate, an escalation to a manager, a re-engagement task) passes through your approval graph.",
@@ -630,6 +651,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing HR stack.",
         body: "Nebbos People sits behind your ATS, HRIS, and engagement platform via named connectors. Nothing changes about how your team works with candidates, new hires, or existing employees. The Pearl surfaces attention through the channel your HR team already uses (Slack, email, or a lightweight per-domain dashboard). Approval routes to your Head of People, your recruiter, or the manager involved.",
@@ -644,6 +666,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -659,6 +682,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -673,6 +697,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -693,6 +718,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -719,6 +745,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -755,6 +782,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "concept-approval",
         h2: "K-12 districts run on overworked administrators and outdated systems.",
@@ -763,6 +791,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs district operations.",
         body: "Nebbos Education is a per-domain Pearl deployed to your district-operations Shell. It reads from your SIS (PowerSchool, Infinite Campus), your HR system, your substitute-management platform (Frontline, Aesop), your state compliance portal, and your parent-communication tool — and reasons across all of them. It surfaces the coverage gaps, the compliance filings due, the enrollment shifts that will hit next year&rsquo;s budget, the teacher-pipeline stages that are stalling. Every action goes through your superintendent&rsquo;s approval graph with an attested trail — because K-12 accountability is public accountability.",
@@ -770,6 +799,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing district stack.",
         body: "Nebbos Education sits behind PowerSchool, Frontline, Workday, your state reporting portal — via named connectors. Nothing changes about how your teachers, principals, or district staff work. Surfaces land in the channels your admin team already uses. Approval routes to your superintendent, HR director, or business manager as configured.",
@@ -784,6 +814,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -799,6 +830,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -813,6 +845,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -833,6 +866,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -859,6 +893,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -895,6 +930,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "concept-approval",
         imageFamilyVariant: 2,
@@ -904,6 +940,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your care coordination.",
         body: "Nebbos Care is a per-domain Pearl deployed to your clinical-operations Shell. It reads from your EMR (Epic, Cerner, Athenahealth), your scheduling platform, your referral-management system, your patient-portal messaging, and your compliance tooling — and reasons across all of them. It surfaces stalled referrals, patients due for follow-up, coverage gaps in the on-call rotation, compliance filings approaching deadline, and care-coordination handoffs that are missing context. Every action passes through your clinical-operations director&rsquo;s approval graph with a HIPAA-adequate audit trail.",
@@ -911,6 +948,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing clinical stack.",
         body: "Nebbos Care sits behind your EMR, scheduling, referral, and compliance systems via named connectors. Nothing changes about how clinicians, care coordinators, or admin staff work. Surfaces land in the tools your team already uses. Approval routes to your clinical-operations director or the care coordinator responsible.",
@@ -925,6 +963,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -940,6 +979,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -954,6 +994,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -974,6 +1015,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -1000,6 +1042,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -1036,6 +1079,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "solution-finance",
         h2: "Trading floors are drowning in operational cycles that regulators demand and traders resent.",
@@ -1044,6 +1088,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your trading operations.",
         body: "Nebbos Financial Services is a per-domain Pearl deployed to your trading-operations Shell. It reads from your OMS/EMS, your risk-management system, your reconciliation platform, your regulatory-reporting stack — and reasons across all of them. It runs overnight P&L reconciliation, pre-market checks, post-trade attestation, and regulatory-filing preparation. Every consequential action passes through your compliance officer&rsquo;s approval graph with a cryptographically-verifiable audit trail (Layer 15).",
@@ -1051,6 +1096,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing trading stack.",
         body: "Nebbos FS sits behind your OMS, EMS, risk system, and reconciliation platform via named connectors. Nothing changes about how traders execute or how risk analysts model. Surfaces land in the tools your team already uses. Approval routes to your compliance officer, chief risk officer, or trading desk head as configured.",
@@ -1065,6 +1111,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -1080,6 +1127,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -1094,6 +1142,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -1114,6 +1163,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -1140,6 +1190,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -1176,6 +1227,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "solution-manufacturing",
         imageFamilyVariant: 2,
@@ -1185,6 +1237,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs alongside your plant operations.",
         body: "Nebbos Manufacturing is a per-domain Pearl deployed to your production-operations Shell. It reads from your MES, your ERP, your quality-management system, your CMMS (maintenance), and your supplier portal — and reasons across all of them. It surfaces production-schedule risks (before they hit the line), quality-gate trend shifts (before they hit the customer), supply reconciliation gaps (before they hit inventory), and maintenance-window slippage (before it hits uptime). Every consequential action passes through the plant manager&rsquo;s approval graph with an attested trail.",
@@ -1192,6 +1245,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing manufacturing stack.",
         body: "Nebbos Manufacturing sits behind your MES + ERP + QMS + CMMS + supplier systems via named connectors. Nothing changes about how operators, quality inspectors, or maintenance techs work. Surfaces land in the tool your plant leadership already uses.",
@@ -1206,6 +1260,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -1221,6 +1276,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -1235,6 +1291,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -1255,6 +1312,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -1281,6 +1339,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -1317,6 +1376,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "concept-audit-attestation",
         imageFamilyVariant: 2,
@@ -1326,6 +1386,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "One Pearl that runs your civic operations.",
         body: "Nebbos Civic is a per-domain Pearl deployed to your agency-operations Shell. It reads from your case-management system, your document management, your citizen-portal messaging, your inter-agency systems, and your compliance-reporting tools — and reasons across all of them. It surfaces case-queue drift, citizen-response patterns, accountability-filing status, and cross-agency handoff quality. Every action passes through your agency-director&rsquo;s approval graph with a public-accountability audit trail.",
@@ -1333,6 +1394,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Deploys behind your existing civic stack.",
         body: "Nebbos Civic sits behind your case management, document management, citizen portal, and inter-agency systems via named connectors. OAuth adapters for state-specific systems. Nothing changes about how caseworkers, supervisors, or citizens interact with your agency. Surfaces land in the tools your team already uses.",
@@ -1347,6 +1409,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -1362,6 +1425,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -1376,6 +1440,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -1396,6 +1461,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -1422,6 +1488,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -1458,6 +1525,7 @@ export const PAGES = {
       {
         id: "problem",
         kind: "text-block",
+        art: "noise",
         eyebrow: "01 · The problem",
         imageFamily: "band-intelligence",
         imageFamilyVariant: 2,
@@ -1467,6 +1535,7 @@ export const PAGES = {
       {
         id: "what-it-does",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "02 · What it does",
         h2: "The substrate that turns your operation into training data.",
         body: "Nebbos captures every human decision your team makes as a structured preference pair — the proposed action, the human decision (accept / edit / reject), the reason, the context, the outcome. Those pairs accumulate in your client&rsquo;s memory (Layer 07). At any time you can export them as a training dataset in your choice of format — for fine-tuning any base model you own or license, whether that&rsquo;s an open-weight model, a frontier model you license, or a custom model you train from scratch. This is the training-substrate side of Nebbos — the counterpart to the governance-substrate side.",
@@ -1474,6 +1543,7 @@ export const PAGES = {
       {
         id: "how-it-fits",
         kind: "text-block",
+        art: "integrate",
         eyebrow: "03 · How it fits",
         h2: "Runs alongside every Pearl you deploy.",
         body: "The training substrate is not a separate product — it&rsquo;s a property of every Pearl you run. Nebbos Design, Nebbos Finance, Nebbos Operations — every one of them produces preference pairs that flow into your training corpus. Your ML platform team gets a growing dataset without changing anything about how your operational teams work.",
@@ -1488,6 +1558,7 @@ export const PAGES = {
       {
         id: "signals",
         kind: "list-numbered",
+        art: "signals",
         eyebrow: "05 · Signals it watches",
         h2: "What the Pearl reads from your existing systems.",
         items: [
@@ -1503,6 +1574,7 @@ export const PAGES = {
       {
         id: "triggers",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "06 · What triggers a Pearl action",
         h2: "The pattern that becomes an action.",
         items: [
@@ -1517,6 +1589,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "07 · Which architecture layers matter most",
         h2: "The Nebbos layers this Pearl leans on hardest.",
         items: [
@@ -1537,6 +1610,7 @@ export const PAGES = {
       {
         id: "objections",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common objections",
         h2: "What leaders ask first.",
         items: [
@@ -1561,6 +1635,7 @@ export const PAGES = {
       {
         id: "getting-started",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "11 · Getting started",
         h2: "Three weeks from signature to live.",
         items: [
@@ -1598,6 +1673,7 @@ export const PAGES = {
       {
         id: "commit",
         kind: "text-block",
+        art: "pillars",
         eyebrow: "01 · What Nebbos commits to",
         h2: "Four commitments Nebbos makes to every client.",
         body: "First — your data belongs to you, in every form it takes inside the platform. Second — every consequential action a Pearl takes carries the identity of a named human who approved it. Third — every action lands in an audit trail that is append-only, hash-chained, and portable to you. Fourth — if you ever leave, your data, your tuned Pearls, and your audit trail export in a machine-readable format on a timeline you control. These are not features. They are load-bearing properties of the substrate. Removing any one of them would require a substrate rebuild.",
@@ -1605,6 +1681,7 @@ export const PAGES = {
       {
         id: "why-architectural",
         kind: "text-block",
+        art: "substrate",
         eyebrow: "02 · Why architectural, not contractual",
         h2: "Why trust is architectural, not contractual.",
         body: "Every enterprise SaaS contract contains language about data ownership, audit trails, and portability. Nebbos is architected so those commitments are properties the code enforces, not sentences the contract asks you to trust. Your data can&rsquo;t touch another client&rsquo;s &mdash; the database refuses the read before the query runs. Every audit record is signed the moment it&rsquo;s written and locked in a chain the storage engine won&rsquo;t rewrite. Portability isn&rsquo;t a promise for offboarding day &mdash; the export routine runs on every deploy, so we already know it works when you need it. The contract describes what the substrate already delivers.",
@@ -1612,6 +1689,7 @@ export const PAGES = {
       {
         id: "pillars",
         kind: "list-numbered",
+        art: "audit",
         eyebrow: "03 · The four accountability pillars",
         h2: "The four accountability pillars.",
         items: [
@@ -1624,6 +1702,7 @@ export const PAGES = {
       {
         id: "ownership",
         kind: "text-block",
+        art: "portability",
         eyebrow: "04 · Data ownership",
         h2: "Data ownership and portability, in detail.",
         body: "You own every byte of data your client produces or ingests. This includes raw inputs (documents, events, transactions), Pearl-generated artifacts (proposals, drafts, plans), memory (accumulated context, preference pairs, tuning), audit records, and any derived intelligence. Nebbos&rsquo;s license to your data is scoped strictly to operating the platform on your behalf — we do not train shared models on your data, we do not aggregate your data with other clients, we do not sell insights derived from your data to any third party. On offboarding, you receive a complete export: raw data + memory + tuned Pearl weights + audit trail + verifier tooling. The export runs on a timeline you control. After confirmed receipt, we execute a documented data-destruction routine and provide the certificate of destruction your legal team needs for retention records.",
@@ -1638,6 +1717,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "06 · Which architecture layers make trust real",
         h2: "Which architecture layers make trust real.",
         items: [
@@ -1672,6 +1752,7 @@ export const PAGES = {
       {
         id: "questions",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Common questions",
         h2: "Common questions from buyer, legal, and CISO.",
         items: [
@@ -1686,6 +1767,7 @@ export const PAGES = {
       {
         id: "certs",
         kind: "list-numbered",
+        art: "document",
         eyebrow: "10 · Certifications",
         h2: "Attestations and certifications.",
         items: [
@@ -1744,6 +1826,7 @@ export const PAGES = {
       {
         id: "threat-model",
         kind: "text-block",
+        art: "substrate",
         eyebrow: "01 · Engineered against",
         h2: "Every risk category answered at the substrate.",
         body: "Data isolation is enforced by the database, not the application &mdash; an application bug cannot leak one client&rsquo;s row to another. Elevated operator actions require the Cradle in the port and a biometric only your operator can provide. Every model call, tool invocation, and approval lands in an append-only audit chain your auditor verifies independently. Supply-chain integrity closes through signed builds and continuous dependency scanning. Identity is unified through your SSO with per-workload attribution. The layers that follow name which architecture layer answers which category.",
@@ -1788,6 +1871,7 @@ export const PAGES = {
       {
         id: "controls-map",
         kind: "list-numbered",
+        art: "audit",
         eyebrow: "05b · NIST SP 800-53 control mapping",
         h2: "The controls the substrate implements.",
         items: [
@@ -1803,6 +1887,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "06 · Which architecture layers enforce security",
         h2: "Which architecture layers enforce security.",
         items: [
@@ -1823,6 +1908,7 @@ export const PAGES = {
       {
         id: "incident",
         kind: "list-numbered",
+        art: "trigger",
         eyebrow: "08 · Incident response commitments",
         h2: "Incident response commitments.",
         items: [
@@ -1837,6 +1923,7 @@ export const PAGES = {
       {
         id: "questions",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Security-team questions",
         h2: "Security-team questions we field weekly.",
         items: [
@@ -1851,6 +1938,7 @@ export const PAGES = {
       {
         id: "sub-processors",
         kind: "list-numbered",
+        art: "integrate",
         eyebrow: "10 · Sub-processors",
         h2: "Sub-processors.",
         items: [
@@ -1905,6 +1993,7 @@ export const PAGES = {
       {
         id: "frameworks",
         kind: "list-numbered",
+        art: "audit",
         eyebrow: "01 · Frameworks",
         h2: "Frameworks Nebbos operates to.",
         items: [
@@ -1920,6 +2009,7 @@ export const PAGES = {
       {
         id: "eu-ai-act",
         kind: "text-block",
+        art: "document",
         eyebrow: "02 · EU AI Act Article 11 Annex IV",
         h2: "Annex IV documentation pack, on the substrate that already generates it.",
         body: "The EU AI Act treats certain deployments as high-risk (Article 6, Annex III) and requires providers to maintain a technical documentation pack covering architecture, data, monitoring, risk, and quality management (Article 11). Nebbos ships the substrate that generates that evidence today &mdash; Layer 07 memory captures the model artifacts, Layer 08 reasoning captures decision provenance, Layer 15 attestation captures the audit trail. The client-facing Annex IV pack lands ahead of the 2027-08-02 deadline. Request the current pack status memo via legal@nebbos.ai.",
@@ -1927,6 +2017,7 @@ export const PAGES = {
       {
         id: "soc2",
         kind: "text-block",
+        art: "pillars",
         eyebrow: "03 · SOC 2 Type II",
         h2: "Trust services criteria, implemented at the substrate.",
         body: "Security, Availability, Confidentiality, Privacy &mdash; every trust services criterion maps to a substrate control that already exists. The Type II audit is engaged and the observation window is running. Report available under NDA when the auditor&rsquo;s opinion issues. Request the current control-implementation status memo via legal@nebbos.ai for procurement gates that need it before the report lands.",
@@ -1934,6 +2025,7 @@ export const PAGES = {
       {
         id: "iso",
         kind: "text-block",
+        art: "substrate",
         eyebrow: "04 · ISO 27001:2022",
         h2: "Annex A control set implemented across the substrate.",
         body: "Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today. The ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
@@ -1962,6 +2054,7 @@ export const PAGES = {
       {
         id: "layers",
         kind: "list-numbered",
+        art: "layers",
         eyebrow: "08 · Which architecture layers make compliance real",
         h2: "Which architecture layers make compliance real.",
         items: [
@@ -1975,6 +2068,7 @@ export const PAGES = {
       {
         id: "questions",
         kind: "list-numbered",
+        art: "questions",
         eyebrow: "09 · Compliance-team questions",
         h2: "Compliance-team questions we field.",
         items: [
@@ -2044,6 +2138,7 @@ export const PAGES = {
       {
         id: "what-were-building",
         kind: "text-block",
+        art: "pearl",
         eyebrow: "01 · What we&rsquo;re building",
         h2: "The platform that sits between intent and state.",
         body: "Every AI call needs a substrate &mdash; metered, isolated, modular, and attested — that decides whether the call runs, what it costs, what it touches, and what it leaves behind. Every operator has domains that would run better with a Pearl scoped to their work; none of those Pearls get built because the team is running the current systems. Nebbos is that missing platform. A substrate underneath, tools on top, an MCP surface every caller routes through, and a Cradle that gates the elevated actions.",
@@ -2051,6 +2146,7 @@ export const PAGES = {
       {
         id: "current-openings",
         kind: "list-numbered",
+        art: "team",
         eyebrow: "01a · Founding-engineer roles",
         h2: "Two founding-engineer roles open now.",
         deck: "The two role shapes below are how the work is scoped today. Reach out with why you&rsquo;re a fit &mdash; formal application intake opens as the first customer engagement lands.",
@@ -2062,6 +2158,7 @@ export const PAGES = {
       {
         id: "roles",
         kind: "list-numbered",
+        art: "integrate",
         eyebrow: "02 · Founding roles",
         h2: "Where founding hires slot in.",
         items: [
@@ -2075,6 +2172,7 @@ export const PAGES = {
       {
         id: "what-we-look-for",
         kind: "list-plain",
+        art: "signals",
         eyebrow: "03 · What we look for",
         h2: "Signals we hire on.",
         items: [
@@ -2114,6 +2212,7 @@ export const PAGES = {
       {
         id: "surfaces",
         kind: "list-numbered",
+        art: "integrate",
         eyebrow: "01 · Where you build",
         h2: "The six surfaces every deployment touches.",
         deck: "The doc set is organized around the six surfaces a team touches to bring a Pearl online. Each surface has its own reference material, worked examples, and troubleshooting.",
@@ -2129,6 +2228,7 @@ export const PAGES = {
       {
         id: "path",
         kind: "text-block",
+        art: "timeline",
         eyebrow: "02 · The path to production",
         h2: "Four steps. Same shape at every deployment.",
         body: "Every Nebbos deployment follows the same shape: (1) scope the Pearl and its context — what department, what actions, what boundary; (2) wire the integrations that feed it and the systems it acts on; (3) define the approval graph — who signs off on what, and how delegation flows; (4) run it in shadow mode, measure, then promote. The docs are structured around this path. Read them in order or jump to the surface you're wiring right now.",
@@ -2136,6 +2236,7 @@ export const PAGES = {
       {
         id: "access",
         kind: "text-block",
+        art: "identity",
         eyebrow: "03 · Access",
         h2: "Full reference is gated to signed engagements.",
         body: "Deep reference material — schemas, replay tools, red-team playbooks, EU AI Act Annex IV artifacts — ships with the deployment package to teams under signed engagement. The public docs cover the shape of the work; the production docs cover the specifics. Reach out to engineering to open the full reference.",
@@ -2166,6 +2267,7 @@ export const PAGES = {
       {
         id: "entries",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "01 · Recent",
         h2: "Recent releases.",
         deck: "Newest first. Each entry names the surface that changed and what it does now that it didn't before.",
@@ -2180,6 +2282,7 @@ export const PAGES = {
       {
         id: "cadence",
         kind: "text-block",
+        art: "audit",
         eyebrow: "02 · Cadence",
         h2: "One entry per material substrate change.",
         body: "The changelog covers material changes to the platform, the MCP, the Cradle, and the substrate underneath. Cosmetic tweaks and internal refactors do not appear here — they live in each deployment's own release notes. Subscribe to the RSS feed to get every entry as it lands.",
@@ -2202,6 +2305,7 @@ export const PAGES = {
       {
         id: "surfaces",
         kind: "list-plain",
+        art: "signals",
         eyebrow: "01 · Surfaces",
         h2: "The surfaces measured.",
         deck: "Every surface below is measured continuously against the same 30-day rolling baseline. Green means the surface is responding within its normal envelope; anything else surfaces as a public incident on this page.",
@@ -2216,6 +2320,7 @@ export const PAGES = {
       {
         id: "incidents",
         kind: "text-block",
+        art: "trigger",
         eyebrow: "02 · Incident history",
         h2: "No incidents in the last 30 days.",
         body: "The honest state right now. When an incident lands, it lands here with a timestamp, an affected-surface list, and a resolution note. No incidents dropped, no incidents batched, no incidents softened. When there is nothing to report, we report nothing.",
@@ -2285,6 +2390,7 @@ export const PAGES = {
       {
         id: "process",
         kind: "list-numbered",
+        art: "timeline",
         eyebrow: "01 · The four-step process",
         h2: "Every request follows the same path.",
         items: [
@@ -2297,6 +2403,7 @@ export const PAGES = {
       {
         id: "transparency",
         kind: "text-block",
+        art: "document",
         eyebrow: "02 · Transparency report",
         h2: "Annual cadence. Published on the trust page.",
         body: "Nebbos publishes an annual transparency report enumerating law-enforcement requests received, requests complied with, requests challenged, and requests where client notification was prohibited (with the legal basis for the prohibition). The current report and prior years are on the trust page.",
@@ -2355,6 +2462,7 @@ export const PAGES = {
       {
         id: "scope",
         kind: "text-block",
+        art: "document",
         eyebrow: "01 · Scope",
         h2: "What Nebbos DOES process (the narrow scope).",
         body: "Platform account metadata: work email, organization name, session cookies. Product-usage analytics: pages viewed on nebbos.ai, form submissions on /demo and /contact. Support-request metadata: subject + timestamp of emails you send to Nebbos inboxes. Payment metadata (when a self-serve tier lands): billing name + address, card last-four, receipt records. This scope is disclosed in full at /legal/privacy.",
@@ -2362,6 +2470,7 @@ export const PAGES = {
       {
         id: "not-scope",
         kind: "text-block",
+        art: "classifier",
         eyebrow: "02 · Not in scope",
         h2: "What Nebbos does NOT process.",
         body: "Your Pearl memory. Your operator's tool-call payloads. Your department data (finance rows, care coordination notes, ops handoffs, HR records). Your credentials. Your Cradle contents. Your operator biometric templates. All of it lives on your side — Cradle, host machine, self-hosted MCP, or your own workspace on the Managed platform where per-workspace encryption keys are held on the customer's Cradle. None of it crosses to Nebbos infrastructure.",
@@ -2369,6 +2478,7 @@ export const PAGES = {
       {
         id: "instrument",
         kind: "text-block",
+        art: "audit",
         eyebrow: "03 · The right instrument",
         h2: "The right legal instrument is the license, not a DPA.",
         body: "Enterprise engagements sign a Master Services Agreement (MSA) and Software License Agreement (SLA) — those govern the vendor-customer relationship for infrastructure Nebbos provides. Hardware ships under a Purchase Agreement + warranty. If your legal team requires a data-processing addendum specifically for the narrow platform-metadata scope above (some procurement flows do), Nebbos will counter-sign a Standard Contractual Clauses (SCC)-based Addendum covering that scope. Request via legal@nebbos.ai.",
