@@ -71,7 +71,7 @@ export function ClosingCta({
               {deck && <p className={cn(deckClass, "max-w-[46ch]")}>{deck}</p>}
               {deckHtml && <p className={cn(deckClass, "max-w-[46ch]")} dangerouslySetInnerHTML={{ __html: deckHtml }} />}
               {(ctas || primary || secondary) && (
-                <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+                <div className="cta-row pt-2">
                   {ctas ?? (
                     <>
                       {primary && <PrimaryCta href={primary.href}>{primary.label}</PrimaryCta>}

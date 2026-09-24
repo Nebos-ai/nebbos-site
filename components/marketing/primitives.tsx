@@ -83,7 +83,7 @@ export function PrimaryCta({
       href={href}
       className={cn(
         "group inline-flex items-center gap-3 whitespace-nowrap rounded-pill bg-ink font-display text-[15px] font-medium text-ground shadow-[0_10px_40px_-12px_rgb(255_107_30/0.55),inset_0_-2px_0_rgb(0_0_0/0.12)] transition-[scale,box-shadow] duration-300 ease-fluid active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
-        arrow ? "py-1.5 pl-6 pr-1.5" : "h-12 px-6",
+        arrow ? "justify-between py-1.5 pl-6 pr-1.5" : "h-12 justify-center px-6",
       )}
     >
       {children}
@@ -116,7 +116,7 @@ export function GhostCta({
     <Link
       href={href}
       className={cn(
-        "inline-flex items-center gap-2 whitespace-nowrap rounded-pill font-display font-medium text-ink ring-1 ring-rule-2 ring-inset transition-[background-color,box-shadow,scale] duration-300 ease-fluid hover:bg-white/[0.06] hover:shadow-[0_10px_36px_-14px_rgb(255_107_30/0.55)] hover:ring-accent/45 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
+        "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-pill font-display font-medium text-ink ring-1 ring-rule-2 ring-inset transition-[background-color,box-shadow,scale] duration-300 ease-fluid hover:bg-white/[0.06] hover:shadow-[0_10px_36px_-14px_rgb(255_107_30/0.55)] hover:ring-accent/45 active:scale-[0.98] focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent",
         size === "md" ? "h-12 px-6 text-[15px]" : "h-9 px-4 text-[13px]",
         className,
       )}

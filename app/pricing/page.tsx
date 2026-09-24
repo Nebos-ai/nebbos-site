@@ -310,7 +310,7 @@ export default function PricingPage() {
                 days. Old device serial is retired from your organization&rsquo;s
                 attestation chain at replacement issue.
               </p>
-              <div className="flex flex-wrap items-center gap-3 pt-1">
+              <div className="cta-row pt-1">
                 <PrimaryCta
                   href={`mailto:${CONTACT.enterprise}?subject=Cradle%20replacement%20request&body=Serial%20of%20lost%2Fdamaged%20device%3A%20%0AShipping%20address%3A%20%0AOrganization%3A%20%0ATier%3A%20%0A`}
                 >

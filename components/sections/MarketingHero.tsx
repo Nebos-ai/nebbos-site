@@ -68,7 +68,7 @@ export function MarketingHero() {
             {BRAND.homeDeck}
           </p>
           <div
-            className="rise-in flex flex-wrap items-center gap-3 pt-1"
+            className="rise-in cta-row pt-1"
             style={d(380)}
           >
             <PrimaryCta href="/demo">Book a demo</PrimaryCta>

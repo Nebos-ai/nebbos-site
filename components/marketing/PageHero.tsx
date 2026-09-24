@@ -107,7 +107,7 @@ export function PageHero({
             </p>
           )}
           {ctas && (
-            <div className="rise-in flex flex-wrap items-center gap-3 pt-1" style={d(360)}>
+            <div className="rise-in cta-row pt-1" style={d(360)}>
               {ctas}
             </div>
           )}

@@ -341,6 +341,20 @@
     0%, 100% { transform: translate3d(0, 0, 0); }
     50% { transform: translate3d(0, -10px, 0); }
   }
+  /* CTA pair · every button takes the width of the widest one: stacked
+     below sm, side by side from sm up. The primary keeps its label left
+     and arrow well pinned right; the ghost label centres. */
+  .cta-row {
+    display: inline-grid;
+    grid-auto-rows: 1fr;
+    gap: 0.75rem;
+  }
+  @media (min-width: 40rem) {
+    .cta-row {
+      grid-auto-flow: column;
+      grid-auto-columns: 1fr;
+    }
+  }
   /* Security identity art · beam sweeps the fingerprint top → bottom */
   .sec-scan {
     animation: sec-scan 4.8s var(--ease-fluid) infinite alternate;
