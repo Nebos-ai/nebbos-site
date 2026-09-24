@@ -2,7 +2,6 @@ import type { CSSProperties } from "react";
 import { BRAND } from "@/content/brand";
 import { SplitWords } from "@/components/patterns/SplitWords";
 import { BackgroundBeams } from "@/components/motion/BackgroundBeams";
-import { BrainCore } from "@/components/sections/hero/BrainCore";
 import {
   Eyebrow,
   GhostCta,
@@ -25,7 +24,12 @@ import { cn } from "@/lib/cn";
  *   - v4 replaces the three-panel dashboard mock with BrainCore: the
  *     sovereign brain drawn as a core with one Pearl per department
  *     wired into it. Founder-directed: no pointer-following motion.
+ *   - v5 (trial) swaps BrainCore for a muted ambient orb loop in the right
+ *     column (public/video/home-orb.*, poster under reduced motion). Its
+ *     black ground is dropped with a screen blend; edges fade radially.
  */
+
+const VIDEO = "/video/home-orb";
 
 const d = (ms: number) => ({ "--d": `${ms}ms` }) as CSSProperties;
 
@@ -70,8 +74,23 @@ export function MarketingHero() {
           </div>
         </div>
 
-        <div className="rise-in-far relative" style={d(300)}>
-          <BrainCore />
+        <div
+          aria-hidden
+          className="rise-in-far pointer-events-none relative mx-auto aspect-square w-full max-w-[560px] scale-120 mix-blend-screen [mask-image:radial-gradient(closest-side,#000_72%,transparent)]"
+          style={d(300)}
+        >
+          <img src={`${VIDEO}-poster.jpg`} alt="" className="absolute inset-0 size-full object-cover" />
+          <video
+            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+            poster={`${VIDEO}-poster.jpg`}
+          >
+            <source src={`${VIDEO}.mp4`} type="video/mp4" />
+          </video>
         </div>
       </div>
     </section>
