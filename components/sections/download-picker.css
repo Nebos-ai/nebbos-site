@@ -1,0 +1,102 @@
+/* ============================================================================
+   components/sections/download-picker.css · @layer patterns · /download
+
+   Visual contract for the platform-detected download CTA on /download.
+   Loaded once from app/globals.css alongside the other section sheets.
+
+   Cascade: reset → tokens → primitives → PATTERNS (here) → page.
+
+   Every declaration references a --token from @layer tokens. Zero literals.
+
+   Semantic vocabulary:
+     __picker      · the detected-platform block (eyebrow + CTA + meta)
+     __meta        · version / size / published line under the CTA
+     __alternates  · the other-platform links below the primary CTA
+     __unsupported · Linux / mobile notice, replaces the CTA
+   ========================================================================= */
+
+@layer patterns {
+  .download-picker {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    align-items: flex-start;
+  }
+
+  .download-picker__meta {
+    font-family: var(--font-mono);
+    font-size: var(--size-eyebrow);
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  /* Reserves the CTA's height before detection resolves so the page does
+     not reflow on hydration (CLS). */
+  .download-picker__pending {
+    min-block-size: var(--space-12);
+    display: flex;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: var(--size-eyebrow);
+    color: var(--ink-3);
+  }
+
+  .download-picker__unsupported {
+    max-inline-size: var(--measure-prose);
+    margin: 0;
+    color: var(--ink-2);
+  }
+
+  .download-picker__alternates {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: baseline;
+    padding-block-start: var(--space-2);
+  }
+
+  .download-picker__alternates-label {
+    font-family: var(--font-mono);
+    font-size: var(--size-eyebrow);
+    color: var(--ink-3);
+    margin: 0;
+  }
+
+  /* App product line owns this route's accent per the four-colour mark
+     scheme shipped in @nebbos/brand v2.1.0 (NLDA-9). */
+  .download-page__rule {
+    border: 0;
+    border-block-start: 2px solid var(--product-color-app);
+    inline-size: var(--space-16);
+    margin: 0 0 var(--space-6);
+  }
+
+  .download-page__prose {
+    max-inline-size: var(--measure-prose);
+    color: var(--ink-2);
+    margin: 0 0 var(--space-6);
+  }
+
+  .download-steps {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: var(--space-6);
+    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  }
+
+  .download-steps__n {
+    font-family: var(--font-mono);
+    font-size: var(--size-eyebrow);
+    color: var(--product-color-app);
+    display: block;
+    margin-block-end: var(--space-2);
+  }
+
+  .download-steps__body {
+    margin: 0;
+    color: var(--ink-2);
+    max-inline-size: var(--measure-prose);
+  }
+}

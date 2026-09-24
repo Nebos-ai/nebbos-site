@@ -250,6 +250,7 @@ export const solutionsNav: NavLink[] = [
 /* ── Secondary (right-aligned in header) ──────────────────────────────── */
 
 export const secondaryNav: NavLink[] = [
+  { label: "Download",     href: "/download" },
   { label: "Log in",       href: "https://app.nebbos.ai", external: true },
   { label: "Book a demo",  href: "/demo" },
 ];
