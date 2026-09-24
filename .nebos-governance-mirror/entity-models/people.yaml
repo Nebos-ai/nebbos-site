@@ -1,0 +1,369 @@
+# Canonical Concept-Model registry — people entity family
+# ---------------------------------------------------------
+# Consumed by:
+#   - ~/.claude/hooks/canonical_noun_drift_pretooluse.py (tool-boundary)
+#   - scripts/check_canonical_noun_drift.py (CI PR-gate — Wave B)
+#   - AGENTS.md @-imports for chat-startup context
+#
+# Rule: any noun in this family's `all_terms_indexed` set that appears in
+# a code / schema / doc diff MUST resolve to either the `canonical_noun`
+# or one of the registered `views[]` (by name or alias). New terms MUST
+# be added here BEFORE they appear in a diff.
+#
+# Grounding: docs/governance/conventions/canonical-concept-model.md
+# Founder directive: 2026-09-24 session 55cc2020
+
+schema_version: v0.1
+family: people
+canonical_noun: user
+canonical_table: users
+canonical_table_reconciliation:
+  primary: users
+  primary_evidence:
+    - "nebos-backend/db/migrations/versions/020_restructure_users.py — canonical restructure"
+    - "nebos-backend/db/migrations/versions/188_users_department_id.py — adds department_id"
+    - "nebos-backend/db/migrations/versions/b64f428ed747_users_role_and_role_source.py — adds role + role_source"
+    - "nebos-backend/db/migrations/versions/c8f5b2d1a90e_users_role_profile.py — adds role_profile"
+  secondary: tenant_users
+  secondary_evidence:
+    - "nebos-backend/db/migrations/versions/86cad51796f2_adr2118_ad3_tenant_orgs_and_tenant_users.py — ADR-2118 AD-3"
+  relationship: >
+    `users` is the substrate row (one per human across all tenants). `tenant_users`
+    is the per-tenant membership + role projection introduced by ADR-2118 AD-3
+    (ratified 2026-08-26 via ADR-PROV-enterprise-hr-user-substrate-unification).
+    Both tables coexist; view predicates that need per-tenant scope join through
+    `tenant_users`. This reconciliation resolves BLOCKER-3 from the 2026-09-24
+    Class B adversarial review.
+canonical_id_prefix: USR
+primary_ui_label: User
+authored_by: Claude (Opus 4.7) on behalf of Dejan Matic
+authored_at: 2026-09-24
+status: draft
+amendment_1_source: ADVERSARIAL-REVIEW-CLASS-B-2026-09-24.md (disposition below)
+
+# The one entity all views project over.
+canonical_entity:
+  table: users
+  id_column: id
+  short_id_column: short_id
+  # Amendment 1 (2026-09-24): removed two aspirational columns
+  # (employment_relationship_to_nebbos_tenant, nebbos_internal_team_id) that had
+  # zero grep-hits in nebos-backend per Class B review BLOCKER-2. Replaced with
+  # grep-verified columns from actual migrations. Views that need the removed
+  # columns now carry predicate_status: aspirational_schema_migration_required.
+  stable_columns_for_view_predicates:
+    - id
+    - deleted_at
+    - department_id     # per db/migrations/versions/188_users_department_id.py
+    - role              # per db/migrations/versions/b64f428ed747_users_role_and_role_source.py
+    - role_source       # per db/migrations/versions/b64f428ed747_users_role_and_role_source.py
+    - role_profile      # per db/migrations/versions/c8f5b2d1a90e_users_role_profile.py
+    - auth_provider_id  # per db/migrations/versions/020_restructure_users.py:24-28 (rename FROM workos_user_id in upgrade())
+  per_tenant_view_columns:
+    # For views scoped to a tenant, join through tenant_users
+    - "tenant_users.tenant_id"
+    - "tenant_users.user_id"
+    - "tenant_users.role  (per-tenant role, distinct from users.role)"
+    - "tenant_users.workos_user_id  (per 86cad51796f2_adr2118_ad3_tenant_orgs_and_tenant_users.py:276,322 — the column named workos_user_id lives HERE on tenant_users, not on users; Amendment 2 correction after Round 2 BLOCKER-NEW-2)"
+  reference_intake: intake-enterprise-user-substrate-cross-system-sync-2026-09-01
+  reference_adr: ADR-PROV-enterprise-hr-user-substrate-unification
+  reference_ratification: 2026-08-26 (session db9f7800)
+
+# Each view is a WHERE-clause projection over `users`. Views compose freely.
+# `voice_register` mapping determines which surface uses which view.
+views:
+  - name: employee
+    # Amendment 1 (2026-09-24): original predicate cited
+    # `employment_relationship_to_nebbos_tenant` — zero grep hits in nebos-backend
+    # (BLOCKER-2 from Class B review). Marked aspirational until schema landed.
+    predicate_sql: "role IS NOT NULL AND role_source = 'hr' AND deleted_at IS NULL"
+    predicate_status: aspirational_schema_migration_required
+    predicate_status_reason: >
+      Placeholder predicate using grep-verified columns (`role`, `role_source`)
+      from b64f428ed747_users_role_and_role_source.py. Real semantics needs
+      dedicated `employment_status` or `employed_by_tenant_id` column; migration
+      pending Users-team owner scope-in per Sprint 1. Do NOT run this predicate
+      against production as the definitive employee filter until schema lands.
+    voice_register: substrate
+    surfaces:
+      - nebos-hr
+      - hr-substrate-tables
+      - internal-team-directories
+    rationale: >
+      An `employee` is a user with an active HR relationship to the Nebbos
+      operating entity. Internal-facing; never used in customer-facing copy.
+    aliases: []
+    deprecated: false
+
+  - name: customer
+    # Amendment 2 (2026-09-24) — Round 2 B-4 (still open): the earlier
+    # Amendment-1 predicate cited `sca.payment_status` on service_client_accounts,
+    # but that TABLE is owned by nebos-billing, not nebos-backend. `payment_gate.py:17-20`
+    # states: "nebos-backend does NOT own the service_client_accounts.payment_status
+    # column. It probes the billing service's GET /api/v1/client-accounts/{id}/payment-status
+    # endpoint via NebosBillingClient." No `CREATE TABLE service_client_accounts`
+    # exists in nebos-backend migrations (grep confirmed 2026-09-24). Reframed as
+    # cross-service HTTP-gated with the actual endpoint reference.
+    predicate_status: cross_service_http_gated
+    predicate_status_reason: >
+      Customer-active state lives in nebos-billing's database, not nebos-backend's.
+      nebos-backend gates on it via HTTP probe (`NebosBillingClient.get_payment_status`)
+      per api/middleware/payment_gate.py:147. Predicate below is documentation of
+      the semantic gate, NOT executable local SQL.
+    predicate_pseudocode: >
+      NebosBillingClient.get_payment_status(user.id).payment_status
+        IS DISTINCT FROM 'suspended'
+    predicate_endpoint: "GET /api/v1/client-accounts/{client_account_id}/payment-status  (on nebos-billing per payment_gate.py:19,147; ticket BTM-532; path param is the client-account id, not the user id — Amendment 3 correction after Round 3 LOW)"
+    predicate_sql_note: >
+      NOT directly runnable against nebos-backend's DB. If a Wave-C schema lands
+      a locally-mirrored `user_billing_state` cache table (per intake-tenant-billing-relationship-orm),
+      the SQL predicate would be against THAT table, not against `service_client_accounts`.
+    voice_register: company
+    surfaces:
+      - nebbos.ai marketing
+      - sales-decks
+      - billing-invoices
+      - customer-support-communications
+    rationale: >
+      A `customer` is a user with ≥1 non-suspended billing relationship.
+      Public-facing; the Marketing + Sales voice register. Amendment 1
+      reframes `client` as CO-CANONICAL rather than deprecated (see HIGH-2
+      disposition + `client` view below) — the marketing site's live copy
+      uses `client` 141× vs `customer` 49× per grep 2026-09-24, so declaring
+      `client` deprecated ships the registry out-of-sync with the product.
+    aliases: []
+    deprecated: false
+
+  - name: client
+    # Amendment 1 (2026-09-24): promoted from `deprecated_aliases` to a
+    # co-canonical view per Class B review HIGH-2. Live marketing copy uses
+    # `client` 141× vs `customer` 49× in nebbos-site/content/ (grep 2026-09-24).
+    # Registry can't declare deprecated what the shipped product actively uses.
+    # Amendment 2 (2026-09-24) — Round 2 B-4 (still open): inherits the same
+    # cross-service HTTP-gated framing as `customer` since they share the
+    # underlying predicate. Not local SQL.
+    predicate_status: cross_service_http_gated
+    predicate_status_reason: >
+      Semantically equivalent to `customer` — same underlying gate against
+      nebos-billing. Distinction is voice-register only: `client` for
+      service-delivery / professional-services / row-level-isolation /
+      MSA-context copy; `customer` for marketing top-line + billing-invoice +
+      support-ticket context. Author selects by surface + audience.
+    predicate_pseudocode: "NebosBillingClient.get_payment_status(user.id).payment_status IS DISTINCT FROM 'suspended'"
+    predicate_endpoint: "GET /api/v1/client-accounts/{client_account_id}/payment-status  (on nebos-billing per payment_gate.py:19,147; ticket BTM-532; path param is the client-account id, not the user id — Amendment 3 correction after Round 3 LOW)"
+    voice_register: company
+    voice_register_secondary: substrate
+    surfaces:
+      - nebbos.ai marketing (professional-services / row-level-isolation / MSA copy)
+      - service-delivery-communications
+      - billing-invoices (MSA context)
+    rationale: >
+      A `client` is the same underlying user as `customer` but in the
+      service-delivery voice register. Nebbos.ai's row-level-isolation framing
+      ("no application-layer bug can leak your data to another client",
+      nebos-site/content/pages.ts:556-557) is native `client` language, not
+      `customer`. Registry recognizes both; author picks by surface.
+    aliases: []
+    deprecated: false
+
+  - name: team_member
+    # Amendment 1 (2026-09-24): original predicate cited `nebbos_internal_team_id` —
+    # zero grep hits in nebos-backend (BLOCKER-2). Placeholder using `department_id`
+    # per db/migrations/versions/188_users_department_id.py, marked aspirational
+    # until a distinct team_id column lands. Nebbos team ≠ department, but
+    # department_id is the closest existing scaffold.
+    predicate_sql: "department_id IS NOT NULL AND deleted_at IS NULL"
+    predicate_status: aspirational_schema_migration_required
+    predicate_status_reason: >
+      Placeholder using grep-verified `department_id` column. Real semantics
+      needs a dedicated `internal_team_id` FK to a `nebbos_internal_teams` table
+      per SYSTEM.md §5 (11 teams). Migration pending Users-team owner scope-in.
+      Until then, this predicate approximates via department membership.
+    voice_register: substrate
+    surfaces:
+      - SYSTEM.md §5 (11-team topology)
+      - team-directory-pages
+      - internal-org-chart
+    rationale: >
+      A `team_member` is a user belonging to one of the 11 Nebbos internal
+      teams per SYSTEM.md §5. Distinct from `employee` — employees include
+      HR-only relationships (contractors, advisors) that don't belong to a
+      product team.
+    aliases:
+      - team-member
+      - teammate
+    deprecated: false
+
+  - name: operator
+    predicate_sql: "tier IN ('super-admin', 'tenant-admin', 'operator')"
+    voice_register: substrate
+    surfaces:
+      - SYSTEM.md §4 5-tier identity
+      - MCP-identity-plane
+      - platform-authorization-decisions
+    rationale: >
+      An `operator` is a user with elevated tier in the SYSTEM.md §4 5-tier
+      identity model (super-admin / tenant-admin / operator). Contrast to
+      `consumer`. Used in substrate voice for authorization decisions.
+    aliases: []
+    deprecated: false
+
+  - name: consumer
+    predicate_sql: "tier = 'consumer'"
+    voice_register: substrate
+    surfaces:
+      - SYSTEM.md §4 5-tier identity
+      - platform-authorization-decisions
+    rationale: >
+      A `consumer` is a user at the base tier of the SYSTEM.md §4 5-tier
+      identity model. Contrast to `operator`. Substrate-voice term only;
+      never appears on marketing surfaces.
+    aliases: []
+    deprecated: false
+
+  - name: founder
+    predicate_sql: "tier = 'founder'"
+    voice_register: substrate
+    surfaces:
+      - SYSTEM.md §4 5-tier identity
+      - kill-switch-and-ratification-flows
+    rationale: >
+      A `founder` is the top-tier user (Dejan Matic per SYSTEM.md §2).
+      Reserved for kill-switch, ratification, and self-observing-loop flows.
+      Never referenced on shared surfaces per
+      [[feedback_founder_never_referenced_on_shared_surfaces_2026_09_17]].
+    aliases: []
+    deprecated: false
+
+# Amendment 1 (2026-09-24): emptied per HIGH-2 disposition. `client` was moved
+# from here to a co-canonical `views[]` entry above; no other family term is
+# currently on a deprecation path. Kept as a scaffold for future deprecations.
+deprecated_aliases: []
+
+# External-boundary AND internal-role terms — used at integration seams AND as
+# internal role/permission values. Amendment 1 (2026-09-24): expanded scope from
+# WorkOS-SCIM-only per BLOCKER-1 (`member` has 868 backend hits + 467 frontend
+# hits, including as an internal permission-role string per
+# nebos-frontend/middleware.test.ts:210-646). Registry can't ban internally
+# what the code uses at volume.
+boundary_terms:
+  - term: member
+    used_at:
+      - workos-scim-boundary (org_memberships table, external contract)
+      - internal-permission-role-value (`role: str = "member"` per nebos-backend/clients/python/.../create_invitation_request.py:25, add_member_request.py:25)
+      - internal-channel-role-value (`channel_role: str = "member"`)
+      - internal-permission-string-in-tests-and-middleware (nebos-frontend/middleware.test.ts:210,351,352,468-697 — `resolvePermissions([], "member")`)
+    not_used_at: >
+      As a synonym for the canonical noun `user` (i.e. never `create_member(...)`
+      as an alternative to `create_user(...)`; the substrate row is always a
+      `user`, and `member` names either a WorkOS SCIM payload field OR a
+      role-column value string).
+    rationale: >
+      `member` occupies two legitimate niches: (a) external WorkOS SCIM contract
+      term at the org_memberships seam; (b) internal role-value string on
+      permission columns + role columns + channel-role columns. It does NOT
+      substitute for the canonical noun `user`. The Wave B org-container family
+      registry will register `member` as a formal `role` view over `tenant_users`
+      or `org_memberships` with a real predicate; until then, `member` is a
+      recognized boundary-and-role term, not drift.
+
+# Terms that are NOT part of this family but might look like they are.
+# The hook whitelists these to avoid false-positives.
+whitelisted_non_family_terms:
+  - term: user
+    context: "when preceded by 'end-' or 'super-' or 'test-' in doc context — refers to the abstract noun, not the substrate concept"
+  - term: employee
+    context: "as an English word in changelog / commit-message prose describing a change to the employee VIEW — allowed because it references the canonical view name"
+
+# Ratification / soak state
+ratification:
+  status: draft
+  adversarial_review_required: true
+  reviewer_perspectives:
+    - skeptical-senior-engineer
+    - security-and-privacy
+    - ops-reliability
+    - founder-adjacent-product
+    - governance-and-compliance
+    - cost-and-runway
+  soak_period_days: 30
+  strict_flip_criteria: "3+ same-class faults per feedback_hook_family_auto_upgrade_strict_after_three_same_class_faults"
+
+# Machine-readable index — reserved for future tooling use.
+#
+# Amendment 2 (2026-09-24) — Round 2 BLOCKER-NEW-1 removed the hook's use of
+# this index (regex-line YAML parser can't distinguish this nested `views:`
+# from the top-level views: block, and the leak was exploitable). Neither the
+# tool-boundary hook nor the CI PR-gate reads this section today — both derive
+# their trust set from `all_terms_indexed.known_unregistered_synonyms_that_fire_hook`
+# ONLY (which is unambiguous because there's only one instance of that key in
+# the file). The canonical/views/deprecated_aliases/boundary_terms sub-lists
+# below are kept as human-readable indexed references + regen bait for a Wave B
+# `regen_concept_model_index.py` script that will emit a JSON sibling file for
+# machine consumption without the regex-parser risk.
+all_terms_indexed:
+  canonical:
+    - user
+    - users
+  views:
+    - employee
+    - employees
+    - customer
+    - customers
+    - team_member
+    - team_members
+    - teammember
+    - teammate
+    - operator
+    - operators
+    - consumer
+    - consumers
+    - founder
+    - founders
+    - client        # Amendment 2 (2026-09-24) — Round 2 MEDIUM-1: `client` promoted from deprecated_aliases to co-canonical view per H-2; moved index entry here to match.
+    - clients
+  deprecated_aliases: []  # Amendment 2 (2026-09-24) — Round 2 MEDIUM-1: emptied to match top-level deprecated_aliases: [] at line 241.
+  boundary_terms:
+    - member
+    - members
+  # Amendment 1 (2026-09-24): removed `workforce` and `personnel` per HIGH-3
+  # of Class B review — both are legitimate company positioning language
+  # (`workforce optimization` in nebos-backend/AGENTS.md:18 + docs/mcp/README.md;
+  # `personnel-commit-identity.md` filename referenced in AGENTS.md:173 + commit
+  # policy). False-positive risk would flip hook to strict on benign edits to
+  # AGENTS.md within 3 fires. Removed to avoid poisoning the auto-upgrade
+  # signal. If a legitimate person-noun `workforce` or `personnel` use appears
+  # in Wave B, re-register with a phrase-exclusion (like
+  # `whitelisted_non_family_terms` for `user`/`employee` below).
+  known_unregistered_synonyms_that_fire_hook:
+    - subscriber
+    - buyer
+    - prospect
+    - end-user
+    - "end user"
+    - endUser
+    - account_holder
+    - accountHolder
+    - staffer
+    - staff-member
+    - "staff member"
+    - patron
+    - clientele
+    - customer_base
+    - user_base
+
+  # Phrase-level exclusions — phrases containing an otherwise-triggering token
+  # that legitimately appear in the codebase. Amendment 1 (2026-09-24): added
+  # per HIGH-3 to demonstrate the pattern for future family-drift tuning.
+  phrase_exclusions:
+    - phrase: "workforce optimization"
+      appears_in:
+        - "nebos-backend/AGENTS.md:18"
+        - "docs/mcp/README.md:3"
+        - "docs/mcp/submission/anthropic-form-answers.md:16,18"
+      rationale: "company's own one-line self-description; not a people-family reference"
+    - phrase: "personnel-commit-identity"
+      appears_in:
+        - "AGENTS.md:173"
+        - "docs/governance/commit_author_policy.md:4,80"
+      rationale: "audit-finding filename reference, not a people-family reference"

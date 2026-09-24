@@ -46,17 +46,6 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Checkout nebos-governance (registry + script)
-        uses: actions/checkout@v4
-        with:
-          repository: Nebos-ai/nebos-governance
-          path: .nebos-governance
-          fetch-depth: 1
-          # nebos-governance is same-org; github.token has read access.
-          # If access ever tightens, set NEBOS_GOVERNANCE_READ_TOKEN as a
-          # fine-grained PAT with contents:read on that repo.
-          token: ${{ secrets.NEBOS_GOVERNANCE_READ_TOKEN || github.token }}
-
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
@@ -66,16 +55,19 @@ jobs:
         run: git fetch origin main --depth=50
 
       - name: Run canonical-noun-drift check
-        # NON-STRICT / warn-first — script exits 1 when drift is found (per its
-        # documented contract), which GitHub Actions treats as step failure.
-        # continue-on-error keeps the overall job green so the check surfaces
-        # as an informational annotation on PRs, not a merge-blocker. The
-        # ::warning:: prefixed report still lands in the run logs. Flip
-        # continue-on-error to false the same PR that flips --strict, after
-        # the 30-day soak (or 3+ empirical catches) per the convention doc's
-        # ratification path.
+        # Registry + script are mirrored under .nebos-governance-mirror/ in this
+        # repo because nebos-governance is PRIVATE and the caller's github.token
+        # 404s on cross-repo checkout (empirical: run 36057278241 2026-09-24).
+        # Follow-up to migrate back to cross-repo pattern once a fine-grained
+        # PAT `NEBOS_GOVERNANCE_READ_TOKEN` (contents:read on nebos-governance)
+        # is set as a nebbos-site secret, OR nebos-governance goes public.
+        #
+        # NON-STRICT / warn-first — script exits 1 on drift by design;
+        # continue-on-error: true keeps the overall job green so drift appears
+        # as annotation, not a merge-blocker. Flip both continue-on-error and
+        # --strict in the same PR after the 30-day soak.
         continue-on-error: true
         run: |
-          python3 .nebos-governance/scripts/check_canonical_noun_drift.py \
-            --registry-root .nebos-governance/docs/governance/conventions/entity-models \
+          python3 .nebos-governance-mirror/scripts/check_canonical_noun_drift.py \
+            --registry-root .nebos-governance-mirror/entity-models \
             --diff-range origin/main..HEAD
