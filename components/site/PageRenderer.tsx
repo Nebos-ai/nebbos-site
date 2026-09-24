@@ -14,6 +14,7 @@ import { ScrollBeam } from "@/components/motion/ScrollBeam";
 import { cn } from "@/lib/cn";
 import { balancedSpans } from "@/lib/balance";
 import { HudCorners, IndexMark } from "@/components/marketing/IndexMark";
+import { SecurityArt } from "@/components/marketing/SecurityArt";
 
 /**
  * PageRenderer · v7 · 2026-09-23 · Tailwind + Motion redesign
@@ -293,8 +294,17 @@ function TextBlockCard({ s, pearl, mirror }: { s: SectionBase; pearl: ProductKey
             )}
           />
           <aside className={cn("relative flex flex-col items-start gap-4 md:col-span-4", mirror && "md:order-2 md:items-end md:text-right")}>
-            <MarkTile />
-            {eb && <Eyebrow>{eb}</Eyebrow>}
+            {s.art ? (
+              <>
+                {eb && <Eyebrow>{eb}</Eyebrow>}
+                <SecurityArt kind={s.art} className="mt-2 max-w-[260px] md:mt-6 md:max-w-[320px]" />
+              </>
+            ) : (
+              <>
+                <MarkTile />
+                {eb && <Eyebrow>{eb}</Eyebrow>}
+              </>
+            )}
           </aside>
           <div className={cn("relative flex flex-col gap-5 md:col-span-8", mirror && "md:order-1")}>
             {s.h2 && <h2 id={`h-${s.id}`} className={h2Class} dangerouslySetInnerHTML={{ __html: s.h2 }} />}

@@ -88,6 +88,7 @@ export type SectionBase = {
   imageV3?: number;                           // v3 concept-mapped batch
   imageFamily?: string;                       // v4 · concept family key (e.g. "band-substrate")
   imageFamilyVariant?: 1 | 2;                 // 1 (default) or 2
+  art?: "encryption" | "identity";            // text-block card illustration in place of the mark tile
 };
 
 export type Page = {
@@ -1749,6 +1750,7 @@ export const PAGES = {
         id: "encryption",
         kind: "text-block",
         eyebrow: "02 · Encryption",
+        art: "encryption",
         h2: "Every byte encrypted, every key attested.",
         body: "Data at rest: AES-256-GCM. Data in transit: TLS 1.3 only. Sensitive columns get application-layer encryption with per-client keys &mdash; a breach that reaches one client&rsquo;s data can&rsquo;t decrypt another&rsquo;s. Master keys live in a hardware security module. Rotation is scheduled and audited. On the enterprise tier: bring-your-own-key against your own KMS.",
       },
@@ -1756,6 +1758,7 @@ export const PAGES = {
         id: "access",
         kind: "text-block",
         eyebrow: "03 · Identity",
+        art: "identity",
         h2: "Your SSO. Your identity boundary.",
         body: "Users authenticate through your existing enterprise SSO (SAML 2.0, OIDC) with SCIM provisioning. MFA required on every operator session. Service accounts and workload identities are separate classes with separate scopes; secrets live in an HSM-backed vault with break-glass audit. Production access is on-call-only, time-bounded, session-recorded, and attested.",
       },
