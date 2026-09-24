@@ -2,6 +2,7 @@ import type { CSSProperties } from "react";
 import { BRAND } from "@/content/brand";
 import { SplitWords } from "@/components/patterns/SplitWords";
 import { BackgroundBeams } from "@/components/motion/BackgroundBeams";
+import { LazyVideo } from "@/components/motion/LazyVideo";
 import {
   Eyebrow,
   GhostCta,
@@ -25,7 +26,8 @@ import { cn } from "@/lib/cn";
  *     sovereign brain drawn as a core with one Pearl per department
  *     wired into it. Founder-directed: no pointer-following motion.
  *   - v5 (trial) swaps BrainCore for a muted ambient orb loop in the right
- *     column (public/video/home-orb.*, poster under reduced motion). Its
+ *     column (public/video/home-orb.*, poster under reduced motion; below
+ *     lg the video only downloads once it nears the viewport). Its
  *     black ground is dropped with a screen blend; edges fade radially.
  */
 
@@ -80,17 +82,12 @@ export function MarketingHero() {
           style={d(300)}
         >
           <img src={`${VIDEO}-poster.jpg`} alt="" className="absolute inset-0 size-full object-cover" />
-          <video
-            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="auto"
+          <LazyVideo
+            src={`${VIDEO}.mp4`}
+            mobileSrc={`${VIDEO}-sm.mp4`}
             poster={`${VIDEO}-poster.jpg`}
-          >
-            <source src={`${VIDEO}.mp4`} type="video/mp4" />
-          </video>
+            className="absolute inset-0 size-full object-cover motion-reduce:hidden"
+          />
         </div>
       </div>
     </section>
