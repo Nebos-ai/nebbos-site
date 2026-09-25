@@ -1,39 +1,27 @@
-import Link from "next/link";
-import { SplitWords } from "@/components/patterns/SplitWords";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
 
 /**
- * MarketingCTA · sections/MarketingCTA.tsx · v1 · 2026-09-18
+ * MarketingCTA · sections/MarketingCTA.tsx · v3 · 2026-09-23
  *
- * The closing CTA on the dark marketing register. Replaces HomeCTA
- * (photo-anchored SceneStill with Cradle imagery + serif "Put a Pearl
- * on your hardest domain" headline) with a Linear-tier centered close.
- *
- * Direct ask, two paths. Book a demo is the primary; See the products
- * is the second-read for those not yet ready to talk.
+ * The home page's closing ask. Direct, two paths: Book a demo is primary;
+ * See the products is the second read for those not yet ready to talk.
+ * v3: renders the shared ClosingCta panel used by every marketing page.
  */
 
 export function MarketingCTA() {
   return (
-    <section className="mkt mkt-section mkt-closing" aria-labelledby="mkt-close-h">
-      <div className="mkt-closing__inner">
-        <p className="mkt-eyebrow">See it on your operation</p>
-        <h2 id="mkt-close-h" className="mkt-display">
-          <SplitWords>Put a Pearl on your hardest department.</SplitWords>
-        </h2>
-        <p className="mkt-deck">
+    <ClosingCta
+      id="mkt-close-h"
+      eyebrow="See it on your operation"
+      title="Put a Pearl on your hardest department."
+      deck={
+        <>
           Thirty minutes. Pick one department. We map it, name the Pearl,
           and show you the first Monday it would run.
-        </p>
-        <div className="mkt-hero__ctas">
-          <Link href="/demo" className="mkt-cta mkt-cta--primary">
-            Book a demo
-            <span className="mkt-cta__arrow" aria-hidden>→</span>
-          </Link>
-          <Link href="/products" className="mkt-cta mkt-cta--ghost">
-            See the products
-          </Link>
-        </div>
-      </div>
-    </section>
+        </>
+      }
+      primary={{ href: "/demo", label: "Book a demo" }}
+      secondary={{ href: "/products", label: "See the products" }}
+    />
   );
 }

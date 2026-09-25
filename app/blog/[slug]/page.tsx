@@ -4,6 +4,8 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { PageHero } from "@/components/marketing/PageHero";
+import { GhostCta, PrimaryCta, Section } from "@/components/marketing/primitives";
 import type { Metadata } from "next";
 
 /**
@@ -81,39 +83,36 @@ export default async function BlogPostPage({
 
   return (
     <>
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="post-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <Link href="/blog" className="mkt-eyebrow" style={{ textDecoration: "none" }}>
-              ← Notes
-            </Link>
-            <p className="mkt-eyebrow" style={{ marginTop: 12 }}>
-              {formatDate(post.date)} · {post.author}
-            </p>
-            <h1 id="post-h" className="mkt-display">
-              {post.title}
-            </h1>
-            {post.description && (
-              <p className="mkt-deck">{post.description}</p>
-            )}
-          </div>
-        </div>
-      </section>
+      <PageHero
+        id="post-h"
+        lead={
+          <Link
+            href="/blog"
+            className="inline-flex items-center rounded-pill px-3 py-1.5 font-code text-[11px] font-medium uppercase tracking-label text-ink-2 ring-1 ring-rule ring-inset transition-colors hover:bg-white/[0.05] hover:text-ink"
+          >
+            ← Notes
+          </Link>
+        }
+        eyebrow={
+          <>
+            {formatDate(post.date)} · {post.author}
+          </>
+        }
+        title={post.title}
+        deck={post.description || undefined}
+      />
 
-      <section className="mkt mkt-section" aria-labelledby="post-body">
-        <div className="mkt-section__inner">
-          <h2 id="post-body" className="sr-only">Article body</h2>
+      <Section labelledBy="post-body" className="pt-0 md:pt-0 lg:pt-0">
+        <h2 id="post-body" className="sr-only">Article body</h2>
+        <div className="mx-auto max-w-[760px]">
           <article className="mkt-prose" dangerouslySetInnerHTML={{ __html: post.html }} />
-          <footer className="mkt-postfoot">
-            <Link href="/blog" className="mkt-cta mkt-cta--ghost">More notes</Link>
-            <Link href="/products" className="mkt-cta mkt-cta--ghost">See the products</Link>
-            <Link href="/demo" className="mkt-cta mkt-cta--primary">
-              Book a demo
-              <span className="mkt-cta__arrow" aria-hidden>→</span>
-            </Link>
+          <footer className="mt-16 flex flex-wrap items-center gap-3 border-t border-rule pt-10">
+            <GhostCta href="/blog">More notes</GhostCta>
+            <GhostCta href="/products">See the products</GhostCta>
+            <PrimaryCta href="/demo">Book a demo</PrimaryCta>
           </footer>
         </div>
-      </section>
+      </Section>
     </>
   );
 }

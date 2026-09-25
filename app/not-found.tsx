@@ -1,6 +1,8 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { BRAND } from "@/content/brand";
+import { PageHero } from "@/components/marketing/PageHero";
+import { PearlMosaic } from "@/components/marketing/PearlMosaic";
+import { GhostCta, PrimaryCta } from "@/components/marketing/primitives";
 
 export const metadata: Metadata = {
   title: `404 · ${BRAND.name}`,
@@ -14,29 +16,32 @@ export const metadata: Metadata = {
  * still lands the visitor inside Nebbos chrome rather than Next's built-in
  * white-screen 404. Consumed by the catchall route's notFound() calls +
  * any direct 404s.
+ *
+ * 2026-09-23: redesigned onto the shared PageHero + PearlMosaic (dark
+ * register, same copy); the legacy hero-paper / btn markup is retired.
  */
 export default function NotFound() {
   return (
-    <div className="mkt-mode">
-    <section className="hero-paper">
-      <div className="container-narrow">
-        <p className="eyebrow">404 · Not found</p>
-        <h1 className="hero-paper__title">This page is not part of {BRAND.name}.</h1>
-        <p className="hero-paper__deck">
+    <PageHero
+      id="nf-h"
+      eyebrow="404 · Not found"
+      title={`This page is not part of ${BRAND.name}.`}
+      deck={
+        <>
           You may have followed a stale link, or a route we retired. The rest of the site is
           still here — start again from the home page, or reach us directly if you were
           expecting something specific.
-        </p>
-        <div className="hero-paper__cta" style={{ display: "flex", gap: "16px", flexWrap: "wrap" }}>
-          <Link href="/" className="btn btn-primary">
+        </>
+      }
+      ctas={
+        <>
+          <PrimaryCta href="/" arrow={false}>
             Return home
-          </Link>
-          <Link href="/contact" className="btn btn-ghost">
-            Reach us
-          </Link>
-        </div>
-      </div>
-    </section>
-    </div>
+          </PrimaryCta>
+          <GhostCta href="/contact">Reach us</GhostCta>
+        </>
+      }
+      visual={<PearlMosaic />}
+    />
   );
 }

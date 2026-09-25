@@ -1,6 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { NebbosMark } from "@nebbos/brand/logo";
+import { PageHero } from "@/components/marketing/PageHero";
+import { PearlMosaic } from "@/components/marketing/PearlMosaic";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { Eyebrow, GhostCta, PrimaryCta, Section, headline } from "@/components/marketing/primitives";
+import { Reveal } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
@@ -25,63 +30,71 @@ export const metadata: Metadata = {
  * study cards. Until then, honesty about the deployment shape.
  */
 
+const h2 = cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]");
+
 export default function CustomersIndexPage() {
   return (
     <>
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="cus-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Customers</p>
-            <h1 id="cus-h" className="mkt-display">
-              Running inside the business that builds it.
-            </h1>
-            <p className="mkt-deck">
-              Nebbos is used every day by the team that builds it. The
-              platform, its Pearls, its Cradle. Case studies from external
-              customers land here as each customer signs off publicly.
-              Until then, the shape of the work is real; the names arrive
-              with permission.
-            </p>
-            <div className="mkt-hero__ctas">
-              <Link href="/how" className="mkt-cta mkt-cta--primary">
-                See how it is built
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href="/demo" className="mkt-cta mkt-cta--ghost">
-                Book a demo
-              </Link>
-            </div>
+      <PageHero
+        id="cus-h"
+        eyebrow="Customers"
+        title="Running inside the business that builds it."
+        deck={
+          <>
+            Nebbos is used every day by the team that builds it. The
+            platform, its Pearls, its Cradle. Case studies from external
+            customers land here as each customer signs off publicly.
+            Until then, the shape of the work is real; the names arrive
+            with permission.
+          </>
+        }
+        ctas={
+          <>
+            <PrimaryCta href="/how">See how it is built</PrimaryCta>
+            <GhostCta href="/demo">Book a demo</GhostCta>
+          </>
+        }
+        visual={<PearlMosaic />}
+      />
+
+      {/* THE SHAPE TODAY · statement panel */}
+      <Section labelledBy="cus-shape">
+        <Reveal className="bezel">
+          <div className="bezel-core relative overflow-hidden p-8 md:p-14">
+            <span aria-hidden className="grid-field pointer-events-none absolute inset-0 opacity-60" />
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-accent/20 blur-[110px]"
+            />
+            <header className="relative flex max-w-4xl flex-col items-start gap-6">
+              <Eyebrow>The shape today</Eyebrow>
+              <h2 id="cus-shape" className={h2}>
+                A Pearl per department. Approved from the operator&rsquo;s
+                phone.
+              </h2>
+              <p className="m-0 max-w-[58ch] text-pretty font-display text-[clamp(1.15rem,1.7vw,1.4rem)] leading-relaxed text-ink-2">
+                A Pearl scoped to each department, deployed behind the
+                systems that department already runs. Every consequential
+                action passes through named-operator approval. Every action
+                lands as an append-only audit event. That is the shape
+                running inside the business that builds Nebbos.
+              </p>
+            </header>
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
-      <section className="mkt mkt-section" aria-labelledby="cus-shape">
-        <div className="mkt-section__inner">
-          <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The shape today</p>
-            <h2 id="cus-shape" className="mkt-h2">
-              A Pearl per department. Approved from the operator&rsquo;s
-              phone.
-            </h2>
-            <p className="mkt-deck">
-              A Pearl scoped to each department, deployed behind the
-              systems that department already runs. Every consequential
-              action passes through named-operator approval. Every action
-              lands as an append-only audit event. That is the shape
-              running inside the business that builds Nebbos.
-            </p>
-          </header>
-        </div>
-      </section>
-
-      <section className="mkt mkt-section" aria-labelledby="cus-when">
-        <div className="mkt-section__inner">
-          <div className="mkt-case">
-            <aside className="mkt-case__aside">
-              <p className="mkt-eyebrow">Case studies</p>
-              <h3 className="mkt-case__subject">Written when the customer says yes.</h3>
+      {/* CASE STUDIES · split card */}
+      <Section labelledBy="cus-when" className="pt-0 md:pt-0 lg:pt-0">
+        <Reveal className="bezel" amount={0.2}>
+          <div className="bezel-core grid gap-8 overflow-hidden p-8 md:grid-cols-[1fr_1.5fr] md:gap-12 md:p-12">
+            <aside className="relative flex flex-col items-start gap-4">
+              <Eyebrow>Case studies</Eyebrow>
+              <h3 id="cus-when" className="m-0 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-medium leading-[1.1] tracking-tight text-ink">
+                Written when the customer says yes.
+              </h3>
             </aside>
-            <div className="mkt-case__body">
+            <div className="prose-mkt relative">
               <p>
                 Every case study on this page names a real customer,
                 describes a real deployment, and lands only after the
@@ -96,36 +109,27 @@ export default function CustomersIndexPage() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
-      <section
-        className="mkt mkt-section mkt-closing"
-        aria-labelledby="cus-close"
-      >
-        <div className="mkt-closing__inner">
-          <span aria-hidden style={{ display: "inline-flex", marginBottom: 24 }}>
+      <ClosingCta
+        id="cus-close"
+        lead={
+          <span aria-hidden className="inline-flex text-ink">
             <NebbosMark size={40} />
           </span>
-          <p className="mkt-eyebrow">Talk to us</p>
-          <h2 id="cus-close" className="mkt-display">
-            See the same shape on your operation.
-          </h2>
-          <p className="mkt-deck">
+        }
+        eyebrow="Talk to us"
+        title="See the same shape on your operation."
+        deck={
+          <>
             Thirty minutes. Bring one department. We show you a Pearl
             running against a workload the same shape as yours.
-          </p>
-          <div className="mkt-hero__ctas">
-            <Link href="/demo" className="mkt-cta mkt-cta--primary">
-              Book a demo
-              <span className="mkt-cta__arrow" aria-hidden>→</span>
-            </Link>
-            <Link href="/products" className="mkt-cta mkt-cta--ghost">
-              See the products
-            </Link>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+        primary={{ href: "/demo", label: "Book a demo" }}
+        secondary={{ href: "/products", label: "See the products" }}
+      />
     </>
   );
 }

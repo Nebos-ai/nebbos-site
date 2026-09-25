@@ -1,11 +1,24 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { SplitWords } from "@/components/patterns/SplitWords";
+import type { CSSProperties } from "react";
 import { CONTACT } from "@/content/contact";
+import { PageHero } from "@/components/marketing/PageHero";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { ProductEmblem } from "@/components/marketing/ProductEmblem";
+import { TierMeter } from "@/components/marketing/TierCard";
+import { Eyebrow, GhostCta, PrimaryCta, Section, deck, headline } from "@/components/marketing/primitives";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal, Stagger, StaggerItem } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 
 /**
- * PAGE · /pricing · v2.1 · 2026-09-19 · three-tier + feature matrix
+ * PAGE · /pricing · v3 · 2026-09-23 · Tailwind + Motion redesign
  *
+ * v3 is visual only (copy + numbers frozen): aligned price cards with the
+ * Team tier lifted on a beam border, comparison matrix with a sticky glass
+ * header and a tinted Team column, Cradle replacement as a split card in
+ * the Cradle colour, shared ClosingCta.
+ *
+ * v2.1 · 2026-09-19 · three-tier + feature matrix:
  * Founder-directed 2026-09-18 (verbatim):
  *   "we need to have pricing for non enterprise users we should have
  *    three levels of users at different levels different things are
@@ -40,6 +53,8 @@ export const metadata: Metadata = {
   description:
     "Nebbos Starter, Team, and Enterprise. Self-serve for individuals and small teams. Enterprise on a call. Cradle hardware ships with every tier.",
 };
+
+const TIER_LEVEL = { starter: "L1", team: "L2", enterprise: "L3" } as const;
 
 const TIERS = [
   {
@@ -130,176 +145,200 @@ const MATRIX_GROUPS = [
   },
 ];
 
+const cellBase = "m-0 max-w-none px-4 py-3.5 text-[14px]";
+
 function Cell({ v, tier }: { v: boolean | string; tier: string }) {
+  const col = cn(cellBase, "text-center", tier === "Team" && "bg-accent/[0.05]");
   if (v === true) {
-    return <p className="mkt-matrix__cell" data-tier={tier}><span className="mkt-matrix__check">✓</span></p>;
+    return (
+      <p className={col} data-tier={tier}>
+        <span className="inline-grid size-6 place-items-center rounded-full bg-accent/15 text-[13px] text-accent">✓</span>
+      </p>
+    );
   }
   if (v === false || v === "—") {
-    return <p className="mkt-matrix__cell" data-tier={tier}><span className="mkt-matrix__dash">—</span></p>;
+    return (
+      <p className={col} data-tier={tier}>
+        <span className="text-ink-3">—</span>
+      </p>
+    );
   }
-  return <p className="mkt-matrix__cell" data-tier={tier}>{v}</p>;
+  return (
+    <p className={col} data-tier={tier}>
+      {v}
+    </p>
+  );
 }
+
+const row = "grid grid-cols-[minmax(0,1.6fr)_repeat(3,minmax(0,1fr))] items-center";
+const h2 = cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]");
 
 export default function PricingPage() {
   return (
     <>
-      {/* HERO */}
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="pricing-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Pricing</p>
-            <h1 id="pricing-h" className="mkt-display">
-              <SplitWords>Three tiers. Enterprise on a call.</SplitWords>
-            </h1>
-            <p className="mkt-deck">
-              Solo operators start on Starter. Teams add the Cradle and
-              scale to Team. Organizations sign an Enterprise agreement
-              for cross-team, air-gapped, or federated deployment.
-            </p>
-            <div className="mkt-hero__ctas">
-              <Link href="#tiers" className="mkt-cta mkt-cta--primary">
-                See the tiers
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href="#compare" className="mkt-cta mkt-cta--ghost">
-                Compare features
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        id="pricing-h"
+        eyebrow="Pricing"
+        title="Three tiers. Enterprise on a call."
+        deck={
+          <>
+            Solo operators start on Starter. Teams add the Cradle and
+            scale to Team. Organizations sign an Enterprise agreement
+            for cross-team, air-gapped, or federated deployment.
+          </>
+        }
+        ctas={
+          <>
+            <PrimaryCta href="#tiers">See the tiers</PrimaryCta>
+            <GhostCta href="#compare">Compare features</GhostCta>
+          </>
+        }
+      />
 
       {/* TIER CARDS */}
-      <section className="mkt mkt-section" aria-labelledby="tiers-h" id="tiers">
-        <div className="mkt-section__inner">
-          <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The tiers</p>
-            <h2 id="tiers-h" className="mkt-h2">
-              <SplitWords>Pick the tier that fits your shift.</SplitWords>
-            </h2>
-          </header>
+      <Section labelledBy="tiers-h" id="tiers" className="scroll-mt-16">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>The tiers</Eyebrow>
+          <h2 id="tiers-h" className={h2}>
+            <RevealWords>Pick the tier that fits your shift.</RevealWords>
+          </h2>
+        </Reveal>
 
-          <div className="mkt-pricing__grid">
-            {TIERS.map((t) => (
-              <article
-                key={t.key}
-                className={`mkt-price ${t.featured ? "mkt-price--featured" : ""}`}
-                aria-labelledby={`tier-${t.key}-h`}
-              >
-                <p className="mkt-price__tier">{t.tier}</p>
-                <h3 id={`tier-${t.key}-h`} className="mkt-price__name">{t.name}</h3>
-                <p className="mkt-price__value">
-                  {t.price}
-                  {t.period && <span className="mkt-price__period">{t.period}</span>}
-                </p>
-                {t.priceNote && <p className="mkt-price__note">{t.priceNote}</p>}
-                <p className="mkt-price__deck">{t.deck}</p>
-                <Link
-                  href={t.cta.href}
-                  className={`mkt-cta ${t.ctaVariant === "primary" ? "mkt-cta--primary" : "mkt-cta--ghost"} mkt-price__cta`}
-                >
-                  {t.cta.label}
-                  {t.ctaVariant === "primary" && (
-                    <span className="mkt-cta__arrow" aria-hidden>→</span>
+        <Stagger className="mt-16 grid items-stretch gap-4 lg:grid-cols-3 lg:gap-5" step={0.1}>
+          {TIERS.map((t) => (
+            <StaggerItem key={t.key} className={cn(t.featured && "lg:-mt-4 lg:mb-4")}>
+              <div className={cn("h-full rounded-bezel", t.featured && "beam-border")}>
+                <article
+                  className={cn(
+                    "spotlight relative flex h-full flex-col overflow-hidden rounded-bezel p-7 ring-1 ring-inset md:p-8",
+                    t.featured
+                      ? "bg-gradient-to-b from-accent/[0.12] via-ground-2 to-ground-2 ring-accent/30 shadow-[0_40px_90px_-40px_rgb(255_107_30/0.55)]"
+                      : "bg-ground-2 ring-rule",
                   )}
-                </Link>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
+                  aria-labelledby={`tier-${t.key}-h`}
+                >
+                  {t.featured && <span aria-hidden className="grid-field pointer-events-none absolute inset-0 opacity-60" />}
+                  <div className="relative flex items-center justify-between">
+                    <p className="m-0 font-code text-[11px] font-medium uppercase tracking-label text-ink-3">{t.tier}</p>
+                    <TierMeter tier={TIER_LEVEL[t.key as keyof typeof TIER_LEVEL]} tint="var(--color-accent)" />
+                  </div>
+                  <h3 id={`tier-${t.key}-h`} className="relative m-0 mt-5 font-display text-3xl font-medium tracking-tight text-ink">
+                    {t.name}
+                  </h3>
+                  <div className="relative mt-6 min-h-[96px]">
+                    <p className="m-0 flex flex-wrap items-baseline gap-x-3 gap-y-1 font-display text-[clamp(2.5rem,4vw,3.5rem)] font-medium leading-none tracking-[-0.03em] text-ink">
+                      {t.price}
+                      {t.period && <span className="font-code text-[12px] font-normal tracking-[0.08em] text-ink-3">{t.period}</span>}
+                    </p>
+                    {t.priceNote && <p className="m-0 mt-3 text-[13px] text-ink-3">{t.priceNote}</p>}
+                  </div>
+                  <p className="relative m-0 mt-4 border-t border-rule pt-5 text-[15px] leading-relaxed text-ink-2">{t.deck}</p>
+                  <div className="relative mt-auto pt-8">
+                    {t.ctaVariant === "primary" ? (
+                      <PrimaryCta href={t.cta.href}>{t.cta.label}</PrimaryCta>
+                    ) : (
+                      <GhostCta href={t.cta.href}>{t.cta.label}</GhostCta>
+                    )}
+                  </div>
+                </article>
+              </div>
+            </StaggerItem>
+          ))}
+        </Stagger>
+      </Section>
 
       {/* COMPARISON MATRIX */}
-      <section className="mkt mkt-section" aria-labelledby="compare-h" id="compare">
-        <div className="mkt-section__inner">
-          <header className="mkt-products__head">
-            <p className="mkt-eyebrow">What&rsquo;s included</p>
-            <h2 id="compare-h" className="mkt-h2">
-              <SplitWords>Compare tier by tier.</SplitWords>
-            </h2>
-          </header>
+      <Section labelledBy="compare-h" id="compare" className="scroll-mt-16">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>What&rsquo;s included</Eyebrow>
+          <h2 id="compare-h" className={h2}>
+            <RevealWords>Compare tier by tier.</RevealWords>
+          </h2>
+        </Reveal>
 
-          <div className="mkt-matrix" aria-label="Tier feature comparison">
-            <div className="mkt-matrix__row mkt-matrix__row--head">
-              <p className="mkt-matrix__cell">Feature</p>
-              <p className="mkt-matrix__cell">Starter</p>
-              <p className="mkt-matrix__cell">Team</p>
-              <p className="mkt-matrix__cell">Enterprise</p>
-            </div>
-            {MATRIX_GROUPS.map((g) => (
-              <div key={g.group}>
-                <div className="mkt-matrix__row mkt-matrix__row--group">
-                  <p className="mkt-matrix__cell">{g.group}</p>
-                  <p className="mkt-matrix__cell" />
-                  <p className="mkt-matrix__cell" />
-                  <p className="mkt-matrix__cell" />
-                </div>
-                {g.rows.map((r) => (
-                  <div key={r.feature} className="mkt-matrix__row">
-                    <p className="mkt-matrix__cell">{r.feature}</p>
-                    <Cell v={r.starter} tier="Starter" />
-                    <Cell v={r.team} tier="Team" />
-                    <Cell v={r.enterprise} tier="Enterprise" />
-                  </div>
-                ))}
+        <Reveal className="mt-14" amount={0.05}>
+          <div className="rounded-bezel ring-1 ring-rule ring-inset max-md:overflow-x-auto" aria-label="Tier feature comparison">
+            <div className="max-md:min-w-[640px]">
+              <div className={cn(row, "glass z-10 rounded-t-bezel border-b border-rule-2 bg-ground-2/85 backdrop-blur-xl md:sticky md:top-[76px]")}>
+                <p className={cn(cellBase, "py-5 font-code text-[11px] uppercase tracking-label text-ink-3")}>Feature</p>
+                <p className={cn(cellBase, "py-5 text-center font-display text-[15px] font-medium text-ink")}>Starter</p>
+                <p className={cn(cellBase, "bg-accent/[0.08] py-5 text-center font-display text-[15px] font-medium text-accent")}>Team</p>
+                <p className={cn(cellBase, "py-5 text-center font-display text-[15px] font-medium text-ink")}>Enterprise</p>
               </div>
-            ))}
+              {MATRIX_GROUPS.map((g) => (
+                <div key={g.group}>
+                  <div className={cn(row, "border-b border-rule bg-white/[0.02]")}>
+                    <p className={cn(cellBase, "pt-6 font-code text-[11px] font-medium uppercase tracking-label text-ink")}>{g.group}</p>
+                    <p className={cellBase} />
+                    <p className={cn(cellBase, "self-stretch bg-accent/[0.05]")} />
+                    <p className={cellBase} />
+                  </div>
+                  {g.rows.map((r) => (
+                    <div key={r.feature} className={cn(row, "border-b border-rule transition-colors duration-300 last:border-b-0 hover:bg-white/[0.03]")}>
+                      <p className={cn(cellBase, "text-ink-2")}>{r.feature}</p>
+                      <Cell v={r.starter} tier="Starter" />
+                      <Cell v={r.team} tier="Team" />
+                      <Cell v={r.enterprise} tier="Enterprise" />
+                    </div>
+                  ))}
+                </div>
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
       {/* CRADLE REPLACEMENT ORDER */}
-      <section className="mkt mkt-section" aria-labelledby="cradle-h">
-        <div className="mkt-section__inner">
-          <header className="mkt-flow__head">
-            <p className="mkt-eyebrow">Lost or damaged Cradle</p>
-            <h2 id="cradle-h" className="mkt-h2">
-              <SplitWords>Order a replacement Cradle.</SplitWords>
-            </h2>
-            <p className="mkt-deck">
-              Team and Enterprise customers can order a replacement Cradle
-              at cost. Ships to the address on file within 3 business
-              days. Old device serial is retired from your organization&rsquo;s
-              attestation chain at replacement issue.
-            </p>
-            <div className="mkt-hero__ctas">
-              <Link
-                href={`mailto:${CONTACT.enterprise}?subject=Cradle%20replacement%20request&body=Serial%20of%20lost%2Fdamaged%20device%3A%20%0AShipping%20address%3A%20%0AOrganization%3A%20%0ATier%3A%20%0A`}
-                className="mkt-cta mkt-cta--primary"
-              >
-                Request replacement
-                <span className="mkt-cta__arrow" aria-hidden>→</span>
-              </Link>
-              <Link href="/contact" className="mkt-cta mkt-cta--ghost">
-                Talk to support
-              </Link>
+      <Section labelledBy="cradle-h">
+        <Reveal className="bezel" amount={0.25}>
+          <div
+            className="bezel-core grid items-center gap-10 overflow-hidden p-8 md:p-12 lg:grid-cols-[1.3fr_1fr]"
+            style={{ "--tint": "var(--color-cradle)" } as CSSProperties}
+          >
+            <span
+              aria-hidden
+              className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-cradle opacity-20 blur-[110px]"
+            />
+            <header className="relative flex flex-col items-start gap-6">
+              <Eyebrow>Lost or damaged Cradle</Eyebrow>
+              <h2 id="cradle-h" className={h2}>
+                <RevealWords>Order a replacement Cradle.</RevealWords>
+              </h2>
+              <p className={deck}>
+                Team and Enterprise customers can order a replacement Cradle
+                at cost. Ships to the address on file within 3 business
+                days. Old device serial is retired from your organization&rsquo;s
+                attestation chain at replacement issue.
+              </p>
+              <div className="cta-row pt-1">
+                <PrimaryCta
+                  href={`mailto:${CONTACT.enterprise}?subject=Cradle%20replacement%20request&body=Serial%20of%20lost%2Fdamaged%20device%3A%20%0AShipping%20address%3A%20%0AOrganization%3A%20%0ATier%3A%20%0A`}
+                >
+                  Request replacement
+                </PrimaryCta>
+                <GhostCta href="/contact">Talk to support</GhostCta>
+              </div>
+            </header>
+            <div className="relative mx-auto hidden w-full max-w-[320px] lg:block">
+              <ProductEmblem tint="var(--color-cradle)" />
             </div>
-          </header>
-        </div>
-      </section>
+          </div>
+        </Reveal>
+      </Section>
 
-      {/* CLOSING CTA */}
-      <section className="mkt mkt-section mkt-closing" aria-labelledby="close-h">
-        <div className="mkt-closing__inner">
-          <p className="mkt-eyebrow">Not sure which tier</p>
-          <h2 id="close-h" className="mkt-display">
-            <SplitWords>Book thirty minutes. We map the fit.</SplitWords>
-          </h2>
-          <p className="mkt-deck">
+      <ClosingCta
+        id="close-h"
+        eyebrow="Not sure which tier"
+        title="Book thirty minutes. We map the fit."
+        deck={
+          <>
             Bring one department. We show you which tier answers the
             shape of your operation and quote the pilot on the call.
-          </p>
-          <div className="mkt-hero__ctas">
-            <Link href="/demo" className="mkt-cta mkt-cta--primary">
-              Book a demo
-              <span className="mkt-cta__arrow" aria-hidden>→</span>
-            </Link>
-            <Link href={`mailto:${CONTACT.enterprise}`} className="mkt-cta mkt-cta--ghost">
-              Email enterprise
-            </Link>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+        primary={{ href: "/demo", label: "Book a demo" }}
+        secondary={{ href: `mailto:${CONTACT.enterprise}`, label: "Email enterprise" }}
+      />
     </>
   );
 }

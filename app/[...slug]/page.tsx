@@ -46,13 +46,7 @@ export default async function CatchAllPage({ params }: { params: Promise<Params>
   const key = slug.join("/") as PageSlug;
   const page = SLUG_MAP[key] ? PAGES[SLUG_MAP[key]] : undefined;
   if (!page) notFound();
-  // Fast-migration wrapper: remaps v3 --paper/--ink/--rule tokens to
-  // marketing-register palette without rewriting every section renderer.
-  // Founder-directed 2026-09-18. Voice + shape re-authoring per route
-  // is a subsequent wave; this eliminates the color register-break now.
-  return (
-    <div className="mkt-mode">
-      <PageRenderer page={page} />
-    </div>
-  );
+  // v7 PageRenderer is fully on the Tailwind register, so the 2026-09-18
+  // `.mkt-mode` token-remap wrapper (and its opaque ground) is retired.
+  return <PageRenderer page={page} />;
 }
