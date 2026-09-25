@@ -23,7 +23,7 @@ import { CONTACT, mailto } from "@/content/contact";
  *   For HubSpot: replace with a fetch POST to the HubSpot forms API +
  *   redirect to a thank-you page.
  *
- *   For a Nebos backend endpoint: POST to /api/v1/leads/demo with the
+ *   For a Nebbos backend endpoint: POST to /api/v1/leads/demo with the
  *   full payload + show a thank-you state inline.
  */
 

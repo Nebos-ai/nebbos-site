@@ -119,7 +119,7 @@ function buildQuadrants(): Quadrant[] {
     typeof (composed as { nebos_mcp_tools?: number })?.nebos_mcp_tools === "number"
       ? {
           value: String((composed as { nebos_mcp_tools: number }).nebos_mcp_tools),
-          label: "Nebos MCP tools",
+          label: "Nebbos MCP tools",
           sub: "callable core surface: signals, Pearl, knowledge graph, workflows",
         }
       : null,
