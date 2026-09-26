@@ -44,6 +44,29 @@ const nextConfig: NextConfig = {
       // specific holding co) — not appropriate for public marketing. Remains
       // reachable via /brief/financial for share-only-via-exact-URL delivery
       // (categorical slug, unlisted, noindex,nofollow per file <meta>).
+
+      // Public technical documentation lives in a separate Next.js /
+      // Nextra service (github.com/Nebos-ai/nebbos-docs), deployed on
+      // Railway. This rewrite proxies /docs/* at the marketing site edge
+      // so the docs live at nebbos.ai/docs — the canonical URL — rather
+      // than a subdomain or Railway origin.
+      //
+      // The docs app sets `basePath: '/docs'` in its own next.config, so
+      // internal links, static-asset URLs and route segments all emit
+      // with the /docs prefix. The origin serves at
+      // nebbos-docs-production.up.railway.app/docs/* — this rewrite
+      // targets that path shape one-for-one.
+      //
+      // When docs.nebbos.ai (or a stable Cloudflare Pages URL) lands,
+      // switch the destination host without touching the rewrite shape.
+      {
+        source: "/docs",
+        destination: "https://nebbos-docs-production.up.railway.app/docs",
+      },
+      {
+        source: "/docs/:path*",
+        destination: "https://nebbos-docs-production.up.railway.app/docs/:path*",
+      },
     ];
   },
   // Retired routes → redirect to current IA. Preserves inbound links (SEO,
