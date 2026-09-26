@@ -115,21 +115,22 @@ export const BRAND = {
     "Your operation is the training data. Nebbos captures every human decision as a preference pair, portable to any model you own or license.",
 
   /**
-   * Three-tier corporate taxonomy (per session 3c918563 message-board note
-   * 2026-09-16 12:34Z + founder ratification during nebbos-signature.html
-   * iteration). Extends the 2026-09-16 08:00Z rename doctrine by adding
-   * the AI operating tier that was missing from the initial two-tier form.
+   * Three-tier corporate taxonomy.
+   *
+   * Rename chain (Serbian operating subsidiary):
+   *   TR3I D.O.O. → Nebbos D.O.O. (2026-09-16)
+   *   → Nebbos Technologies D.O.O. (2026-09-19, aligned to parent "Technologies" branding)
    *
    * Structure top-to-bottom:
    *   1. Nebbos Technologies Corp · Wilmington, Delaware (US parent)
    *   2. Nebbos AI · Los Angeles, California (AI product/business unit)
-   *   3. Nebbos D.O.O. · Beograd, Serbia (Serbian operating subsidiary)
+   *   3. Nebbos Technologies D.O.O. · Beograd, Serbia (Serbian operating subsidiary)
    *
-   * `legalEntity` remains the Serbian tier name for legacy footer usage
-   * (single-line copyright). `parentEntity` remains the US parent. The
-   * new `aiEntity` fills the middle tier. Full colophon = all three.
+   * `legalEntity` = Serbian tier name for legacy footer usage.
+   * `parentEntity` = US parent. `aiEntity` fills the middle tier.
+   * Full colophon = all three.
    */
-  legalEntity: "Nebbos D.O.O.",
+  legalEntity: "Nebbos Technologies D.O.O.",
   legalEntityLocation: "Beograd, Serbia",
 
   /** US parent entity (Delaware C-Corp). */

@@ -1931,7 +1931,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "04 · ISO 27001:2022",
         h2: "Annex A control set implemented across the substrate.",
-        body: "Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today. The ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
+        body: "ISO 27001:2022 certification is not yet held. Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today, and the ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
       },
       {
         id: "hipaa",
