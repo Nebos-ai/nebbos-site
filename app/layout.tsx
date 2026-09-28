@@ -170,6 +170,17 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         <a href="#main" className="skip-link">Skip to content</a>
+        {/*
+          Invisible banner landmark. Per founder direction 2026-09-28: the
+          visual SiteHeader was removed from the marketing site, but WCAG
+          2.2 AA / axe-core still expects a top-of-page <header role="banner">
+          landmark so assistive tech can navigate the page's regions. This
+          renders sr-only text carrying the brand name so screen readers
+          announce "Nebbos, banner region" while sighted users see nothing.
+          If a visible marketing header is later designed, replace this with
+          the real <SiteHeader /> component.
+        */}
+        <header role="banner" className="sr-only">Nebbos</header>
         <main id="main">{children}</main>
         <MarketingFooter />
         <MarketingCursorGlow />
