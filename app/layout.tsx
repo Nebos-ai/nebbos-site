@@ -2,7 +2,6 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { connection } from "next/server";
 import { headers } from "next/headers";
-import { SiteHeader } from "@/components/site/SiteHeader";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
 import { MarketingCursorGlow } from "@/components/site/MarketingCursorGlow";
 import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
@@ -171,7 +170,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         <a href="#main" className="skip-link">Skip to content</a>
-        <SiteHeader />
         <main id="main">{children}</main>
         <MarketingFooter />
         <MarketingCursorGlow />
