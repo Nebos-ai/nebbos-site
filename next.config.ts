@@ -75,6 +75,33 @@ const nextConfig: NextConfig = {
       // with existing BRAND.productLine vocabulary). URL preserved via 302
       // so inbound links from press, PRs, bookmarks continue to work.
       { source: "/products/usb", destination: "/products/cradle", permanent: false },
+      // Platform-only paths hit on the marketing domain → 302 to app.nebbos.ai.
+      //
+      // Added 2026-10-01 after a 2-day founder-visible block: clicking a link
+      // or bookmark to `nebbos.ai/billing` returned the marketing 404 page
+      // ("This page is not part of Nebbos") because marketing has no /billing
+      // route and the fallthrough `[...slug]` catch-all renders not-found.
+      // Cloudflare cached the 404 for max-age=14400 (4h) so every reload
+      // reinforced the dead-end.
+      //
+      // These four paths (/billing, /portfolio, /analytics, /settings) are
+      // the top-nav items in components/shell/public-header.tsx — they
+      // belong to the authenticated app shell on app.nebbos.ai, never to
+      // marketing. Mirror-redirecting them from the marketing host turns a
+      // stale bookmark or share-link into a one-hop bounce to the real
+      // surface (which then auth-gates via /login?returnPathname=...).
+      //
+      // 302 (not 301) matches the retired-routes doctrine above: if marketing
+      // ever grows a `/billing` landing page (unlikely but possible), 302s
+      // let that happen without browsers hard-caching the redirect.
+      { source: "/billing", destination: "https://app.nebbos.ai/billing", permanent: false },
+      { source: "/billing/:path*", destination: "https://app.nebbos.ai/billing/:path*", permanent: false },
+      { source: "/portfolio", destination: "https://app.nebbos.ai/portfolio", permanent: false },
+      { source: "/portfolio/:path*", destination: "https://app.nebbos.ai/portfolio/:path*", permanent: false },
+      { source: "/analytics", destination: "https://app.nebbos.ai/analytics", permanent: false },
+      { source: "/analytics/:path*", destination: "https://app.nebbos.ai/analytics/:path*", permanent: false },
+      { source: "/settings", destination: "https://app.nebbos.ai/settings", permanent: false },
+      { source: "/settings/:path*", destination: "https://app.nebbos.ai/settings/:path*", permanent: false },
     ];
   },
   // Cache headers · rapid-iteration marketing site.
