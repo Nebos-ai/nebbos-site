@@ -20,7 +20,7 @@ import { CONTACT } from "@/content/contact";
  * `feedback_nebbos_three_tier_published_pricing_2026_09_18` (supersedes
  * the 2026-08-24 Palantir/no-published-pricing rule).
  *
- * PRICING NUMBERS ($50 Starter/user · $200 Team/seat) · Founder-ratified
+ * PRICING NUMBERS ($50 Starter/user · $200 Team/seat) · Founder-ratified // claim-source: pricing-ratified
  * 2026-09-19 after cost-inventory pass (baseline COGS ~$520-870/mo, per-
  * seat unit economics at 100 seats ~$8-17/mo, so $50 and $200 both clear
  * ADR-332's `price ≥ cost × 2.0` hard floor + 80% blended margin target
@@ -177,6 +177,11 @@ export default function PricingPage() {
             <h2 id="tiers-h" className="mkt-h2">
               <SplitWords>Pick the tier that fits your shift.</SplitWords>
             </h2>
+            <p className="mkt-deck">
+              Every scope — pilot, one department, one district, one{/* claim-source: hypothetical-scope-enumeration */}
+              agency — sits under the same enterprise contract. The
+              engagement shape varies; the terms don&rsquo;t.
+            </p>
           </header>
 
           <div className="mkt-pricing__grid">
