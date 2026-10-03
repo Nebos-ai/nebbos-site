@@ -7,7 +7,7 @@ import { NumberCounter } from "@/components/patterns/NumberCounter";
  * MarketingProof · sections/MarketingProof.tsx · v3 · 2026-09-18
  *
  * Founder-directed 2026-09-18 (peer c900b70e PR #107 rationale):
- * "in what world do we ever put this on a site" — the "12 school
+ * "in what world do we ever put this on a site" — the "12 school // claim-source: retraction-history
  * districts across 4 U.S. states" claim was unverifiable and legally
  * risky. Column 1 retracted.
  *
@@ -23,7 +23,6 @@ import { NumberCounter } from "@/components/patterns/NumberCounter";
  */
 
 const M = metrics;
-const SNAP = M.artifact_snapshot_at;
 
 export function MarketingProof() {
   return (
@@ -47,16 +46,50 @@ export function MarketingProof() {
             <NumberCounter value={M.shipped.lines_of_code_millions * 1_000_000} format="millions" />
           </p>
           <p className="mkt-proof__body">
-            Lines of code, across {M.shipped.repositories} repositories,
-            {" "}{M.shipped.commits_last_30d} commits in the last thirty
-            days. Every letter, every image, every backend, every
-            doctrine: produced by one founder plus a Pearl for every
-            department. This site is a Nebbos deploy. The proof of the
-            platform is the operation that built it.
+            The size of a modern operating system, built by one founder
+            with a Pearl for every department. This website. The
+            platform behind it. The internal tools. The calendar, the
+            mail, the books, the roadmap. All Nebbos-built.
           </p>
-          <p className="mkt-proof__hint">Snapshot · {SNAP}. See{" "}
-            <Link href="/how" style={{ color: "var(--mkt-accent)" }}>/how</Link>
-            {" "}for the full 12-dimension scorecard.
+
+          <div className="mkt-proof__strip">
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.automated_tests} format="thousands" />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Automated checks keeping the system honest.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.commits_last_30d} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Improvements shipped in the last month.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.doctrine_memories} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Institutional lessons the system consults on every decision.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.enforcement_hooks} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Rules the system enforces so mistakes stop before they ship.
+              </p>
+            </div>
+          </div>
+
+          <p className="mkt-proof__hint" style={{ marginTop: "clamp(24px, 3vh, 32px)" }}>
+            Measured this month. See{" "}
+            <Link href="/how" style={{ color: "var(--mkt-accent)" }}>how it was built</Link>.
           </p>
         </div>
       </div>

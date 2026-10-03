@@ -35,8 +35,10 @@ import { MarketingCTA } from "@/components/sections/MarketingCTA";
  *                                  narrative. Story beats specs.
  *   4. MarketingTrustLine          One quiet line. Signals CISO-ready.
  *                                  Links to /trust for the depth.
- *   5. MarketingProof              12 K-12 districts, 4 states. Peer
- *                                  proof over vendor claim.
+ *   5. MarketingProof              Dogfood proof — the operation that
+ *                                  built Nebbos, running on Nebbos.
+ *                                  (v2's "K-12 districts, 4 states" line // claim-source: retraction-history
+ *                                  was retracted 2026-09-18, PR #107.)
  *   6. MarketingCTA                "Put a Pearl on your hardest
  *                                  department." Same imperative close.
  *

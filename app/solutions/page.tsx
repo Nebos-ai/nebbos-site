@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 
 /**
  * PAGE · /solutions · v2 · 2026-09-18 · marketing-register rebuild
@@ -45,9 +46,9 @@ export default function SolutionsPage() {
             </h1>
             <p className="mkt-deck">
               Every industry has departments that would run better with a
-              brain. Nebbos ships a Pearl for each — three functions, five
-              industries, one training substrate. Pick the one closest to
-              yours.
+              brain. Nebbos ships eight Pearls tuned to those departments,
+              plus a training substrate that turns your operation into
+              your own preference data. Pick the one closest to yours.
             </p>
             <div className="mkt-hero__ctas">
               <Link href="/demo" className="mkt-cta mkt-cta--primary">
@@ -55,7 +56,7 @@ export default function SolutionsPage() {
                 <span className="mkt-cta__arrow" aria-hidden>→</span>
               </Link>
               <Link href="#verticals" className="mkt-cta mkt-cta--ghost">
-                See the Pearls
+                See the catalog
               </Link>
             </div>
           </div>
@@ -66,16 +67,16 @@ export default function SolutionsPage() {
       <section className="mkt mkt-section" aria-labelledby="verticals">
         <div className="mkt-section__inner">
           <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The nine Pearls</p>
+            <p className="mkt-eyebrow">Eight Pearls + one substrate</p>
             <h2 id="verticals" className="mkt-h2">
               Three functions. Five industries. One training substrate.
             </h2>
             <p className="mkt-deck">
               Function Pearls (Operations, Finance, People) work across every
               industry. Industry Pearls (Education, Care, FS, Manufacturing,
-              Civic) come pre-tuned to that vertical&rsquo;s ops shape. The
-              Training Substrate captures every decision your team makes as
-              a preference pair.
+              Civic) come pre-tuned to that vertical&rsquo;s ops shape.
+              Underneath them, the Training Substrate captures every
+              decision your team makes as a preference pair.
             </p>
           </header>
 
@@ -87,7 +88,9 @@ export default function SolutionsPage() {
                 : "mkt-product--cradle";
               return (
                 <Link key={v.slug} href={`/solutions/${v.slug}`} className={`mkt-product ${variantClass}`}>
-                  <span className="mkt-product__mark" aria-hidden />
+                  <span className="mkt-product__mark" aria-hidden>
+                    <NebbosMark size={32} />
+                  </span>
                   <div className="mkt-product__body">
                     <p className="mkt-product__eyebrow">{v.eyebrow}</p>
                     <h3 className="mkt-product__name">{v.name.replace("Nebbos ", "")}</h3>

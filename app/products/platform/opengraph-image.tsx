@@ -16,7 +16,7 @@ export default async function OpenGraphImage() {
             The <Accent>platform</Accent> your operators live in.
           </>
         }
-        subline="Multi-Shell by default, enterprise-grade, live in production. Where operators run their Pearls, view dashboards, and approve actions."
+        subline="Multi-Shell by default, enterprise-grade. Where operators run their Pearls, view dashboards, and approve actions."
       />
     ),
     { ...size },

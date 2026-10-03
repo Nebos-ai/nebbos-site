@@ -10,6 +10,15 @@ export const metadata: Metadata = {
     "Longer writing on the platform, its tools, its MCP, the security of its Cradle, and how operators run their Pearls under the whole system.",
 };
 
+/**
+ * /blog · v3 · 2026-09-18 · mkt-native rebuild
+ *
+ * v2 shape: container-narrow editorial-page + editorial-list (cream
+ * paper serif register). v3 shape: mkt-hero + a hairline-separated
+ * mkt-postlist to match the home / products / catchall visual language.
+ * Content pipeline (gray-matter over content/blog/*.mdx) is unchanged.
+ */
+
 type PostMeta = {
   slug: string;
   title: string;
@@ -52,28 +61,42 @@ function formatDate(iso: string): string {
 export default async function BlogIndexPage() {
   const posts = await getAllPosts();
   return (
-    <div className="mkt-mode container-narrow editorial-page">
-      <header className="editorial-page__lede">
-        <p className="editorial-page__eyebrow">Notes · from Nebbos</p>
-        <h1 className="editorial-page__title">Notes from Nebbos.</h1>
-        <p className="editorial-page__deck">
-          Longer writing on the platform, its tools, its MCP&rsquo;s system
-          abilities, and the security of its Cradle.
-        </p>
-      </header>
-      <ol className="editorial-list">
-        {posts.map((post) => (
-          <li key={post.slug} className="editorial-list__item">
-            <Link href={`/blog/${post.slug}`} aria-label={post.title}>
-              <article>
-                <p className="editorial-list__date">{formatDate(post.date)}</p>
-                <h2 className="editorial-list__title">{post.title}</h2>
-                <p className="editorial-list__desc">{post.description}</p>
-              </article>
-            </Link>
-          </li>
-        ))}
-      </ol>
-    </div>
+    <>
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="blog-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <p className="mkt-eyebrow">Notes</p>
+            <h1 id="blog-h" className="mkt-display">
+              Notes from Nebbos.
+            </h1>
+            <p className="mkt-deck">
+              Longer writing on the platform, its tools, its MCP, and
+              the security of its Cradle. Written by the operators who
+              build and run the substrate.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="blog-list">
+        <div className="mkt-section__inner">
+          <h2 id="blog-list" className="mkt-eyebrow" style={{ marginBottom: 16 }}>
+            {posts.length} note{posts.length === 1 ? "" : "s"}
+          </h2>
+          <ol className="mkt-postlist">
+            {posts.map((post) => (
+              <li key={post.slug} className="mkt-postlist__item">
+                <Link href={`/blog/${post.slug}`} className="mkt-postlist__link" aria-label={post.title}>
+                  <p className="mkt-postlist__date">{formatDate(post.date)}</p>
+                  <h3 className="mkt-postlist__title">{post.title}</h3>
+                  <p className="mkt-postlist__desc">{post.description}</p>
+                  <span className="mkt-postlist__cta" aria-hidden>Read →</span>
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+    </>
   );
 }
