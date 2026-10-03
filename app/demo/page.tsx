@@ -32,7 +32,7 @@ const AGENDA = [
 
 const ROUTES = [
   { label: "General", email: CONTACT.general, desc: "Sales, partnerships, misc." },
-  { label: "Enterprise", email: CONTACT.enterprise, desc: "SOWs, MSAs, DPAs, procurement." },
+  { label: "Enterprise", email: CONTACT.enterprise, desc: "SOWs, MSAs, License, procurement." },
   { label: "Engineering", email: CONTACT.engineering, desc: "Developer and integration questions." },
   { label: "Security", email: CONTACT.security, desc: "Vulnerability reports and incident notification." },
   { label: "Privacy", email: CONTACT.privacy, desc: "Data-protection officer, GDPR, DSARs." },

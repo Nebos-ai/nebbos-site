@@ -567,7 +567,7 @@ function InboxRouter({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; 
   const eb = cleanEyebrow(s.eyebrow);
   const inboxes = [
     { label: "General",     addr: CONTACT.general,     strap: "Sales, partnerships, misc." },
-    { label: "Enterprise",  addr: CONTACT.enterprise,  strap: "SOWs, MSAs, procurement." },
+    { label: "Enterprise",  addr: CONTACT.enterprise,  strap: "SOWs, MSAs, License, procurement." },
     { label: "Engineering", addr: CONTACT.engineering, strap: "Developer + integration questions." },
     { label: "Security",    addr: CONTACT.security,    strap: "Vulnerability reports + incident notification." },
     { label: "Privacy",     addr: CONTACT.privacy,     strap: "Data-protection officer, GDPR, DSARs." },
