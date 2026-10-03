@@ -1,0 +1,32 @@
+name: repo-hygiene
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: repo-hygiene-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  no-session-markers:
+    name: no tracked session markers
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      # .nebos-worktree-owner is per-session local state written into each
+      # worktree. When it is tracked, every new worktree starts out claiming
+      # one session, and the worktree marker guard refuses commits from every
+      # other session. It was committed in #127, untracked in #129, and then
+      # re-added by #126's squash merge. The .gitignore entry cannot stop a
+      # branch that already tracks the file, so this check fails the PR.
+      - name: fail if .nebos-worktree-owner is tracked
+        run: |
+          if git ls-files --error-unmatch .nebos-worktree-owner >/dev/null 2>&1; then
+            echo "::error file=.nebos-worktree-owner::Per-session worktree marker is tracked. Run: git rm --cached .nebos-worktree-owner"
+            exit 1
+          fi
+          echo "no tracked session markers"
