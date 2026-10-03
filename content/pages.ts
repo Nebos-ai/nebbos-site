@@ -1906,7 +1906,7 @@ export const PAGES = {
           { title: "EU AI Act — Regulation (EU) 2024/1689", body: "Substrate implemented (Layer 07 memory + Layer 08 reasoning + Layer 15 attestation). Client-facing Annex IV documentation pack ships ahead of the 2027-08-02 Annex III deadline. Current status memo on request." },
           { title: "SOC 2 Type II", body: "Trust services criteria (Security, Availability, Confidentiality, Privacy) implemented across the substrate. Audit engaged, observation window running. Report available under NDA as the auditor&rsquo;s opinion issues." },
           { title: "ISO 27001:2022", body: "Annex A control set implemented across identity, access, audit, encryption, and data retention. ISMS documentation and certification cycle scheduled. SoA + risk register + control narratives available under NDA on request." },
-          { title: "HIPAA (US healthcare clients)", body: "Technical safeguards implemented (access control, audit trail, integrity, entity authentication, transmission security). Administrative + physical safeguards + BAA template ship ahead of first healthcare deployment." },
+          { title: "HIPAA (US healthcare clients)", body: "HIPAA-readiness is in progress. Technical safeguards implemented (access control, audit trail, integrity, entity authentication, transmission security). Administrative + physical safeguards + BAA template ship ahead of first healthcare deployment." },
           { title: "FERPA (US K-12 + higher-ed clients)", body: "Substrate controls mapped to FERPA educational-records handling. Documented onboarding path for school districts and higher-ed." },
           { title: "GDPR (EU clients + EU data subjects)", body: "Data Processing Addendum at /legal/dpa. Data-subject rights (access, correction, deletion, portability) implemented as first-class flows." },
           { title: "CCPA + state privacy regimes", body: "Consumer rights implemented. State-by-state addenda where relevant." },
@@ -1931,7 +1931,7 @@ export const PAGES = {
         kind: "text-block",
         eyebrow: "04 · ISO 27001:2022",
         h2: "Annex A control set implemented across the substrate.",
-        body: "Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today. The ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
+        body: "ISO 27001:2022 certification is not yet held. Every Annex A control that applies to a cloud-hosted platform &mdash; identity, access, audit, encryption, retention, incident response &mdash; is implemented today. The ISMS documentation and formal certification cycle are scheduled. Statement of applicability, risk register, and control narratives available under NDA on request via legal@nebbos.ai.",
       },
       {
         id: "hipaa",
