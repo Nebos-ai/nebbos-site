@@ -2,8 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Space_Grotesk, Fira_Code } from "next/font/google";
 import { connection } from "next/server";
 import { headers } from "next/headers";
-import { SiteHeader } from "@/components/site/SiteHeader";
 import { MarketingFooter } from "@/components/site/MarketingFooter";
+import { secondaryNav } from "@/lib/nav";
 import { MarketingCursorGlow } from "@/components/site/MarketingCursorGlow";
 import { WebVitalsReporter } from "@/components/site/WebVitalsReporter";
 import { BRAND } from "@/content/brand";
@@ -171,7 +171,37 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
         <a href="#main" className="skip-link">Skip to content</a>
-        <SiteHeader />
+        {/*
+          Minimal marketing sign-in affordance. Restored 2026-09-29 after the
+          founder caught that PR #124 (SiteHeader removal) also deleted the
+          only visible sign-in link on nebbos.ai. Original ask was to remove
+          the OPERATOR-APP MENU BAR (Home/Portfolio/Billing/etc. links leaking
+          onto marketing) — not the sign-in button. This fixed-position pill
+          is the minimum-viable restoration: no primary nav, no mega-menu,
+          just the canonical Log in link from secondaryNav[0] so visitors can
+          reach app.nebbos.ai. z-index 50 keeps it above MarketingCursorGlow.
+        */}
+        <a
+          href={secondaryNav[0]!.href}
+          {...(secondaryNav[0]!.external ? { rel: "noopener noreferrer" } : {})}
+          data-slot="marketing-signin-pill"
+          style={{
+            position: "fixed",
+            top: "1rem",
+            right: "1rem",
+            zIndex: 50,
+            padding: "0.5rem 1rem",
+            borderRadius: "9999px",
+            background: "var(--paper)",
+            color: "var(--ink)",
+            fontSize: "0.875rem",
+            fontWeight: 500,
+            textDecoration: "none",
+            boxShadow: "0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.08)",
+          }}
+        >
+          {secondaryNav[0]!.label}
+        </a>
         <main id="main">{children}</main>
         <MarketingFooter />
         <MarketingCursorGlow />
