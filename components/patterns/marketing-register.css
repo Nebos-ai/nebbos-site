@@ -691,6 +691,35 @@
     margin-bottom: clamp(48px, 6vh, 88px);
   }
 
+  /* Shared section header · used by every list-shape section
+     (list-numbered, list-plain, table-rows, split-columns, inbox-router,
+     etc.). Founder-caught 2026-09-19 T11:57 UTC: text-block sections
+     carried a mark tile with the chip; list-shape section headers had
+     only a plain chip. That inconsistency read as sloppy — some
+     sections felt anchored, others floated. SectionHead + this class
+     enforce the same [mark] + [chip] meta row on every section header
+     so pages feel like every pixel is intentional. */
+  .mkt-section__head {
+    display: grid;
+    gap: clamp(16px, 2vh, 24px);
+    max-width: 62ch;
+    margin-block-end: clamp(40px, 5vh, 72px);
+  }
+  .mkt-section__head--center {
+    justify-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+  .mkt-section__head-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .mkt-section__head-meta .mkt-eyebrow-chip {
+    margin-block-end: 0;
+  }
+
   .mkt-products__grid {
     display: grid;
     gap: clamp(16px, 1.8vw, 24px);
@@ -3576,22 +3605,23 @@
      background lifts the content off the section ground; per-Pearl
      border tint on hover matches every other card in the register. */
 
+  /* Text-card is a SINGLE-column article at every width. The aside was
+     originally a 5-fr side column with mark+chip, but on real pages that
+     column was mostly empty (~100px of chrome next to a 400-500px stack
+     of h2+body on the right) and read as a broken layout with a lonely
+     header pinned to the top-left corner. Founder-caught 2026-09-19
+     ("this looks sloppy"). Single-column meta-row-on-top matches the
+     banner + mirror shapes so every text-block section reads with the
+     same top-to-bottom rhythm: [mark · chip] → h2 → body. */
   .mkt-textcard {
     display: grid;
     grid-template-columns: 1fr;
-    gap: clamp(24px, 3vw, 40px);
+    gap: clamp(20px, 2.5vw, 28px);
     padding: clamp(28px, 3.5vw, 48px);
     background: linear-gradient(180deg, rgba(23, 27, 38, 0.6), rgba(10, 13, 19, 0.6));
     border: 1px solid var(--mkt-rule);
     border-radius: var(--mkt-radius-panel);
     transition: border-color 320ms var(--mkt-ease), transform 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease);
-  }
-  @media (min-width: 960px) {
-    .mkt-textcard {
-      grid-template-columns: minmax(0, 5fr) minmax(0, 8fr);
-      gap: clamp(40px, 5vw, 80px);
-      align-items: start;
-    }
   }
   .mkt-textcard:hover { transform: translateY(-2px); }
   .mkt-textcard--platform:hover { border-color: rgba(74, 92, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(74, 92, 255, 0.22); }
@@ -3599,10 +3629,17 @@
   .mkt-textcard--mcp:hover      { border-color: rgba(185, 107, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(185, 107, 255, 0.22); }
   .mkt-textcard--cradle:hover   { border-color: rgba(214, 58, 76, 0.28);   box-shadow: 0 22px 48px -14px rgba(214, 58, 76, 0.22); }
 
+  /* Meta row · mark tile + eyebrow chip inline, horizontal. Was a
+     vertical grid stack in a side column; now a header row above the
+     main content. */
   .mkt-textcard__aside {
-    display: grid;
-    gap: 20px;
-    align-content: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .mkt-textcard__aside .mkt-eyebrow-chip {
+    margin-block-end: 0;
   }
   .mkt-textcard__num {
     font-family: var(--mkt-font-mono);
@@ -3638,23 +3675,20 @@
   .mkt-textcard__body em { font-style: italic; color: var(--mkt-text); }
   .mkt-textcard__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
 
-  /* Mirror variant · numeral+flower aside on the RIGHT, body on the
-     LEFT. Breaks the "same card orientation stacked N times" rhythm
-     without changing card shape. Applied to every third text-block
-     via PageRenderer's `index % 3 === 2` rotation. */
+  /* Mirror variant · end-aligned composition. Was a column-flip (aside
+     right, body left) which produced the same lonely-aside problem in
+     reverse. Now: meta row aligns to end, h2 and body align to end.
+     Same top-to-bottom rhythm, right-anchored — reads as a balanced
+     counterweight to the default left-anchored card. */
   @media (min-width: 960px) {
-    .mkt-textcard--mirror {
-      grid-template-columns: minmax(0, 8fr) minmax(0, 5fr);
-    }
     .mkt-textcard--mirror .mkt-textcard__aside {
-      order: 2;
+      justify-content: flex-end;
+    }
+    .mkt-textcard--mirror .mkt-textcard__main {
       text-align: end;
       justify-items: end;
     }
-    .mkt-textcard--mirror .mkt-textcard__main {
-      order: 1;
-    }
-    .mkt-textcard--mirror .mkt-eyebrow-chip {
+    .mkt-textcard--mirror .mkt-textcard__body {
       margin-inline-start: auto;
     }
   }
@@ -3669,9 +3703,16 @@
      matters as much as density. This shape has zero card chrome and
      radically different visual weight so the eye registers a break. */
 
+  /* Banner padding-block tightened 2026-09-19 T11:58 UTC — the previous
+     clamp(96, 14vh, 168) produced ~252px of empty vertical padding on a
+     900px viewport, which read as "small composition floating in a sea
+     of empty space" even after the mark + chip proportions were bumped.
+     Reduced to a tighter clamp so the meta row + display title + body
+     hold the visual center of the section instead of getting lost in
+     top/bottom air. */
   .mkt-banner {
     position: relative;
-    padding-block: clamp(96px, 14vh, 168px);
+    padding-block: clamp(64px, 9vh, 112px);
     overflow: hidden;
     isolation: isolate;
   }
@@ -3705,12 +3746,33 @@
     justify-items: center;
     text-align: center;
   }
+  /* Banner meta row · mark + chip inline, centered above the display
+     title. Founder-caught 2026-09-19: the default 44px mark + 12px chip
+     was dwarfed by the clamp(32, 5vw, 64) display title and read as
+     "small lonely header floating over a giant heading". Banner-scoped
+     overrides bump the mark to 64px and the chip to 13px/heavier
+     padding so the row carries weight proportional to the heading. */
   .mkt-banner__meta {
     display: inline-flex;
     align-items: center;
-    gap: 16px;
+    gap: 20px;
     flex-wrap: wrap;
     justify-content: center;
+  }
+  .mkt-banner .mkt-tile__mark {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+  .mkt-banner .mkt-eyebrow-chip {
+    padding: 7px 18px 7px 16px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    margin-block-end: 0;
+  }
+  .mkt-banner .mkt-eyebrow-chip__dot {
+    width: 9px;
+    height: 9px;
   }
   .mkt-banner__num {
     font-family: var(--mkt-font-mono);

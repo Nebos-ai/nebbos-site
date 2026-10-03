@@ -36,3 +36,6 @@ yarn-error.log*
 /.lighthouseci
 
 .worktrees/
+
+# per-session worktree ownership marker (local only, never committed)
+.nebos-worktree-owner

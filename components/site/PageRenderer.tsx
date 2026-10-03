@@ -134,6 +134,48 @@ function EyebrowChip({ pearl, children }: { pearl: ProductKey; children: React.R
   );
 }
 
+/* Shared section header · mark tile + eyebrow chip meta row + h2.
+   Founder-caught 2026-09-19 T11:38 UTC: text-block sections carried
+   a mark tile with the chip; list-numbered / list-plain / split-cols
+   / table-rows / inbox-router headers had only the chip. That
+   inconsistency read as sloppy — some sections felt anchored, others
+   floated. SectionHead enforces the same [mark] + [chip] meta row on
+   every section header so pages feel like every pixel is intentional
+   and thought about. `align` is 'start' by default; use 'center' for
+   pages/heroes that want centered composition. */
+function SectionHead({
+  id,
+  pearl,
+  eyebrow,
+  title,
+  align = "start",
+}: {
+  id: string;
+  pearl: ProductKey;
+  eyebrow?: string;
+  title?: string;
+  align?: "start" | "center";
+}) {
+  if (!eyebrow && !title) return null;
+  return (
+    <header className={`mkt-section__head mkt-section__head--${align}`}>
+      <div className="mkt-section__head-meta">
+        <span className={`mkt-tile__mark mkt-tile__mark--${pearl}`} aria-hidden>
+          <NebbosMark />
+        </span>
+        {eyebrow && <EyebrowChip pearl={pearl}>{eyebrow}</EyebrowChip>}
+      </div>
+      {title && (
+        <h2
+          id={id}
+          className="mkt-h2"
+          dangerouslySetInnerHTML={{ __html: title }}
+        />
+      )}
+    </header>
+  );
+}
+
 function CTAButtons({
   primary,
   secondary,
@@ -317,14 +359,7 @@ function SplitColumns({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey;
       <div className="mkt-section__inner">
         <div className="mkt-split">
           <div>
-            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-            {s.h2 && (
-              <h2
-                id={`h-${s.id}`}
-                className="mkt-h2"
-                dangerouslySetInnerHTML={{ __html: s.h2 }}
-              />
-            )}
+            <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
             {s.deck && (
               <p className="mkt-deck" dangerouslySetInnerHTML={{ __html: s.deck }} />
             )}
@@ -380,16 +415,7 @@ function ListNumbered({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey;
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        <header className="mkt-products__head">
-          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-          {s.h2 && (
-            <h2
-              id={`h-${s.id}`}
-              className="mkt-h2"
-              dangerouslySetInnerHTML={{ __html: s.h2 }}
-            />
-          )}
-        </header>
+        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
         <ol className="mkt-numcards">
           {(s.items ?? []).map((item, i) => {
             const p = pearlAt(baseIdx + i);
@@ -431,16 +457,7 @@ function ListPlain({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; ac
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        <header className="mkt-products__head">
-          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-          {s.h2 && (
-            <h2
-              id={`h-${s.id}`}
-              className="mkt-h2"
-              dangerouslySetInnerHTML={{ __html: s.h2 }}
-            />
-          )}
-        </header>
+        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
         <TileGrid items={items} basePearl={pearl} />
       </div>
     </section>
@@ -464,16 +481,7 @@ function TableRows({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; ac
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        <header className="mkt-products__head">
-          {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-          {s.h2 && (
-            <h2
-              id={`h-${s.id}`}
-              className="mkt-h2"
-              dangerouslySetInnerHTML={{ __html: s.h2 }}
-            />
-          )}
-        </header>
+        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
         <ul className="mkt-factgrid">
           {rows.map(([label, value], i) => {
             const p = pearlAt(baseIdx + i);
@@ -570,23 +578,12 @@ function InboxRouter({ s, pearl, accent }: { s: SectionBase; pearl: ProductKey; 
     <section className={`mkt mkt-section ${accent ? "mkt-section--accented" : ""}`} aria-labelledby={`h-${s.id}`}>
       {accent && <SectionRail pearl={pearl} />}
       <div className="mkt-section__inner">
-        {(eb || s.h2) && (
-          <header className="mkt-products__head">
-            {eb && <EyebrowChip pearl={pearl}>{eb}</EyebrowChip>}
-            {s.h2 && (
-              <h2
-                id={`h-${s.id}`}
-                className="mkt-h2"
-                dangerouslySetInnerHTML={{ __html: s.h2 }}
-              />
-            )}
-            {s.deck && (
-              <p
-                className="mkt-deck"
-                dangerouslySetInnerHTML={{ __html: s.deck }}
-              />
-            )}
-          </header>
+        <SectionHead id={`h-${s.id}`} pearl={pearl} eyebrow={eb} title={s.h2} />
+        {s.deck && (
+          <p
+            className="mkt-deck"
+            dangerouslySetInnerHTML={{ __html: s.deck }}
+          />
         )}
         <ul className="mkt-inboxlist">
           {inboxes.map((inbox) => (

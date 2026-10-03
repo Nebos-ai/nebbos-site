@@ -24,3 +24,7 @@ Before writing any code, read the checklist for your work type. Every checklist 
 - **Never hardcode API keys, tokens, or secrets.** Use environment variables only.
 - **Never use the names "Idvor" or "Nebos" (single-b) on user-facing surfaces** — the product is "Nebbos" (double-b). Real infrastructure identifiers (the `Nebos-ai` GitHub org, `nebos-governance`, `~/nebos-main` paths) keep their existing spelling until separately renamed.
 - Commit author: `dejan@tr3i.com`
+
+## Pre-push gates
+
+`.githooks/pre-push` runs `scripts/check-vocab.sh`, `scripts/check-marketing-claims.mjs` (when present) and `tsc --noEmit` before every push, the same checks CI runs. Opt in with `git config core.hooksPath .githooks` unless your machine's global hooks path already delegates to repo-local hooks. For a deliberate bypass, put `[preflight-bypass]: <reason>` in the pushed tip commit's message. Never use `--no-verify`.
