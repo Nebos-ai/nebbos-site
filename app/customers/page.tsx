@@ -5,59 +5,42 @@ import { NebbosMark } from "@nebbos/brand/logo";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Customer references will appear here when they are ready to be named.",
+    "Nebbos is used inside the business that builds it. Case studies land here as external customers sign off publicly.",
 };
 
 /**
- * /customers · revision 3 · 2026-09-18 · substantiated-only framing
+ * /customers · 2026-09-18 · v3 · mkt-native rebuild + dogfood-only framing
  *
- * HISTORY: revision 2 (2026-09-12) asserted "Nebbos is deployed today // claim-source: retraction-history
- * inside school districts across multiple U.S. states" with named
- * operations (SIS / HR / substitute / reporting / parent comms), no
- * customer names but a specific-shape claim. Retracted 2026-09-18 for
- * the same reason MarketingProof v2 was (PR #107): specific customer /
- * geo / use-case claims without a `source_of_record` in
- * `content/claims.ts` are legal-risk, regardless of whether the shape
- * is claimed to be "true but confidential." Per ratified
- * `feedback_marketing_site_pricing_editorial_discipline`: marketing
- * surface = narrow projection of verifiable internal facts; default
- * OFF when in doubt.
+ * v2 (2026-09-12) claimed deployment inside U.S. school-district
+ * operations. That was the same class of unverifiable external claim
+ * the home page retracted in 73af932 (2026-09-18) — retracted here
+ * for consistency with the claims-registry doctrine (peer PR #108).
  *
- * This revision is the honest empty state: the page acknowledges the
- * category (customer references), commits to naming references only
- * with permission, and does not describe use-cases, geographic reach,
- * industry, or count. When the first customer is namable, add their
- * entry to `content/claims.ts` under a `customer-<slug>` id with a
- * `verifiable-external` source-of-record (linked case study, signed
- * approval), and this page renders their reference.
+ * v3 replaces:
+ *   - shape: v3 FullBleedScene + section--paper → mkt-hero + mkt-section
+ *   - copy: external-customer claim → dogfood-only framing (the
+ *     business that builds Nebbos is running on it today)
  *
- * Prior versions preserved via git history:
- *   - revision 1 (coming-soon)      : PR #23, 2026-09-12
- *   - revision 2 (in-production)    : this branch, retracted 2026-09-18
+ * When external customers land, this page swaps to per-customer case
+ * study cards. Until then, honesty about the deployment shape.
  */
 
 export default function CustomersIndexPage() {
   return (
-    <div className="mkt-mode">
-      <FullBleedScene
-        className="hero-fullbleed"
-        scene={{ imageFamily: "concept-operator-onboarding", imageFamilyVariant: 1 }}
-        scrim="bottom"
-        vignetteStrength={0.5}
-        chapter="00"
-        chapterLabel="In production"
-        priority
-      >
-        <div className="container hero-fullbleed__inner">
-          <div className="hero-fullbleed__frame">
-            <h1 className="hero-fullbleed__title">
-              Customer references appear here when they are ready to be
-              named.
+    <>
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="cus-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <p className="mkt-eyebrow">Customers</p>
+            <h1 id="cus-h" className="mkt-display">
+              Running inside the business that builds it.
             </h1>
-            <p className="hero-fullbleed__deck">
-              Nebbos does not name customers on this page ahead of their
-              written permission. When a customer is namable, their
-              reference appears here.
+            <p className="mkt-deck">
+              Nebbos is used every day by the team that builds it. The
+              platform, its Pearls, its Cradle. Case studies from external
+              customers land here as each customer signs off publicly.
+              Until then, the shape of the work is real; the names arrive
+              with permission.
             </p>
             <div className="mkt-hero__ctas">
               <Link href="/how" className="mkt-cta mkt-cta--primary">
@@ -120,49 +103,17 @@ export default function CustomersIndexPage() {
         className="mkt mkt-section mkt-closing"
         aria-labelledby="cus-close"
       >
-        <div className="container-narrow">
-          <p
-            style={{
-              fontFamily: "var(--font-mono)",
-              fontSize: 11,
-              letterSpacing: "0.24em",
-              textTransform: "uppercase",
-              color: "var(--ink-3)",
-              margin: 0,
-            }}
-          >
-            01 &middot; Why this page is quiet
-          </p>
-          <h2
-            style={{
-              fontFamily: "var(--font-serif)",
-              fontSize: "clamp(32px, 4.4vw, 56px)",
-              lineHeight: 1.04,
-              letterSpacing: "-0.022em",
-              fontWeight: 400,
-              color: "var(--ink)",
-              margin: "20px 0 0 0",
-              maxWidth: "26ch",
-              textWrap: "balance",
-            }}
-          >
-            Named permission, or nothing.
+        <div className="mkt-closing__inner">
+          <span aria-hidden style={{ display: "inline-flex", marginBottom: 24 }}>
+            <NebbosMark size={40} />
+          </span>
+          <p className="mkt-eyebrow">Talk to us</p>
+          <h2 id="cus-close" className="mkt-display">
+            See the same shape on your operation.
           </h2>
-          <p
-            style={{
-              fontFamily: "var(--font-sans)",
-              fontSize: "clamp(16px, 1.4vw, 18px)",
-              lineHeight: 1.5,
-              color: "var(--ink-2)",
-              margin: "20px 0 0 0",
-              maxWidth: "56ch",
-            }}
-          >
-            Customer counts, geographies, industries, and use-cases are
-            things a competitor could infer from &mdash; and things a
-            regulator could hold us to. Until a customer signs off on
-            being named on this page, we say nothing specific about them
-            here. When they are ready, their reference is what appears.
+          <p className="mkt-deck">
+            Thirty minutes. Bring one department. We show you a Pearl
+            running against a workload the same shape as yours.
           </p>
           <div className="mkt-hero__ctas">
             <Link href="/demo" className="mkt-cta mkt-cta--primary">
