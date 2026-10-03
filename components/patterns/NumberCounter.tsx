@@ -1,14 +1,18 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
+import { animate, useInView, useReducedMotion } from "motion/react";
 
 /**
- * NumberCounter · patterns/NumberCounter.tsx · v1 · 2026-09-18
+ * NumberCounter · patterns/NumberCounter.tsx · v2 · 2026-09-23
  *
  * Counts UP from 0 to the target value when the component enters view.
- * Standard award-tier reveal move for hero stats. Uses
- * IntersectionObserver to trigger once, requestAnimationFrame to
- * animate. Respects prefers-reduced-motion.
+ *
+ * v2: Motion `animate()` drives the tween and writes straight to the
+ * node's textContent, so a count-up never re-renders React. The server
+ * renders the final value (crawlers and no-JS readers see the real
+ * number); the client resets to 0 only if the counter is still off
+ * screen, then counts up on entry. Respects prefers-reduced-motion.
  *
  * `format` controls how the interpolated value renders: default
  * shows the raw integer with tabular-nums; pass "millions" for
@@ -28,56 +32,48 @@ export function NumberCounter({
   durationMs?: number;
   suffix?: string;
 }) {
-  const [display, setDisplay] = useState(() =>
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches
-      ? value
-      : 0,
-  );
   const ref = useRef<HTMLSpanElement>(null);
-  const startedRef = useRef(false);
+  const reduce = useReducedMotion();
+  const inView = useInView(ref, { once: true, margin: "0px 0px -20% 0px" });
+  const armed = useRef(false);
+
+  // Arm: if still below the fold on mount, park at 0 until it scrolls in.
+  // Reads matchMedia directly: useReducedMotion() is not settled on the
+  // first client effect, and a reduced-motion reader must never see 0.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const r = el.getBoundingClientRect();
+    if (r.top > window.innerHeight) {
+      el.textContent = formatValue(0, format) + suffix;
+      armed.current = true;
+    }
+  }, [format, suffix]);
+
+  // Preference flipped to reduced after arming: show the real value.
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || !reduce || !armed.current) return;
+    armed.current = false;
+    el.textContent = formatValue(value, format) + suffix;
+  }, [reduce, value, format, suffix]);
 
   useEffect(() => {
-    if (typeof window === "undefined") return;
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setDisplay(value);
-      return;
-    }
     const el = ref.current;
-    if (!el) return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting && !startedRef.current) {
-            startedRef.current = true;
-            const start = performance.now();
-            const from = 0;
-            const to = value;
-            function tick(now: number) {
-              const t = Math.min(1, (now - start) / durationMs);
-              // Ease-out cubic
-              const eased = 1 - Math.pow(1 - t, 3);
-              const current = from + (to - from) * eased;
-              setDisplay(current);
-              if (t < 1) requestAnimationFrame(tick);
-              else setDisplay(to);
-            }
-            requestAnimationFrame(tick);
-            observer.disconnect();
-          }
-        }
+    if (!el || !inView || !armed.current) return;
+    const controls = animate(0, value, {
+      duration: durationMs / 1000,
+      ease: [0.16, 1, 0.3, 1],
+      onUpdate: (v) => {
+        el.textContent = formatValue(v, format) + suffix;
       },
-      { rootMargin: "0px 0px -20% 0px", threshold: 0 },
-    );
-    observer.observe(el);
-    return () => observer.disconnect();
-  }, [value, durationMs]);
+    });
+    return () => controls.stop();
+  }, [inView, value, durationMs, format, suffix]);
 
   return (
     <span ref={ref} style={{ fontVariantNumeric: "tabular-nums" }}>
-      {formatValue(display, format)}
-      {suffix}
+      {formatValue(value, format) + suffix}
     </span>
   );
 }

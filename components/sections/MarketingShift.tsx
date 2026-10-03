@@ -1,30 +1,34 @@
-import { ShiftPlayhead } from "@/components/patterns/ShiftPlayhead";
-import { SplitWords } from "@/components/patterns/SplitWords";
+import type { CSSProperties } from "react";
 import { NebbosMark } from "@nebbos/brand/logo";
+import { ShiftPlayhead } from "@/components/patterns/ShiftPlayhead";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal } from "@/components/motion/Reveal";
+import { ScrollBeam } from "@/components/motion/ScrollBeam";
+import { ScrollScrub } from "@/components/motion/ScrollScrub";
+import {
+  Eyebrow,
+  Section,
+  deck,
+  headline,
+} from "@/components/marketing/primitives";
+import { cn } from "@/lib/cn";
 
 /**
- * MarketingShift · sections/MarketingShift.tsx · v2 · 2026-09-18
+ * MarketingShift · sections/MarketingShift.tsx · v3 · 2026-09-23
  *
- * Day-in-the-life animation of one operator's Monday, WITHOUT and WITH
- * Nebbos, along one shared timeline. Founder-directed 2026-09-18:
- * "we should use this animation to show just a day in the life of a
- * nebbos user" — the pattern reference was a scroll-driven timeline
- * pen; the aesthetic is our dark marketing register.
+ * Day-in-the-life of one operator's Monday, WITHOUT and WITH Nebbos,
+ * along one shared timeline. Copy and beats unchanged from v2.
  *
- * Structure — 4 beats × 3 columns:
- *   [ chaos card · without ]  [ spine node · flower tile ]  [ calm card · with ]
- *
- * A sticky clock playhead at the top of the section shows the current
- * beat's hour, updated by IntersectionObserver (ShiftPlayhead client
- * child). Each beat is a scroll-linked reveal (translate-only per the
- * axe-safety doctrine — opacity never animates in scroll-timeline
- * keyframes). Active beat lights up its Pearl color; past beats mute;
- * future beats ghost.
- *
- * The spine flower tile uses the same app-icon shape used elsewhere
- * on the home (per-product color background + white currentColor
- * flower + elevation shadow) so this section reads as one design
- * language with departments/products.
+ * v3 visual layer:
+ *   - A scroll-linked accent beam (adapted from 21st.dev Timeline) runs
+ *     down the spine and fills as the visitor scrolls the day.
+ *   - Sticky glass playhead with rolling clock digits (ShiftPlayhead).
+ *   - "Without" cards are flat and muted; "With Nebbos" cards are
+ *     double-bezel surfaces that light up in the beat's Pearl colour
+ *     when the playhead reaches them. Cards slide in from their side.
+ *   - The timeline pins to the viewport (ScrollScrub) and moves at half
+ *     ~3/8 of the scroll speed: same card spacing, ~2.7× the scroll per
+ *     hour, with eased hand-offs between hours.
  */
 
 type Beat = {
@@ -85,58 +89,113 @@ const BEATS: Beat[] = [
   },
 ];
 
+const TINT: Record<Beat["product"], string> = {
+  platform: "var(--color-platform)",
+  app: "var(--color-app)",
+  mcp: "var(--color-mcp)",
+  cradle: "var(--color-cradle)",
+};
+
 export function MarketingShift() {
   return (
-    <section className="mkt mkt-section mkt-shift" aria-labelledby="mkt-shift-h">
-      <div className="mkt-section__inner">
-        <header className="mkt-flow__head">
-          <p className="mkt-eyebrow">A day in the life</p>
-          <h2 id="mkt-shift-h" className="mkt-h2">
-            <SplitWords>One Monday, with and without.</SplitWords>
+    <Section labelledBy="mkt-shift-h" className="overflow-x-clip">
+      <div data-shift>
+        <Reveal
+          as="header"
+          className="flex max-w-3xl flex-col items-start gap-6"
+        >
+          <Eyebrow>A day in the life</Eyebrow>
+          <h2
+            id="mkt-shift-h"
+            className={cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]")}
+          >
+            <RevealWords>One Monday, with and without.</RevealWords>
           </h2>
-          <p className="mkt-deck">
-            Same operator. Same signals. Same team. The only variable is
-            whether a Pearl is watching. Scroll the day.
+          <p className={deck}>
+            Same operator. Same signals. Same team. The only variable is whether
+            a Pearl is watching. Scroll the day.
           </p>
-        </header>
+        </Reveal>
 
-        <ShiftPlayhead
-          beats={BEATS.map((b) => ({ time: b.time, product: b.product }))}
-        />
-
-        <ol className="mkt-shift__timeline" aria-label="Monday, beat by beat">
-          {BEATS.map((beat, i) => (
-            <li
-              key={beat.time}
-              className={`mkt-shift__beat mkt-shift__beat--${beat.product}`}
-              data-beat={i}
-              data-time={beat.time}
+        <ScrollScrub
+          slow={8 / 3}
+          overlay={
+            <ShiftPlayhead
+              beats={BEATS.map((b) => ({ time: b.time, product: b.product }))}
+            />
+          }
+        >
+          <div className="relative">
+            <ScrollBeam className="left-6 md:left-1/2 md:-translate-x-1/2" />
+            <ol
+              className="relative m-0 grid list-none gap-6 p-0 md:gap-10"
+              aria-label="Monday, beat by beat"
             >
-              <article className="mkt-shift__card mkt-shift__card--chaos">
-                <p className="mkt-shift__cardlabel">Without</p>
-                <p className="mkt-shift__hour">{beat.time}</p>
-                <h3 className="mkt-shift__event">{beat.chaos.event}</h3>
-                <p className="mkt-shift__body">{beat.chaos.body}</p>
-              </article>
+              {BEATS.map((beat, i) => (
+                <li
+                  key={beat.time}
+                  data-beat={i}
+                  data-time={beat.time}
+                  data-state={i === 0 ? "active" : "future"}
+                  style={{ "--tint": TINT[beat.product] } as CSSProperties}
+                  className="group/beat relative grid grid-cols-[48px_1fr] gap-x-4 gap-y-4 md:grid-cols-[1fr_96px_1fr] md:gap-x-0"
+                >
+                  <Reveal
+                    as="article"
+                    x={-40}
+                    y={0}
+                    className="col-start-2 row-start-1 rounded-[1.4rem] bg-ground-2/60 p-6 ring-1 ring-rule ring-inset transition-[filter,opacity] duration-700 ease-fluid md:col-start-1 md:p-7"
+                  >
+                    <p className="m-0 font-code text-[10.5px] font-medium uppercase tracking-label text-ink-3">
+                      Without
+                    </p>
+                    <p className="m-0 mt-2 font-code text-[13px] tabular-nums text-ink-3">
+                      {beat.time}
+                    </p>
+                    <h3 className="m-0 mt-3 font-display text-xl font-medium tracking-tight text-ink-2 md:text-2xl">
+                      {beat.chaos.event}
+                    </h3>
+                    <p className="m-0 mt-2 text-[15px] leading-relaxed text-ink-3">
+                      {beat.chaos.body}
+                    </p>
+                  </Reveal>
 
-              <div className="mkt-shift__spine" aria-hidden>
-                <span className="mkt-shift__spine-line mkt-shift__spine-line--above" />
-                <span className={`mkt-shift__spine-tile mkt-shift__spine-tile--${beat.product}`}>
-                  <NebbosMark size={28} />
-                </span>
-                <span className="mkt-shift__spine-line mkt-shift__spine-line--below" />
-              </div>
+                  <div
+                    className="col-start-1 row-span-2 row-start-1 flex justify-center pt-6 md:col-start-2 md:row-span-1 md:items-center md:pt-0"
+                    aria-hidden
+                  >
+                    <span className="relative grid size-12 place-items-center rounded-[0.9rem] bg-ground-3 text-ink-3 ring-1 ring-rule-2 ring-inset transition-all duration-700 ease-fluid group-data-[state=active]/beat:scale-110 group-data-[state=active]/beat:bg-[var(--tint)] group-data-[state=active]/beat:text-white group-data-[state=active]/beat:shadow-[0_0_0_6px_var(--color-ground),0_0_40px_4px_color-mix(in_srgb,var(--tint)_60%,transparent)] group-data-[state=past]/beat:bg-[color-mix(in_srgb,var(--tint)_35%,var(--color-ground-3))] group-data-[state=past]/beat:text-ink">
+                      <NebbosMark size={26} />
+                    </span>
+                  </div>
 
-              <article className="mkt-shift__card mkt-shift__card--calm">
-                <p className="mkt-shift__cardlabel">With Nebbos</p>
-                <p className="mkt-shift__hour mkt-shift__hour--accent">{beat.time}</p>
-                <h3 className="mkt-shift__event">{beat.calm.event}</h3>
-                <p className="mkt-shift__body">{beat.calm.body}</p>
-              </article>
-            </li>
-          ))}
-        </ol>
+                  <Reveal
+                    as="article"
+                    x={40}
+                    y={0}
+                    className="bezel col-start-2 row-start-2 transition-shadow duration-700 ease-fluid md:col-start-3 md:row-start-1 group-data-[state=active]/beat:shadow-[inset_0_0_0_1px_color-mix(in_srgb,var(--tint)_55%,transparent),0_30px_80px_-40px_var(--tint)]"
+                  >
+                    <div className="bezel-core h-full p-6 md:p-7">
+                      <p className="m-0 font-code text-[10.5px] font-medium uppercase tracking-label text-ink-3">
+                        With Nebbos
+                      </p>
+                      <p className="m-0 mt-2 font-code text-[13px] tabular-nums text-accent">
+                        {beat.time}
+                      </p>
+                      <h3 className="m-0 mt-3 font-display text-xl font-medium tracking-tight text-ink md:text-2xl">
+                        {beat.calm.event}
+                      </h3>
+                      <p className="m-0 mt-2 text-[15px] leading-relaxed text-ink-2">
+                        {beat.calm.body}
+                      </p>
+                    </div>
+                  </Reveal>
+                </li>
+              ))}
+            </ol>
+          </div>
+        </ScrollScrub>
       </div>
-    </section>
+    </Section>
   );
 }

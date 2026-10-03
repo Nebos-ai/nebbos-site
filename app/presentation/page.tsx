@@ -1,5 +1,11 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import type { CSSProperties } from "react";
+import { PageHero } from "@/components/marketing/PageHero";
+import { ClosingCta } from "@/components/marketing/ClosingCta";
+import { Eyebrow, PrimaryCta, Section, headline } from "@/components/marketing/primitives";
+import { RevealWords } from "@/components/motion/RevealWords";
+import { Reveal } from "@/components/motion/Reveal";
+import { cn } from "@/lib/cn";
 
 export const metadata: Metadata = {
   title: "Presentation",
@@ -8,8 +14,11 @@ export const metadata: Metadata = {
 };
 
 /**
- * /presentation · v4 · 2026-09-18 · mkt-native rebuild
+ * /presentation · v5 · 2026-09-23 · Tailwind + Motion redesign (visual
+ * only): the four slides as a sticky card stack (each slide pins a little
+ * lower than the last as you scroll), the PDF on a bezel frame.
  *
+ * v4 · 2026-09-18 · mkt-native rebuild:
  * v3 shipped v3 primitives (PageHero, PageSection, Eyebrow, Button)
  * against the cream paper register. v4 rebuilds against the mkt
  * register: one mkt-hero + four mkt-slide cards + PDF viewer inside
@@ -41,53 +50,67 @@ const SLIDES = [
   },
 ];
 
-const SLIDE_COLOR = ["platform", "app", "mcp", "cradle"] as const;
+const SLIDE_TINT = ["var(--color-platform)", "var(--color-app)", "var(--color-mcp)", "var(--color-cradle)"];
 
 export default function PresentationPage() {
+  const h2 = cn(headline, "text-[clamp(2.25rem,4.8vw,4rem)]");
   return (
     <>
-      <section className="mkt mkt-section mkt-hero" aria-labelledby="pres-h">
-        <div className="mkt-section__inner">
-          <div className="mkt-hero__copy">
-            <p className="mkt-eyebrow">Presentation</p>
-            <h1 id="pres-h" className="mkt-display">
-              Nebbos in four slides.
-            </h1>
-            <p className="mkt-deck">
-              The platform. Its tools. Its MCP. Its Cradle. Four things,
-              one substrate.
-            </p>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        id="pres-h"
+        eyebrow="Presentation"
+        title="Nebbos in four slides."
+        deck={
+          <>
+            The platform. Its tools. Its MCP. Its Cradle. Four things,
+            one substrate.
+          </>
+        }
+      />
 
-      <section className="mkt mkt-section" aria-labelledby="pres-slides">
-        <div className="mkt-section__inner">
-          <h2 id="pres-slides" className="sr-only">Slides</h2>
-          <ol className="mkt-deck-list">
-            {SLIDES.map((s, i) => (
-              <li key={s.k} className={`mkt-slide mkt-slide--${SLIDE_COLOR[i]}`}>
-                <p className="mkt-slide__k">{s.k}</p>
-                <h3
-                  className="mkt-slide__title"
-                  dangerouslySetInnerHTML={{ __html: s.title }}
-                />
-                <p className="mkt-slide__body">{s.body}</p>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
+      {/* SLIDES · sticky stack */}
+      <Section labelledBy="pres-slides">
+        <h2 id="pres-slides" className="sr-only">Slides</h2>
+        <ol className="m-0 grid list-none gap-6 p-0">
+          {SLIDES.map((s, i) => (
+            <li
+              key={s.k}
+              className="md:sticky"
+              style={{ top: `${110 + i * 28}px`, "--tint": SLIDE_TINT[i] } as CSSProperties}
+            >
+              <div className="bezel shadow-[0_-30px_60px_-30px_rgb(0_0_0/0.9)]">
+                <div className="bezel-core relative grid min-h-[360px] gap-8 overflow-hidden p-8 md:grid-cols-[180px_1fr] md:p-12">
+                  <span aria-hidden className="grid-field pointer-events-none absolute inset-0 opacity-50" />
+                  <span
+                    aria-hidden
+                    className="pointer-events-none absolute -right-24 -top-24 size-96 rounded-full bg-[var(--tint)] opacity-[0.22] blur-[110px]"
+                  />
+                  <p className="relative m-0 font-code text-[clamp(3rem,6vw,5rem)] font-medium leading-none tabular-nums text-tint">
+                    {s.k}
+                  </p>
+                  <div className="relative flex flex-col gap-5 self-end">
+                    <h3
+                      className="m-0 max-w-[22ch] font-display text-[clamp(1.9rem,3.4vw,3rem)] font-medium leading-[1.05] tracking-tight text-ink"
+                      dangerouslySetInnerHTML={{ __html: s.title }}
+                    />
+                    <p className="m-0 max-w-[62ch] text-[16px] leading-relaxed text-ink-2">{s.body}</p>
+                  </div>
+                </div>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </Section>
 
-      <section className="mkt mkt-section" aria-labelledby="pres-pdf">
-        <div className="mkt-section__inner">
-          <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The deck, on paper</p>
-            <h2 id="pres-pdf" className="mkt-h2">
-              Same four slides. Portable, printable, forwardable.
-            </h2>
-          </header>
-          <div className="mkt-pdf-frame">
+      <Section labelledBy="pres-pdf">
+        <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
+          <Eyebrow>The deck, on paper</Eyebrow>
+          <h2 id="pres-pdf" className={h2}>
+            <RevealWords>Same four slides. Portable, printable, forwardable.</RevealWords>
+          </h2>
+        </Reveal>
+        <Reveal className="bezel mt-14" amount={0.1}>
+          <div className="bezel-core overflow-hidden p-2">
             {/* <object> renders inline PDF where the browser supports it;
                 the child <a> serves as the visible fallback for Safari-iOS
                 + any browser that blocks inline PDF (WCAG 2.2 §1.3.1). */}
@@ -95,46 +118,32 @@ export default function PresentationPage() {
               data="/nebbos-presentation.pdf#view=FitH"
               type="application/pdf"
               aria-label="Nebbos presentation (PDF)"
-              className="mkt-pdf-object"
+              className="block aspect-[16/10] w-full rounded-[1.1rem] bg-ground-3"
             >
-              <p className="mkt-pdf-fallback">
+              <p className="m-0 flex flex-wrap items-center gap-3 p-8 text-[15px] leading-relaxed text-ink-2">
                 Your browser can&rsquo;t display the PDF inline.{" "}
-                <Link href="/nebbos-presentation.pdf" className="mkt-cta mkt-cta--primary" style={{ display: "inline-flex", marginInline: 8 }}>
-                  Download the four-slide deck (PDF)
-                  <span className="mkt-cta__arrow" aria-hidden>→</span>
-                </Link>{" "}
+                <PrimaryCta href="/nebbos-presentation.pdf">Download the four-slide deck (PDF)</PrimaryCta>{" "}
                 &mdash; same four slides above, portable to any device.
               </p>
             </object>
           </div>
-        </div>
-      </section>
+        </Reveal>
+      </Section>
 
-      <section
-        className="mkt mkt-section mkt-closing"
-        aria-labelledby="pres-close"
-      >
-        <div className="mkt-closing__inner">
-          <p className="mkt-eyebrow">Walk it live</p>
-          <h2 id="pres-close" className="mkt-display">
-            Walk it live with the team who runs it.
-          </h2>
-          <p className="mkt-deck">
+      <ClosingCta
+        id="pres-close"
+        eyebrow="Walk it live"
+        title="Walk it live with the team who runs it."
+        deck={
+          <>
             The presentation is the surface. The runtime is the substance.
             Book a demo and see the same primitives running against your
             real workload shape.
-          </p>
-          <div className="mkt-hero__ctas">
-            <Link href="/demo" className="mkt-cta mkt-cta--primary">
-              Book a demo
-              <span className="mkt-cta__arrow" aria-hidden>→</span>
-            </Link>
-            <Link href="/nebbos-presentation.pdf" className="mkt-cta mkt-cta--ghost">
-              Download the PDF
-            </Link>
-          </div>
-        </div>
-      </section>
+          </>
+        }
+        primary={{ href: "/demo", label: "Book a demo" }}
+        secondary={{ href: "/nebbos-presentation.pdf", label: "Download the PDF" }}
+      />
     </>
   );
 }

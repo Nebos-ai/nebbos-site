@@ -4,6 +4,9 @@ import matter from "gray-matter";
 import { marked } from "marked";
 import { notFound } from "next/navigation";
 import Link from "next/link";
+import { PageHero } from "@/components/marketing/PageHero";
+import { PearlMosaic } from "@/components/marketing/PearlMosaic";
+import { GhostCta, PrimaryCta, Section } from "@/components/marketing/primitives";
 import type { Metadata } from "next";
 
 /**
@@ -77,31 +80,48 @@ export default async function CareerRolePage({
   if (!role) notFound();
 
   const subject = encodeURIComponent(`Role: ${role.title}`);
+  const meta = role.team || role.location;
 
   return (
-    <div className="container-narrow editorial-post">
-      <Link href="/careers" className="editorial-post__backlink">
-        ← Careers
-      </Link>
-      <p className="editorial-post__meta">
-        {role.team}
-        {role.team && role.location ? " · " : ""}
-        {role.location}
-      </p>
-      <h1 className="editorial-post__title">{role.title}</h1>
-      <p className="editorial-post__lede">{role.description}</p>
-      <article className="blog-prose" dangerouslySetInnerHTML={{ __html: role.html }} />
-      <footer className="editorial-post__footer">
-        <p>
-          <Link href={`mailto:careers@nebbos.ai?subject=${subject}`}>
-            Apply: careers@nebbos.ai
-          </Link>{" "}
-          ·{" "}
-          <Link href="/careers">Other roles</Link>{" "}
-          ·{" "}
-          <Link href="/about">About Nebbos</Link>
-        </p>
-      </footer>
-    </div>
+    <>
+      <PageHero
+        id="role-h"
+        lead={
+          <Link
+            href="/careers"
+            className="inline-flex items-center rounded-pill px-3 py-1.5 font-code text-[11px] font-medium uppercase tracking-label text-ink-2 ring-1 ring-rule ring-inset transition-colors hover:bg-white/[0.05] hover:text-ink"
+          >
+            ← Careers
+          </Link>
+        }
+        eyebrow={
+          meta ? (
+            <>
+              {role.team}
+              {role.team && role.location ? " · " : ""}
+              {role.location}
+            </>
+          ) : undefined
+        }
+        title={role.title}
+        deck={role.description || undefined}
+        visual={<PearlMosaic />}
+      />
+
+      <Section labelledBy="role-h" className="pt-0 md:pt-0 lg:pt-0">
+        <div className="mx-auto max-w-[760px]">
+          <article className="mkt-prose" dangerouslySetInnerHTML={{ __html: role.html }} />
+          <footer className="mt-16 flex flex-wrap items-center gap-3 border-t border-rule pt-10">
+            <PrimaryCta href={`mailto:careers@nebbos.ai?subject=${subject}`} arrow={false}>
+              Apply: careers@nebbos.ai
+            </PrimaryCta>{" "}
+            <span className="text-ink-3" aria-hidden>·</span>{" "}
+            <GhostCta href="/careers">Other roles</GhostCta>{" "}
+            <span className="text-ink-3" aria-hidden>·</span>{" "}
+            <GhostCta href="/about">About Nebbos</GhostCta>
+          </footer>
+        </div>
+      </Section>
+    </>
   );
 }

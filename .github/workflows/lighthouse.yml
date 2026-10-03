@@ -21,7 +21,10 @@ jobs:
   lhci:
     name: lighthouse-ci
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # 30 since the 2026-09 redesign: blur/glow layers paint in software on
+    # the GPU-less runner (~70s per run vs ~12s locally), so 14 URLs x 2
+    # runs no longer fit in 15 minutes. Budgets are unchanged.
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
