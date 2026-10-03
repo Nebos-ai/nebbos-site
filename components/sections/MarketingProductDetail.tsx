@@ -164,16 +164,29 @@ export function MarketingProductDetail({ product }: { product: Product }) {
             </p>
           </header>
           <div className="mkt-productrow__tiers">
-            {TIERS.map((tier) => (
-              <div key={tier.key} className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}>
-                <p className="mkt-tier__key">{tier.key}</p>
-                <p className="mkt-tier__label">{name} · {tier.key}</p>
-                <p className="mkt-tier__scope">{tier.scope}</p>
-                <Link href="/contact" className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start", marginTop: 8 }}>
-                  Contact sales
+            {TIERS.map((tier) => {
+              // Extract the human-readable tier name (Guest/Host/Architect)
+              // from the "L1 · Guest" label — the buyer sees the word, the
+              // engineering L# stays as a small chip.
+              const humanName = tier.label.includes("·") ? tier.label.split("·")[1]!.trim() : tier.key;
+              const tierSlug = humanName.toLowerCase();
+              return (
+                <Link
+                  key={tier.key}
+                  id={`tier-${product.key}-${tier.key.toLowerCase()}`}
+                  href={`/products/${product.slug}/${tierSlug}`}
+                  className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}
+                >
+                  <p className="mkt-tier__key">{tier.key}</p>
+                  <p className="mkt-tier__label">{name} · {humanName}</p>
+                  <p className="mkt-tier__factors">{tier.factors}</p>
+                  <p className="mkt-tier__scope">{tier.scope}</p>
+                  <span className="mkt-tier__cta" aria-hidden>
+                    See {humanName} tier <span className="mkt-cta__arrow">→</span>
+                  </span>
                 </Link>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -187,7 +200,7 @@ export function MarketingProductDetail({ product }: { product: Product }) {
               The other three products.
             </h2>
           </header>
-          <div className="mkt-products__grid">
+          <div className="mkt-products__grid mkt-products__grid--3">
             {others.map((p) => (
               <Link key={p.key} href={`/products/${p.slug}`} className={`mkt-product ${PRODUCT_CLASS[p.key].split(" ")[0]}`}>
                 <span className="mkt-product__mark" aria-hidden>

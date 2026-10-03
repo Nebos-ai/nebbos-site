@@ -47,8 +47,9 @@ export default function SolutionsPage() {
             <p className="mkt-deck">
               A Pearl is the intelligence your ops team never had — it
               watches every handoff, remembers every decision, and shows
-              up before the fire does. Nine of them, pre-shaped for a
-              domain. Pick the one closest to yours.
+              up before the fire does. Eight of them, each pre-shaped for
+              a domain, plus a training substrate underneath. Pick the
+              one closest to yours.
             </p>
             <div className="mkt-hero__ctas">
               <Link href="/demo" className="mkt-cta mkt-cta--primary">
@@ -56,7 +57,7 @@ export default function SolutionsPage() {
                 <span className="mkt-cta__arrow" aria-hidden>→</span>
               </Link>
               <Link href="#verticals" className="mkt-cta mkt-cta--ghost">
-                See the Pearls
+                See the catalog
               </Link>
             </div>
           </div>
@@ -67,7 +68,7 @@ export default function SolutionsPage() {
       <section className="mkt mkt-section" aria-labelledby="verticals">
         <div className="mkt-section__inner">
           <header className="mkt-products__head">
-            <p className="mkt-eyebrow">The nine Pearls</p>
+            <p className="mkt-eyebrow">Eight Pearls + one substrate</p>
             <h2 id="verticals" className="mkt-h2">
               Three functions. Five industries. One training substrate.
             </h2>

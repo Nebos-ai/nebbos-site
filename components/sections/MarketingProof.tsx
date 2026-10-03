@@ -7,7 +7,7 @@ import { NumberCounter } from "@/components/patterns/NumberCounter";
  * MarketingProof · sections/MarketingProof.tsx · v3 · 2026-09-18
  *
  * Founder-directed 2026-09-18 (peer c900b70e PR #107 rationale):
- * "in what world do we ever put this on a site" — the "12 school
+ * "in what world do we ever put this on a site" — the "12 school // claim-source: retraction-history
  * districts across 4 U.S. states" claim was unverifiable and legally
  * risky. Column 1 retracted.
  *
