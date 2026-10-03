@@ -34,6 +34,7 @@ export function MarketingHero() {
             <h1 id="mkt-hero-h" className="mkt-display">
               <SplitWords>{BRAND.taglineShort}</SplitWords>
             </h1>
+            <p className="mkt-subhead">{BRAND.heroSubhead}</p>
             <p className="mkt-deck">{BRAND.homeDeck}</p>
             <div className="mkt-hero__ctas">
               <Link href="/demo" className="mkt-cta mkt-cta--primary">
