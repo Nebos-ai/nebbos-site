@@ -5,7 +5,7 @@ import { NebbosMark } from "@nebbos/brand/logo";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Nebbos is used inside the business that builds it. Case studies land here as external customers sign off publicly.",
+    "Nebbos runs inside the business that builds it. External customers are named here only with their written permission.",
 };
 
 /**
@@ -37,10 +37,8 @@ export default function CustomersIndexPage() {
             </h1>
             <p className="mkt-deck">
               Nebbos is used every day by the team that builds it. The
-              platform, its Pearls, its Cradle. Case studies from external
-              customers land here as each customer signs off publicly.
-              Until then, the shape of the work is real; the names arrive
-              with permission.
+              platform, its Pearls, its Cradle. External customers are named
+              here only with their written permission.
             </p>
             <div className="mkt-hero__ctas">
               <Link href="/how" className="mkt-cta mkt-cta--primary">
@@ -78,7 +76,7 @@ export default function CustomersIndexPage() {
         <div className="mkt-section__inner">
           <div className="mkt-case">
             <aside className="mkt-case__aside">
-              <p className="mkt-eyebrow">Case studies</p>
+              <p className="mkt-eyebrow">Customer references</p>
               <h3 className="mkt-case__subject">Written when the customer says yes.</h3>
             </aside>
             <div className="mkt-case__body">
