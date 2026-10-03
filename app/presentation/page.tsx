@@ -1,35 +1,24 @@
-import { PageHero } from "@/components/primitives/PageHero";
-import { PageSection } from "@/components/primitives/PageSection";
-import { Eyebrow } from "@/components/primitives/Eyebrow";
-import { Button } from "@/components/primitives/Button";
-import { SectionDivider } from "@/components/patterns/section-divider";
-import { pageMetadata } from "@/lib/seo";
-import "./presentation.css";
+import type { Metadata } from "next";
+import Link from "next/link";
 
-export const metadata = pageMetadata({
+export const metadata: Metadata = {
   title: "Presentation",
-  path: "/presentation",
   description:
     "Nebbos in four slides. The platform. Its tools. Its MCP. Its Cradle. Embedded PDF at the bottom.",
-});
+};
 
 /**
- * /presentation · v3 · 2026-09-18 · migrated to v3 primitives + Cradle framing
+ * /presentation · v4 · 2026-09-18 · mkt-native rebuild
  *
- * v2 (2026-09-13) shipped legacy Hero + 4× FeatureRow + CTABand — the exact
- * "wall of text" template the founder called out on /platform 2026-09-18.
- * Voice was pre-2026-09-14 run-layer (retired for customer surfaces per
- * feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14).
- *
- * v3 replaces the legacy component set with v3 primitives (PageHero,
- * PageSection, Eyebrow, Button) and rewrites the four slides against the
- * ratified Platform · Tools · MCP · Cradle framing. Chapter cadence via
- * SectionDivider between the slide sections. PDF iframe now sits inside
- * an <object> with a visible download-link fallback (Safari on iOS blocks
- * inline PDF — WCAG 2.2 §1.3.1 Info-and-Relationships fix).
+ * v3 shipped v3 primitives (PageHero, PageSection, Eyebrow, Button)
+ * against the cream paper register. v4 rebuilds against the mkt
+ * register: one mkt-hero + four mkt-slide cards + PDF viewer inside
+ * an mkt-panel. Copy preserved verbatim (the four slides + PDF-viewer
+ * fallback + CTA). PDF <object> pattern preserved for WCAG 2.2 §1.3.1
+ * Info-and-Relationships fix.
  */
 
-const slides = [
+const SLIDES = [
   {
     k: "01",
     title: "The platform between intent and state.",
@@ -47,81 +36,105 @@ const slides = [
   },
   {
     k: "04",
-    title: "Deploy here and it's governed by default.",
+    title: "Deploy here and it&rsquo;s governed by default.",
     body: "Governance is not a feature layered on top. It is the shape of the runtime. Every call you route through Nebbos carries its own audit, its own metering, its own isolation. You do not opt in. You get it because you deployed here.",
   },
 ];
 
+const SLIDE_COLOR = ["platform", "app", "mcp", "cradle"] as const;
+
 export default function PresentationPage() {
   return (
-    <div className="mkt-mode">
-      <PageHero
-        surface="paper"
-        align="start"
-        eyebrow="Presentation"
-        headline={
-          <>
-            Nebbos in <em>four slides.</em>
-          </>
-        }
-        deck="The platform. Its tools. Its MCP. Its Cradle. Four things, one substrate."
-      />
-
-      {slides.map((s, i) => (
-        <div key={s.k}>
-          {i > 0 && i % 3 === 0 ? (
-            <SectionDivider chapter={s.k} strap="The four slides" />
-          ) : null}
-          <PageSection ruled ground={i % 2 === 0 ? "paper" : "paper2"}>
-            <Eyebrow>{s.k}</Eyebrow>
-            <h2 className="presentation__slide-title">{s.title}</h2>
-            <p className="presentation__slide-body">{s.body}</p>
-          </PageSection>
-        </div>
-      ))}
-
-      <SectionDivider chapter="V" strap="The deck, on paper" />
-
-      <PageSection ruled ground="paper2">
-        <Eyebrow>The deck, on paper</Eyebrow>
-        <h2 className="presentation__slide-title">Same four slides. Portable, printable, forwardable.</h2>
-        <div className="presentation__pdf-frame">
-          {/* <object> renders inline PDF where the browser supports it; the
-              child <a> serves as the visible fallback for Safari-iOS + any
-              browser that blocks inline PDF (WCAG 2.2 §1.3.1). */}
-          <object
-            data="/nebbos-presentation.pdf#view=FitH"
-            type="application/pdf"
-            aria-label="Nebbos presentation (PDF)"
-            className="presentation__pdf-object"
-          >
-            <p className="presentation__pdf-fallback">
-              Your browser can&rsquo;t display the PDF inline.{" "}
-              <a href="/nebbos-presentation.pdf" download className="presentation__pdf-download">
-                Download the four-slide deck (PDF)
-              </a>{" "}
-              — same four slides above, portable to any device.
+    <>
+      <section className="mkt mkt-section mkt-hero" aria-labelledby="pres-h">
+        <div className="mkt-section__inner">
+          <div className="mkt-hero__copy">
+            <p className="mkt-eyebrow">Presentation</p>
+            <h1 id="pres-h" className="mkt-display">
+              Nebbos in four slides.
+            </h1>
+            <p className="mkt-deck">
+              The platform. Its tools. Its MCP. Its Cradle. Four things,
+              one substrate.
             </p>
-          </object>
+          </div>
         </div>
-      </PageSection>
+      </section>
 
-      <PageSection>
-        <div className="presentation__footer-cta">
-          <h2 className="presentation__footer-headline">
+      <section className="mkt mkt-section" aria-labelledby="pres-slides">
+        <div className="mkt-section__inner">
+          <h2 id="pres-slides" className="sr-only">Slides</h2>
+          <ol className="mkt-deck-list">
+            {SLIDES.map((s, i) => (
+              <li key={s.k} className={`mkt-slide mkt-slide--${SLIDE_COLOR[i]}`}>
+                <p className="mkt-slide__k">{s.k}</p>
+                <h3
+                  className="mkt-slide__title"
+                  dangerouslySetInnerHTML={{ __html: s.title }}
+                />
+                <p className="mkt-slide__body">{s.body}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="pres-pdf">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">The deck, on paper</p>
+            <h2 id="pres-pdf" className="mkt-h2">
+              Same four slides. Portable, printable, forwardable.
+            </h2>
+          </header>
+          <div className="mkt-pdf-frame">
+            {/* <object> renders inline PDF where the browser supports it;
+                the child <a> serves as the visible fallback for Safari-iOS
+                + any browser that blocks inline PDF (WCAG 2.2 §1.3.1). */}
+            <object
+              data="/nebbos-presentation.pdf#view=FitH"
+              type="application/pdf"
+              aria-label="Nebbos presentation (PDF)"
+              className="mkt-pdf-object"
+            >
+              <p className="mkt-pdf-fallback">
+                Your browser can&rsquo;t display the PDF inline.{" "}
+                <Link href="/nebbos-presentation.pdf" className="mkt-cta mkt-cta--primary" style={{ display: "inline-flex", marginInline: 8 }}>
+                  Download the four-slide deck (PDF)
+                  <span className="mkt-cta__arrow" aria-hidden>→</span>
+                </Link>{" "}
+                &mdash; same four slides above, portable to any device.
+              </p>
+            </object>
+          </div>
+        </div>
+      </section>
+
+      <section
+        className="mkt mkt-section mkt-closing"
+        aria-labelledby="pres-close"
+      >
+        <div className="mkt-closing__inner">
+          <p className="mkt-eyebrow">Walk it live</p>
+          <h2 id="pres-close" className="mkt-display">
             Walk it live with the team who runs it.
           </h2>
-          <p className="presentation__footer-deck">
+          <p className="mkt-deck">
             The presentation is the surface. The runtime is the substance.
             Book a demo and see the same primitives running against your
             real workload shape.
           </p>
-          <div className="presentation__footer-ctas">
-            <Button variant="primary" tone="onPaper" href="/demo">Book a demo</Button>
-            <Button variant="ghost" tone="onPaper" href="/nebbos-presentation.pdf">Download the PDF</Button>
+          <div className="mkt-hero__ctas">
+            <Link href="/demo" className="mkt-cta mkt-cta--primary">
+              Book a demo
+              <span className="mkt-cta__arrow" aria-hidden>→</span>
+            </Link>
+            <Link href="/nebbos-presentation.pdf" className="mkt-cta mkt-cta--ghost">
+              Download the PDF
+            </Link>
           </div>
         </div>
-      </PageSection>
-    </div>
+      </section>
+    </>
   );
 }

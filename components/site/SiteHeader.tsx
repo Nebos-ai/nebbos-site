@@ -169,7 +169,7 @@ export function SiteHeader() {
                   </Link>
                   <ul className="site-mega__layers">
                     {tiers.map((tier) => {
-                      // tier.label is "L1 · Basic" — split for two-column layout
+                      // tier.label is "L1 · Guest" — split for two-column layout
                       const [tierNum, ...rest] = tier.label.split(" · ");
                       const tierName = rest.join(" · ") || tier.key;
                       return (

@@ -1,6 +1,6 @@
 {
   "$schema_note": "Nebbos platform metrics — mix of live-verified counts (measured against filesystem/KG/live MCP endpoint) and snapshot-dated counts (from the 2026-09-10 estate scan artifact). Every field's source lives in provenance.field_sources. When adding a field: name the source. Never fabricate.",
-  "snapshot_at": "2026-09-12",
+  "snapshot_at": "2026-09-18",
   "artifact_snapshot_at": "2026-09-10",
   "artifact_url": "https://claude.ai/code/artifact/fd5ed807-be2a-4bbe-aa9f-dfa68c1d33c5",
 
@@ -14,11 +14,11 @@
 
   "governed": {
     "architecture_specs_ratified": 328,
-    "architecture_drafts_active": 471,
+    "architecture_drafts_active": 349,
     "constitutional_articles": 102,
-    "enforcement_hooks": 76,
-    "doctrine_memories": 523,
-    "session_reports": 141,
+    "enforcement_hooks": 131,
+    "doctrine_memories": 649,
+    "session_reports": 204,
     "governance_graph_nodes": 499,
     "governance_graph_edges": 2288
   },
@@ -46,7 +46,7 @@
   },
 
   "shipped": {
-    "repositories": 26,
+    "repositories": 31,
     "lines_of_code_millions": 2.11,
     "source_files": 32236,
     "automated_tests": 39278,
@@ -56,7 +56,7 @@
     "commits_last_30d": 950,
     "commits_last_7d": 236,
     "parallel_worktrees_active": 2688,
-    "open_intakes": 30
+    "open_intakes": 22
   },
 
   "provenance": {

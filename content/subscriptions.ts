@@ -123,7 +123,7 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     ],
     headline: "Dashboard access, personal-scope reads, low-risk automations.",
     sales_description:
-      "Basic-tier Nebbos.ai platform access for a Shell of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No Cradle required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
+      "Guest-tier Nebbos.ai platform access for a Shell of operators. Every operator authenticates with device biometric (Touch ID · Face ID · Windows Hello · Android BiometricPrompt). No Cradle required at this tier. Suitable for view-first roles, analysts, and Pearl-consumer teams.",
     prepay_discount_note: null,
   },
   {
@@ -145,9 +145,9 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
       "additional tool-calls beyond quota",
       "additional Nebbos Cradle units",
     ],
-    headline: "Privileged operator access with Cradle physical-presence gate.",
+    headline: "Host operator access with Cradle physical-presence gate.",
     sales_description:
-      "Privileged-tier Nebbos.ai platform access. Each operator paired with a Nebbos Cradle device; elevated operations (Shell writes, memory registers, admin ops within Shell) require both biometric AND physical Cradle presence. Includes annual attestation renewal per Cradle. Suitable for operators executing writes on Shell substrate.",
+      "Host-tier Nebbos.ai platform access. Each operator paired with a Nebbos Cradle device; elevated operations (Shell writes, memory registers, admin ops within Shell) require both biometric AND physical Cradle presence. Includes annual attestation renewal per Cradle. Suitable for operators executing writes on Shell substrate.",
     prepay_discount_note: null,
   },
   {
@@ -164,12 +164,12 @@ export const SUBSCRIPTION_MODELS: SubscriptionModel[] = [
     rate_pending_founder: true,
     rate_amount_minor: null,
     overage_dimensions: [
-      "additional admin users beyond commit",
+      "additional architect users beyond commit",
       "quorum-signing rate beyond baseline",
     ],
-    headline: "Admin-tier access with enclave-signed approval for cross-boundary and quorum operations.",
+    headline: "Architect-tier access with enclave-signed approval for cross-boundary and quorum operations.",
     sales_description:
-      "Admin-tier Nebbos.ai platform access. Each admin user provisioned with a Nebbos Cradle plus enclave-signed approval capability (AGSE-attested). Unlocks Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
+      "Architect-tier Nebbos.ai platform access. Each architect user provisioned with a Nebbos Cradle plus enclave-signed approval capability (AGSE-attested). Unlocks Shell creation and destruction, substrate mutation, cross-Shell reads, ADR-cluster ratification, and quorum-required actions. Multi-year commit standard for enterprise procurement.",
     prepay_discount_note: null,
   },
 

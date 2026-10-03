@@ -4,25 +4,25 @@ import { SplitWords } from "@/components/patterns/SplitWords";
 import { NumberCounter } from "@/components/patterns/NumberCounter";
 
 /**
- * MarketingProof · sections/MarketingProof.tsx · v2 · 2026-09-18
+ * MarketingProof · sections/MarketingProof.tsx · v3 · 2026-09-18
  *
- * Two-column proof band. Founder-directed 2026-09-18 (verbatim):
- * "we have examples of the power of nebbos because we did it we build
- * everything using nebbos every letter image line of code connection is
- * nebbos build."
+ * Founder-directed 2026-09-18 (peer c900b70e PR #107 rationale):
+ * "in what world do we ever put this on a site" — the "12 school
+ * districts across 4 U.S. states" claim was unverifiable and legally
+ * risky. Column 1 retracted.
  *
- * Column 1 · IN PRODUCTION — external peer proof (K-12 districts).
- * Column 2 · BUILT WITH NEBBOS — dogfood proof (this site, every backend,
- *           every doctrine, produced by one founder + a Pearl per
- *           department). Numbers sourced from platform-metrics.json.
+ * v2 briefly re-introduced Column 1 (my session dd808040 pushing
+ * craft commits without git-pull between them, rolling over peer's
+ * PR #107 retraction). v3 re-retracts + centers the dogfood proof.
  *
- * Consumer-psychology: dogfooding is the strongest form of proof.
- * External proof + self-proof together = "not vaporware" +
- * "actually runs an operation."
+ * Doctrine: dogfooding is the strongest form of proof AND it's the
+ * only claim on this section we can verify from the codebase itself
+ * (numbers sourced live from platform-metrics.json). External-customer
+ * claims re-land when peer session's PR #108 claim-substrate is
+ * live and a district approves public reference.
  */
 
 const M = metrics;
-const SNAP = M.artifact_snapshot_at;
 
 export function MarketingProof() {
   return (
@@ -31,50 +31,66 @@ export function MarketingProof() {
         <header className="mkt-flow__head">
           <p className="mkt-eyebrow">Proof</p>
           <h2 id="mkt-proof-h" className="mkt-h2">
-            <SplitWords>Running quietly. Built with itself.</SplitWords>
+            <SplitWords>Built with itself.</SplitWords>
           </h2>
           <p className="mkt-deck">
-            Two kinds of proof. Real operators running Nebbos on their
-            own operation. And the operation that built Nebbos, running
-            on Nebbos.
+            The strongest proof of a platform is the operation that built
+            it, running on the platform. Nebbos built Nebbos with Nebbos.
+            Every number below is measured from this codebase directly.
           </p>
         </header>
 
-        <div className="mkt-shift__grid">
-          {/* Column 1 · External proof */}
-          <div className="mkt-proof">
-            <p className="mkt-eyebrow">In production</p>
-            <p className="mkt-proof__stat"><NumberCounter value={12} /></p>
-            <p className="mkt-proof__body">
-              School districts running Nebbos Education Pearls today —
-              scheduling, coverage, compliance filings. Across four U.S.
-              states. No public announcement yet; the Pearls run quietly
-              by design. Named case studies land on{" "}
-              <Link href="/customers" style={{ color: "var(--mkt-accent)" }}>/customers</Link> as
-              each district approves public reference.
-            </p>
-            <p className="mkt-proof__hint">Live count · 2026-09</p>
+        <div className="mkt-proof mkt-proof--single">
+          <p className="mkt-eyebrow">Built with Nebbos, by Nebbos</p>
+          <p className="mkt-proof__stat">
+            <NumberCounter value={M.shipped.lines_of_code_millions * 1_000_000} format="millions" />
+          </p>
+          <p className="mkt-proof__body">
+            The size of a modern operating system, built by one founder
+            with a Pearl for every department. This website. The
+            platform behind it. The internal tools. The calendar, the
+            mail, the books, the roadmap. All Nebbos-built.
+          </p>
+
+          <div className="mkt-proof__strip">
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.automated_tests} format="thousands" />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Automated checks keeping the system honest.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.shipped.commits_last_30d} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Improvements shipped in the last month.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.doctrine_memories} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Institutional lessons the system consults on every decision.
+              </p>
+            </div>
+            <div className="mkt-proof__stripstat">
+              <p className="mkt-proof__stripstat-value">
+                <NumberCounter value={M.governed.enforcement_hooks} />
+              </p>
+              <p className="mkt-proof__stripstat-label">
+                Rules the system enforces so mistakes stop before they ship.
+              </p>
+            </div>
           </div>
 
-          {/* Column 2 · Dogfood proof */}
-          <div className="mkt-proof">
-            <p className="mkt-eyebrow">Built with Nebbos, by Nebbos</p>
-            <p className="mkt-proof__stat">
-              <NumberCounter value={M.shipped.lines_of_code_millions * 1_000_000} format="millions" />
-            </p>
-            <p className="mkt-proof__body">
-              Lines of code, across {M.shipped.repositories} repositories,
-              {" "}{M.shipped.commits_last_30d} commits in the last thirty
-              days. Every letter, every image, every backend, every
-              doctrine: produced by one founder plus a Pearl for every
-              department. This site is a Nebbos deploy. The proof of the
-              platform is the operation that built it.
-            </p>
-            <p className="mkt-proof__hint">Snapshot · {SNAP}. See{" "}
-              <Link href="/how" style={{ color: "var(--mkt-accent)" }}>/how</Link>
-              {" "}for the full 12-dimension scorecard.
-            </p>
-          </div>
+          <p className="mkt-proof__hint" style={{ marginTop: "clamp(24px, 3vh, 32px)" }}>
+            Measured this month. See{" "}
+            <Link href="/how" style={{ color: "var(--mkt-accent)" }}>how it was built</Link>.
+          </p>
         </div>
       </div>
     </section>
