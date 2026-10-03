@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { PRODUCTS, type Product } from "@/content/products";
 
 /**
@@ -56,7 +57,9 @@ export function MarketingProductsBand() {
               href={`/products/${product.slug}`}
               className={`mkt-product ${PRODUCT_CLASS[product.key]}`}
             >
-              <span className="mkt-product__mark" aria-hidden />
+              <span className="mkt-product__mark" aria-hidden>
+                <NebbosMark size={32} />
+              </span>
               <div className="mkt-product__body">
                 <p className="mkt-product__eyebrow">{product.eyebrow}</p>
                 <h3 className="mkt-product__name">{shortName(product)}</h3>

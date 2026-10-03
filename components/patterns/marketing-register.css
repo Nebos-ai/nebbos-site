@@ -38,6 +38,39 @@
    collision with corporate-parent register styles that stay in @layer
    primitives / patterns / page. */
 
+/* ─────────────────────────────────────────────────────────────────
+   ALIGNMENT DISCIPLINE · standing convention · 2026-09-19
+   ─────────────────────────────────────────────────────────────────
+
+   Every variable-item grid on the site MUST center partial rows.
+   Grids where item count doesn't cleanly divide by column count
+   otherwise left-hang the orphan items — the "3 cards in a 4-col
+   grid" bug founder-caught on /products/mcp cross-nav.
+
+   THE PATTERN (apply to every new variable-item grid):
+     grid-template-columns: repeat(auto-fit, minmax(MIN, MAX));
+     justify-content: center;
+     margin-inline: auto;
+     max-width: <container-cap>;
+
+   auto-fit collapses empty tracks · justify-content centers what
+   remains · margin-inline auto centers the grid itself · max-width
+   keeps cards from stretching oddly on wide viewports.
+
+   FIXED-COUNT GRIDS (exactly N items every time) may use
+   `repeat(N, minmax(0, 1fr))` — but ONLY if a spec pins the count.
+   The /products showcase (4 products) and /departments (4 Pearls)
+   are the two exceptions.
+
+   For 3-item cross-nav rows (product-detail "other three products",
+   solutions verticals with 3 in a row), use `.mkt-products__grid
+   .mkt-products__grid--3` — that modifier centers 3 cards in the
+   grid at ≥ 1120px.
+
+   Every grid in this file already follows the pattern. Any new
+   grid inheriting `.mkt-tilegrid` / `.mkt-numcards` / `.mkt-factgrid`
+   picks up the alignment automatically. */
+
   .mkt {
     /* Ground */
     --mkt-ground: #05070a;
@@ -47,11 +80,16 @@
     --mkt-rule: rgba(255, 255, 255, 0.08);
     --mkt-rule-2: rgba(255, 255, 255, 0.14);
 
-    /* Text on dark */
+    /* Text on dark — every tier hits WCAG 2.2 AA 4.5:1 on --mkt-ground.
+       Founder-caught 2026-09-18: prior alphas 0.48 / 0.32 failed axe-core
+       color-contrast checks. Recomputed:
+         text-2 @ 0.78 = #C3C1BD on #05070A ≈ 9.1:1  · pass
+         text-3 @ 0.60 = #93918E on #05070A ≈ 6.0:1  · pass
+         text-4 @ 0.48 = #7A7A77 on #05070A ≈ 4.5:1  · pass at threshold */
     --mkt-text: #f4f2ee;
-    --mkt-text-2: rgba(244, 242, 238, 0.72);
-    --mkt-text-3: rgba(244, 242, 238, 0.48);
-    --mkt-text-4: rgba(244, 242, 238, 0.32);
+    --mkt-text-2: rgba(244, 242, 238, 0.78);
+    --mkt-text-3: rgba(244, 242, 238, 0.60);
+    --mkt-text-4: rgba(244, 242, 238, 0.48);
 
     /* Accents — one confident orange + one bright cta-yellow moment */
     --mkt-accent: #ff6b1e;               /* Nebbos electric orange */
@@ -149,13 +187,17 @@
     to   { transform: translate3d(-16px, 8px, 0); opacity: 1; }
   }
 
-  /* Every .mkt-* section sits ABOVE the backdrop layers. */
+  /* Every .mkt-* section sits ABOVE the backdrop layers. NOTE:
+     .site-header was previously in this list, which overrode its
+     `position: sticky` (from globals.css page-layer) to relative —
+     defeating stickiness site-wide. Founder-caught 2026-09-19:
+     "when i scroll down i cant see it at all." Header keeps its
+     own sticky+z-index rule below (line ~2340). */
   .mkt,
   .mkt-section,
   .mkt-footer,
   .mkt-trustline,
-  .mkt-strip,
-  .site-header {
+  .mkt-strip {
     position: relative;
     z-index: 1;
   }
@@ -649,6 +691,35 @@
     margin-bottom: clamp(48px, 6vh, 88px);
   }
 
+  /* Shared section header · used by every list-shape section
+     (list-numbered, list-plain, table-rows, split-columns, inbox-router,
+     etc.). Founder-caught 2026-09-19 T11:57 UTC: text-block sections
+     carried a mark tile with the chip; list-shape section headers had
+     only a plain chip. That inconsistency read as sloppy — some
+     sections felt anchored, others floated. SectionHead + this class
+     enforce the same [mark] + [chip] meta row on every section header
+     so pages feel like every pixel is intentional. */
+  .mkt-section__head {
+    display: grid;
+    gap: clamp(16px, 2vh, 24px);
+    max-width: 62ch;
+    margin-block-end: clamp(40px, 5vh, 72px);
+  }
+  .mkt-section__head--center {
+    justify-items: center;
+    text-align: center;
+    margin-inline: auto;
+  }
+  .mkt-section__head-meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .mkt-section__head-meta .mkt-eyebrow-chip {
+    margin-block-end: 0;
+  }
+
   .mkt-products__grid {
     display: grid;
     gap: clamp(16px, 1.8vw, 24px);
@@ -659,6 +730,19 @@
   }
   @media (min-width: 1120px) {
     .mkt-products__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  }
+  /* 3-item variant · used by cross-nav rows ("The other three products",
+     Solutions verticals with 3 items in a row). Without this modifier,
+     3 items in the 4-col grid fill positions 1/2/3 and leave position
+     4 empty — reads as left-aligned. Founder-caught 2026-09-19 on
+     product-detail cross-nav. This variant centers the row in the
+     container instead. */
+  .mkt-products__grid--3 {
+    max-width: 1000px;
+    margin-inline: auto;
+  }
+  @media (min-width: 1120px) {
+    .mkt-products__grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   }
 
   .mkt-product {
@@ -744,13 +828,31 @@
   .mkt-product--mcp { --mkt-product-tint: var(--mkt-product-mcp); }
   .mkt-product--cradle { --mkt-product-tint: var(--mkt-product-cradle); }
 
+  /* App-icon shape: rounded-square tile in the product color +
+     white flower on top + drop shadow. Founder-directed 2026-09-18:
+     "white flower with some drop shadow or app icon design" — this
+     gives both, per-tile color signature via the tile background,
+     brand consistency via the white flower. */
   .mkt-product__mark {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    background: var(--mkt-product-tint);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.08),
-      0 12px 32px -14px var(--mkt-product-tint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+      var(--mkt-product-tint, var(--mkt-accent));
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+      0 8px 20px -6px var(--mkt-product-tint, var(--mkt-accent)),
+      0 4px 10px -2px rgba(0, 0, 0, 0.4);
+  }
+  .mkt-product__mark svg {
+    width: 62%;
+    height: 62%;
   }
 
   .mkt-product__body {
@@ -795,7 +897,11 @@
     font-size: 11px;
     letter-spacing: 0.16em;
     text-transform: uppercase;
-    color: var(--mkt-product-tint);
+    /* WCAG 2.2 AA: product-tint text (platform indigo #4a5cff = 2.9:1,
+       cradle red #d63a4c = 4.0:1) FAILS 4.5:1 on --mkt-ground. Fixed
+       2026-09-18 to paper-white; the product accent still reads via
+       the mark disc + tint gradient bloom + edge glow. */
+    color: var(--mkt-text);
     font-weight: 600;
   }
   .mkt-product__link-arrow {
@@ -1016,12 +1122,25 @@
     align-content: start;
   }
   .mkt-productrow__mark {
-    width: 56px;
-    height: 56px;
-    border-radius: 50%;
-    background: var(--mkt-product-tint);
-    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 16px 40px -18px var(--mkt-product-tint);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 18px;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.14), rgba(255, 255, 255, 0) 55%),
+      var(--mkt-product-tint, var(--mkt-accent));
+    color: #fff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.25),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.2),
+      0 12px 28px -8px var(--mkt-product-tint, var(--mkt-accent)),
+      0 6px 14px -3px rgba(0, 0, 0, 0.45);
+  }
+  .mkt-productrow__mark svg {
+    width: 62%;
+    height: 62%;
   }
   .mkt-productrow__name {
     font-family: var(--mkt-font-display);
@@ -1061,13 +1180,66 @@
     display: grid;
     gap: 10px;
     align-content: start;
+    /* Sticky header is ~76px tall; add clearance so a mega-menu tier
+       link like /products/platform#tier-platform-guest scrolls the
+       card ~120px below the top edge instead of hiding behind the
+       header. Founder-caught 2026-09-19: all three tier links opened
+       the same page at the top with no visible distinction. */
+    scroll-margin-top: 120px;
+    transition: border-color 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease), transform 320ms var(--mkt-ease);
+  }
+  /* :target highlight — when the URL fragment matches a tier card id
+     (e.g. #tier-platform-host), that card lifts + halos in the Pearl
+     color so the mega-menu click has a visible landing target. */
+  .mkt-tier:target {
+    transform: translateY(-2px);
+  }
+  .mkt-tier.mkt-product--platform:target { border-color: rgba(74, 92, 255, 0.55);   box-shadow: 0 24px 60px -18px rgba(74, 92, 255, 0.42); }
+  .mkt-tier.mkt-product--app:target      { border-color: rgba(255, 138, 61, 0.55);  box-shadow: 0 24px 60px -18px rgba(255, 138, 61, 0.42); }
+  .mkt-tier.mkt-product--mcp:target      { border-color: rgba(185, 107, 255, 0.55); box-shadow: 0 24px 60px -18px rgba(185, 107, 255, 0.42); }
+  .mkt-tier.mkt-product--cradle:target   { border-color: rgba(214, 58, 76, 0.55);   box-shadow: 0 24px 60px -18px rgba(214, 58, 76, 0.42); }
+  .mkt-tier__factors {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    margin: 4px 0 0 0;
+  }
+  /* The whole card is now a Link to /products/<slug>/<tier> — reset
+     the default anchor styling so it doesn't underline body text +
+     add hover elevation cursor for affordance. */
+  .mkt-tier {
+    text-decoration: none;
+    color: inherit;
+  }
+  .mkt-tier:hover {
+    transform: translateY(-2px);
+    border-color: var(--mkt-rule-2);
+  }
+  .mkt-tier__cta {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+    margin-top: 12px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-tier:hover .mkt-tier__cta {
+    transform: translateX(4px);
   }
   .mkt-tier__key {
     font-family: var(--mkt-font-mono);
     font-size: 11px;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--mkt-product-tint, var(--mkt-accent));
+    /* WCAG 2.2 AA: platform-indigo + cradle-red tints fail contrast on
+       ground; standardize on the orange accent (#ff6b1e = 5.9:1). */
+    color: var(--mkt-accent);
     font-weight: 600;
     margin: 0;
   }
@@ -1396,31 +1568,174 @@
     transform: translateX(3px);
   }
 
-  /* ── SHIFT NARRATIVE · one-day story shape ───────────────────── */
+  /* ── SHIFT NARRATIVE · one-day timeline animation ─────────────────
 
-  .mkt-shift__grid {
+     Founder-directed 2026-09-18: "we should use this animation to show
+     just a day in the life of a nebbos user." The section now scrolls
+     through one operator's Monday as a shared timeline. Each beat is
+     a 3-column row:
+
+        [chaos card · Without]   [spine + flower tile]   [calm card · With]
+
+     A sticky clock playhead at the top ticks through the times as
+     each beat enters the viewport (ShiftPlayhead client component +
+     IntersectionObserver). Active beat lights up its product color;
+     past beats mute; future beats ghost. Scroll-linked reveal uses
+     translate-only keyframes per the axe-safety doctrine — WCAG
+     color-contrast never fails because opacity never animates. */
+
+  section.mkt-shift {
+    position: relative;
+  }
+
+  /* Sticky clock playhead. Sits above the timeline, stays anchored
+     as the reader scrolls the day. */
+  .mkt-shift__playhead {
+    position: sticky;
+    top: 80px;                       /* clear the site header */
+    z-index: 3;
+    margin-block-end: clamp(32px, 5vw, 64px);
+    display: flex;
+    justify-content: center;
+    pointer-events: none;
+  }
+  .mkt-shift__playhead-inner {
+    display: inline-flex;
+    align-items: center;
+    gap: clamp(16px, 2vw, 28px);
+    padding: 14px 22px;
+    background: rgba(23, 27, 38, 0.72);
+    border: 1px solid var(--mkt-rule-2);
+    border-radius: var(--mkt-radius-pill);
+    backdrop-filter: blur(14px) saturate(140%);
+    -webkit-backdrop-filter: blur(14px) saturate(140%);
+    box-shadow:
+      0 12px 32px -8px rgba(0, 0, 0, 0.55),
+      0 2px 6px -1px rgba(0, 0, 0, 0.35);
+  }
+  .mkt-shift__playhead-label {
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+  }
+  .mkt-shift__playhead-clock {
+    font-family: var(--mkt-font-mono);
+    font-size: 22px;
+    letter-spacing: 0.04em;
+    color: var(--mkt-text);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    min-width: 5ch;
+    text-align: center;
+    transition: color 320ms var(--mkt-ease), text-shadow 320ms var(--mkt-ease);
+  }
+  .mkt-shift__playhead-clock--app       { text-shadow: 0 0 18px rgba(255, 138, 61, 0.55); }
+  .mkt-shift__playhead-clock--platform  { text-shadow: 0 0 18px rgba(74, 92, 255, 0.55); }
+  .mkt-shift__playhead-clock--mcp       { text-shadow: 0 0 18px rgba(185, 107, 255, 0.55); }
+  .mkt-shift__playhead-clock--cradle    { text-shadow: 0 0 18px rgba(214, 58, 76, 0.55); }
+
+  .mkt-shift__playhead-rail {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .mkt-shift__playhead-dot {
+    position: relative;
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: var(--mkt-rule-2);
+    transition: background 320ms var(--mkt-ease), transform 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease);
+  }
+  .mkt-shift__playhead-dot[data-state="past"]   { background: var(--mkt-text-3); }
+  .mkt-shift__playhead-dot[data-state="active"] { transform: scale(1.4); }
+  .mkt-shift__playhead-dot--app[data-state="active"]      { background: var(--mkt-product-app);      box-shadow: 0 0 12px rgba(255, 138, 61, 0.75); }
+  .mkt-shift__playhead-dot--platform[data-state="active"] { background: var(--mkt-product-platform); box-shadow: 0 0 12px rgba(74, 92, 255, 0.75); }
+  .mkt-shift__playhead-dot--mcp[data-state="active"]      { background: var(--mkt-product-mcp);      box-shadow: 0 0 12px rgba(185, 107, 255, 0.75); }
+  .mkt-shift__playhead-dot--cradle[data-state="active"]   { background: var(--mkt-product-cradle);   box-shadow: 0 0 12px rgba(214, 58, 76, 0.75); }
+  .mkt-shift__playhead-tick {                 /* SR-only tick label */
+    position: absolute;
+    width: 1px; height: 1px;
+    overflow: hidden; clip: rect(0 0 0 0);
+  }
+
+  /* Timeline shape */
+  .mkt-shift__timeline {
+    list-style: none;
+    padding: 0;
+    margin: 0;
     display: grid;
-    gap: clamp(48px, 6vw, 96px);
+    gap: clamp(48px, 7vw, 96px);
+  }
+
+  .mkt-shift__beat {
+    display: grid;
     grid-template-columns: 1fr;
-    align-items: start;
+    align-items: stretch;
+    gap: 20px;
+    position: relative;
   }
   @media (min-width: 960px) {
-    .mkt-shift__grid { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .mkt-shift__beat {
+      grid-template-columns: minmax(0, 1fr) 96px minmax(0, 1fr);
+      gap: clamp(24px, 4vw, 48px);
+    }
   }
-  .mkt-shift__col {
+
+  /* Card shape — chaos (left) and calm (right) share the base panel
+     shape and diverge on accent color + border treatment. */
+  .mkt-shift__card {
+    position: relative;
+    padding: clamp(20px, 2.4vw, 28px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
     display: grid;
-    gap: 16px;
+    gap: 10px;
     align-content: start;
+    transition:
+      transform 420ms var(--mkt-ease),
+      border-color 420ms var(--mkt-ease),
+      box-shadow 420ms var(--mkt-ease),
+      background 420ms var(--mkt-ease);
   }
-  .mkt-shift__hour {
+  .mkt-shift__card--chaos {
+    /* Faint amber warning wash — reads as friction without failing contrast. */
+    background: linear-gradient(180deg, rgba(38, 20, 12, 0.55), rgba(10, 13, 19, 0.55));
+    border-color: rgba(255, 138, 61, 0.16);
+  }
+  .mkt-shift__card--calm {
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.65), rgba(10, 13, 19, 0.65));
+    border-color: rgba(255, 255, 255, 0.10);
+  }
+
+  .mkt-shift__cardlabel {
     font-family: var(--mkt-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
+    font-size: 10px;
+    letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--mkt-accent);
-    font-weight: 600;
+    color: var(--mkt-text-3);
     margin: 0;
   }
+  .mkt-shift__card--chaos .mkt-shift__cardlabel { color: rgba(255, 138, 61, 0.85); }
+
+  .mkt-shift__hour {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-shift__hour--accent { color: var(--mkt-accent); }
+
   .mkt-shift__event {
     font-family: var(--mkt-font-display);
     font-size: clamp(20px, 2vw, 26px);
@@ -1437,30 +1752,112 @@
     color: var(--mkt-text-2);
     margin: 0;
   }
-  .mkt-shift__col--head p {
-    margin: 0;
+
+  /* Spine — the vertical column running between chaos and calm. Holds
+     a flower app-icon tile at the beat and a hairline connector above
+     and below. On narrow widths the spine collapses to a small inline
+     row above the calm card. */
+  .mkt-shift__spine {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    order: -1;                       /* narrow: sits above the two cards */
   }
-  .mkt-shift__label {
-    font-family: var(--mkt-font-mono);
-    font-size: 11px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--mkt-text-3);
-    font-weight: 500;
+  @media (min-width: 960px) {
+    .mkt-shift__spine {
+      order: 0;
+      flex-direction: column;
+      align-self: stretch;
+      gap: 0;
+    }
   }
-  .mkt-shift__list {
-    display: grid;
-    gap: 24px;
+  .mkt-shift__spine-line {
+    background: linear-gradient(180deg, var(--mkt-rule) 0%, var(--mkt-rule-2) 50%, var(--mkt-rule) 100%);
+    flex: 1;
+    min-height: 1px;
+    height: 1px;
+    width: 100%;
   }
-  .mkt-shift__item {
-    display: grid;
-    gap: 10px;
-    padding-block: 20px;
-    border-block-start: 1px solid var(--mkt-rule);
+  @media (min-width: 960px) {
+    .mkt-shift__spine-line {
+      width: 1px;
+      height: auto;
+      min-height: 24px;
+      background: linear-gradient(180deg, transparent 0%, var(--mkt-rule-2) 50%, transparent 100%);
+    }
   }
-  .mkt-shift__item:last-child {
-    border-block-end: 1px solid var(--mkt-rule);
+  .mkt-shift__spine-line--above { }
+  .mkt-shift__spine-line--below { }
+  .mkt-shift__beat:first-child .mkt-shift__spine-line--above,
+  .mkt-shift__beat:last-child  .mkt-shift__spine-line--below {
+    opacity: 0;
   }
+
+  /* Spine flower tile — app-icon design (per-product color tile + white
+     flower + elevation shadow) shared with departments/products so the
+     visual language is one system. */
+  .mkt-shift__spine-tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    color: #ffffff;                   /* stroke: currentColor on the flower */
+    position: relative;
+    flex: none;
+    transition: transform 420ms var(--mkt-ease), box-shadow 420ms var(--mkt-ease), filter 420ms var(--mkt-ease);
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 10px 24px -8px rgba(0, 0, 0, 0.55),
+      0 3px 8px -2px rgba(0, 0, 0, 0.35);
+    filter: saturate(0.85) brightness(0.92);
+  }
+  .mkt-shift__spine-tile--app       { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app) 62%, #d76a24 100%); }
+  .mkt-shift__spine-tile--platform  { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
+  .mkt-shift__spine-tile--mcp       { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp) 62%, #9848e0 100%); }
+  .mkt-shift__spine-tile--cradle    { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle) 62%, #b02533 100%); }
+  .mkt-shift__spine-tile svg { width: 62%; height: 62%; }
+
+  /* State-driven expression — the JS playhead sets data-state on each
+     beat as it enters view. Past = muted (day already happened),
+     Active = full presence, Future = ghosted (yet to come). */
+  .mkt-shift__beat[data-state="future"] .mkt-shift__card,
+  .mkt-shift__beat[data-state="future"] .mkt-shift__spine-tile {
+    filter: saturate(0.5) brightness(0.72);
+  }
+  .mkt-shift__beat[data-state="future"] .mkt-shift__card {
+    transform: translateY(6px);
+  }
+  .mkt-shift__beat[data-state="past"] .mkt-shift__card {
+    filter: saturate(0.72) brightness(0.88);
+  }
+  .mkt-shift__beat[data-state="past"] .mkt-shift__spine-tile {
+    filter: saturate(0.85) brightness(0.85);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__spine-tile {
+    transform: scale(1.08);
+    filter: saturate(1) brightness(1);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__card--chaos {
+    border-color: rgba(255, 138, 61, 0.42);
+    box-shadow:
+      0 20px 48px -12px rgba(255, 138, 61, 0.28),
+      0 4px 12px -2px rgba(0, 0, 0, 0.45);
+  }
+  .mkt-shift__beat[data-state="active"] .mkt-shift__card--calm {
+    border-color: var(--mkt-rule-2);
+    box-shadow:
+      0 20px 48px -12px rgba(0, 0, 0, 0.55),
+      0 4px 12px -2px rgba(0, 0, 0, 0.35);
+  }
+  /* Active-beat calm card picks up a subtle Pearl-colored halo per product */
+  .mkt-shift__beat--app[data-state="active"]      .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(255, 138, 61, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--platform[data-state="active"] .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(74, 92, 255, 0.32),  0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--mcp[data-state="active"]      .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(185, 107, 255, 0.32), 0 4px 12px -2px rgba(0, 0, 0, 0.45); }
+  .mkt-shift__beat--cradle[data-state="active"]   .mkt-shift__card--calm { box-shadow: 0 20px 48px -12px rgba(214, 58, 76, 0.32),   0 4px 12px -2px rgba(0, 0, 0, 0.45); }
 
   /* ── PROOF · social-proof / customer band ───────────────────── */
 
@@ -1468,6 +1865,47 @@
     display: grid;
     gap: 24px;
     align-content: center;
+  }
+  /* Single-column variant · centered wide layout when only dogfood
+     proof is present (external-customer proof retracted per peer PR
+     #107 legal-lens review). */
+  .mkt-proof--single {
+    max-width: 62rem;
+    margin: 0 auto;
+    text-align: left;
+  }
+
+  /* Sub-stat strip · secondary numbers below the hero stat. Reads
+     as a horizontal band of 3-4 stats, each with a bright number
+     + a short customer-language label. */
+  .mkt-proof__strip {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: clamp(20px, 3vw, 40px);
+    margin-top: clamp(32px, 5vh, 56px);
+    padding-top: clamp(28px, 4vh, 40px);
+    border-top: 1px solid var(--mkt-rule);
+  }
+  .mkt-proof__stripstat {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-proof__stripstat-value {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(24px, 2.4vw, 34px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    font-variant-numeric: tabular-nums;
+    margin: 0;
+  }
+  .mkt-proof__stripstat-label {
+    font-family: var(--mkt-font-body);
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--mkt-text-2);
+    margin: 0;
   }
   .mkt-proof__stat {
     font-family: var(--mkt-font-display);
@@ -1591,18 +2029,114 @@
     .mkt-marquee__track { animation-duration: 160s; }
   }
 
-  /* ── PRICING · tier cards on dark ───────────────────────────────── */
+  /* ── PRICING · 3 tier cards + comparison matrix ─────────────────── */
 
   .mkt-pricing__grid {
     display: grid;
     gap: clamp(20px, 2.4vw, 32px);
     grid-template-columns: 1fr;
-    max-width: 62rem;
+    max-width: 78rem;
     margin: 0 auto;
   }
-  @media (min-width: 720px) {
-    /* Currently one-tier; when a second tier lands this becomes 2-col. */
-    .mkt-pricing__grid { grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); }
+  @media (min-width: 900px) {
+    .mkt-pricing__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  .mkt-price__period {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    margin-left: 6px;
+    font-weight: 500;
+  }
+  .mkt-price__note {
+    font-family: var(--mkt-font-mono);
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: var(--mkt-text-4);
+    margin: 0;
+    text-transform: uppercase;
+  }
+
+  /* Comparison matrix — feature × tier grid */
+  .mkt-matrix {
+    max-width: 78rem;
+    margin: clamp(48px, 6vh, 88px) auto 0;
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    overflow: hidden;
+    background: var(--mkt-ground-2);
+  }
+  .mkt-matrix__row {
+    display: grid;
+    grid-template-columns: minmax(160px, 2fr) repeat(3, minmax(80px, 1fr));
+    gap: 16px;
+    padding: 16px clamp(16px, 2vw, 28px);
+    align-items: center;
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-matrix__row:first-child {
+    border-block-start: none;
+    background: var(--mkt-ground-3);
+  }
+  .mkt-matrix__cell {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--mkt-text-2);
+    margin: 0;
+    text-align: center;
+  }
+  .mkt-matrix__cell:first-child {
+    text-align: left;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-matrix__row--head .mkt-matrix__cell {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+  }
+  .mkt-matrix__row--group {
+    background: var(--mkt-ground-3);
+  }
+  .mkt-matrix__row--group .mkt-matrix__cell:first-child {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    font-weight: 600;
+  }
+  .mkt-matrix__check {
+    color: var(--mkt-accent);
+    font-family: var(--mkt-font-mono);
+    font-size: 13px;
+  }
+  .mkt-matrix__dash {
+    color: var(--mkt-text-4);
+    font-family: var(--mkt-font-mono);
+  }
+  @media (max-width: 720px) {
+    .mkt-matrix__row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      text-align: left;
+    }
+    .mkt-matrix__cell,
+    .mkt-matrix__cell:first-child {
+      text-align: left;
+    }
+    .mkt-matrix__cell[data-tier]::before {
+      content: attr(data-tier) " · ";
+      color: var(--mkt-text-4);
+      font-family: var(--mkt-font-mono);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+    }
   }
   .mkt-price {
     position: relative;
@@ -1916,13 +2450,50 @@
      they beat the @layer page defaults. Composes with — never removes —
      the header's existing sticky/z-index/border behaviour. */
 
+  /* Sticky header — must stay VISIBLE over the scrolled page content
+     (founder-caught 2026-09-19: "when i scroll down i cant see it at
+     all"). The v3 header was sticky+opaque already but nested inside
+     a body wrapper the mkt aurora paints under, so the header edge
+     could visually merge with the aurora glow. Fix: pin z-index and
+     paint an OPAQUE band with backdrop-filter fallback, so the header
+     always reads as a distinct floating chrome. */
   .site-header {
-    background: var(--mkt-ground, #05070a);
-    border-block-end-color: var(--mkt-rule, rgba(255, 255, 255, 0.08));
+    background: rgba(5, 7, 10, 0.86);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    backdrop-filter: saturate(1.4) blur(14px);
+    border-block-end-color: var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    z-index: 60;
   }
+  /* Older browsers without backdrop-filter get a fully opaque header. */
+  @supports not (backdrop-filter: blur(1px)) {
+    .site-header { background: var(--mkt-ground, #05070a); }
+  }
+
+  /* Mega dropdown — was inheriting v3 --ink text tokens (dark) on a
+     mkt-remapped dark background = invisible ("bleeds into the site"
+     founder-caught 2026-09-19). Force light mkt text tokens on every
+     descendant + add solid panel background + a real border + shadow
+     + backdrop-blur so it reads as a distinct floating panel. */
   .site-mega {
-    background: var(--mkt-ground-2, #0a0d13);
-    border-block-end-color: var(--mkt-rule, rgba(255, 255, 255, 0.08));
+    background: rgba(10, 13, 19, 0.98);
+    -webkit-backdrop-filter: saturate(1.4) blur(20px);
+    backdrop-filter: saturate(1.4) blur(20px);
+    border-block-start: 1px solid var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    border-block-end: 1px solid var(--mkt-rule-2, rgba(255, 255, 255, 0.14));
+    box-shadow: 0 32px 80px -24px rgba(0, 0, 0, 0.75);
+    z-index: 55;
+    color: var(--mkt-text, #f4f2ee);
+  }
+  @supports not (backdrop-filter: blur(1px)) {
+    .site-mega { background: var(--mkt-panel, #171b26); }
+  }
+  .site-mega .site-mega__band-name { color: var(--mkt-text, #f4f2ee); }
+  .site-mega .site-mega__band-strap { color: var(--mkt-text-3, rgba(244, 242, 238, 0.60)); }
+  .site-mega .site-mega__layer-link { color: var(--mkt-text-2, rgba(244, 242, 238, 0.78)); }
+  .site-mega .site-mega__layer-num  { color: var(--mkt-text-3, rgba(244, 242, 238, 0.60)); }
+  .site-mega .site-mega__layer-link:hover {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--mkt-text, #f4f2ee);
   }
 
   /* ── MOTION · scroll-reveal + on-mount stagger + live-signal pulse ──
@@ -1939,23 +2510,37 @@
      reduced-motion. Graceful in Firefox (elements render visible
      without animation). */
 
+  /* Fade-up is translate-only. Opacity change here would fail axe
+     color-contrast checks on below-fold cards at initial load (axe
+     evaluates elements whether or not they're currently in viewport,
+     and animation-timeline:view() + fill:both holds the `from`
+     keyframe until the element enters view). Founder-caught
+     2026-09-18 via CI a11y sweep. */
   @keyframes mkt-fade-up {
-    from { opacity: 0; transform: translateY(24px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(24px); }
+    to   { transform: translateY(0); }
   }
+  /* Also translate-only. Axe scan races the on-mount animation and
+     can sample during opacity-0 phase (documented axe-core behavior
+     for animated content). Transform-only reveal keeps content
+     always at opacity 1, always contrast-passing. */
   @keyframes mkt-fade-in {
-    from { opacity: 0; transform: translateY(14px); }
-    to   { opacity: 1; transform: translateY(0); }
+    from { transform: translateY(14px); }
+    to   { transform: translateY(0); }
   }
   @keyframes mkt-pulse-line {
     0%, 100% { opacity: 0.85; transform: scaleX(1); transform-origin: left; }
     50%      { opacity: 0.42; transform: scaleX(0.94); transform-origin: left; }
   }
   @keyframes mkt-pulse-mark {
-    0%, 100% { box-shadow: 0 0 0 1px rgba(255,255,255,0.08),
-                            0 12px 32px -14px var(--mkt-product-tint, var(--mkt-accent)); }
-    50%      { box-shadow: 0 0 0 1px rgba(255,255,255,0.14),
-                            0 20px 48px -12px var(--mkt-product-tint, var(--mkt-accent)); }
+    0%, 100% { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.25),
+                            inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+                            0 8px 20px -6px var(--mkt-product-tint, var(--mkt-accent)),
+                            0 4px 10px -2px rgba(0, 0, 0, 0.4); }
+    50%      { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.28),
+                            inset 0 -1px 0 rgba(0, 0, 0, 0.18),
+                            0 14px 32px -6px var(--mkt-product-tint, var(--mkt-accent)),
+                            0 6px 14px -2px rgba(0, 0, 0, 0.45); }
   }
 
   /* Scroll-triggered reveal — every card / row / list item as it
@@ -1967,14 +2552,20 @@
     .mkt-metric,
     .mkt-deep__item,
     .mkt-value,
-    .mkt-shift__item,
+    .mkt-shift__beat,
     .mkt-faq__item,
     .mkt-highlight,
     .mkt-builtfor__item,
     .mkt-route,
     .mkt-list__item,
     .mkt-proof,
-    .mkt-productrow {
+    .mkt-productrow,
+    .mkt-textcard,
+    .mkt-numcard,
+    .mkt-tile,
+    .mkt-fact,
+    .mkt-postlist__item,
+    .mkt-slide {
       animation: mkt-fade-up linear both;
       animation-timeline: view();
       animation-range: entry 0% cover 28%;
@@ -2151,22 +2742,1126 @@
       animation: none !important;
       opacity: 1 !important;
     }
+    /* Day-in-the-life shift: freeze active/past/future filters so every
+       beat reads at full brightness, and keep the playhead static. */
+    .mkt-shift__card,
+    .mkt-shift__spine-tile,
+    .mkt-shift__playhead-clock,
+    .mkt-shift__playhead-dot {
+      transition-duration: 60ms !important;
+    }
+    .mkt-shift__beat[data-state="future"] .mkt-shift__card,
+    .mkt-shift__beat[data-state="future"] .mkt-shift__spine-tile,
+    .mkt-shift__beat[data-state="past"] .mkt-shift__card,
+    .mkt-shift__beat[data-state="past"] .mkt-shift__spine-tile {
+      filter: none !important;
+      transform: none !important;
+    }
+    .mkt-shift__playhead {
+      position: static !important;
+    }
     @supports (animation-timeline: view()) {
       .mkt-product,
       .mkt-stage,
       .mkt-metric,
       .mkt-deep__item,
       .mkt-value,
-      .mkt-shift__item,
+      .mkt-shift__beat,
       .mkt-faq__item,
       .mkt-highlight,
       .mkt-builtfor__item,
       .mkt-route,
       .mkt-list__item,
       .mkt-proof,
-      .mkt-productrow {
+      .mkt-productrow,
+      .mkt-textcard,
+      .mkt-numcard,
+      .mkt-tile,
+      .mkt-fact,
+      .mkt-postlist__item,
+      .mkt-slide {
         animation: none !important;
       }
     }
+  }
+
+  /* ── CATCHALL-PAGE SHAPES · consumed by PageRenderer v5 ──────────
+     Ratified 2026-09-18: PageRenderer no longer emits v3 substrate
+     classes (section--paper, hero-paper, block__title, list-numbered,
+     rows-table, case-study, inbox-list, hero-fullbleed). Every
+     catchall route (/security, /sovereignty, /trust, /about, all
+     /solutions/*, /careers, /docs, /changelog, /status, /press, all
+     /legal/*, /compliance) now emits these mkt shapes for one-file
+     visual parity with the home / products / pricing surfaces. */
+
+  /* Split · heading + list side-by-side */
+  .mkt-split {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vw, 72px);
+    align-items: start;
+  }
+  @media (min-width: 960px) {
+    .mkt-split {
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+    }
+  }
+
+  /* Numbered list · big index numerals + title + body */
+  .mkt-numlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+    counter-reset: mkt-num;
+  }
+  .mkt-numlist__item {
+    display: grid;
+    grid-template-columns: 56px minmax(0, 1fr);
+    gap: 20px;
+    align-items: baseline;
+    padding-block: clamp(20px, 2.4vw, 28px);
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-numlist__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-numlist__index {
+    font-family: var(--mkt-font-mono);
+    font-size: 14px;
+    letter-spacing: 0.12em;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-numlist__body {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-numlist__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(18px, 1.7vw, 22px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-numlist__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Plain list · title (+ optional body), hairline-separated */
+  .mkt-plainlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-plainlist__item {
+    padding-block: clamp(18px, 2vw, 24px);
+    border-block-start: 1px solid var(--mkt-rule);
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-plainlist__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-plainlist__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.3;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-plainlist__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Table rows · dt/dd pairs (facts, specs) */
+  .mkt-rowstable {
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-rowstable__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4px;
+    padding-block: 18px;
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  @media (min-width: 720px) {
+    .mkt-rowstable__row {
+      grid-template-columns: minmax(180px, 260px) minmax(0, 1fr);
+      gap: 32px;
+      align-items: baseline;
+    }
+  }
+  .mkt-rowstable__row:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-rowstable__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+    margin: 0;
+  }
+  .mkt-rowstable__value {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.4;
+    color: var(--mkt-text);
+    margin: 0;
+  }
+
+  /* Case study · aside + narrative body (2-column at ≥ 960px) */
+  .mkt-case {
+    display: grid;
+    gap: clamp(24px, 3vw, 40px);
+    padding: clamp(24px, 3vw, 36px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+  }
+  @media (min-width: 960px) {
+    .mkt-case {
+      grid-template-columns: minmax(0, 4fr) minmax(0, 8fr);
+      align-items: start;
+    }
+  }
+  .mkt-case__aside {
+    display: grid;
+    gap: 8px;
+    align-content: start;
+  }
+  .mkt-case__subject {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+  }
+  .mkt-case__body {
+    font-family: var(--mkt-font-body);
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--mkt-text-2);
+  }
+  .mkt-case__body p {
+    margin: 0 0 12px 0;
+  }
+  .mkt-case__body p:last-child {
+    margin-bottom: 0;
+  }
+
+  /* Inbox router · label + email address rows (used by /contact + any
+     inbox-router section on catchall pages) */
+  .mkt-inboxlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-inboxlist__row {
+    display: grid;
+    grid-template-columns: 140px minmax(0, 1fr) 32px;
+    gap: 20px;
+    align-items: center;
+    padding-block: clamp(18px, 2.2vw, 24px);
+    border-block-start: 1px solid var(--mkt-rule);
+    color: var(--mkt-text);
+    text-decoration: none;
+    transition: background var(--mkt-dur) var(--mkt-ease), transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-inboxlist li:last-child .mkt-inboxlist__row {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-inboxlist__row:hover {
+    background: rgba(255, 255, 255, 0.03);
+  }
+  .mkt-inboxlist__row:hover .mkt-inboxlist__caret {
+    transform: translateX(3px);
+  }
+  .mkt-inboxlist__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    font-weight: 600;
+  }
+  .mkt-inboxlist__addr {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.35;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-inboxlist__strap {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--mkt-text-3);
+    margin-top: 2px;
+  }
+  .mkt-inboxlist__caret {
+    color: var(--mkt-accent);
+    font-size: 18px;
+    text-align: end;
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  @media (max-width: 640px) {
+    .mkt-inboxlist__row {
+      grid-template-columns: 1fr 24px;
+      gap: 6px;
+    }
+    .mkt-inboxlist__label {
+      grid-column: 1 / -1;
+    }
+  }
+
+  /* ── DEDICATED-ROUTE SHAPES · blog / how / customers / presentation
+     ─────────────────────────────────────────────────────────────────
+     Consumed by app/blog/page.tsx (list) + app/blog/[slug]/page.tsx
+     (article) + app/presentation/page.tsx (deck viewer). PageRenderer
+     doesn't touch these routes — each has its own bespoke content
+     pipeline (gray-matter + marked for blog, hand-authored slides for
+     presentation, live scorecard for how) — so their shapes live here
+     directly rather than through the section-slot switch. */
+
+  /* Blog list */
+  .mkt-postlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0;
+  }
+  .mkt-postlist__item {
+    border-block-start: 1px solid var(--mkt-rule);
+  }
+  .mkt-postlist__item:last-child {
+    border-block-end: 1px solid var(--mkt-rule);
+  }
+  .mkt-postlist__link {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding-block: clamp(28px, 3vw, 40px);
+    text-decoration: none;
+    color: var(--mkt-text);
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  @media (min-width: 720px) {
+    .mkt-postlist__link {
+      grid-template-columns: 180px minmax(0, 1fr) auto;
+      gap: 32px;
+      align-items: baseline;
+    }
+  }
+  .mkt-postlist__link:hover {
+    transform: translateX(4px);
+  }
+  .mkt-postlist__date {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    margin: 0;
+  }
+  .mkt-postlist__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 2vw, 26px);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+  }
+  .mkt-postlist__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    margin: 4px 0 0 0;
+    max-width: 60ch;
+  }
+  .mkt-postlist__cta {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--mkt-accent);
+    align-self: end;
+  }
+
+  /* Blog article prose · long-form reader typography for marked-rendered
+     Markdown body content. All descendant selectors scoped to
+     .mkt-prose so the register-scoped rules never leak. */
+  .mkt-prose {
+    max-width: 68ch;
+    margin: 0 auto;
+    font-family: var(--mkt-font-body);
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--mkt-text);
+  }
+  .mkt-prose > * + * { margin-top: 1.1em; }
+  .mkt-prose p { margin: 0; }
+  .mkt-prose h2 {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(24px, 2.4vw, 32px);
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 2.2em 0 0.6em 0;
+  }
+  .mkt-prose h3 {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(20px, 1.9vw, 24px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 1.8em 0 0.5em 0;
+  }
+  .mkt-prose a {
+    color: var(--mkt-accent);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .mkt-prose a:hover { color: var(--mkt-text); }
+  .mkt-prose strong { color: var(--mkt-text); font-weight: 600; }
+  .mkt-prose em { font-style: italic; color: var(--mkt-text); }
+  .mkt-prose blockquote {
+    border-inline-start: 2px solid var(--mkt-accent);
+    padding-inline-start: 20px;
+    color: var(--mkt-text-2);
+    font-style: italic;
+    margin-inline: 0;
+  }
+  .mkt-prose code {
+    font-family: var(--mkt-font-mono);
+    font-size: 0.88em;
+    background: var(--mkt-panel);
+    padding: 2px 6px;
+    border-radius: 6px;
+    color: var(--mkt-text);
+  }
+  .mkt-prose pre {
+    background: var(--mkt-ground-2);
+    border: 1px solid var(--mkt-rule);
+    border-radius: 12px;
+    padding: 16px 18px;
+    overflow-x: auto;
+    line-height: 1.5;
+  }
+  .mkt-prose pre code {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    font-size: 13px;
+  }
+  .mkt-prose ul, .mkt-prose ol { padding-inline-start: 1.4em; }
+  .mkt-prose li + li { margin-top: 0.4em; }
+  .mkt-prose hr {
+    border: none;
+    border-top: 1px solid var(--mkt-rule);
+    margin: 2em 0;
+  }
+  .mkt-prose img { border-radius: 12px; }
+
+  .mkt-postfoot {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-top: clamp(48px, 6vw, 96px);
+    padding-top: clamp(24px, 3vw, 40px);
+    border-top: 1px solid var(--mkt-rule);
+  }
+
+  /* Presentation deck · four Pearl-colored slide cards + PDF viewer */
+  .mkt-deck-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: clamp(24px, 3vw, 40px);
+    grid-template-columns: 1fr;
+  }
+  @media (min-width: 960px) {
+    .mkt-deck-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+  .mkt-slide {
+    position: relative;
+    padding: clamp(24px, 3vw, 36px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.65), rgba(10, 13, 19, 0.65));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    display: grid;
+    gap: 12px;
+    align-content: start;
+    transition: border-color var(--mkt-dur) var(--mkt-ease), transform var(--mkt-dur) var(--mkt-ease), box-shadow var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-slide:hover { transform: translateY(-2px); }
+  .mkt-slide--platform { border-color: rgba(74, 92, 255, 0.28); }
+  .mkt-slide--app      { border-color: rgba(255, 138, 61, 0.28); }
+  .mkt-slide--mcp      { border-color: rgba(185, 107, 255, 0.28); }
+  .mkt-slide--cradle   { border-color: rgba(214, 58, 76, 0.28); }
+  .mkt-slide--platform:hover { box-shadow: 0 20px 48px -12px rgba(74, 92, 255, 0.28); }
+  .mkt-slide--app:hover      { box-shadow: 0 20px 48px -12px rgba(255, 138, 61, 0.28); }
+  .mkt-slide--mcp:hover      { box-shadow: 0 20px 48px -12px rgba(185, 107, 255, 0.28); }
+  .mkt-slide--cradle:hover   { box-shadow: 0 20px 48px -12px rgba(214, 58, 76, 0.28); }
+  .mkt-slide__k {
+    font-family: var(--mkt-font-mono);
+    font-size: 12px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--mkt-text-3);
+    margin: 0;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-slide--platform .mkt-slide__k { color: var(--mkt-product-platform); }
+  .mkt-slide--app      .mkt-slide__k { color: var(--mkt-product-app); }
+  .mkt-slide--mcp      .mkt-slide__k { color: var(--mkt-product-mcp); }
+  .mkt-slide--cradle   .mkt-slide__k { color: var(--mkt-product-cradle); }
+  .mkt-slide__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(22px, 2.2vw, 30px);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+    text-wrap: balance;
+  }
+  .mkt-slide__body {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* PDF viewer frame · deck-on-paper section */
+  .mkt-pdf-frame {
+    background: var(--mkt-panel);
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    overflow: hidden;
+    aspect-ratio: 8.5 / 11;
+    max-height: 82vh;
+  }
+  .mkt-pdf-object {
+    display: block;
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background: var(--mkt-panel);
+  }
+  .mkt-pdf-fallback {
+    padding: clamp(24px, 3vw, 40px);
+    text-align: center;
+    font-family: var(--mkt-font-body);
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* ── VISUAL-DENSITY SHAPES · PageRenderer v6 · 2026-09-18 ──────────
+     Founder walked the site 2026-09-18 T15:03 UTC: "we need to have
+     the same level of design style across the entire website." The
+     text register matched but the visual density did not — catchall
+     pages were text-blocks with hairline seps only, home had tiles /
+     cards / mock imagery / Pearl-color accents. These shapes lift
+     catchalls to the home's design level:
+       .mkt-hero__mosaic   → 4 flower tiles anchor every page hero
+       .mkt-section__rail  → colored side rail on every non-hero
+       .mkt-eyebrow-chip   → Pearl-color pill eyebrow with dot
+       .mkt-tilegrid       → list-plain becomes card grid
+       .mkt-tile           → each tile: flower + title + body, per-Pearl
+       .mkt-numcards       → list-numbered becomes numbered cards
+       .mkt-case--<pearl>  → case-study gets flower + Pearl frame
+       .mkt-closing--<p>   → closing CTA gets Pearl halo per page */
+
+  /* Per-Pearl color helpers reused by many shapes below */
+  .mkt-tile__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    color: #ffffff;
+    flex: none;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 8px 20px -6px rgba(0, 0, 0, 0.55),
+      0 2px 6px -1px rgba(0, 0, 0, 0.35);
+    filter: saturate(0.9) brightness(0.94);
+    transition: transform var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-tile__mark--platform { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
+  .mkt-tile__mark--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
+  .mkt-tile__mark--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
+  .mkt-tile__mark--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-tile__mark svg { width: 62%; height: 62%; }
+
+  /* Page-hero 4-tile flower mosaic (right side anchor at ≥ 960px) */
+  .mkt-hero__row {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(32px, 5vw, 64px);
+    align-items: center;
+  }
+  @media (min-width: 960px) {
+    .mkt-hero__row {
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+    }
+  }
+  .mkt-hero__mosaic {
+    display: none;
+  }
+  @media (min-width: 960px) {
+    .mkt-hero__mosaic {
+      display: grid;
+      grid-template-columns: repeat(2, 96px);
+      gap: 20px;
+      justify-content: end;
+      align-content: center;
+    }
+  }
+  .mkt-hero__tile {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 96px;
+    height: 96px;
+    border-radius: 22px;
+    color: #ffffff;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.20),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.28),
+      0 20px 44px -12px rgba(0, 0, 0, 0.55),
+      0 6px 16px -4px rgba(0, 0, 0, 0.42);
+    transition: transform 320ms var(--mkt-ease);
+  }
+  .mkt-hero__tile:nth-child(2n) { transform: translateY(18px); }
+  .mkt-hero__tile:hover        { transform: translateY(-4px); }
+  .mkt-hero__tile:nth-child(2n):hover { transform: translateY(14px); }
+  .mkt-hero__tile--platform { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
+  .mkt-hero__tile--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
+  .mkt-hero__tile--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
+  .mkt-hero__tile--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-hero__tile svg { width: 62%; height: 62%; }
+
+  /* Per-section colored side rail (decorative, aria-hidden) */
+  .mkt-section--accented {
+    position: relative;
+  }
+  .mkt-section__rail {
+    position: absolute;
+    inset-block-start: clamp(60px, 8vh, 96px);
+    inset-inline-start: clamp(12px, 2vw, 32px);
+    width: 3px;
+    height: 44px;
+    border-radius: 2px;
+    background: var(--mkt-rule-2);
+    pointer-events: none;
+  }
+  .mkt-section__rail--platform { background: linear-gradient(180deg, var(--mkt-product-platform) 0%, transparent 100%); }
+  .mkt-section__rail--app      { background: linear-gradient(180deg, var(--mkt-product-app)      0%, transparent 100%); }
+  .mkt-section__rail--mcp      { background: linear-gradient(180deg, var(--mkt-product-mcp)      0%, transparent 100%); }
+  .mkt-section__rail--cradle   { background: linear-gradient(180deg, var(--mkt-product-cradle)   0%, transparent 100%); }
+
+  /* Pearl-color pill eyebrow with dot indicator */
+  .mkt-eyebrow-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px 5px 12px;
+    border: 1px solid var(--mkt-rule-2);
+    border-radius: var(--mkt-radius-pill);
+    background: rgba(255, 255, 255, 0.03);
+    width: fit-content;
+    margin-block-end: 20px;
+  }
+  .mkt-eyebrow-chip__dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 999px;
+    background: var(--mkt-text-3);
+    display: inline-block;
+    flex: none;
+  }
+  .mkt-eyebrow-chip--platform { border-color: rgba(74, 92, 255, 0.42); }
+  .mkt-eyebrow-chip--app      { border-color: rgba(255, 138, 61, 0.42); }
+  .mkt-eyebrow-chip--mcp      { border-color: rgba(185, 107, 255, 0.42); }
+  .mkt-eyebrow-chip--cradle   { border-color: rgba(214, 58, 76, 0.42); }
+  .mkt-eyebrow-chip--platform .mkt-eyebrow-chip__dot { background: var(--mkt-product-platform); box-shadow: 0 0 10px rgba(74, 92, 255, 0.75); }
+  .mkt-eyebrow-chip--app      .mkt-eyebrow-chip__dot { background: var(--mkt-product-app);      box-shadow: 0 0 10px rgba(255, 138, 61, 0.75); }
+  .mkt-eyebrow-chip--mcp      .mkt-eyebrow-chip__dot { background: var(--mkt-product-mcp);      box-shadow: 0 0 10px rgba(185, 107, 255, 0.75); }
+  .mkt-eyebrow-chip--cradle   .mkt-eyebrow-chip__dot { background: var(--mkt-product-cradle);   box-shadow: 0 0 10px rgba(214, 58, 76, 0.75); }
+
+  /* Tile grid · list-plain + split-columns items become cards.
+     Uses flex-wrap so partial last rows (4-item list, 5-item list,
+     any n-not-multiple-of-3) NATURALLY center their orphan items.
+     Founder-directed 2026-09-19 audit found the previous
+     `grid-template-columns: repeat(auto-fit, minmax(...))` approach
+     collapsed empty tracks by container width but did NOT re-center
+     items when the last row had fewer cards than columns — orphan
+     items hung LEFT. Flex-wrap + justify-content: center gets the
+     natural centering per row instead. */
+  .mkt-tilegrid {
+    list-style: none;
+    padding: 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+  .mkt-tile {
+    /* flex-grow 0 so a solo card on the last row doesn't stretch to fill
+       the container width (which defeats justify-content: center). */
+    flex: 0 1 320px;
+    min-width: 260px;
+    max-width: 340px;
+  }
+  .mkt-tile {
+    display: grid;
+    gap: 16px;
+    padding: clamp(20px, 2.2vw, 26px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.65), rgba(10, 13, 19, 0.65));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    align-content: start;
+    transition: transform var(--mkt-dur) var(--mkt-ease), border-color var(--mkt-dur) var(--mkt-ease), box-shadow var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-tile:hover {
+    transform: translateY(-2px);
+  }
+  .mkt-tile--platform:hover { border-color: rgba(74, 92, 255, 0.42); box-shadow: 0 20px 44px -12px rgba(74, 92, 255, 0.28); }
+  .mkt-tile--app:hover      { border-color: rgba(255, 138, 61, 0.42); box-shadow: 0 20px 44px -12px rgba(255, 138, 61, 0.28); }
+  .mkt-tile--mcp:hover      { border-color: rgba(185, 107, 255, 0.42); box-shadow: 0 20px 44px -12px rgba(185, 107, 255, 0.28); }
+  .mkt-tile--cradle:hover   { border-color: rgba(214, 58, 76, 0.42);   box-shadow: 0 20px 44px -12px rgba(214, 58, 76, 0.28); }
+  .mkt-tile__body {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-tile__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(17px, 1.6vw, 20px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+    margin: 0;
+  }
+  .mkt-tile__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Numbered cards · big Pearl-color numerals + card body.
+     Flex-wrap so odd-count lists (5, 7) center their orphan row on
+     the last row instead of hanging left (auto-fit collapses empty
+     tracks by width, not by orphan-row position). */
+  .mkt-numcards {
+    list-style: none;
+    padding: 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  .mkt-numcard {
+    flex: 0 1 460px;
+    min-width: 340px;
+    max-width: 500px;
+  }
+  .mkt-numcard {
+    display: grid;
+    grid-template-columns: 72px minmax(0, 1fr);
+    gap: 20px;
+    align-items: baseline;
+    padding: clamp(20px, 2.2vw, 26px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    transition: transform var(--mkt-dur) var(--mkt-ease), border-color var(--mkt-dur) var(--mkt-ease), box-shadow var(--mkt-dur) var(--mkt-ease);
+  }
+  .mkt-numcard:hover { transform: translateY(-2px); }
+  .mkt-numcard--platform:hover { border-color: rgba(74, 92, 255, 0.36); box-shadow: 0 18px 40px -12px rgba(74, 92, 255, 0.24); }
+  .mkt-numcard--app:hover      { border-color: rgba(255, 138, 61, 0.36); box-shadow: 0 18px 40px -12px rgba(255, 138, 61, 0.24); }
+  .mkt-numcard--mcp:hover      { border-color: rgba(185, 107, 255, 0.36); box-shadow: 0 18px 40px -12px rgba(185, 107, 255, 0.24); }
+  .mkt-numcard--cradle:hover   { border-color: rgba(214, 58, 76, 0.36);   box-shadow: 0 18px 40px -12px rgba(214, 58, 76, 0.24); }
+  .mkt-numcard__index {
+    font-family: var(--mkt-font-mono);
+    font-size: clamp(28px, 3vw, 40px);
+    font-weight: 600;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-numcard__index--platform { color: var(--mkt-product-platform); text-shadow: 0 0 24px rgba(74, 92, 255, 0.45); }
+  .mkt-numcard__index--app      { color: var(--mkt-product-app);      text-shadow: 0 0 24px rgba(255, 138, 61, 0.45); }
+  .mkt-numcard__index--mcp      { color: var(--mkt-product-mcp);      text-shadow: 0 0 24px rgba(185, 107, 255, 0.45); }
+  .mkt-numcard__index--cradle   { color: var(--mkt-product-cradle);   text-shadow: 0 0 24px rgba(214, 58, 76, 0.45); }
+  .mkt-numcard__body {
+    display: grid;
+    gap: 6px;
+  }
+  .mkt-numcard__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(18px, 1.8vw, 22px);
+    line-height: 1.25;
+    letter-spacing: -0.01em;
+    color: var(--mkt-text);
+    font-weight: 500;
+  }
+  .mkt-numcard__desc {
+    font-family: var(--mkt-font-body);
+    font-size: 15px;
+    line-height: 1.55;
+    color: var(--mkt-text-2);
+    margin: 0;
+  }
+
+  /* Case-study Pearl-color border variants */
+  .mkt-case--platform { border-color: rgba(74, 92, 255, 0.24); }
+  .mkt-case--app      { border-color: rgba(255, 138, 61, 0.24); }
+  .mkt-case--mcp      { border-color: rgba(185, 107, 255, 0.24); }
+  .mkt-case--cradle   { border-color: rgba(214, 58, 76, 0.24); }
+  .mkt-case__mark {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    color: #ffffff;
+    flex: none;
+    margin-bottom: 8px;
+    box-shadow:
+      inset 0 1px 0 rgba(255, 255, 255, 0.18),
+      inset 0 -1px 0 rgba(0, 0, 0, 0.25),
+      0 8px 20px -6px rgba(0, 0, 0, 0.5);
+  }
+  .mkt-case__mark--platform { background: linear-gradient(155deg, #6d7cff 0%, var(--mkt-product-platform) 62%, #2c3ee8 100%); }
+  .mkt-case__mark--app      { background: linear-gradient(155deg, #ff9b52 0%, var(--mkt-product-app)      62%, #d76a24 100%); }
+  .mkt-case__mark--mcp      { background: linear-gradient(155deg, #cc86ff 0%, var(--mkt-product-mcp)      62%, #9848e0 100%); }
+  .mkt-case__mark--cradle   { background: linear-gradient(155deg, #e35a6a 0%, var(--mkt-product-cradle)   62%, #b02533 100%); }
+  .mkt-case__mark svg { width: 62%; height: 62%; }
+
+  /* Closing-CTA per-Pearl halo variants · RETIRED 2026-09-19.
+     The 40px-offset + 100px-blur shadow rendered as a visible sharp
+     colored line below the CTA buttons instead of a soft halo —
+     founder-caught on /security & /trust ("do you not see the linke
+     under the last sentence"). Pearl accent already carries through
+     the flower tile, the eyebrow, and the section's own aurora
+     backdrop; the halo shadow was decorative and was adding a real
+     visual defect. Left the selectors empty as a no-op so the
+     variant classes on the section wrapper don't break future
+     styling; add different chrome here if needed later. */
+  .mkt-closing--platform .mkt-closing__inner,
+  .mkt-closing--app      .mkt-closing__inner,
+  .mkt-closing--mcp      .mkt-closing__inner,
+  .mkt-closing--cradle   .mkt-closing__inner { box-shadow: none; }
+
+  /* ── TEXT-CARD · designed shape for text-block sections ────────────
+     Founder-caught 2026-09-19: catchall text-blocks were still
+     one-column walls of type. This card gives every copy-only section
+     a designed 2-column layout — Pearl-color numeral + flower tile +
+     eyebrow chip on the left, headline + prose on the right. Panel
+     background lifts the content off the section ground; per-Pearl
+     border tint on hover matches every other card in the register. */
+
+  /* Text-card is a SINGLE-column article at every width. The aside was
+     originally a 5-fr side column with mark+chip, but on real pages that
+     column was mostly empty (~100px of chrome next to a 400-500px stack
+     of h2+body on the right) and read as a broken layout with a lonely
+     header pinned to the top-left corner. Founder-caught 2026-09-19
+     ("this looks sloppy"). Single-column meta-row-on-top matches the
+     banner + mirror shapes so every text-block section reads with the
+     same top-to-bottom rhythm: [mark · chip] → h2 → body. */
+  .mkt-textcard {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: clamp(20px, 2.5vw, 28px);
+    padding: clamp(28px, 3.5vw, 48px);
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.6), rgba(10, 13, 19, 0.6));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-panel);
+    transition: border-color 320ms var(--mkt-ease), transform 320ms var(--mkt-ease), box-shadow 320ms var(--mkt-ease);
+  }
+  .mkt-textcard:hover { transform: translateY(-2px); }
+  .mkt-textcard--platform:hover { border-color: rgba(74, 92, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(74, 92, 255, 0.22); }
+  .mkt-textcard--app:hover      { border-color: rgba(255, 138, 61, 0.28); box-shadow: 0 22px 48px -14px rgba(255, 138, 61, 0.22); }
+  .mkt-textcard--mcp:hover      { border-color: rgba(185, 107, 255, 0.28); box-shadow: 0 22px 48px -14px rgba(185, 107, 255, 0.22); }
+  .mkt-textcard--cradle:hover   { border-color: rgba(214, 58, 76, 0.28);   box-shadow: 0 22px 48px -14px rgba(214, 58, 76, 0.22); }
+
+  /* Meta row · mark tile + eyebrow chip inline, horizontal. Was a
+     vertical grid stack in a side column; now a header row above the
+     main content. */
+  .mkt-textcard__aside {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+  .mkt-textcard__aside .mkt-eyebrow-chip {
+    margin-block-end: 0;
+  }
+  .mkt-textcard__num {
+    font-family: var(--mkt-font-mono);
+    font-size: clamp(56px, 7vw, 96px);
+    font-weight: 600;
+    line-height: 0.9;
+    letter-spacing: -0.04em;
+    font-variant-numeric: tabular-nums;
+    color: var(--mkt-text-3);
+    display: block;
+  }
+  .mkt-textcard__num--platform { color: var(--mkt-product-platform); text-shadow: 0 0 42px rgba(74, 92, 255, 0.38); }
+  .mkt-textcard__num--app      { color: var(--mkt-product-app);      text-shadow: 0 0 42px rgba(255, 138, 61, 0.38); }
+  .mkt-textcard__num--mcp      { color: var(--mkt-product-mcp);      text-shadow: 0 0 42px rgba(185, 107, 255, 0.38); }
+  .mkt-textcard__num--cradle   { color: var(--mkt-product-cradle);   text-shadow: 0 0 42px rgba(214, 58, 76, 0.38); }
+
+  .mkt-textcard__main {
+    display: grid;
+    gap: 20px;
+    align-content: start;
+    min-width: 0;
+  }
+  .mkt-textcard__body {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(15px, 1.4vw, 17px);
+    line-height: 1.65;
+    color: var(--mkt-text-2);
+    max-width: 68ch;
+  }
+  .mkt-textcard__body p { margin: 0 0 1em 0; }
+  .mkt-textcard__body p:last-child { margin-bottom: 0; }
+  .mkt-textcard__body strong { color: var(--mkt-text); font-weight: 600; }
+  .mkt-textcard__body em { font-style: italic; color: var(--mkt-text); }
+  .mkt-textcard__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* Mirror variant · end-aligned composition. Was a column-flip (aside
+     right, body left) which produced the same lonely-aside problem in
+     reverse. Now: meta row aligns to end, h2 and body align to end.
+     Same top-to-bottom rhythm, right-anchored — reads as a balanced
+     counterweight to the default left-anchored card. */
+  @media (min-width: 960px) {
+    .mkt-textcard--mirror .mkt-textcard__aside {
+      justify-content: flex-end;
+    }
+    .mkt-textcard--mirror .mkt-textcard__main {
+      text-align: end;
+      justify-items: end;
+    }
+    .mkt-textcard--mirror .mkt-textcard__body {
+      margin-inline-start: auto;
+    }
+  }
+
+  /* ── BANNER STATEMENT · full-width Pearl-color chapter break ─────
+     Every third text-block renders as a saturated Pearl-color band
+     with centered display type and no card panel. Acts as a "chapter
+     break" between stacks of cards so pages carry visual rhythm.
+     Founder-directed 2026-09-19 (v8 followup to v7): "still way too
+     many pages are full walls of text" — the text-cards were dense
+     enough but every section had the identical shape, and rhythm
+     matters as much as density. This shape has zero card chrome and
+     radically different visual weight so the eye registers a break. */
+
+  /* Banner padding-block tightened 2026-09-19 T11:58 UTC — the previous
+     clamp(96, 14vh, 168) produced ~252px of empty vertical padding on a
+     900px viewport, which read as "small composition floating in a sea
+     of empty space" even after the mark + chip proportions were bumped.
+     Reduced to a tighter clamp so the meta row + display title + body
+     hold the visual center of the section instead of getting lost in
+     top/bottom air. */
+  .mkt-banner {
+    position: relative;
+    padding-block: clamp(64px, 9vh, 112px);
+    overflow: hidden;
+    isolation: isolate;
+  }
+  .mkt-banner__wash {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    opacity: 0.9;
+  }
+  .mkt-banner--platform .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(74, 92, 255, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(74, 92, 255, 0.18), transparent 55%); }
+  .mkt-banner--app      .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(255, 138, 61, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(255, 138, 61, 0.18), transparent 55%); }
+  .mkt-banner--mcp      .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(185, 107, 255, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(185, 107, 255, 0.18), transparent 55%); }
+  .mkt-banner--cradle   .mkt-banner__wash { background: radial-gradient(ellipse at 30% 20%, rgba(214, 58, 76, 0.28), transparent 60%), radial-gradient(ellipse at 80% 90%, rgba(214, 58, 76, 0.18), transparent 55%); }
+
+  .mkt-banner::before {
+    content: "";
+    position: absolute;
+    inset-block-start: 0;
+    inset-inline: 0;
+    height: 2px;
+    z-index: -1;
+  }
+  .mkt-banner--platform::before { background: linear-gradient(90deg, transparent, var(--mkt-product-platform), transparent); }
+  .mkt-banner--app::before      { background: linear-gradient(90deg, transparent, var(--mkt-product-app),      transparent); }
+  .mkt-banner--mcp::before      { background: linear-gradient(90deg, transparent, var(--mkt-product-mcp),      transparent); }
+  .mkt-banner--cradle::before   { background: linear-gradient(90deg, transparent, var(--mkt-product-cradle),   transparent); }
+
+  .mkt-banner__inner {
+    display: grid;
+    gap: 32px;
+    justify-items: center;
+    text-align: center;
+  }
+  /* Banner meta row · mark + chip inline, centered above the display
+     title. Founder-caught 2026-09-19: the default 44px mark + 12px chip
+     was dwarfed by the clamp(32, 5vw, 64) display title and read as
+     "small lonely header floating over a giant heading". Banner-scoped
+     overrides bump the mark to 64px and the chip to 13px/heavier
+     padding so the row carries weight proportional to the heading. */
+  .mkt-banner__meta {
+    display: inline-flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .mkt-banner .mkt-tile__mark {
+    width: 64px;
+    height: 64px;
+    border-radius: 16px;
+  }
+  .mkt-banner .mkt-eyebrow-chip {
+    padding: 7px 18px 7px 16px;
+    font-size: 13px;
+    letter-spacing: 0.14em;
+    margin-block-end: 0;
+  }
+  .mkt-banner .mkt-eyebrow-chip__dot {
+    width: 9px;
+    height: 9px;
+  }
+  .mkt-banner__num {
+    font-family: var(--mkt-font-mono);
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    font-variant-numeric: tabular-nums;
+  }
+  .mkt-banner__num--platform { color: var(--mkt-product-platform); text-shadow: 0 0 20px rgba(74, 92, 255, 0.55); }
+  .mkt-banner__num--app      { color: var(--mkt-product-app);      text-shadow: 0 0 20px rgba(255, 138, 61, 0.55); }
+  .mkt-banner__num--mcp      { color: var(--mkt-product-mcp);      text-shadow: 0 0 20px rgba(185, 107, 255, 0.55); }
+  .mkt-banner__num--cradle   { color: var(--mkt-product-cradle);   text-shadow: 0 0 20px rgba(214, 58, 76, 0.55); }
+  .mkt-banner__title {
+    font-family: var(--mkt-font-display);
+    font-size: clamp(32px, 5vw, 64px);
+    line-height: 1.02;
+    letter-spacing: -0.03em;
+    font-weight: 500;
+    color: var(--mkt-text);
+    margin: 0;
+    max-width: 22ch;
+    text-wrap: balance;
+  }
+  .mkt-banner__body {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(16px, 1.4vw, 18px);
+    line-height: 1.6;
+    color: var(--mkt-text-2);
+    max-width: 62ch;
+    margin: 0;
+  }
+  .mkt-banner__body p { margin: 0 0 1em 0; }
+  .mkt-banner__body p:last-child { margin-bottom: 0; }
+  .mkt-banner__body a { color: var(--mkt-accent); text-decoration: underline; text-underline-offset: 3px; }
+
+  /* ── FACT GRID · replaces flat dt/dd table for table-rows sections
+     Every row becomes a Pearl-color pill card with label + value.
+     3-col at ≥ 1080px, 2-col at ≥ 720px. */
+
+  /* Fact grid · flex-wrap so partial rows center per the alignment
+     discipline at top of file. */
+  .mkt-factgrid {
+    list-style: none;
+    padding: 0;
+    margin: 32px auto 0 auto;
+    max-width: 1120px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+  }
+  .mkt-fact {
+    flex: 0 1 320px;
+    min-width: 260px;
+    max-width: 340px;
+  }
+  .mkt-fact {
+    display: grid;
+    gap: 10px;
+    padding: 20px 22px;
+    background: linear-gradient(180deg, rgba(23, 27, 38, 0.55), rgba(10, 13, 19, 0.55));
+    border: 1px solid var(--mkt-rule);
+    border-radius: var(--mkt-radius-card);
+    align-content: start;
+    transition: border-color 320ms var(--mkt-ease), transform 320ms var(--mkt-ease);
+  }
+  .mkt-fact:hover { transform: translateY(-2px); }
+  .mkt-fact--platform:hover { border-color: rgba(74, 92, 255, 0.32); }
+  .mkt-fact--app:hover      { border-color: rgba(255, 138, 61, 0.32); }
+  .mkt-fact--mcp:hover      { border-color: rgba(185, 107, 255, 0.32); }
+  .mkt-fact--cradle:hover   { border-color: rgba(214, 58, 76, 0.32); }
+  .mkt-fact__label {
+    font-family: var(--mkt-font-mono);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 600;
+    color: var(--mkt-text-3);
+  }
+  .mkt-fact__label--platform { color: var(--mkt-product-platform); }
+  .mkt-fact__label--app      { color: var(--mkt-product-app); }
+  .mkt-fact__label--mcp      { color: var(--mkt-product-mcp); }
+  .mkt-fact__label--cradle   { color: var(--mkt-product-cradle); }
+  .mkt-fact__value {
+    font-family: var(--mkt-font-body);
+    font-size: clamp(15px, 1.3vw, 17px);
+    line-height: 1.4;
+    color: var(--mkt-text);
+    margin: 0;
+    word-break: break-word;
   }
 

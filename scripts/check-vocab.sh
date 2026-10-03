@@ -68,7 +68,17 @@ FORBIDDEN_PATTERNS=(
   # sweeps. Added AFTER the voice-drift PR lands.
 )
 
-# Forbidden pricing exposure on marketing site
+# Forbidden pricing exposure on marketing site.
+# NOTE 2026-09-18 · pricing doctrine expanded per founder directive
+# ("we need to have pricing for non enterprise users, three levels of
+# users at different levels"). The blanket "no dollar figures" rule is
+# retired. New rule:
+#   - Starter and Team tiers CAN carry published prices (self-serve).
+#   - Enterprise tier MUST stay "Contact us." (no dollar figure).
+# The old $150 patterns below stay in the guard because that specific
+# figure was tied to the OLD 4-tier ARPU model which is retired; if it
+# reappears it signals a regression to the old shape. Dollar figures for
+# the new 3-tier Starter/Team model are permitted.
 PRICING_PATTERNS=(
   '\$150'
   '\$150/'
@@ -79,12 +89,6 @@ PRICING_PATTERNS=(
   'flat per-seat price'
   'flat per-seat rate'
   'one flat rate per seat'
-  # NOTE 2026-09-18: '/pricing' route ban lifted per founder directive
-  # ("there should be enterprise level and that level should be contact
-  # us"). A /pricing page exists with the Enterprise tier showing
-  # "Contact us." only — no dollar figures. The dollar-figure patterns
-  # above still fire if a price ever appears; only the route existence
-  # is now permitted.
 )
 
 VIOLATIONS=0

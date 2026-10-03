@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 import { PRODUCTS, TIERS, type Product } from "@/content/products";
 import { PRODUCT_DETAILS } from "@/content/product-detail";
 
@@ -46,7 +47,9 @@ export function MarketingProductDetail({ product }: { product: Product }) {
       >
         <div className="mkt-section__inner">
           <div className="mkt-hero__copy">
-            <span className="mkt-productrow__mark" aria-hidden style={{ marginBottom: 24 }} />
+            <span className="mkt-productrow__mark" aria-hidden style={{ marginBottom: 24 }}>
+              <NebbosMark size={44} />
+            </span>
             <p className="mkt-eyebrow">{product.eyebrow} · Chapter {detail.chapter}</p>
             <h1 id={`prod-${product.key}-h`} className="mkt-display">
               {name}
@@ -161,16 +164,29 @@ export function MarketingProductDetail({ product }: { product: Product }) {
             </p>
           </header>
           <div className="mkt-productrow__tiers">
-            {TIERS.map((tier) => (
-              <div key={tier.key} className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}>
-                <p className="mkt-tier__key">{tier.key}</p>
-                <p className="mkt-tier__label">{name} · {tier.key}</p>
-                <p className="mkt-tier__scope">{tier.scope}</p>
-                <Link href="/contact" className="mkt-cta mkt-cta--ghost" style={{ justifySelf: "start", marginTop: 8 }}>
-                  Contact sales
+            {TIERS.map((tier) => {
+              // Extract the human-readable tier name (Guest/Host/Architect)
+              // from the "L1 · Guest" label — the buyer sees the word, the
+              // engineering L# stays as a small chip.
+              const humanName = tier.label.includes("·") ? tier.label.split("·")[1]!.trim() : tier.key;
+              const tierSlug = humanName.toLowerCase();
+              return (
+                <Link
+                  key={tier.key}
+                  id={`tier-${product.key}-${tier.key.toLowerCase()}`}
+                  href={`/products/${product.slug}/${tierSlug}`}
+                  className={`mkt-tier ${PRODUCT_CLASS[product.key]}`}
+                >
+                  <p className="mkt-tier__key">{tier.key}</p>
+                  <p className="mkt-tier__label">{name} · {humanName}</p>
+                  <p className="mkt-tier__factors">{tier.factors}</p>
+                  <p className="mkt-tier__scope">{tier.scope}</p>
+                  <span className="mkt-tier__cta" aria-hidden>
+                    See {humanName} tier <span className="mkt-cta__arrow">→</span>
+                  </span>
                 </Link>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
       </section>
@@ -184,10 +200,12 @@ export function MarketingProductDetail({ product }: { product: Product }) {
               The other three products.
             </h2>
           </header>
-          <div className="mkt-products__grid">
+          <div className="mkt-products__grid mkt-products__grid--3">
             {others.map((p) => (
               <Link key={p.key} href={`/products/${p.slug}`} className={`mkt-product ${PRODUCT_CLASS[p.key].split(" ")[0]}`}>
-                <span className="mkt-product__mark" aria-hidden />
+                <span className="mkt-product__mark" aria-hidden>
+                  <NebbosMark size={32} />
+                </span>
                 <div className="mkt-product__body">
                   <p className="mkt-product__eyebrow">{p.eyebrow}</p>
                   <h3 className="mkt-product__name">{shortName(p)}</h3>

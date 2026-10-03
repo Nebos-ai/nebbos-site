@@ -17,6 +17,7 @@ export const metadata: Metadata = {
  */
 export default function NotFound() {
   return (
+    <div className="mkt-mode">
     <section className="hero-paper">
       <div className="container-narrow">
         <p className="eyebrow">404 · Not found</p>
@@ -36,5 +37,6 @@ export default function NotFound() {
         </div>
       </div>
     </section>
+    </div>
   );
 }

@@ -20,7 +20,6 @@ import metrics from "@/content/platform-metrics.json";
  */
 
 const M = metrics;
-const SNAP = M.artifact_snapshot_at;
 
 export function MarketingProof() {
   return (

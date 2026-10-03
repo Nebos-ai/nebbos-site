@@ -1,6 +1,6 @@
-import { FullBleedScene } from "@/components/site/FullBleedScene";
-import { Button } from "@/components/ui/Button";
 import type { Metadata } from "next";
+import Link from "next/link";
+import { NebbosMark } from "@nebbos/brand/logo";
 
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
@@ -59,16 +59,66 @@ export default function CustomersIndexPage() {
               written permission. When a customer is namable, their
               reference appears here.
             </p>
+            <div className="mkt-hero__ctas">
+              <Link href="/how" className="mkt-cta mkt-cta--primary">
+                See how it is built
+                <span className="mkt-cta__arrow" aria-hidden>→</span>
+              </Link>
+              <Link href="/demo" className="mkt-cta mkt-cta--ghost">
+                Book a demo
+              </Link>
+            </div>
           </div>
         </div>
-      </FullBleedScene>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="cus-shape">
+        <div className="mkt-section__inner">
+          <header className="mkt-products__head">
+            <p className="mkt-eyebrow">The shape today</p>
+            <h2 id="cus-shape" className="mkt-h2">
+              A Pearl per department. Approved from the operator&rsquo;s
+              phone.
+            </h2>
+            <p className="mkt-deck">
+              A Pearl scoped to each department, deployed behind the
+              systems that department already runs. Every consequential
+              action passes through named-operator approval. Every action
+              lands as an append-only audit event. That is the shape
+              running inside the business that builds Nebbos.
+            </p>
+          </header>
+        </div>
+      </section>
+
+      <section className="mkt mkt-section" aria-labelledby="cus-when">
+        <div className="mkt-section__inner">
+          <div className="mkt-case">
+            <aside className="mkt-case__aside">
+              <p className="mkt-eyebrow">Case studies</p>
+              <h3 className="mkt-case__subject">Written when the customer says yes.</h3>
+            </aside>
+            <div className="mkt-case__body">
+              <p>
+                Every case study on this page names a real customer,
+                describes a real deployment, and lands only after the
+                customer has read and approved the language. No composite
+                accounts. No aggregated numbers. If it&rsquo;s on this
+                page, the operator quoted has signed off in writing.
+              </p>
+              <p>
+                Until customers reach that point, this page tells you
+                what the shape of the work is, not who is running it.
+                That is the trade-off. It stays that way.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section
-        className="section section--paper"
-        style={{
-          paddingBlock: "clamp(64px, 10vh, 128px)",
-          borderTop: "1px solid var(--rule)",
-        }}
+        className="mkt mkt-section mkt-closing"
+        aria-labelledby="cus-close"
       >
         <div className="container-narrow">
           <p
@@ -114,23 +164,17 @@ export default function CustomersIndexPage() {
             being named on this page, we say nothing specific about them
             here. When they are ready, their reference is what appears.
           </p>
-          <div
-            style={{
-              display: "flex",
-              gap: 16,
-              marginTop: "clamp(32px, 5vh, 56px)",
-              flexWrap: "wrap",
-            }}
-          >
-            <Button href="/solutions/k12" variant="primary" size="lg">
-              See district operations
-            </Button>
-            <Button href="/demo" variant="ghost" size="lg" arrow={false}>
+          <div className="mkt-hero__ctas">
+            <Link href="/demo" className="mkt-cta mkt-cta--primary">
               Book a demo
-            </Button>
+              <span className="mkt-cta__arrow" aria-hidden>→</span>
+            </Link>
+            <Link href="/products" className="mkt-cta mkt-cta--ghost">
+              See the products
+            </Link>
           </div>
         </div>
       </section>
-    </div>
+    </>
   );
 }
