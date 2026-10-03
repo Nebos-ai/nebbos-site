@@ -1,0 +1,74 @@
+<!doctype html>
+<html data-theme="light" lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow">
+<title>Nebbos — Business case template</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+:root{color-scheme:light;--paper:oklch(100% 0 0);--paper-2:oklch(97.5% 0.002 106);
+--ink:oklch(15% 0.006 258);--ink-2:oklch(38% 0.006 258);--ink-3:oklch(55% 0.006 258);
+--rule:oklch(87% 0.003 106);--accent-deep:oklch(65% 0.155 55);
+--font-sans:"Space Grotesk",ui-sans-serif,system-ui,sans-serif;--font-mono:"JetBrains Mono",ui-monospace,monospace;
+--fs-hero:clamp(2.25rem,3.5vw+1rem,3.5rem);--fs-h2:clamp(1.375rem,1.5vw+1rem,1.75rem);--fs-h3:1.125rem;
+--fs-body-lg:clamp(1.0625rem,0.3vw+1rem,1.1875rem);--fs-body:1rem;--fs-small:0.9375rem;--fs-micro:0.65rem;--fs-eyebrow:0.6875rem;
+--s-3:0.75rem;--s-4:1rem;--s-5:1.5rem;--s-6:2rem;--s-7:3rem;--s-8:4rem;--s-9:6rem;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--font-sans);font-weight:400;line-height:1.55;-webkit-font-smoothing:antialiased}
+.shell{max-width:960px;margin:0 auto;padding:var(--s-9) clamp(var(--s-5),5vw,var(--s-8))}
+.meta{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:var(--s-4);padding-bottom:var(--s-5);border-bottom:1px solid var(--rule);margin-bottom:var(--s-8);font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-3);font-weight:500}
+.meta .mark{color:var(--ink);font-weight:700;letter-spacing:.08em}.meta .code{color:var(--accent-deep)}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--s-3);font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:.22em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;margin-bottom:var(--s-5)}
+.eyebrow::before{content:"";display:block;width:24px;height:2px;background:var(--accent-deep)}
+h1.hero{font-size:var(--fs-hero);font-weight:600;line-height:1.05;letter-spacing:-.024em;color:var(--ink);margin-bottom:var(--s-5);max-width:26ch}
+p.lede{font-size:var(--fs-body-lg);line-height:1.55;color:var(--ink-2);max-width:72ch;margin-bottom:var(--s-8)}
+section{margin-bottom:var(--s-7)}
+h2.section-h{font-size:var(--fs-h2);font-weight:600;line-height:1.2;letter-spacing:-.02em;color:var(--ink);margin-bottom:var(--s-4)}
+h2.section-h::after{content:"";display:block;width:32px;height:2px;background:var(--accent-deep);margin-top:var(--s-3)}
+section p{font-size:var(--fs-body);line-height:1.65;color:var(--ink-2);max-width:72ch;margin-bottom:var(--s-4)}
+.step{padding:var(--s-5) 0;border-bottom:1px solid var(--rule);display:grid;grid-template-columns:80px 1fr;gap:var(--s-5)}
+.step-n{font-family:var(--font-mono);font-size:var(--fs-eyebrow);letter-spacing:.16em;text-transform:uppercase;color:var(--accent-deep);font-weight:700;padding-top:.2em}
+.step-t{font-size:var(--fs-h3);font-weight:600;color:var(--ink);margin-bottom:var(--s-3);letter-spacing:-.012em}
+.step-d{font-size:var(--fs-body);color:var(--ink-2);line-height:1.65;max-width:70ch}
+.cta{margin-top:var(--s-9);padding:var(--s-7) 0 0;border-top:2px solid var(--ink)}
+.cta h3{font-size:var(--fs-h3);font-weight:600;color:var(--ink);margin-bottom:var(--s-4);letter-spacing:-.012em;max-width:40ch}
+.cta p{font-size:var(--fs-body);color:var(--ink-2);line-height:1.65;max-width:70ch;margin-bottom:var(--s-5)}
+.cta .contact{font-family:var(--font-mono);font-size:var(--fs-small);letter-spacing:.06em;color:var(--accent-deep);font-weight:500}
+.cta .contact a{color:inherit;text-decoration:none;border-bottom:1px solid var(--accent-deep)}
+.foot{margin-top:var(--s-9);padding-top:var(--s-5);border-top:1px solid var(--rule);display:flex;justify-content:space-between;flex-wrap:wrap;gap:var(--s-4);font-family:var(--font-mono);font-size:var(--fs-micro);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-3)}
+.foot .entity{color:var(--ink);font-weight:600}.foot .code{color:var(--accent-deep)}
+</style>
+</head>
+<body>
+<div class="shell">
+<div class="meta"><span class="mark">Nebbos</span><span>Business Case Template</span><span class="code">NEB-BC-01</span><span>Rev 2 · 2026-09-19</span></div>
+<div class="eyebrow">For internal decision committees</div>
+<h1 class="hero">Business case template.</h1>
+<p class="lede">This template provides a reference structure for an internal business case supporting a Nebbos deployment decision. The Nebbos deployment team will pre-populate sections 01, 02, 03, 04, and 07 for a scoped assessment under NDA on a ten-business-day timeline.</p>
+
+<div class="step"><div class="step-n">01</div><div><div class="step-t">Problem statement</div><div class="step-d">State the operational problem in specific, measurable terms. Identify the affected business function, the volume of the affected work stream, and the observed inefficiency. Committee reviewers evaluate business cases on the specificity of the problem statement; generic problem statements typically require rework before approval.</div></div></div>
+
+<div class="step"><div class="step-n">02</div><div><div class="step-t">Current state</div><div class="step-d">Quantify the baseline before Nebbos deployment. Include operation volume, cycle time (median and 90th percentile), error rate, headcount, external vendor spend, and audit outcomes over the trailing 24 months. Where operational metrics are not currently instrumented, note the measurement gap and propose an instrumentation approach.</div></div></div>
+
+<div class="step"><div class="step-n">03</div><div><div class="step-t">Target state</div><div class="step-d">Describe the state after deployment with reference to specific Nebbos surfaces. Department-scoped Pearls with citation provenance address reasoning-reconstruction time. Row-level isolation eliminates cross-system record-location overhead. The audit chain replaces manual evidence-collection cycles.</div></div></div>
+
+<div class="step"><div class="step-n">04</div><div><div class="step-t">Cost</div><div class="step-d">Enumerate one-time and recurring costs. Platform license is annual per tier. Cradle hardware is one-time with rotation every three to five years. Integration engineering and onboarding are one-time. Platform administration is approximately 0.25 FTE per 100 operators.</div></div></div>
+
+<div class="step"><div class="step-n">05</div><div><div class="step-t">Benefit</div><div class="step-d">Quantify benefit against the current-state baseline. Standard categories include cycle-time reduction, error-cost avoidance, audit-preparation time reduction, regulatory-exposure reduction (measured conservatively), and capacity reallocation. Total quantified benefit divided by cost yields the payback horizon.</div></div></div>
+
+<div class="step"><div class="step-n">06</div><div><div class="step-t">Risk</div><div class="step-d">Document material risks and mitigations. Vendor concentration is mitigated by the documented portability bundle. Data residency is addressed by deployment-time region assignment. Regulatory drift is addressed by the EU AI Act Annex IV pack. Model-provider dependency is mitigated by per-operator provider selection.</div></div></div>
+
+<div class="step"><div class="step-n">07</div><div><div class="step-t">Timeline</div><div class="step-d">The Nebbos enterprise onboarding path executes in six phases over approximately 33 business days from kickoff to production sign-off. See nebbos.ai/docs/success/onboarding for the phase-by-phase specification, exit artefacts, and per-phase gate criteria.</div></div></div>
+
+<div class="step"><div class="step-n">08</div><div><div class="step-t">Decision</div><div class="step-d">The committee-facing decision statement should be a single sentence naming the department, tier composition, one-time cost, recurring cost, and go-live target.</div></div></div>
+
+<div class="cta">
+<h3>Scoped assessment</h3>
+<p>The Nebbos deployment team produces a committee-ready pre-populated business case (sections 01, 02, 03, 04, and 07) against your specific operational profile under NDA. Timeline: 10 business days from initial scoping call.</p>
+<div class="contact"><a href="mailto:enterprise@nebbos.ai">enterprise@nebbos.ai</a> · <a href="https://nebbos.ai/docs">nebbos.ai/docs</a></div>
+</div>
+
+<div class="foot"><span class="entity">Nebbos Technologies Corp · Nebbos Technologies D.O.O.</span><span>Confidential · Under NDA</span><span class="code">NEB-BC-01 · Rev 2</span></div>
+</div>
+</body>
+</html>

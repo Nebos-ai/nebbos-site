@@ -18,7 +18,7 @@ export const CONTACT = {
   /** Data-protection officer (GDPR, DSARs). */
   privacy: "privacy@nebbos.ai",
 
-  /** Enterprise / procurement — SOWs, MSAs, DPAs. */
+  /** Enterprise / procurement — SOWs, MSAs, License, narrow-scope DPA on request. */
   enterprise: "enterprise@nebbos.ai",
 
   /** Legal / license / MSA / policy questions.
