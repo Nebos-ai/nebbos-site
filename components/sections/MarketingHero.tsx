@@ -64,6 +64,9 @@ export function MarketingHero() {
           >
             <SplitWords step={0.07}>{BRAND.taglineShort}</SplitWords>
           </h1>
+          <p className={cn(deck, "rise-in max-w-[52ch] font-medium text-ink")} style={d(200)}>
+            {BRAND.heroSubhead}
+          </p>
           <p className={cn(deck, "rise-in max-w-[52ch]")} style={d(260)}>
             {BRAND.homeDeck}
           </p>

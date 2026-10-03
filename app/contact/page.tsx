@@ -95,7 +95,7 @@ export default function ContactPage() {
         <Reveal as="header" className="flex max-w-3xl flex-col items-start gap-6">
           <Eyebrow>Offices</Eyebrow>
           <h2 id="offices-h" className={h2}>
-            <RevealWords>Three entities. One company.</RevealWords>
+            <RevealWords>Three entities. One company.</RevealWords>{/* claim-source: corporate-taxonomy-one-company */}
           </h2>
           <p className={deck}>
             US parent for contracting. LA for product. Belgrade for

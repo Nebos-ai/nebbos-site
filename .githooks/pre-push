@@ -1,0 +1,76 @@
+#!/usr/bin/env bash
+# nebbos-site pre-push — run the copy + type gates before a push leaves the
+# machine, so banned vocabulary, unsourced marketing claims, and broken
+# builds are caught locally instead of as red checks on a PR.
+#
+# Gates (same scripts CI runs):
+#   1. scripts/check-vocab.sh             — banned customer-facing vocabulary
+#   2. scripts/check-marketing-claims.mjs — unsourced claims (when present
+#                                           on the branch being pushed)
+#   3. tsc --noEmit                       — type/syntax errors (e.g. a bad
+#                                           merge resolution); a failed build
+#                                           otherwise surfaces in CI only as
+#                                           axe-core / lighthouse-ci reds
+#
+# Wiring: if your git uses a global core.hooksPath shim that delegates to a
+# repo-local .githooks/pre-push, nothing to do. Otherwise, opt in with:
+#   git config core.hooksPath .githooks
+#
+# Branch deletions are never gated.
+#
+# Deliberate bypass (e.g. pushing a fix to a PR whose remaining red is a
+# known pending decision): make the pushed tip commit's message carry
+#   [preflight-bypass]: <one-line reason>
+# The reason is printed and the push proceeds. Never use --no-verify.
+#
+# The gates run against the working tree, so commit or discard local edits
+# before pushing.
+
+set -euo pipefail
+
+ZERO_SHA="0000000000000000000000000000000000000000"
+bypass_reason=""
+pushing_commits=0
+
+while read -r _local_ref local_sha _remote_ref _remote_sha; do
+  [[ -z "${local_sha:-}" || "$local_sha" == "$ZERO_SHA" ]] && continue
+  pushing_commits=1
+  reason="$(git log -1 --format=%B "$local_sha" \
+    | sed -n 's/^\[preflight-bypass\]:[[:space:]]*\(..*\)$/\1/p' | head -1)"
+  [[ -n "$reason" ]] && bypass_reason="$reason"
+done
+
+if (( pushing_commits == 0 )); then
+  exit 0
+fi
+
+if [[ -n "$bypass_reason" ]]; then
+  echo "[pre-push] gates bypassed via [preflight-bypass]: $bypass_reason" >&2
+  exit 0
+fi
+
+cd "$(git rev-parse --show-toplevel)"
+fail=0
+
+echo "[pre-push] check-vocab"
+bash scripts/check-vocab.sh || fail=1
+
+if [[ -f scripts/check-marketing-claims.mjs ]]; then
+  echo "[pre-push] check-marketing-claims"
+  node scripts/check-marketing-claims.mjs || fail=1
+fi
+
+echo "[pre-push] tsc --noEmit"
+if [[ -x node_modules/.bin/tsc ]]; then
+  node_modules/.bin/tsc --noEmit -p . || fail=1
+else
+  echo "[pre-push] node_modules/.bin/tsc not found — run 'pnpm install' first." >&2
+  fail=1
+fi
+
+if (( fail )); then
+  echo "[pre-push] BLOCKED — fix the failures above, then push again." >&2
+  exit 1
+fi
+
+echo "[pre-push] all gates passed"

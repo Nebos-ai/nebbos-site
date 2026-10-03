@@ -10,7 +10,7 @@ import { cn } from "@/lib/cn";
 export const metadata: Metadata = {
   title: "Customers · Nebbos",
   description:
-    "Nebbos is used inside the business that builds it. Case studies land here as external customers sign off publicly.",
+    "Nebbos runs inside the business that builds it. External customers are named here only with their written permission.",
 };
 
 /**
@@ -42,10 +42,8 @@ export default function CustomersIndexPage() {
         deck={
           <>
             Nebbos is used every day by the team that builds it. The
-            platform, its Pearls, its Cradle. Case studies from external
-            customers land here as each customer signs off publicly.
-            Until then, the shape of the work is real; the names arrive
-            with permission.
+            platform, its Pearls, its Cradle. External customers are named
+            here only with their written permission.
           </>
         }
         ctas={
@@ -84,12 +82,12 @@ export default function CustomersIndexPage() {
         </Reveal>
       </Section>
 
-      {/* CASE STUDIES · split card */}
+      {/* CUSTOMER REFERENCES · split card */}
       <Section labelledBy="cus-when" className="pt-0 md:pt-0 lg:pt-0">
         <Reveal className="bezel" amount={0.2}>
           <div className="bezel-core grid gap-8 overflow-hidden p-8 md:grid-cols-[1fr_1.5fr] md:gap-12 md:p-12">
             <aside className="relative flex flex-col items-start gap-4">
-              <Eyebrow>Case studies</Eyebrow>
+              <Eyebrow>Customer references</Eyebrow>
               <h3 id="cus-when" className="m-0 font-display text-[clamp(1.6rem,2.6vw,2.25rem)] font-medium leading-[1.1] tracking-tight text-ink">
                 Written when the customer says yes.
               </h3>

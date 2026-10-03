@@ -38,6 +38,13 @@
  *                            feedback_nebbos_ai_product_framing_platform_tools_mcp_usb_security_2026_09_14.
  *                            Run-layer language retained internally; customer
  *                            hero framing leads with the four pillars.
+ *   2026-09-14 → 2026-09-29: hero-language refinement — added "Attested AI
+ *                            Platform" as the category noun on top of the
+ *                            2026-09-14 four-pillar doctrine. Ratified via
+ *                            3-stream research (positioning discipline +
+ *                            18-site AI-marketing language census + analyst
+ *                            taxonomy). Not a doctrine shift; Platform +
+ *                            Tools + MCP + Cradle still stand.
  */
 
 export const BRAND = {
@@ -45,6 +52,13 @@ export const BRAND = {
   name: "Nebbos",
 
   /** Home-page hero title (canonical, most reused).
+   *  Supersede-log 2026-09-29: "A sovereign brain for your operation." →
+   *  "The Attested AI Platform." Category positioning ratified via 3-stream
+   *  research (Dunford/Ries/Play Bigger positioning discipline + 18-site
+   *  AI-marketing language census + Gartner/Forrester/IDC analyst taxonomy).
+   *  Coined "Attested" modifier + established "AI Platform" noun; hero
+   *  surface for the category-defining shift from rented AI to AI a company
+   *  deploys and owns end-to-end.
    *  Supersede-log 2026-09-18: "Infrastructure for AI operators." was
    *  category-defining but sausage — a buyer looking for a sovereign AI
    *  brain does not want to hear "infrastructure." They want to hear
@@ -52,14 +66,21 @@ export const BRAND = {
    *  outcome-first framing: "sovereign brain for your operation."
    *  Prior supersede-log 2026-09-17: "The platform. Its tools. Its MCP.
    *  Its Cradle." → "Infrastructure for AI operators." (now retired). */
-  taglineShort: "A sovereign brain for your operation.",
+  taglineShort: "The Attested AI Platform.",
+
+  /** Home-page hero subhead (plain-language elaboration of the category
+   *  noun, ratified 2026-09-29). Explains WHAT the platform does in
+   *  language a non-technical buyer can repeat. Sits directly below
+   *  taglineShort. */
+  heroSubhead:
+    "The AI that answers to a physical key your team holds. Every action signed. Every decision provable.",
 
   /** Slightly longer version used in <title> tags. */
   taglineLong:
-    "Infrastructure for AI operators. Every action attested. Every credential on hardware. Every substrate yours to take with you.",
+    "The Attested AI Platform — the AI that answers to a physical key your team holds, running on infrastructure your company owns.",
 
   /** Category the company sits in — market label used in press / SEO only. */
-  category: "Operator infrastructure",
+  category: "Attested AI Platform",
 
   /** Home hero deck under the title.
    *  Founder-directed 2026-09-18 (verbatim critique on the substrate/
@@ -100,11 +121,11 @@ export const BRAND = {
 
   /** One-line site description (SEO meta + share previews). */
   descriptionShort:
-    "A Pearl for every department. Runs on hardware you own. Ships your memory back when you leave.",
+    "Nebbos is the Attested AI Platform — every privileged AI action is tied to a hardware credential the operator holds, verified on the device, recorded on a tamper-evident ledger.",
 
   /** Long-form site description (for landing-page bodies + doc). */
   descriptionLong:
-    "Nebbos is the platform your operators live in. Its tools are the concrete verbs — Pearls, workflows, memory operations — that the platform gives your team. Its MCP is the capability surface every tool routes through, the same substrate whether the caller is a browser, a native desktop, a mobile app, or a headless orchestrator. Its Cradle is the hardware-attested credential that gates privileged actions: without it in the port, elevated capabilities are not available; with it in the port, biometric approves per-action and photographic audit-frames prove who approved what.",
+    "Nebbos is an Attested AI Platform — the full operating substrate your company deploys to run AI on its own infrastructure, where every privileged action is tied to a hardware credential the operator holds. Its tools are the concrete verbs — Pearls, workflows, memory operations — that the platform gives your team. Its MCP is the capability surface every tool routes through, the same substrate whether the caller is a browser, a native desktop, a mobile app, or a headless orchestrator. Its Cradle is the hardware-attested credential that gates privileged actions: without it in the port, elevated capabilities are not available; with it in the port, biometric approves per-action and photographic audit-frames prove who approved what.",
 
   /** Positioning one-liner for the two-ecosystem framing. */
   positioningTwoEcosystems:
