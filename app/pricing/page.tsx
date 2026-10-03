@@ -20,7 +20,7 @@ import { CONTACT } from "@/content/contact";
  * `feedback_nebbos_three_tier_published_pricing_2026_09_18` (supersedes
  * the 2026-08-24 Palantir/no-published-pricing rule).
  *
- * PRICING NUMBERS ($50 Starter/user · $200 Team/seat) · Founder-ratified
+ * PRICING NUMBERS ($50 Starter/user · $200 Team/seat) · Founder-ratified // claim-source: pricing-ratified
  * 2026-09-19 after cost-inventory pass (baseline COGS ~$520-870/mo, per-
  * seat unit economics at 100 seats ~$8-17/mo, so $50 and $200 both clear
  * ADR-332's `price ≥ cost × 2.0` hard floor + 80% blended margin target

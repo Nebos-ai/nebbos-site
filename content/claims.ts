@@ -261,6 +261,22 @@ export const CLAIMS = {
         "and remain gate-blocked.",
     },
   },
+
+  "pricing-ratified": {
+    id: "pricing-ratified",
+    value: "$50 Starter per user · $200 Team per seat · Enterprise on contact",
+    numeric: null,
+    consumed_by: ["app/pricing/page.tsx"],
+    source_of_record: {
+      kind: "ratified",
+      memory: "feedback_nebbos_three_tier_published_pricing_2026_09_18",
+      rationale:
+        "Published self-serve tier prices, founder-ratified 2026-09-19 " +
+        "after the cost-inventory pass. 'Team' is a tier name, not a " +
+        "customer count; the gate's numeric-customer-count shape matches " +
+        "'$200 Team' by accident. Enterprise pricing stays private.",
+    },
+  },
 } as const satisfies Readonly<Record<string, Claim>>;
 
 /**
